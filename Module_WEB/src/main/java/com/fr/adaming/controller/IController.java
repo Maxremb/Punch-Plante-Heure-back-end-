@@ -1,5 +1,7 @@
 package com.fr.adaming.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
@@ -34,7 +36,7 @@ import com.fr.adaming.dto.ResponseDto;
  */
 
 @RequestMapping
-public interface IController<C, U> { 
+public interface IController<C, U> {
 
 	/**
 	 * <b>Description : </b>
@@ -57,7 +59,7 @@ public interface IController<C, U> {
 	 * @param id : id de l'entite
 	 * @return boolean true or false
 	 */
-	@DeleteMapping(path="/{id}")
+	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto<?>> deleteById(@PathVariable @Positive int id);
 
 	/**
@@ -81,8 +83,8 @@ public interface IController<C, U> {
 	 * @param id : id de l'entite
 	 * @return UpdateDto
 	 */
-	@GetMapping(path="/{id}")
-	public ResponseEntity<ResponseDto<?>> readById(@PathVariable @Positive int id);
+	@GetMapping(path = "/{id}")
+	public ResponseEntity<ResponseDto<U>> readById(@PathVariable @Positive int id);
 
 	/**
 	 * <b>Description : </b>
@@ -93,6 +95,6 @@ public interface IController<C, U> {
 	 * @return listDto
 	 */
 	@GetMapping(path = "/all")
-	public ResponseEntity<ResponseDto<?>> readAll();
+	public ResponseEntity<ResponseDto<List<U>>> readAll();
 
 }
