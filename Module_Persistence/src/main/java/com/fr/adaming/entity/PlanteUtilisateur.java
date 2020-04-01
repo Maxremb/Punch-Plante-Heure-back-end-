@@ -1,6 +1,8 @@
 package com.fr.adaming.entity;
 
-import java.util.Date;
+
+
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,10 +41,10 @@ public class PlanteUtilisateur {
 	private EtatSante etatSante;
 	
 	@Column
-	private Date dateSemis;
+	private LocalDate dateSemis;
 	
 	@Column
-	private Date datePlantation;
+	private LocalDate datePlantation;
 	
 	@ManyToOne
 	private Jardin jardin;
