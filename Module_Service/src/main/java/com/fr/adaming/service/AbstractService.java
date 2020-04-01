@@ -18,7 +18,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public abstract class AbstractService<E> implements IService<E> {
 
 	@Autowired
-	JpaRepository<E, Integer> dao;
+	protected JpaRepository<E, Integer> dao;
 
 	@Override
 	public List<E> readAll() {
