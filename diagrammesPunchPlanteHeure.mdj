@@ -2553,7 +2553,7 @@
 											"top": 533,
 											"width": 135.103515625,
 											"height": 13,
-											"text": "-sol: String",
+											"text": "-sol: Enum",
 											"horizontalAlignment": 0
 										},
 										{
@@ -7506,7 +7506,7 @@
 							},
 							"name": "sol",
 							"visibility": "private",
-							"type": "String"
+							"type": "Enum"
 						},
 						{
 							"_type": "UMLAttribute",
