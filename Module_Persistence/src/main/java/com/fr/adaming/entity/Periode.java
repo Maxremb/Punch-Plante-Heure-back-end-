@@ -28,18 +28,18 @@ public class Periode {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
-	TypePeriod type;
+	private int id;
+	private TypePeriod type;
 	@Column(nullable = false)
-	LocalDate dateDebut;
+	private LocalDate dateDebut;
 	@Column(nullable = false)
-	LocalDate dateFin;
+	private LocalDate dateFin;
 	
 	@ManyToOne
-	Departement departement;
+	private Departement departement;
 	
 	@ManyToOne
-	PlanteModel planteModel;
+	private PlanteModel planteModel;
 	
 	
 }
