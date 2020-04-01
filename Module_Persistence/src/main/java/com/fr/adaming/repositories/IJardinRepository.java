@@ -15,7 +15,7 @@ import com.fr.adaming.entity.Jardin;
  * @since 0.0.1-SNAPSHOT
  */
 @Repository
-public interface IJardinRepository extends JpaRepository<Jardin, Long>{
+public interface IJardinRepository extends JpaRepository<Jardin, Integer>{
 
 	public List<Jardin> findByNom(String nom);
 	

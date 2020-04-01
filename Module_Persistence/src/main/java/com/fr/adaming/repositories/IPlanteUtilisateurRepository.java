@@ -12,7 +12,7 @@ import com.fr.adaming.entity.PlanteUtilisateur;
  * @since 1.0.x
  */
 @Repository
-public interface IPlanteUtilisateurRepository extends JpaRepository<PlanteUtilisateur, Long> {
+public interface IPlanteUtilisateurRepository extends JpaRepository<PlanteUtilisateur, Integer> {
 	
 	
 	

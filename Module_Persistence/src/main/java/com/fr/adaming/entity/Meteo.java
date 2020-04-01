@@ -25,10 +25,10 @@ public class Meteo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
-	double temperature; //pas dessous de -273.15
-	int pluie;	//positive
+	private int id;
+	private double temperature; //pas dessous de -273.15
+	private int pluie;	//positive
 	@Column(nullable = false)
-	LocalDate date;
+	private LocalDate date;
 
 }
