@@ -11,6 +11,14 @@ import javax.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+
+
+/**
+ * @author Gregoire
+ *
+ *	La température et la quantité de pluie pour une date
+ *	\nJointures controllés par d'autres classes: Département
+ */
 @Entity
 @Getter @Setter
 public class Meteo {

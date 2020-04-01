@@ -59,6 +59,6 @@ public interface IService<E> {
 	 * @param entite Entite à modifier
 	 * @return VRAI(modification effectue) ou FAUX (modification non efffectue)
 	 */
-	public boolean update(E entite); //TODO decider si on veut update en boolean
+	public E update(E entite); //TODO decider si on veut update en boolean
 
 }
