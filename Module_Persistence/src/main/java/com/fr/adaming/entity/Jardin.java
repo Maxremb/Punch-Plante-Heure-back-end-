@@ -1,7 +1,5 @@
 package com.fr.adaming.entity;
 
-import java.util.ArrayList;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +9,6 @@ import javax.persistence.ManyToOne;
 
 import com.fr.adaming.enums.Sol;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,8 +29,6 @@ public class Jardin {
 	private Enum<Sol> sol;
 	@Column
 	private String nom;
-	@Column
-	private ArrayList<PlanteUtilisateur> planteUtilisateur;
 	@Column
 	private Float longueur;
 	@Column

@@ -7,6 +7,9 @@ package com.fr.adaming.enums;
  */
 public enum Sol {
 	Sableux,
+	LimonoArgileux,
+	ArgiloSableux,
+	ArgiloLimoneux,
 	Argileux,
 	
 

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.fr.adaming.entity.User;
+import com.fr.adaming.entity.Jardin;
 
 /**
  * Interface repository responsable de la communication avec la base de données pour l'entité Jardin 
