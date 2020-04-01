@@ -1,4 +1,4 @@
-package com.fr.adaming.entity;
+package com.fr.adaming.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
