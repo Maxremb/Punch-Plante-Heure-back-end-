@@ -1,7 +1,13 @@
 package com.fr.adaming.dto;
 
-public class ResponseDto {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
+public class ResponseDto<T> {
 	
-	
+	boolean error;
+	String message;
+	T body;
 
 }
