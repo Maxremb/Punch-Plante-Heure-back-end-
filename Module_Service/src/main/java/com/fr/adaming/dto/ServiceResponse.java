@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class ServiceResponse <T>{
 	
-	String message;
+	String message = "Success";
 	T body;
 
 }
