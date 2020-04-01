@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fr.adaming.enums.Sol;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

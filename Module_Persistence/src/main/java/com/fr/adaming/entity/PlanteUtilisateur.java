@@ -5,8 +5,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import com.fr.adaming.enumeration.EtatPlante;
-import com.fr.adaming.enumeration.EtatSante;
+import com.fr.adaming.enums.EtatPlante;
+import com.fr.adaming.enums.EtatSante;
 
 import lombok.Getter;
 import lombok.Setter;

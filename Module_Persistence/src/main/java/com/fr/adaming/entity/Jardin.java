@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fr.adaming.enums.Sol;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

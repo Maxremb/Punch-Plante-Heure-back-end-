@@ -1,4 +1,4 @@
-package com.fr.adaming.entity;
+package com.fr.adaming.enums;
 
 /**
  * Classe d'énumération des différents types de sol

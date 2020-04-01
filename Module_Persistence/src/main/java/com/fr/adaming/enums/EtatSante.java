@@ -1,4 +1,4 @@
-package com.fr.adaming.enumeration;
+package com.fr.adaming.enums;
 
 public enum EtatSante {
 	
