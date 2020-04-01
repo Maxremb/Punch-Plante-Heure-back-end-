@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.fr.adaming.dto.ServiceResponse;
 
-//TODO Adapter si les besoins/retours sont differents
-
 /**
  * <p>Classe Abstraite des classes service permettant la communication avec la
  * BD</p>
