@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.fr.adaming.enums.Sol;
 
@@ -31,6 +33,7 @@ public class PlanteModel {
 	String nomScientifique;
 	
 	@Column
+	@ManyToOne
 	List<Periode> dates;
 	
 	@Column
@@ -62,5 +65,14 @@ public class PlanteModel {
 	
 	@Column
 	String photo;
+	
+	@Column
+	@ManyToMany
+	List<PlanteModel> assoPositive;
+	
+	@Column
+	@ManyToMany
+	List<PlanteModel> assoNegative;
+	
 
 }
