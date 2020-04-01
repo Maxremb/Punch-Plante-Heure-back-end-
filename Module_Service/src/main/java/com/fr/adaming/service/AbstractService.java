@@ -33,9 +33,13 @@ public abstract class AbstractService<E> implements IService<E> {
 	@Override
 	public ServiceResponse<E> readById(Integer id) {
 		
-		E entity = dao.findById(id).orElse(null);
+		E entity = dao.findById(id).orElse(null);		
 		ServiceResponse<E> serviceResponse = new ServiceResponse<E>();
 		serviceResponse.setBody(entity);
+		
+		if( entity == null ) { 
+			serviceResponse.setMessage("Une entité avec cet ID n'existe pas dans la base de données");
+		} 
 		
 		return serviceResponse;
 	}
