@@ -2,6 +2,8 @@ package com.fr.adaming.service;
 
 import java.util.List;
 
+import com.fr.adaming.dto.ServiceResponse;
+
 //TODO adapter les methodes au demandes du projet
 
 /**
@@ -19,14 +21,14 @@ public interface IService<E> {
 	 * @param entity L'entité à créer
 	 * @return Une entite
 	 */
-	public E create(E entity);
+	public ServiceResponse<E> create(E entity);
 
 	/**
 	 * <p>Methode permettant l'affichage de la liste de toute les entites</p>
 	 * 
 	 * @return Une liste d'entité
 	 */
-	public List<E> readAll();
+	public ServiceResponse<List<E>> readAll();
 
 	/**
 	 * <p>Methode permettant l'affichage d'une entite par son ID</p>
@@ -34,7 +36,7 @@ public interface IService<E> {
 	 * @param id Id de l'entite
 	 * @return Une entite
 	 */
-	public E readById(Integer id);
+	public ServiceResponse<E> readById(Integer id);
 
 	/**
 	 * <p>Methode permettant la connaissance de l'existence d'une entite par son
@@ -59,6 +61,6 @@ public interface IService<E> {
 	 * @param entite Entite à modifier
 	 * @return VRAI(modification effectue) ou FAUX (modification non efffectue)
 	 */
-	public E update(E entite); //TODO decider si on veut update en boolean
+	public ServiceResponse<E> update(E entite); //TODO decider si on veut update en boolean
 
 }
