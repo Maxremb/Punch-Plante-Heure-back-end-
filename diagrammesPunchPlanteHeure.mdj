@@ -186,7 +186,7 @@
 											"top": 523,
 											"width": 159.6943359375,
 											"height": 13,
-											"text": "-pseudonyme",
+											"text": "-pseudonyme: String",
 											"horizontalAlignment": 0
 										},
 										{
@@ -6656,7 +6656,7 @@
 							},
 							"name": "pseudonyme",
 							"visibility": "private",
-							"type": ""
+							"type": "String"
 						},
 						{
 							"_type": "UMLAttribute",
