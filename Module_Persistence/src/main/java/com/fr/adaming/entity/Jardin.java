@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Classe représentative de l'entité Jardin stockée de manière persistante
- * @author clara
- * @since 1.0.x
+ * Classe représentative de l'entité persistante Jardin
+ * @author Clara Cadet
+ * @since 0.0.1-SNAPSHOT
  */
 @Getter @Setter @NoArgsConstructor
 @Entity
@@ -24,18 +24,20 @@ public class Jardin {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@Column
+	private Integer id;
+	@Column 
 	private Enum<Sol> sol;
-	@Column
+	@Column (nullable = false)
 	private String nom;
 	@Column
 	private Float longueur;
 	@Column
 	private Float largeur;
-	@ManyToOne
+	@ManyToOne 
+	@Column (nullable = false)
 	private Departement departement;
 	@ManyToOne
+	@Column (nullable = false)
 	private Utilisateur utilisateur;
 	
 }

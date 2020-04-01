@@ -11,8 +11,8 @@ import com.fr.adaming.entity.Jardin;
 
 /**
  * Interface repository responsable de la communication avec la base de données pour l'entité Jardin 
- * @author clara
- * @since 1.0.x
+ * @author Clara Cadet
+ * @since 0.0.1-SNAPSHOT
  */
 @Repository
 public interface IJardinRepository extends JpaRepository<Jardin, Long>{
