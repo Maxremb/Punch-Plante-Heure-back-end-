@@ -42,7 +42,7 @@ public class PlanteModel {
 	int humiditeopti;
 	
 	@Column
-	String solOpti;
+	Sol solOpti;
 	
 	@Column
 	int repiquage;
