@@ -3,8 +3,12 @@ package com.fr.adaming.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.fr.adaming.constant.WebMappingConstant;
+import com.fr.adaming.converter.IConverter;
+import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.service.IService;
 
 //TODO adapter au front
@@ -17,80 +21,99 @@ import com.fr.adaming.service.IService;
  * Redefinition des méthodes CRUD</p>
  *
  * @param <C> CreateDto
- * @param <T> UpdateDto
+ * @param <U> UpdateDto
  * @param <E> Entite
  */
-public abstract class AbstractController <C,T, E> implements IController<C, T>{
+public abstract class AbstractController <C,U, E> implements IController<C, U>{
 	
-//	@Autowired
-//	IConverter<C, T, E> converter;
-//	
-//	@Autowired
-//	IService<E> service;
-//	
-//
-//	@Override
-//	public ResponseEntity<?> create(C dto) {
-//		C returnedDto = converter.convertEntityToCreateDto(service.create(converter.convertCreateDtoToEntity(dto)));
-//		ResponseDto responseDto = null;
-//		
-//		if (returnedDto != null) {
-//			responseDto = new ResponseDto(false,WebMappingConstant.SUCCESS_CREATE,returnedDto);
-//			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-//		} else {
-//			responseDto = new ResponseDto(true, WebMappingConstant.FAIL_CREATE, returnedDto);
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
-//		}				
-//	}
-//
-//	@Override
-//	public ResponseEntity<ResponseDto> deleteById(int id) {
-//		boolean result = service.deleteById(id);
-//		ResponseDto response = null;
-//
-//		if (result) {
-//			response = new ResponseDto(false, WebMappingConstant.SUCCESS_DELEDETE_BY_ID, null);
-//			return ResponseEntity.status(HttpStatus.OK).body(response);
-//		} else {
-//			response = new ResponseDto(true, WebMappingConstant.FAIL_DELEDETE, null);
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-//		}
-//	}
-//
-//	@Override
-//	public ResponseEntity<ResponseDto> update(T dto) {
-//		boolean result = service.update(converter.convertUpdateDtoToEntity(dto));
-//		ResponseDto response = null;
-//		
-//		if (result) {
-//			response = new ResponseDto(false,WebMappingConstant.SUCCESS_UPDATE,null);
-//			return ResponseEntity.status(HttpStatus.OK).body(response);
-//		} else {
-//			response = new ResponseDto(true,WebMappingConstant.FAIL_UPDATE,null);
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-//		}		
-//	}
-//	
-//
-//	@Override
-//	public ResponseEntity<ResponseDto> readById(int id) {
-//		T returnedDto = converter.convertEntityToUpdateDto(service.readById(id));
-//		ResponseDto response = null;
-//		
-//		if (returnedDto!= null) {
-//			response = new ResponseDto(false,WebMappingConstant.SUCCESS_READ_BY_ID,returnedDto);
-//			return ResponseEntity.status(HttpStatus.OK).body(response);
-//		} else {
-//			response = new ResponseDto(true,WebMappingConstant.FAIL_READ_BY_ID,returnedDto);
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-//		}		
-//	}
-//
-//	@Override
-//	public ResponseEntity<ResponseDto> readAll() {
-//		List<T> returnedList = converter.convertListEntityToUpdateDto(service.readAll());
-//		ResponseDto response =  new ResponseDto(false,WebMappingConstant.SUCCESS_READ_ALL, returnedList);
-//			return ResponseEntity.status(HttpStatus.OK).body(response);
-//	}
+	@Autowired
+	IConverter<C, U, E> converter;
+	
+	@Autowired
+	IService<E> service;
+	
+
+	@Override
+	public ResponseEntity<ResponseDto<U>> create(C dto) {
+		U returnedDto = converter.convertEntityToUpdateDto(service.create(converter.convertCreateDtoToEntity(dto)).getBody());
+		ResponseDto<U> responseDto = new ResponseDto<U>();
+		
+		if (returnedDto != null) {
+			responseDto.setError(false);
+			responseDto.setMessage(WebMappingConstant.SUCCESS_CREATE);
+			responseDto.setBody(returnedDto);
+			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		} else {
+			responseDto.setError(true);
+			responseDto.setMessage(WebMappingConstant.FAIL_CREATE);
+			responseDto.setBody(returnedDto);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		}				
+	}
+
+	@Override
+	public ResponseEntity<ResponseDto<?>> deleteById(int id) {
+		boolean result = service.deleteById(id);
+		ResponseDto<?> responseDto = new ResponseDto<Object>();
+
+		if (result) {
+			responseDto.setError(false);
+			responseDto.setMessage(WebMappingConstant.SUCCESS_DELETE_BY_ID);
+			responseDto.setBody(null);
+			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		} else {
+			responseDto.setError(true);
+			responseDto.setMessage(WebMappingConstant.SUCCESS_DELETE_BY_ID);
+			responseDto.setBody(null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		}
+	}
+
+	@Override
+	public ResponseEntity<ResponseDto<U>> update(U dto) {
+		U returnedDto = converter.convertEntityToUpdateDto(service.update(converter.convertUpdateDtoToEntity(dto)).getBody());
+		ResponseDto<U> responseDto = new ResponseDto<U>();
+		
+		if (returnedDto != null) {
+			responseDto.setError(false);
+			responseDto.setMessage(WebMappingConstant.SUCCESS_UPDATE);
+			responseDto.setBody(returnedDto);
+			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		} else {
+			responseDto.setError(true);
+			responseDto.setMessage(WebMappingConstant.FAIL_UPDATE);
+			responseDto.setBody(returnedDto);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		}		
+	}
+	
+
+	@Override
+	public ResponseEntity<ResponseDto<?>> readById(int id) {
+		U returnedDto = converter.convertEntityToUpdateDto(service.readById(id).getBody());
+		ResponseDto<U> responseDto = new ResponseDto<U>();
+		
+		if (returnedDto!= null) {
+			responseDto.setError(false);
+			responseDto.setMessage(WebMappingConstant.SUCCESS_READ_BY_ID);
+			responseDto.setBody(returnedDto);
+			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		} else {
+			responseDto.setError(true);
+			responseDto.setMessage(WebMappingConstant.FAIL_READ_BY_ID);
+			responseDto.setBody(returnedDto);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		}		
+	}
+
+	@Override
+	public ResponseEntity<ResponseDto<?>> readAll() {
+		List<U> returnedList = converter.convertListEntityToUpdateDto(service.readAll().getBody());
+		ResponseDto<List<U>> responseDto =  new ResponseDto<List<U>>();
+		responseDto.setError(false);
+		responseDto.setMessage(WebMappingConstant.SUCCESS_READ_ALL);
+		responseDto.setBody(returnedList);
+			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+	}
 
 }
