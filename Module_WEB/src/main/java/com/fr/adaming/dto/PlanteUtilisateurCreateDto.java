@@ -2,8 +2,7 @@ package com.fr.adaming.dto;
 
 import java.time.LocalDate;
 
-import com.fr.adaming.entity.Jardin;
-import com.fr.adaming.entity.PlanteModel;
+
 import com.fr.adaming.enums.EtatPlante;
 import com.fr.adaming.enums.EtatSante;
 
@@ -22,8 +21,8 @@ public class PlanteUtilisateurCreateDto {
 	
 	private LocalDate plantingDate;
 	
-	private Jardin garden;
+	private JardinUpdateDto garden;
 	
-	private PlanteModel modelPlant;
+	private PlanteModelUpdateDto modelPlant;
 	
 }
