@@ -71,7 +71,7 @@ public class IJardinRepositoryTests {
 		String nomInput = "nom4Test";
 		
 		//invoquer l'appli
-		List<Jardin> result = repo.findByUtilisateur(1);
+		List<Jardin> result = repo.trouveParUtilisateur(1);
 		
 		//assertion
 	    assertThat(result).isNotNull().asList().isNotEmpty().hasSize(1);
@@ -88,7 +88,7 @@ public class IJardinRepositoryTests {
 		String nomInput = "nom4Test";
 		
 		//invoquer l'appli
-		List<Jardin> result = repo.findByUtilisateur(1);
+		List<Jardin> result = repo.trouveParUtilisateur(1);
 		
 		//assertion
 	    assertThat(result).isNotNull().asList().isNotEmpty().isEmpty();
@@ -107,7 +107,7 @@ public class IJardinRepositoryTests {
 		String nomInput = "nom4Test";
 		
 		//invoquer l'appli
-		List<Jardin> result = repo.findByDepartement(69);
+		List<Jardin> result = repo.trouveParDepartement(69);
 		
 		//assertion
 	    assertThat(result).isNotNull().asList().isNotEmpty().hasSize(1);
@@ -125,7 +125,7 @@ public class IJardinRepositoryTests {
 		String nomInput = "nom4Test";
 		
 		//invoquer l'appli
-		List<Jardin> result = repo.findByDepartement(69);
+		List<Jardin> result = repo.trouveParDepartement(69);
 		
 		//assertion
 	    assertThat(result).isNotNull().asList().isNotEmpty().isEmpty();

@@ -108,7 +108,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> {
 			try {
 				log.info("Recherche jardin par utilisateur dans la DB OK");
 				return new ServiceResponse<List<Jardin>>("Recherche jardin par utilisateur",
-						repo.findByUtilisateur(id));
+						repo.trouveParUtilisateur(id));
 
 			} catch (Exception e) {
 				log.warn(e.getMessage());
@@ -136,7 +136,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> {
 			try {
 				log.info("Recherche jardin par utilisateur dans la DB OK");
 				return new ServiceResponse<List<Jardin>>("Recherche jardin par departement ok",
-						repo.findByDepartement(numDep));
+						repo.trouveParDepartement(numDep));
 
 			} catch (Exception e) {
 				log.warn(e.getMessage());
