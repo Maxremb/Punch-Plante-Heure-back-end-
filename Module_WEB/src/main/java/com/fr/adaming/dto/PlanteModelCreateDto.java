@@ -4,7 +4,7 @@ import java.util.List;
 
 
 
-import com.fr.adaming.entity.Periode;
+
 import com.fr.adaming.enums.Sol;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ public class PlanteModelCreateDto {
 
 	private String commun;
 	private String scientifique;
-	private List<Periode> periodes;
+	private List<PeriodeUpdateDto> periodes;
 	private int arrosage;
 	private String ensoleillement;
 	private int humidite;
@@ -29,6 +29,6 @@ public class PlanteModelCreateDto {
 	private String desc;
 	private boolean toxi;
 	private String picture;
-	private List<PlanteModelUpdateDto> positive;
-	private List<PlanteModelUpdateDto> negative;
+	private List<PlanteModelReducedDto> positive;
+	private List<PlanteModelReducedDto> negative;
 }

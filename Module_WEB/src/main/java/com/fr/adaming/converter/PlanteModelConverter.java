@@ -2,6 +2,8 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fr.adaming.dto.PlanteModelCreateDto;
 import com.fr.adaming.dto.PlanteModelReducedDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
@@ -9,10 +11,33 @@ import com.fr.adaming.entity.PlanteModel;
 
 public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, PlanteModelUpdateDto, PlanteModel> {
 
+	@Autowired
+	private PeriodeConverter periodeConverter;
+	
+	
+	
 	@Override
 	public PlanteModel convertCreateDtoToEntity(PlanteModelCreateDto createDto) {
-		PlanteModel entity = new PlanteModel();
 		
+		if(createDto==null) {
+			return null;
+		}
+		PlanteModel entity = new PlanteModel();
+		entity.setNomCommun(createDto.getCommun());
+		entity.setNomScientifique(createDto.getScientifique());
+		entity.setDates(periodeConverter.convertListUpdateDtoToEntity(createDto.getPeriodes()));
+		entity.setDescription(createDto.getDesc());
+		entity.setEnsoleillementOpti(createDto.getEnsoleillement());
+		entity.setHumiditeopti(createDto.getHumidite());
+		entity.setIntervalArrosage(createDto.getArrosage());
+		entity.setPhoto(createDto.getPicture());
+		entity.setRepiquage(createDto.getRepiquage());
+		entity.setToxicite(createDto.isToxi());
+		entity.setTemperatureMax(createDto.getMax());
+		entity.setTemperatureMin(createDto.getMin());
+		entity.setHumiditeopti(createDto.getHumidite());
+		entity.setAssoNegative(convertListReducedDtoToEntity(createDto.getNegative()));
+		entity.setAssoPositive(convertListReducedDtoToEntity(createDto.getPositive()));
 		
 		return entity;
 	}
