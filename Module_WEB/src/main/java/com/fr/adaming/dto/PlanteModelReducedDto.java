@@ -9,8 +9,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PlanteModelUpdateDto extends PlanteModelCreateDto {
+public class PlanteModelReducedDto {
 	
+	private String commun;
+	private String scientifique;
 	int identifiant;
+	private String picture;
 
 }
