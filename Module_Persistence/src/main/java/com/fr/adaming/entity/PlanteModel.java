@@ -35,7 +35,7 @@ public class PlanteModel {
 	@Column(length = 30)
 	private String nomCommun;
 
-	@Column(length = 30, nullable = false)
+	@Column(length = 30, nullable = false, unique = true)
 	private String nomScientifique;
 
 	@Column
