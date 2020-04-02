@@ -86,7 +86,7 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel>  implem
 	public ServiceResponse<List<PlanteModel>> readAllReduced(){
 		ServiceResponse<List<PlanteModel>> retour = new ServiceResponse<List<PlanteModel>>();
 			List<PlanteModel> retListe = new ArrayList<PlanteModel>();
-			retListe = repo.findAllReduced();
+		//	retListe = repo.findAllReduced();
 			retour.setBody(retListe);
 			retour.setMessage("Succes");
 			return retour;
