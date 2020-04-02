@@ -17,13 +17,28 @@ import com.fr.adaming.entity.Jardin;
 @Repository
 public interface IJardinRepository extends JpaRepository<Jardin, Integer>{
 
+	/**
+	 * Permet la recherche par un nom exact d'un jardin
+	 * @param nom du jardin à rechercher
+	 * @return une liste de jardins ayant exactement ce nom
+	 */
 	public List<Jardin> findByNom(String nom);
 	
+	/**
+	 * Permet la recherche de jardins par l'identifiant unique d'un utilisateur propriétaires
+	 * @param idUtilisateur
+	 * @return une liste de jardin possédés par l'utilisateur ayant cet identifiant
+	 */
 	@Query(value = "from Jardin where utilisateur_id= :idUtilisateur")
-	public List<Jardin> findByUtilisateur(@Param(value = "idUtilisateur") Integer idUtilisateur);
+	public List<Jardin> trouveParUtilisateur(@Param(value = "idUtilisateur") Integer idUtilisateur);
 	
+	/**
+	 * Permet la recherche de jardins par le numéro de département unique où il(s) se trouve(nt)
+	 * @param idDepartement correspondant au numéro unique de département
+	 * @return une liste de jardin localisé dans le département ayant ce numéro
+	 */
 	@Query(value = "from Jardin where departement_id= :idDepartement")
-	public List<Jardin> findByDepartement(@Param(value = "idDepartement") Integer idDepartement);
+	public List<Jardin> trouveParDepartement(@Param(value = "idDepartement") Integer idDepartement);
 	
 	
 }
