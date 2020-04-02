@@ -64,6 +64,8 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		createDto.setDesc(entity.getDescription());
 		createDto.setToxi(entity.isToxicite());
 		createDto.setPicture(entity.getPhoto());
+		createDto.setNegative(convertListEntityToReducedDto(entity.getAssoNegative()));
+		createDto.setPositive(convertListEntityToReducedDto(entity.getAssoPositive()));
 		return createDto;
 	}
 
@@ -81,8 +83,15 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 
 	@Override
 	public PlanteModelUpdateDto convertEntityToUpdateDto(PlanteModel entity) {
-		// TODO Auto-generated method stub
-		return null;
+		if(entity==null) {
+			return null;
+		}
+		PlanteModelUpdateDto updateDto = new PlanteModelUpdateDto();
+		updateDto=(PlanteModelUpdateDto) convertEntityToCreateDto(entity);
+		updateDto.setIdentifiant(entity.getId());
+			
+		return updateDto;
+		
 	}
 
 	@Override
@@ -96,8 +105,11 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 
 	@Override
 	public List<PlanteModelCreateDto> convertListEntityToCreateDto(List<PlanteModel> listeEntity) {
-		// TODO Auto-generated method stub
-		return null;
+		List<PlanteModelCreateDto> listeRetour = new ArrayList<PlanteModelCreateDto>();
+		for(PlanteModel p: listeEntity) {
+			listeRetour.add(convertEntityToCreateDto(p));
+		}
+		return listeRetour;
 	}
 
 	@Override
@@ -111,12 +123,23 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 
 	@Override
 	public List<PlanteModelUpdateDto> convertListEntityToUpdateDto(List<PlanteModel> listeEntity) {
-		// TODO Auto-generated method stub
-		return null;
+		List<PlanteModelUpdateDto> listeRetour = new ArrayList<PlanteModelUpdateDto>();
+		for(PlanteModel p: listeEntity) {
+			listeRetour.add(convertEntityToUpdateDto(p));
+		}
+		return listeRetour;
 	}
 	
 	public PlanteModelReducedDto convertEntityToReducedDto(PlanteModel entity) {
-		return null;
+		if(entity==null) {
+			return null;
+		}
+		PlanteModelReducedDto reducedDto= new PlanteModelReducedDto();
+		reducedDto.setIdentifiant(entity.getId());
+		reducedDto.setCommun(entity.getNomCommun());
+		reducedDto.setScientifique(entity.getNomScientifique());
+		reducedDto.setPicture(entity.getPhoto());
+		return reducedDto;
 	}
 	
 	public PlanteModel convertReducedDtoToEntity(PlanteModelReducedDto reducedDto) {
@@ -143,8 +166,11 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 	}
 
 	public List<PlanteModelReducedDto> convertListEntityToReducedDto(List<PlanteModel> listeEntity) {
-		// TODO Auto-generated method stub
-		return null;
+		List<PlanteModelReducedDto> listeRetour = new ArrayList<PlanteModelReducedDto>();
+		for(PlanteModel p: listeEntity) {
+			listeRetour.add(convertEntityToReducedDto(p));
+		}
+		return listeRetour;
 	} 
 
 }
