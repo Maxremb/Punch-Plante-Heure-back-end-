@@ -21,6 +21,9 @@ public interface IPlanteModelRepository extends JpaRepository<PlanteModel, Integ
 	@Query(value = "select (id, nom_commun, nom_scientifique, photo) from plante_model")
 	public List<PlanteModel> findAllReduced();
 
+	public boolean existsByNomScientifique(String nomScientifique);
+	
+	public PlanteModel findByNomScientifique(String nomScientifique);
 	
 	
 
