@@ -1,5 +1,7 @@
 package com.fr.adaming.service.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.fr.adaming.service.IServiceTests;
 
 public class JardinServiceTest implements IServiceTests{
@@ -7,7 +9,6 @@ public class JardinServiceTest implements IServiceTests{
 	@Override
 	public void testDeletingValidId_shouldReturnTrue() {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

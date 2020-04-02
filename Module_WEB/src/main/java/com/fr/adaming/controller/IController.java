@@ -37,8 +37,6 @@ import com.fr.adaming.dto.ResponseDto;
  * 
  */
 
-//@CrossOrigin
-//@RestController
 @RequestMapping
 public interface IController<C, U> {
 
