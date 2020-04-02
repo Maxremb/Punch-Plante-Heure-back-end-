@@ -9,16 +9,22 @@ import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Periode;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.enums.TypePeriod;
+import com.fr.adaming.repositories.IDepartementRepository;
 import com.fr.adaming.repositories.IPeriodeRepository;
+import com.fr.adaming.repositories.IPlanteModelRepository;
 import com.fr.adaming.service.AbstractService;
 import com.fr.adaming.service.IPeriodeService;
+
 
 @Service
 public class PeriodeServiceImpl extends AbstractService<Periode> implements IPeriodeService {
 
-	
+	//
+
 	private IPeriodeRepository periodeRepo;
-	
+	private IDepartementRepository depRepo;
+	private IPlanteModelRepository planteRepo;
+
 	@Override
 	public ServiceResponse<Periode> create(Periode entity) {
 
@@ -36,7 +42,7 @@ public class PeriodeServiceImpl extends AbstractService<Periode> implements IPer
 
 		} else {
 
-			serviceResponse = verifierConditionsCommunes(entity); 
+			serviceResponse = verifierConditionsCommunes(entity);
 
 		}
 
@@ -61,68 +67,72 @@ public class PeriodeServiceImpl extends AbstractService<Periode> implements IPer
 
 		} else {
 
-			serviceResponse = verifierConditionsCommunes(entity); 
+			serviceResponse = verifierConditionsCommunes(entity);
 
 		}
 
 		return serviceResponse;
-		
+
 	}
 
 	@Override
-	public ServiceResponse<List<Periode>> readByDepartement(Departement departement) {
+	public ServiceResponse<List<Periode>> readByDepartementId(int depId) {
 
 		ServiceResponse<List<Periode>> serviceResponse = new ServiceResponse<List<Periode>>();
-
+		Departement departement = depRepo.findById(depId).orElse(null);
 		List<Periode> periodeList = periodeRepo.findByDepartement(departement);
 		serviceResponse.setBody(periodeList);
 
 		return serviceResponse;
-		
+
 	}
 
 	@Override
-	public ServiceResponse<List<Periode>> readByPlanteModel(PlanteModel planteModel) {
+	public ServiceResponse<List<Periode>> readByPlanteModelId(int planteId) {
 
 		ServiceResponse<List<Periode>> serviceResponse = new ServiceResponse<List<Periode>>();
+		PlanteModel planteModel = planteRepo.findById(planteId).orElse(null);
 
 		List<Periode> periodeList = periodeRepo.findByPlanteModel(planteModel);
 		serviceResponse.setBody(periodeList);
 
 		return serviceResponse;
-		
+
 	}
 
 	@Override
-	public ServiceResponse<List<Periode>> readByDepartementAndPlanteModel(Departement departement,
-			PlanteModel planteModel) {
+	public ServiceResponse<List<Periode>> readByDepartementIdAndPlanteModelId(int depId, int planteId) {
 
 		ServiceResponse<List<Periode>> serviceResponse = new ServiceResponse<List<Periode>>();
+		Departement departement = depRepo.findById(depId).orElse(null);
+		PlanteModel planteModel = planteRepo.findById(planteId).orElse(null);
 
 		List<Periode> periodeList = periodeRepo.findByDepartementAndPlanteModel(departement, planteModel);
 		serviceResponse.setBody(periodeList);
 
 		return serviceResponse;
-		
+
 	}
 
 	@Override
-	public ServiceResponse<Periode> readByPlanteModelAndDepartementAndType(Departement departement,
-			PlanteModel planteModel, TypePeriod type) {
+	public ServiceResponse<Periode> readByDepartementIdAndPlanteModelIdAndType(int depId, int planteId,
+			TypePeriod type) {
 
 		ServiceResponse<Periode> serviceResponse = new ServiceResponse<Periode>();
+		Departement departement = depRepo.findById(depId).orElse(null);
+		PlanteModel planteModel = planteRepo.findById(planteId).orElse(null);
 
 		Periode periode = periodeRepo.findByDepartementAndPlanteModelAndType(departement, planteModel, type);
 		serviceResponse.setBody(periode);
 
 		return serviceResponse;
-		
+
 	}
-	
+
 	// Méthodes Privées
 
 	private ServiceResponse<Periode> verifierConditionsCommunes(Periode entity) {
-		
+
 		// Regroupe les opérations qui sont communes à l'update et a create.
 
 		ServiceResponse<Periode> serviceResponse = new ServiceResponse<Periode>();

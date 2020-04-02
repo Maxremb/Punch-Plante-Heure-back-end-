@@ -31,12 +31,8 @@ public class PlantModelControllerImpl extends AbstractController<PlanteModelCrea
 		
 		ServiceResponse<List<PlanteModel>> serviceResponse = servicePM.readAllReduced();
 		
-		List<PlanteModelUpdateDto> returnedList = converter.convertListEntityToUpdateDto(serviceResponse.getBody());
-		ResponseDto<List<PlanteModelUpdateDto>> responseDto = new ResponseDto<List<PlanteModelUpdateDto>>();
-		responseDto.setError(false);
-		responseDto.setMessage(serviceResponse.getMessage());
-		responseDto.setBody(returnedList);
-		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		return makeUpdateDtoListResponse(serviceResponse);
+		
 	}
 
 }
