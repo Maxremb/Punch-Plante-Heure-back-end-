@@ -64,7 +64,7 @@ public interface IController<C, U> {
 	 * @return boolean true or false
 	 */
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto<?>> deleteById(@PathVariable @Positive int id);
+	public ResponseEntity<ResponseDto<?>> deleteById(@PathVariable("id") @Positive int id);
 
 	/**
 	 * <b>Description : </b>
@@ -88,7 +88,7 @@ public interface IController<C, U> {
 	 * @return UpdateDto
 	 */
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto<U>> readById(@PathVariable @Positive int id);
+	public ResponseEntity<ResponseDto<U>> readById(@PathVariable("id") @Positive int id);
 
 	/**
 	 * <b>Description : </b>
