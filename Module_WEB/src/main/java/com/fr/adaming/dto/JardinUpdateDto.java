@@ -20,22 +20,22 @@ public class JardinUpdateDto {
 
 	@NotNull
 	@Min(value = 1)
-	private Integer id;
+	private Integer identifier;
 
-	private Enum<Sol> sol;
+	private Enum<Sol> ground;
 
 	@NotBlank
 	@NotNull
-	private String nom;
+	private String name;
 
-	private Float longueur;
+	private Float length;
 
-	private Float largeur;
+	private Float width;
 	
 	@NotNull
-	private DepartementDto departement;  // Ne devrais pas être nul 
+	private DepartementDto dept;  // Ne devrais pas être nul 
 	
 	@NotNull
-	private UtilisateurCreateDto utilisateur; // Ne devrais pas être nul
+	private UtilisateurCreateDto user; // Ne devrais pas être nul
 	
 }
