@@ -1,3 +1,4 @@
+
 package com.fr.adaming.entity;
 
 import java.util.List;
