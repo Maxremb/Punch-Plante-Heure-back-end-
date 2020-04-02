@@ -60,7 +60,7 @@ public interface IControllerDepartement<D, MU> {
 	 * @return boolean true or false
 	 */
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto<?>> deleteById(@PathVariable @Positive int id);
+	public ResponseEntity<ResponseDto<?>> deleteById(@PathVariable("id") @Positive int id);
 
 	/**
 	 * <b>Description : </b>
@@ -84,7 +84,7 @@ public interface IControllerDepartement<D, MU> {
 	 * @return UpdateDto
 	 */
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto<D>> readById(@PathVariable @Positive int id);
+	public ResponseEntity<ResponseDto<D>> readById(@PathVariable("id") @Positive int id);
 
 	/**
 	 * <b>Description : </b>
@@ -98,9 +98,9 @@ public interface IControllerDepartement<D, MU> {
 	public ResponseEntity<ResponseDto<List<D>>> readAll();
 	
 	@GetMapping(path = "/{name}")
-	public ResponseEntity<ResponseDto<List<D>>> readByName(@PathVariable @NotNull String name);
+	public ResponseEntity<ResponseDto<List<D>>> readByName(@PathVariable("name") @NotNull String name);
 	
 	@GetMapping(path = "/meteo/{id}")
-	public ResponseEntity<ResponseDto<List<MU>>> readMeteoByNumDep(@PathVariable @Positive int id);
+	public ResponseEntity<ResponseDto<List<MU>>> readMeteoByNumDep(@PathVariable("id") @Positive int id);
 
 }
