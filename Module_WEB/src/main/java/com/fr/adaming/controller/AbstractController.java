@@ -30,10 +30,10 @@ import com.fr.adaming.service.IService;
 public abstract class AbstractController<C, U, E> implements IController<C, U> {
 
 	@Autowired
-	IConverter<C, U, E> converter;
+	protected IConverter<C, U, E> converter;
 
 	@Autowired
-	IService<E> service;
+	protected IService<E> service;
 
 	@Override
 	public ResponseEntity<ResponseDto<U>> create(C dto) {
@@ -116,10 +116,13 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 
 	@Override
 	public ResponseEntity<ResponseDto<List<U>>> readAll() {
-		List<U> returnedList = converter.convertListEntityToUpdateDto(service.readAll().getBody());
+		
+		ServiceResponse<List<E>> serviceResponse = service.readAll();
+		
+		List<U> returnedList = converter.convertListEntityToUpdateDto(serviceResponse.getBody());
 		ResponseDto<List<U>> responseDto = new ResponseDto<List<U>>();
 		responseDto.setError(false);
-		responseDto.setMessage(WebMappingConstant.SUCCESS_READ_ALL);
+		responseDto.setMessage(serviceResponse.getMessage());
 		responseDto.setBody(returnedList);
 		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 	}

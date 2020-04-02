@@ -2,10 +2,13 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.fr.adaming.dto.UtilisateurCreateDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.entity.Utilisateur;
 
+@Component
 public class UtilisateurConverter implements IConverter<UtilisateurCreateDto, UtilisateurUpdateDto, Utilisateur>{
 
 	@Override

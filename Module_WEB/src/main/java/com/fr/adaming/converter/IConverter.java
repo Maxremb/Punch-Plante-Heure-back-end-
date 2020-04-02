@@ -2,6 +2,8 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 /**
  * Interface IConverter implementant les classes Converter de chaque entite
  * @author Isaline
