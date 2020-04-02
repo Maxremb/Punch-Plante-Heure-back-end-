@@ -9,9 +9,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
+import com.fr.adaming.ModuleServiceApplication;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
@@ -20,6 +22,7 @@ import com.fr.adaming.service.IJardinService;
 import com.fr.adaming.service.IService;
 import com.fr.adaming.service.IServiceTests;
 
+@SpringBootTest(classes = ModuleServiceApplication.class)
 public class JardinServiceTest implements IServiceTests {
 
 	@Autowired
@@ -28,9 +31,7 @@ public class JardinServiceTest implements IServiceTests {
 	@Autowired
 	private IService<Jardin> service;
 
-	/**
-	 * Teste la suppression avec un id valide
-	 */
+
 	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -43,9 +44,6 @@ public class JardinServiceTest implements IServiceTests {
 
 	}
 
-	/**
-	 * Teste la suppression avec un id inconnu
-	 */
 	@Override
 	@Test
 	public void testDeletingInvalidId_shouldReturnFalse() {
@@ -53,9 +51,6 @@ public class JardinServiceTest implements IServiceTests {
 
 	}
 
-	/**
-	 * Teste la lecture de tous avec du contenu
-	 */
 	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -66,10 +61,7 @@ public class JardinServiceTest implements IServiceTests {
 		ServiceResponse<List<Jardin>> resp = service.readAll();
 		assertTrue(resp.getBody().size() == 1);
 	}
-	
-	/**
-	 * Teste la lecture de tous sans contenu
-	 */
+
 	@Override
 	@Test
 	public void testReadAllNoContent_shouldReturnEmptyList() {
@@ -77,9 +69,6 @@ public class JardinServiceTest implements IServiceTests {
 		assertTrue(resp.getBody().isEmpty());
 	}
 
-	/**
-	 * Teste la lecture par identifiant avec identifiant valide
-	 */
 	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -90,9 +79,7 @@ public class JardinServiceTest implements IServiceTests {
 		assertThat(service.readById(1).getBody()).isNotNull().hasFieldOrPropertyWithValue("nom", "Jardinblabla");
 	}
 
-	/**
-	 * Teste la lecture par identifiant avec identifiant inconnu
-	 */
+
 	@Override
 	@Test
 	public void testReadByIdInvalidId_shouldReturnNull() {
@@ -102,9 +89,7 @@ public class JardinServiceTest implements IServiceTests {
 
 	}
 
-	/**
-	 * Teste l'existence par identifiant avec identifiant valide
-	 */
+
 	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -115,9 +100,7 @@ public class JardinServiceTest implements IServiceTests {
 		assertTrue(service.existsById(1));
 	}
 
-	/**
-	 * Teste l'existence par identifiant avec identifiant inconnu
-	 */
+
 	@Override
 	@Test
 	public void testExistsByIdInValidId_ShouldReturnFalse() {
@@ -126,8 +109,11 @@ public class JardinServiceTest implements IServiceTests {
 	}
 
 	/**
-	 * Teste la création existence par identifiant avec identifiant inconnu
+	 * Teste la création d'une entité valide 
 	 */
+	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "Delete from jardin, Delete from departement, Delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testCreateValid_ShouldReturnEntity() {
 		Utilisateur user = new Utilisateur();
@@ -142,12 +128,18 @@ public class JardinServiceTest implements IServiceTests {
 
 	}
 
+	/**
+	 * Teste la création existence par identifiant avec identifiant inconnu
+	 */
 	@Test
 	public void testCreateNull_ShouldReturnNull() {
 		assertNull(service.create(null).getBody());
 
 	}
 
+	/**
+	 * Teste la création avec un id déjà connu dans la DB
+	 */
 	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -165,6 +157,9 @@ public class JardinServiceTest implements IServiceTests {
 
 	}
 	
+	/**
+	 * Teste la modification avec un id déjà connu dans la DB
+	 */
 	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -183,6 +178,9 @@ public class JardinServiceTest implements IServiceTests {
 
 	}
 	
+	/**
+	 * Teste la modification avec un id inconnu dans la DB
+	 */
 	@Test
 	public void testUpdateNotExistingJardin_ShouldReturnEntite() {
 		Utilisateur user = new Utilisateur();
@@ -196,6 +194,19 @@ public class JardinServiceTest implements IServiceTests {
 
 	}
 	
+	/**
+	 * Teste la modification avec une entité null
+	 */
+	@Test
+	public void testUpdateNullJardin_ShouldReturnEntite() {
+		assertNull(service.update(null).getBody());
+
+	}
+	
+	
+	/**
+	 * Teste la lecture par nom avec un nom existant
+	 */
 	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -207,18 +218,36 @@ public class JardinServiceTest implements IServiceTests {
 
 	}
 	
+	/**
+	 * Teste la lecture par nom avec un nom non existant
+	 */
 	@Test
 	public void testReadNameNotExistingName_ShouldReturnEntite() {
-		assertNull(serviceJardin.readByNom("Jardinblabla").getBody());
+		assertTrue(serviceJardin.readByNom("Jardinblabla").getBody().isEmpty());
 
 	}
 	
+	/**
+	 * Teste la lecture par nom avec un nom vide
+	 */
 	@Test
 	public void testReadNameWithBlankName_ShouldReturnEntite() {
 		assertNull(serviceJardin.readByNom("").getBody());
 
 	}
 	
+	/**
+	 * Teste la lecture par nom avec un nom null
+	 */
+	@Test
+	public void testReadNameWithNullName_ShouldReturnEntite() {
+		assertNull(serviceJardin.readByNom(null).getBody());
+
+	}
+	
+	/**
+	 * Teste la lecture par utilisateur avec un utilisateur existant
+	 */
 	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -231,18 +260,27 @@ public class JardinServiceTest implements IServiceTests {
 
 	}
 	
+	/**
+	 * Teste la lecture par utilisateur avec un utilisateur non existant
+	 */
 	@Test
 	public void testReadUserNotExistingUser_ShouldReturnEntite() {
-		assertNull(serviceJardin.readByUtilisateur(1).getBody());
+		assertTrue(serviceJardin.readByUtilisateur(1).getBody().isEmpty());
 
 	}
 	
+	/**
+	 * Teste la lecture par utilisateur avec un id utilisateur null
+	 */
 	@Test
 	public void testReadUserWithIdNull_ShouldReturnEntite() {
 		assertNull(serviceJardin.readByUtilisateur(null).getBody());
 
 	}
 	
+	/**
+	 * Teste la lecture par département avec un département existant
+	 */
 	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -255,12 +293,18 @@ public class JardinServiceTest implements IServiceTests {
 
 	}
 	
+	/**
+	 * Teste la lecture par département avec un département non existant
+	 */
 	@Test
 	public void testReadDepNotExistingDep_ShouldReturnEntite() {
-		assertNull(serviceJardin.readByDepartement(1).getBody());
+		assertTrue(serviceJardin.readByDepartement(1).getBody().isEmpty());
 
 	}
 	
+	/**
+	 * Teste la lecture par département avec un numéro département null
+	 */
 	@Test
 	public void testReadDepWithIdNull_ShouldReturnEntite() {
 		assertNull(serviceJardin.readByDepartement(null).getBody());

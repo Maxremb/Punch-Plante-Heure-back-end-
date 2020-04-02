@@ -51,7 +51,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 
 	@Override
 	public ServiceResponse<Jardin> update(Jardin entite) {
-		if (existsById(entite.getId())) {
+		if (entite != null && existsById(entite.getId())) {
 			try {
 				dao.save(entite);
 				log.info("Jardin modifié dans la DB");
