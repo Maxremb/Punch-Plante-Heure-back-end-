@@ -47,8 +47,24 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 
 	@Override
 	public PlanteModelCreateDto convertEntityToCreateDto(PlanteModel entity) {
-		// TODO Auto-generated method stub
-		return null;
+		if(entity==null) {
+			return null;
+		}
+		
+		PlanteModelCreateDto createDto= new PlanteModelCreateDto();
+		createDto.setCommun(entity.getNomCommun());
+		createDto.setScientifique(entity.getNomScientifique());
+		createDto.setPeriodes(periodeConverter.convertListEntityToUpdateDto(entity.getDates()));
+		createDto.setArrosage(entity.getIntervalArrosage());
+		createDto.setEnsoleillement(entity.getEnsoleillementOpti());
+		createDto.setHumidite(entity.getHumiditeopti());
+		createDto.setRepiquage(entity.getRepiquage());
+		createDto.setMin(entity.getTemperatureMin());
+		createDto.setMax(entity.getTemperatureMax());
+		createDto.setDesc(entity.getDescription());
+		createDto.setToxi(entity.isToxicite());
+		createDto.setPicture(entity.getPhoto());
+		return createDto;
 	}
 
 	@Override
