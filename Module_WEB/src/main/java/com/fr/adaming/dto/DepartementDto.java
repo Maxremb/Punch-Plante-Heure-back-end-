@@ -1,5 +1,6 @@
 package com.fr.adaming.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.Positive;
@@ -19,6 +20,6 @@ public class DepartementDto {
 	@NotNull
 	private String name; 
 	
-	private List<MeteoUpdateDto> weatherDep;
+	private List<MeteoUpdateDto> weatherDep = new ArrayList<MeteoUpdateDto>();
 
 }

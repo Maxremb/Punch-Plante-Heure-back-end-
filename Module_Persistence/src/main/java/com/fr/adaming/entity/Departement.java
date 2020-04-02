@@ -1,5 +1,6 @@
 package com.fr.adaming.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -28,6 +29,6 @@ public class Departement {
 	
 	@OneToMany
 	@JoinColumn(name = "departement_id")
-	private List<Meteo> meteoDep;
+	private List<Meteo> meteoDep = new ArrayList<Meteo>();
 
 }
