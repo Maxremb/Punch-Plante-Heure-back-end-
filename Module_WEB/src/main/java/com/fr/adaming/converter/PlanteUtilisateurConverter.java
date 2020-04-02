@@ -1,10 +1,16 @@
 package com.fr.adaming.converter;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.fr.adaming.dto.JardinCreateDto;
+import com.fr.adaming.dto.JardinUpdateDto;
+import com.fr.adaming.dto.PlanteModelCreateDto;
+import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.PlanteUtilisateurCreateDto;
 import com.fr.adaming.dto.PlanteUtilisateurUpdateDto;
 import com.fr.adaming.entity.Jardin;
@@ -15,12 +21,11 @@ import com.fr.adaming.entity.PlanteUtilisateur;
 public class PlanteUtilisateurConverter implements IConverter<PlanteUtilisateurCreateDto, PlanteUtilisateurUpdateDto, PlanteUtilisateur> {
 
 	@Autowired
-	private PlanteModelConverter plantModelConverter;
-	
+	private IConverter<PlanteModelCreateDto, PlanteModelUpdateDto, PlanteModel> plantModelConverter;
+
 	@Autowired
-	private JardinConverter jardinConverter;
-	
-	
+	private IConverter<JardinCreateDto, JardinUpdateDto, Jardin> jardinConverter;
+
 	@Override
 	public PlanteUtilisateur convertCreateDtoToEntity(PlanteUtilisateurCreateDto createDto) {
 		if (createDto != null) {
@@ -30,13 +35,13 @@ public class PlanteUtilisateurConverter implements IConverter<PlanteUtilisateurC
 			planteUtilisateur.setDatePlantation(createDto.getPlantingDate());
 			planteUtilisateur.setEtatPlante(createDto.getPlantStage());
 			planteUtilisateur.setEtatSante(createDto.getHealthStage());
-			
+
 			Jardin jardin = jardinConverter.convertUpdateDtoToEntity(createDto.getGarden());
 			planteUtilisateur.setJardin(jardin);
-			
+
 			PlanteModel planteModel = plantModelConverter.convertUpdateDtoToEntity(createDto.getModelPlant());
 			planteUtilisateur.setPlanteModel(planteModel);
-			
+
 			return planteUtilisateur;
 
 		} else {
@@ -49,18 +54,15 @@ public class PlanteUtilisateurConverter implements IConverter<PlanteUtilisateurC
 		if (entity != null) {
 			PlanteUtilisateurCreateDto planteUtilisateurDto = new PlanteUtilisateurCreateDto();
 
-			planteUtilisateurDto.setName(entity.getNom());
-			planteUtilisateurDto.setSurname(entity.getPrenom());
-			planteUtilisateurDto.setAdress(entity.getAdresse());
-			planteUtilisateurDto.setPostalCode(entity.getCp());
-			planteUtilisateurDto.setCity(entity.getVille());
-			planteUtilisateurDto.setS(entity.getSexe());
-			planteUtilisateurDto.setIdentity(entity.getCni());
-			planteUtilisateurDto.setPhone(entity.getNum());
-			planteUtilisateurDto.setMail(entity.getEmail());
-			
-			planteUtilisateurDto.setClasse(classConverter.convertEntityToUpdateDto(entity.getClasse()));
-	
+			planteUtilisateurDto.setSemiDate(entity.getDateSemis());
+			planteUtilisateurDto.setPlantingDate(entity.getDatePlantation());
+			planteUtilisateurDto.setPlantStage(entity.getEtatPlante());
+			planteUtilisateurDto.setHealthStage(entity.getEtatSante());
+
+			planteUtilisateurDto.setGarden(jardinConverter.convertEntityToUpdateDto(entity.getJardin()));
+
+			planteUtilisateurDto.setModelPlant(plantModelConverter.convertEntityToUpdateDto(entity.getPlanteModel()));
+
 			return planteUtilisateurDto;
 
 		} else {
@@ -70,40 +72,104 @@ public class PlanteUtilisateurConverter implements IConverter<PlanteUtilisateurC
 
 	@Override
 	public PlanteUtilisateur convertUpdateDtoToEntity(PlanteUtilisateurUpdateDto updateDto) {
-		// TODO Auto-generated method stub
-		return null;
+		if (updateDto != null) {
+			PlanteUtilisateur planteUtilisateur = new PlanteUtilisateur();
+
+			planteUtilisateur.setDateSemis(updateDto.getSemiDate());
+			planteUtilisateur.setDatePlantation(updateDto.getPlantingDate());
+			planteUtilisateur.setEtatPlante(updateDto.getPlantStage());
+			planteUtilisateur.setEtatSante(updateDto.getHealthStage());
+
+			Jardin jardin = jardinConverter.convertUpdateDtoToEntity(updateDto.getGarden());
+			planteUtilisateur.setJardin(jardin);
+
+			PlanteModel planteModel = plantModelConverter.convertUpdateDtoToEntity(updateDto.getModelPlant());
+			planteUtilisateur.setPlanteModel(planteModel);
+
+			return planteUtilisateur;
+
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public PlanteUtilisateurUpdateDto convertEntityToUpdateDto(PlanteUtilisateur entity) {
-		// TODO Auto-generated method stub
-		return null;
+		if (entity != null) {
+			PlanteUtilisateurUpdateDto planteUtilisateurDto = new PlanteUtilisateurUpdateDto();
+
+			planteUtilisateurDto.setSemiDate(entity.getDateSemis());
+			planteUtilisateurDto.setPlantingDate(entity.getDatePlantation());
+			planteUtilisateurDto.setPlantStage(entity.getEtatPlante());
+			planteUtilisateurDto.setHealthStage(entity.getEtatSante());
+
+			planteUtilisateurDto.setGarden(jardinConverter.convertEntityToUpdateDto(entity.getJardin()));
+
+			planteUtilisateurDto.setModelPlant(plantModelConverter.convertEntityToUpdateDto(entity.getPlanteModel()));
+
+			return planteUtilisateurDto;
+
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public List<PlanteUtilisateur> convertListCreateDtoToEntity(List<PlanteUtilisateurCreateDto> listeCreateDto) {
-		// TODO Auto-generated method stub
-		return null;
+		if (listeCreateDto != null) {
+			List<PlanteUtilisateur> planteUtilisateurListe = new ArrayList<>();
+
+			for (PlanteUtilisateurCreateDto planteUtilisateurDto : listeCreateDto) {
+				planteUtilisateurListe.add(convertCreateDtoToEntity(planteUtilisateurDto));
+			}
+			return planteUtilisateurListe;
+		} else {
+			return Collections.emptyList();
+		}
 	}
 
 	@Override
 	public List<PlanteUtilisateurCreateDto> convertListEntityToCreateDto(List<PlanteUtilisateur> listeEntity) {
-		// TODO Auto-generated method stub
-		return null;
+		if (listeEntity != null) {
+			List<PlanteUtilisateurCreateDto> planteUtilisateurdtolist = new ArrayList<>();
+
+			for (PlanteUtilisateur p : listeEntity) {
+
+				planteUtilisateurdtolist.add(convertEntityToCreateDto(p));
+			}
+			return planteUtilisateurdtolist;
+		} else {
+			return Collections.emptyList();
+		}
 	}
 
 	@Override
 	public List<PlanteUtilisateur> convertListUpdateDtoToEntity(List<PlanteUtilisateurUpdateDto> listeUpdateDto) {
-		// TODO Auto-generated method stub
-		return null;
+		if (listeUpdateDto != null) {
+			List<PlanteUtilisateur> planteUtilisateurListe = new ArrayList<>();
+
+			for (PlanteUtilisateurUpdateDto planteUtilisateurDto : listeUpdateDto) {
+				planteUtilisateurListe.add(convertUpdateDtoToEntity(planteUtilisateurDto));
+			}
+			return planteUtilisateurListe;
+		} else {
+			return Collections.emptyList();
+		}
 	}
 
 	@Override
 	public List<PlanteUtilisateurUpdateDto> convertListEntityToUpdateDto(List<PlanteUtilisateur> listeEntity) {
-		// TODO Auto-generated method stub
-		return null;
+		if (listeEntity != null) {
+			List<PlanteUtilisateurUpdateDto> planteUtilisateurdtolist = new ArrayList<>();
+
+			for (PlanteUtilisateur p : listeEntity) {
+
+				planteUtilisateurdtolist.add(convertEntityToUpdateDto(p));
+			}
+			return planteUtilisateurdtolist;
+		} else {
+			return Collections.emptyList();
+		}
 	}
 
-	
-	
 }
