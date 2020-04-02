@@ -10,6 +10,7 @@ import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Meteo;
 import com.fr.adaming.repositories.IDepartementRepository;
 import com.fr.adaming.service.AbstractService;
+import com.fr.adaming.service.IDepartementService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,11 +22,10 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * @author Isaline MILLET
  * @since 0.0.1
- *
  */
 @Service
 @Slf4j
-public class DepartementServiceImpl extends AbstractService<Departement> {
+public class DepartementServiceImpl extends AbstractService<Departement> implements IDepartementService<Departement, Meteo> {
 
 	@Override
 	public ServiceResponse<Departement> create(Departement departement) {
@@ -62,21 +62,11 @@ public class DepartementServiceImpl extends AbstractService<Departement> {
 	@Autowired
 	protected IDepartementRepository depRepo;
 	
-	/**
-	 * Méthode permettant de récupérer la liste des départements après recherche par nom
-	 * @param nom Nom du département recherché
-	 * @return liste de départements
-	 */
 	public ServiceResponse<List<Departement>> readDepartementByNom(String nom) {
 		log.info("Récupération d'une liste de département après recherche par nom");
 		return new ServiceResponse<List<Departement>>("Récupération d'une liste de département après recherche par nom", depRepo.findDepartementByNom(nom));
 	}
 
-	/**
-	 * Méthode permettant de récupérer la liste des conditions météo pour un département
-	 * @param numDep numéro du département concerné
-	 * @return liste d'objets météo
-	 */
 	public ServiceResponse<List<Meteo>> readMeteoByNumeroDep(Integer numDep) {
 		log.info("Récupération d'une liste de conditions météo après recherche par département");
 		return new ServiceResponse<List<Meteo>>("Récupération d'une liste de conditions météo par département", depRepo.findMeteoByNumeroDep(numDep));

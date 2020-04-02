@@ -19,6 +19,6 @@ public class DepartementDto {
 	@NotNull
 	private String name; 
 	
-	private List<Meteo> weatherDep;
+	private List<MeteoUpdateDto> weatherDep;
 
 }
