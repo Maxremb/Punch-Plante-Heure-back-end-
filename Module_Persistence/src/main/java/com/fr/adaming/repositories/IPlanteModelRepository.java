@@ -11,7 +11,7 @@ import com.fr.adaming.entity.PlanteModel;
 /**
  * Interface repository responsable de la communication avec la base de données pour l'entité PlanteModel 
  * @author Léa
- * @since 1.0.x
+ * @since 0.0.1
  */
 
 @Repository
