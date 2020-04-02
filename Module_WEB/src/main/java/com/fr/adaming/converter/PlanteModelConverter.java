@@ -1,14 +1,17 @@
 package com.fr.adaming.converter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.PlanteModelCreateDto;
 import com.fr.adaming.dto.PlanteModelReducedDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.entity.PlanteModel;
 
+@Component
 public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, PlanteModelUpdateDto, PlanteModel> {
 
 	@Autowired
@@ -50,8 +53,14 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 
 	@Override
 	public PlanteModel convertUpdateDtoToEntity(PlanteModelUpdateDto updateDto) {
-		// TODO Auto-generated method stub
-		return null;
+		if(updateDto==null) {
+			return null;
+		}
+		PlanteModel entity = new PlanteModel();
+		entity=convertCreateDtoToEntity(updateDto);
+		entity.setId(updateDto.getIdentifiant());
+		
+		return entity;
 	}
 
 	@Override
@@ -62,8 +71,11 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 
 	@Override
 	public List<PlanteModel> convertListCreateDtoToEntity(List<PlanteModelCreateDto> listeCreateDto) {
-		// TODO Auto-generated method stub
-		return null;
+		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
+		for(PlanteModelCreateDto p:listeCreateDto) {
+			listeRetour.add(convertCreateDtoToEntity(p));
+		}
+		return listeRetour;
 	}
 
 	@Override
@@ -74,8 +86,11 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 
 	@Override
 	public List<PlanteModel> convertListUpdateDtoToEntity(List<PlanteModelUpdateDto> listeUpdateDto) {
-		// TODO Auto-generated method stub
-		return null;
+		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
+		for(PlanteModelUpdateDto p:listeUpdateDto) {
+			listeRetour.add(convertUpdateDtoToEntity(p));
+		}
+		return listeRetour;
 	}
 
 	@Override
@@ -89,12 +104,26 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 	}
 	
 	public PlanteModel convertReducedDtoToEntity(PlanteModelReducedDto reducedDto) {
-		return null;
+		if(reducedDto==null) {
+			return null;
+		}
+		PlanteModel entity = new PlanteModel();
+		entity.setNomCommun(reducedDto.getCommun());
+		entity.setNomScientifique(reducedDto.getScientifique());
+		entity.setPhoto(reducedDto.getPicture());
+		entity.setId(reducedDto.getIdentifiant());
+		
+		
+		
+		return entity;
 	}
 	
 	public List<PlanteModel> convertListReducedDtoToEntity(List<PlanteModelReducedDto> listeReducedDto) {
-		// TODO Auto-generated method stub
-		return null;
+		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
+		for(PlanteModelReducedDto p:listeReducedDto) {
+			listeRetour.add(convertReducedDtoToEntity(p));
+		}
+		return listeRetour;
 	}
 
 	public List<PlanteModelReducedDto> convertListEntityToReducedDto(List<PlanteModel> listeEntity) {
