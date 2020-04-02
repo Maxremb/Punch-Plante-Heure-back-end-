@@ -27,7 +27,7 @@ public class IDepartementRepositoryTest {
 	private IDepartementRepository depRepo;
 	
 	/**
-	 * Cette méthode teste la recherche d'un département dans la BD par son nom 
+	 * Cette méthode teste la recherche d'un département dans la BD par son nom  via couche repository
 	 */
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -50,33 +50,37 @@ public class IDepartementRepositoryTest {
 	}
 	
 	/**
-	 * Cette méthode teste la recherche des données météo pour un département (via numéro département)
+	 * Cette méthode teste la recherche des données météo pour un département (via numéro département) via couche repository
 	 */
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (2, '2020-02-20', 0, 15, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)	
-//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (2, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testFetchingMeteoByDepartement_shouldReturnListOfMeteo() {
 		//préparer les inputs
-		Integer numeroInput = 1 ;
+		int idMeteo1 = 1 ;
+		int idMeteo2 = 2 ;
+		LocalDate date = LocalDate.parse("2020-02-20");
+		int pluie = 5 ; 
+		double temperature = 20 ; 
+		int idDep = 1 ;
 				
 		//invoquer l'appli
-		List<Meteo> result = depRepo.findMeteoByNumeroDep(numeroInput);
+		List<Meteo> result = depRepo.findMeteoByNumeroDep(idDep);
 		
 		//assertion
 	    assertThat(result).isNotNull().asList().isNotEmpty().hasSize(2);
-	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("id", 1);
-	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("id", 2);
-	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("date", LocalDate.parse("2020-02-20"));
-	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("date", LocalDate.parse("2020-02-20"));
-	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("pluie", 5);
-	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("pluie", 0);
-	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("temperature", (double)20);
-	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("temperature", (double)15);
-	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("departement_id", 1);
-	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("departement_id", 1);
+	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("id", idMeteo1);
+	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("id", idMeteo2);
+	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("date", date);
+	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("date", date);
+	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("pluie", pluie);
+	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("pluie", pluie);
+	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("temperature", temperature);
+	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("temperature", temperature);
+	
 	}
 
 }

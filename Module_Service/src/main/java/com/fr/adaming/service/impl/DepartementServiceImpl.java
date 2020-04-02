@@ -15,10 +15,9 @@ import com.fr.adaming.service.IDepartementService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Cette classe implémente une classe Service abstraite qui implémente
- * une interface pour gérer les méthodes CRUD de la couche service. Cette classe
- * manage la couche service de l'entité Département et définie des méthodes
- * propres à ce service (create / update / read personnalisés).
+ * Cette classe étend une classe Service abstraite qui implémente
+ * une interface pour gérer les méthodes CRUD de la couche service de l'entité Département. 
+ * Cette classe implémente une interface qui gère les méthodes de la couche service n'appartenant pas aux méthodes CRUD de l'entité Département.
  * 
  * @author Isaline MILLET
  * @since 0.0.1
