@@ -16,26 +16,11 @@ import lombok.Setter;
  * @since 0.0.1-SNAPSHOT
  */
 @Getter @Setter @NoArgsConstructor
-public class JardinUpdateDto {
+public class JardinUpdateDto extends JardinCreateDto{
 
 	@NotNull
 	@Min(value = 1)
 	private Integer identifier;
 
-	private Enum<Sol> ground;
-
-	@NotBlank
-	@NotNull
-	private String name;
-
-	private Float length;
-
-	private Float width;
-	
-	@NotNull
-	private DepartementDto dept;  // Ne devrais pas être nul 
-	
-	@NotNull
-	private UtilisateurUpdateDto user; // Ne devrais pas être nul
 	
 }

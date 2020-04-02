@@ -10,6 +10,7 @@ import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.repositories.IJardinRepository;
 import com.fr.adaming.service.AbstractService;
+import com.fr.adaming.service.IJardinService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @Slf4j
-public class JardinServiceImpl extends AbstractService<Jardin> {
+public class JardinServiceImpl extends AbstractService<Jardin> implements IJardinService {
 
 	@Autowired
 	private IJardinRepository repo;
@@ -75,6 +76,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> {
 	 *         un objet null
 	 * @author Clara Cadet
 	 */
+	@Override
 	public ServiceResponse<List<Jardin>> readByNom(String nom) {
 		if (nom != null) {
 			if (nom.length() > 0) {
@@ -103,6 +105,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> {
 	 *         un objet null
 	 * @author Clara Cadet
 	 */
+	@Override
 	public ServiceResponse<List<Jardin>> readByUtilisateur(Integer id) {
 		if (id != null) {
 			try {
@@ -130,6 +133,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> {
 	 *         un objet null
 	 * @author Clara Cadet
 	 */
+	@Override
 	public ServiceResponse<List<Jardin>> readByDepartement(Integer numDep) {
 
 		if (numDep != null) {

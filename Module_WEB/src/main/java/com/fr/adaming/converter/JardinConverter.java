@@ -34,7 +34,7 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 			entite.setLongueur(createDto.getLength());
 			entite.setNom(createDto.getName());
 			entite.setSol(createDto.getGround());
-			entite.setUtilisateur(convertUtil.convertCreateDtoToEntity(createDto.getUser()));
+			entite.setUtilisateur(convertUtil.convertUpdateDtoToEntity(createDto.getUser()));
 			entite.setId(0);
 			return entite;
 		}
@@ -50,7 +50,7 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 			createDto.setGround(entity.getSol());
 			createDto.setLength(entity.getLongueur());
 			createDto.setName(entity.getNom());
-			createDto.setUser(convertUtil.convertEntityToCreateDto(entity.getUtilisateur()));
+			createDto.setUser(convertUtil.convertEntityToUpdateDto(entity.getUtilisateur()));
 			createDto.setWidth(entity.getLargeur());
 
 			return createDto;
