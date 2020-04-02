@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import com.fr.adaming.constant.WebMappingConstant;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.service.IService;
 
 //TODO adapter au front
@@ -36,19 +37,21 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 
 	@Override
 	public ResponseEntity<ResponseDto<U>> create(C dto) {
-		U returnedDto = converter
-				.convertEntityToUpdateDto(service.create(converter.convertCreateDtoToEntity(dto)).getBody());
+
+		ServiceResponse<E> serviceResponse = service.create(converter.convertCreateDtoToEntity(dto));
+
+		U returnedDto = converter.convertEntityToUpdateDto(serviceResponse.getBody());
+
 		ResponseDto<U> responseDto = new ResponseDto<U>();
+
+		responseDto.setMessage(serviceResponse.getMessage());
+		responseDto.setBody(returnedDto);
 
 		if (returnedDto != null) {
 			responseDto.setError(false);
-			responseDto.setMessage(WebMappingConstant.SUCCESS_CREATE);
-			responseDto.setBody(returnedDto);
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
 			responseDto.setError(true);
-			responseDto.setMessage(WebMappingConstant.FAIL_CREATE);
-			responseDto.setBody(returnedDto);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		}
 	}
@@ -73,37 +76,40 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 
 	@Override
 	public ResponseEntity<ResponseDto<U>> update(U dto) {
-		U returnedDto = converter
-				.convertEntityToUpdateDto(service.update(converter.convertUpdateDtoToEntity(dto)).getBody());
+
+		ServiceResponse<E> serviceResponse = service.update(converter.convertUpdateDtoToEntity(dto));
+
+		U returnedDto = converter.convertEntityToUpdateDto(serviceResponse.getBody());
+
 		ResponseDto<U> responseDto = new ResponseDto<U>();
+		responseDto.setMessage(serviceResponse.getMessage());
+		responseDto.setBody(returnedDto);
 
 		if (returnedDto != null) {
 			responseDto.setError(false);
-			responseDto.setMessage(WebMappingConstant.SUCCESS_UPDATE);
-			responseDto.setBody(returnedDto);
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
 			responseDto.setError(true);
-			responseDto.setMessage(WebMappingConstant.FAIL_UPDATE);
-			responseDto.setBody(returnedDto);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		}
 	}
 
 	@Override
 	public ResponseEntity<ResponseDto<U>> readById(int id) {
-		U returnedDto = converter.convertEntityToUpdateDto(service.readById(id).getBody());
+
+		ServiceResponse<E> serviceResponse = service.readById(id);
+
+		U returnedDto = converter.convertEntityToUpdateDto(serviceResponse.getBody());
+		
 		ResponseDto<U> responseDto = new ResponseDto<U>();
+		responseDto.setMessage(serviceResponse.getMessage());
+		responseDto.setBody(returnedDto);
 
 		if (returnedDto != null) {
 			responseDto.setError(false);
-			responseDto.setMessage(WebMappingConstant.SUCCESS_READ_BY_ID);
-			responseDto.setBody(returnedDto);
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
 			responseDto.setError(true);
-			responseDto.setMessage(WebMappingConstant.FAIL_READ_BY_ID);
-			responseDto.setBody(returnedDto);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		}
 	}
@@ -117,5 +123,7 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 		responseDto.setBody(returnedList);
 		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 	}
+	
+
 
 }
