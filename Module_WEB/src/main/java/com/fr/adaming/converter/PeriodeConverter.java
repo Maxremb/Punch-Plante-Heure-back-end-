@@ -2,10 +2,13 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.fr.adaming.dto.PeriodeCreateDto;
 import com.fr.adaming.dto.PeriodeUpdateDto;
 import com.fr.adaming.entity.Periode;
 
+@Component
 public class PeriodeConverter implements IConverter<PeriodeCreateDto, PeriodeUpdateDto, Periode> {
 
 	@Override
