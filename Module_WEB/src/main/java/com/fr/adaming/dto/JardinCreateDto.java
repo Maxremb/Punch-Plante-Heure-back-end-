@@ -1,11 +1,8 @@
 package com.fr.adaming.dto;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.fr.adaming.entity.Departement;
-import com.fr.adaming.entity.Utilisateur;
 import com.fr.adaming.enums.Sol;
 
 import lombok.Getter;
@@ -20,20 +17,20 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class JardinCreateDto {
 
-	private Enum<Sol> sol;
+	private Enum<Sol> ground;
 
 	@NotBlank
 	@NotNull
-	private String nom;
+	private String name;
 
-	private Float longueur;
+	private Float length;
 
-	private Float largeur;
+	private Float width;
 	
 	@NotNull
-	private DepartementDto departement;  // Ne devrais pas être nul 
+	private DepartementDto dept;  // Ne devrais pas être nul 
 	
 	@NotNull
-	private UtilisateurCreateDto utilisateur; // Ne devrais pas être nul
+	private UtilisateurCreateDto user; // Ne devrais pas être nul
 	
 }
