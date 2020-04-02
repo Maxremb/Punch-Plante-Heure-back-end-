@@ -31,10 +31,10 @@ public class PlanteModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 
-	@Column(length = 30)
+	@Column(length = 30, nullable = false)
 	String nomCommun;
 
-	@Column(length = 30, nullable = false)
+	@Column(length = 30, unique = true, nullable = false)
 	String nomScientifique;
 
 	@Column

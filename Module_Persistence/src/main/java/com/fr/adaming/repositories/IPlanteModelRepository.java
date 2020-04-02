@@ -16,7 +16,7 @@ import com.fr.adaming.entity.PlanteModel;
 public interface IPlanteModelRepository extends JpaRepository<PlanteModel, Integer> {
 	
 	@Query(value = "select (id, nom_commun, nom_scientifique, photo) from plante_model")
-	public List<PlanteModel> findAll();
+	public List<PlanteModel> findAllReduced();
 	
 	
 
