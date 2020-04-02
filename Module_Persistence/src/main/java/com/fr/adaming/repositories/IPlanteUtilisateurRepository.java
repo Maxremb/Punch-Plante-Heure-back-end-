@@ -12,9 +12,10 @@ import com.fr.adaming.entity.PlanteUtilisateur;
 
 
 /**
- * Interface repository responsable de la communication avec la base de données pour l'entité Plante Utilisateur
+ * <p>Interface repository responsable de la communication avec la base de données pour l'entité Plante Utilisateur<br>
+ * Hérite de la classe JpaRespository.</p>
  * @author lucie
- * @since 1.0.x
+ * @since 0.0.1
  */
 @Repository
 public interface IPlanteUtilisateurRepository extends JpaRepository<PlanteUtilisateur, Integer> {
@@ -22,7 +23,7 @@ public interface IPlanteUtilisateurRepository extends JpaRepository<PlanteUtilis
 	/**
 	 * Methode d'affichage d'une liste de Plante Utilisateur à partir de l'id du Jardin
 	 * @param idJardin
-	 * @return List<PlanteUtilisateur 
+	 * @return List<PlanteUtilisateur> : retourne la liste associé à l'id du Jardin.
 	 */
 	@Query(value = "from PlanteUtilisateur where jardin_id= :idJardin")
 	public List<PlanteUtilisateur> findByJardin (@Param(value = "idJardin") Integer idJardin);

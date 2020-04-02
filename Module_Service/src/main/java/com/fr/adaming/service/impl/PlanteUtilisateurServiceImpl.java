@@ -1,37 +1,33 @@
 package com.fr.adaming.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
-import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.PlanteUtilisateur;
-import com.fr.adaming.repositories.IPlanteUtilisateurRepository;
+
 import com.fr.adaming.service.AbstractService;
+import com.fr.adaming.service.IPlanteUtilisateurService;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
- * Couche Service des Plante Utilisateur qui étend la classe Abstract Service
- * <br>
- * Redéfinition des méthodes create, udpate et find Plante Utilisateur By
- * idJardin
+ * Couche Service des Plante Utilisateur qui étend la classe Abstract Service et
+ * implemente l'interface IPlanteUtilisateurService. <br>
+ * Redéfinition des méthodes create, udpate et findByIdJardin.
  * </p>
  * 
  * @author Lucie
+ * @since 0.0.1
  *
  */
 @Service
 @Slf4j
-public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisateur> {
-
-	@Autowired
-	private IPlanteUtilisateurRepository repo;
+public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisateur>
+		implements IPlanteUtilisateurService {
 
 	@Override
 	public ServiceResponse<PlanteUtilisateur> create(PlanteUtilisateur planteUtilisateur) {

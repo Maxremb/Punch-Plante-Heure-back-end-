@@ -9,6 +9,12 @@ import com.fr.adaming.enums.EtatSante;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * <p>Data access Objet pour l'entite Plante Utilisateur, sans l'id, utiliser pour la méthode create().</p>
+ * @author lucie
+ * @since 0.0.1
+ *
+ */
 @Getter
 @Setter
 public class PlanteUtilisateurCreateDto {

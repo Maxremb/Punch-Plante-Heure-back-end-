@@ -17,6 +17,13 @@ import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.entity.PlanteUtilisateur;
 
+/**
+ * <p>Converter pour l'entite Plante Utilisateur en dto et inversement <br>
+ * Implemente IConverter.</p>
+ * @author lucie
+ * @since 0.0.1
+ *
+ */
 @Component
 public class PlanteUtilisateurConverter implements IConverter<PlanteUtilisateurCreateDto, PlanteUtilisateurUpdateDto, PlanteUtilisateur> {
 

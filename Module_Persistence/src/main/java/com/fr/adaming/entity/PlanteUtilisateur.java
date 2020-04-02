@@ -22,7 +22,7 @@ import lombok.Setter;
 /**
  * Classe représentative de l'entité Plante Utilisateur stockée de manière persistante
  * @author lucie
- * @since 1.0.x
+ * @since 0.0.1
  */
 @Getter
 @Setter
