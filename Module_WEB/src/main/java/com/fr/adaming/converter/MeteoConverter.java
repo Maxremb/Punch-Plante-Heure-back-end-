@@ -2,10 +2,13 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.fr.adaming.dto.MeteoCreateDto;
 import com.fr.adaming.dto.MeteoUpdateDto;
 import com.fr.adaming.entity.Meteo;
 
+@Component
 public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto, Meteo>{
 
 	@Override
