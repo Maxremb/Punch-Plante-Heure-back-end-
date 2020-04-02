@@ -1,6 +1,5 @@
 package com.fr.adaming.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +51,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 
 	@Override
 	public ServiceResponse<Jardin> update(Jardin entite) {
-		if (existsById(entite.getId())) {
+		if (entite != null && existsById(entite.getId())) {
 			try {
 				dao.save(entite);
 				log.info("Jardin modifié dans la DB");

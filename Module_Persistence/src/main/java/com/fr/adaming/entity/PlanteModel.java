@@ -14,12 +14,13 @@ import com.fr.adaming.enums.Sol;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author Léa
  *
- *         Le dictionnaire des données botanique du site.
- *         AutoJointure sur les associations positives et négatives
+ *         Le dictionnaire des données botanique du site. AutoJointure sur les
+ *         associations positives et négatives
  */
 
 @Entity
@@ -35,38 +36,38 @@ public class PlanteModel {
 	@Column(length = 30)
 	private String nomCommun;
 
-	@Column(length = 30, nullable = false, unique = true)
+	@Column(length = 30, nullable = false)
 	private String nomScientifique;
 
 	@Column
 	@OneToMany
 	private List<Periode> dates;
 
-	@Column
+	@Column(columnDefinition = "INT DEFAULT 0")
 	private int intervalArrosage;
 
 	@Column
 	private String ensoleillementOpti;
 
-	@Column
+	@Column(columnDefinition = "INT DEFAULT 0")
 	private int humiditeopti;
 
 	@Column
 	private Sol solOpti;
 
-	@Column
+	@Column(columnDefinition = "INT DEFAULT 0")
 	private int repiquage;
 
-	@Column
+	@Column(columnDefinition = "INT DEFAULT 0")
 	private int temperatureMin;
 
-	@Column
+	@Column(columnDefinition = "INT DEFAULT 0")
 	private int temperatureMax;
 
 	@Column
 	private String description;
 
-	@Column
+	@Column(columnDefinition = "BOOLEAN DEFAULT false")
 	private boolean toxicite;
 
 	@Column
@@ -79,5 +80,18 @@ public class PlanteModel {
 	@Column
 	@ManyToMany
 	private List<PlanteModel> assoNegative;
+
+	public PlanteModel(int id, String nomCommun, String nomScientifique, String photo) {
+		super();
+		this.id = id;
+		this.nomCommun = nomCommun;
+		this.nomScientifique = nomScientifique;
+		this.photo = photo;
+	}
+
+	@Override
+	public String toString() {
+		return "PlanteModel [id=" + id + ", nomCommun=" + nomCommun + ", nomScientifique=" + nomScientifique + "]";
+	}
 
 }

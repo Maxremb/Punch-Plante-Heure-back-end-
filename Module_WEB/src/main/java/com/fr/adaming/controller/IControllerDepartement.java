@@ -83,7 +83,7 @@ public interface IControllerDepartement<D, MU> {
 	 * @param id : id de l'entite
 	 * @return UpdateDto
 	 */
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "/one/{id}")
 	public ResponseEntity<ResponseDto<D>> readById(@PathVariable("id") @Positive int id);
 
 	/**
