@@ -1,3 +1,4 @@
+
 package com.fr.adaming.entity;
 
 import java.util.List;
@@ -29,54 +30,54 @@ public class PlanteModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
+	private int id;
+
+	@Column(length = 30)
+	private String nomCommun;
 
 	@Column(length = 30, nullable = false)
-	String nomCommun;
-
-	@Column(length = 30, unique = true, nullable = false)
-	String nomScientifique;
+	private String nomScientifique;
 
 	@Column
 	@OneToMany
-	List<Periode> dates;
+	private List<Periode> dates;
 
 	@Column
-	int intervalArrosage;
+	private int intervalArrosage;
 
 	@Column
-	String ensoleillementOpti;
+	private String ensoleillementOpti;
 
 	@Column
-	int humiditeopti;
+	private int humiditeopti;
 
 	@Column
-	Sol solOpti;
+	private Sol solOpti;
 
 	@Column
-	int repiquage;
+	private int repiquage;
 
 	@Column
-	int temperatureMin;
+	private int temperatureMin;
 
 	@Column
-	int temperatureMax;
+	private int temperatureMax;
 
 	@Column
-	String description;
+	private String description;
 
 	@Column
-	boolean toxicite;
+	private boolean toxicite;
 
 	@Column
-	String photo;
-
-	@Column
-	@ManyToMany
-	List<PlanteModel> assoPositive;
+	private String photo;
 
 	@Column
 	@ManyToMany
-	List<PlanteModel> assoNegative;
+	private List<PlanteModel> assoPositive;
+
+	@Column
+	@ManyToMany
+	private List<PlanteModel> assoNegative;
 
 }

@@ -33,11 +33,11 @@ public class Jardin {
 	private Float longueur;
 	@Column
 	private Float largeur;
+	
 	@ManyToOne 
-	@Column (nullable = false)
-	private Departement departement;
+	private Departement departement;  // Ne devrais pas être nul 
+	
 	@ManyToOne
-	@Column (nullable = false)
-	private Utilisateur utilisateur;
+	private Utilisateur utilisateur; // Ne devrais pas être nul
 	
 }
