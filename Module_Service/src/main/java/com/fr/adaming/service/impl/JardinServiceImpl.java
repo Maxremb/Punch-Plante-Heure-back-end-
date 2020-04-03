@@ -76,29 +76,77 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 	 * @return un ServiceReponse constitué d'un string "success" et d'une liste de
 	 *         jardin (peut être vide), si cela fonctionne sinon un autre string et
 	 *         un objet null
-	 * @author Clara Cadet
+	 * @author Clara Cadet / Isaline Millet
 	 */
 	@Override
 	public ServiceResponse<Page<Jardin>> readByNom(int page, String nom) {
+		try {
 		if (nom != null) {
-			if (nom.length() > 0) {
-				try {
 					log.info("Recherche jardin par nom dans la DB OK");
 					Pageable pageable = PageRequest.of(page, 20);
-					return new ServiceResponse<Page<Jardin>>("Success", repo.findByNom(pageable, nom));
-				} catch (Exception e) {
-					log.warn(e.getMessage());
-					return new ServiceResponse<Page<Jardin>>("Exception lors de la recherche jardin par nom", null);
-				}
-
+					return new ServiceResponse<Page<Jardin>>("Recherche jardin par nom", repo.findByNom(pageable, nom));
+			} else {
+				log.info("Recherche jardin par nom non réalisée : nom null");
+				return new ServiceResponse<Page<Jardin>>("Recherche non réalisé : nom null", null);
 			}
-			log.info("Recherche jardin par nom non réalisée : nom vide");
-			return new ServiceResponse<Page<Jardin>>("Recherche non réalisé : nom vide", null);
+		} catch (Exception e) {
+			log.warn("Problème récupération d'un jardin après recherche via nom (couche service)" + e.getMessage());
+			return new ServiceResponse<Page<Jardin>>("Recherche par nom non réalisée", null);
 		}
-		log.info("Recherche jardin par nom non réalisée : nom null");
-		return new ServiceResponse<Page<Jardin>>("Recherche non réalisé : nom null", null);
+		
 	}
 
+	//A modifier à partir d'ici ++ revoir JAVADOC
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+//	
+	
 	/**
 	 * Methode permettant la recherche de jardins par un identifiant utilisateur
 	 * 
@@ -106,7 +154,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 	 * @return un ServiceReponse constitué d'un string "success" et d'une liste de
 	 *         jardin (peut être vide), si cela fonctionne sinon un autre string et
 	 *         un objet null
-	 * @author Clara Cadet
+	 * @author Clara Cadet / Isaline Millet
 	 */
 	@Override
 	public ServiceResponse<Page<Jardin>> readByUtilisateur(int page, Integer id) {
@@ -135,7 +183,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 	 * @return un ServiceReponse constitué d'un string "success" et d'une liste de
 	 *         jardin (peut être vide), si cela fonctionne sinon un autre string et
 	 *         un objet null
-	 * @author Clara Cadet
+	 * @author Clara Cadet / Isaline Millet
 	 */
 	@Override
 	public ServiceResponse<Page<Jardin>> readByDepartement(int page, Integer numDep) {
