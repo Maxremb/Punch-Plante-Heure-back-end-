@@ -477,6 +477,9 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	}
 	
 	
+	/**
+	 * <p>Cette méthode test la modification d'une Plante Utilisateur en modifiant l'entite avec un null.</p>
+	 */
 	@Test
 	public void testUpdateNullEntity_shouldReturnNull() {
 		ServiceResponse<PlanteUtilisateur> response =planteUtilisateurService.update(null);
