@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.fr.adaming.dto.ResponseDto;
 
-//TODO ajouter une responseDto
-
 /**
  * @author Gregoire
  * @author Jeanne-Marie
@@ -44,7 +42,7 @@ public interface IController<C, U> {
 	 * </p>
 	 * 
 	 * @param dto : CreateDTO de l'Entité
-	 * @return ResponseDto : null ou objet CreateDto
+	 * @return Response entity avec ResponseDto. Body : null ou objet UpdateDto
 	 */
 	@PostMapping
 	public ResponseEntity<ResponseDto<U>> create(@RequestBody @Valid C dto);
@@ -56,7 +54,7 @@ public interface IController<C, U> {
 	 * </p>
 	 * 
 	 * @param id : id de l'entite
-	 * @return boolean true or false
+	 * @return ResponseEntity avec ResponseDto. Body: boolean true or false
 	 */
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto<?>> deleteById(@PathVariable("id") @Positive int id);
@@ -68,7 +66,7 @@ public interface IController<C, U> {
 	 * </p>
 	 * 
 	 * @param dto : Updatedto de l'entite
-	 * @return boolean true or false
+	 * @return ResponseEntity avec ResponseDto. Body: UpdateDto
 	 */
 	@PutMapping
 	public ResponseEntity<ResponseDto<U>> update(@RequestBody @Valid U dto);
@@ -80,7 +78,7 @@ public interface IController<C, U> {
 	 * </p>
 	 * 
 	 * @param id : id de l'entite
-	 * @return UpdateDto
+	 * @return ResponseEntity avec ResponseDto. Body: UpdateDto
 	 */
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto<U>> readById(@PathVariable("id") @Positive int id);
@@ -91,7 +89,7 @@ public interface IController<C, U> {
 	 * Methode pour afficher la page p de la liste complète des instances d'une entité
 	 * </p>
 	 * @param p le numéro de la page souhaitée
-	 * @return page d'entité
+	 * @return ResponseEntity avec ResponseDto. Body: page d'entité
 	 */
 	@GetMapping(path = "/all/{p}")
 	public ResponseEntity<ResponseDto<Page<U>>> readAll(@PathVariable("p") int p);
