@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -89,13 +90,14 @@ public interface IControllerDepartement<D, MU> {
 	/**
 	 * <b>Description : </b>
 	 * <p>
-	 * Methode pour afficher la liste des donnees d'une entite.
+	 * Méthode pour afficher la page p de la liste complète des instances de l'entité département
 	 * </p>
 	 * 
-	 * @return listDto
+	 * @param p le numéro de la page souhaitée
+	 * @return page DepartementDto
 	 */
-	@GetMapping(path = "/all")
-	public ResponseEntity<ResponseDto<List<D>>> readAll();
+	@GetMapping(path = "/all/{p}")
+	public ResponseEntity<ResponseDto<Page<D>>> readAll(@PathVariable("p") int p);
 	
 	@GetMapping(path = "/{name}")
 	public ResponseEntity<ResponseDto<D>> readByName(@PathVariable("name") @NotNull String name);
