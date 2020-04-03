@@ -51,7 +51,7 @@ public class IPlanteModelRepositoryTests {
 	/**
 	 * Teste la méthode existsByNomScientifique pour un objet existant
 	 */
-	@Sql(statements = "INSERT INTO PlanteModel (id, nomCommun, nomScientifique) VALUES (1, 'nomCommun', 'nomScientifique)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	void testExistsBynomScientifiqueExistingNom_shouldReturnTrue() {
@@ -62,7 +62,7 @@ public class IPlanteModelRepositoryTests {
 	/**
 	 * Teste la méthode existsByNomScientifique pour un objet inexistant
 	 */
-	@Sql(statements = "INSERT INTO PlanteModel (id, nomCommun, nomScientifique) VALUES (1, 'nomCommun', 'nomScientifique)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	void testExistsBynomScientifiqueNotExistingNom_shouldReturnFalse() {
@@ -73,7 +73,7 @@ public class IPlanteModelRepositoryTests {
 	/**
 	 * Teste la méthode findByNomScientifique pour un objet existant
 	 */
-	@Sql(statements = "INSERT INTO PlanteModel (id, nomCommun, nomScientifique) VALUES (1, 'nomCommun', 'nomScientifique)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	void testfindBynomScientifiqueExistingNom_shouldReturnObject() {
@@ -84,7 +84,7 @@ public class IPlanteModelRepositoryTests {
 	/**
 	 * Teste la méthode findByNomScientifique pour un objet inexistant
 	 */
-	@Sql(statements = "INSERT INTO PlanteModel (id, nomCommun, nomScientifique) VALUES (1, 'nomCommun', 'nomScientifique)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	void testfindBynomScientifiqueInExistingNom_shouldReturnNull() {
