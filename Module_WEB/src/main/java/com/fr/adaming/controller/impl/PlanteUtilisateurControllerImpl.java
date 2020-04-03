@@ -3,6 +3,7 @@ package com.fr.adaming.controller.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ import com.fr.adaming.service.IPlanteUtilisateurService;
  */
 @RestController
 @RequestMapping(path = "/planteUtilisateur")
+@CrossOrigin
 public class PlanteUtilisateurControllerImpl
 		extends AbstractController<PlanteUtilisateurCreateDto, PlanteUtilisateurUpdateDto, PlanteUtilisateur> {
 
