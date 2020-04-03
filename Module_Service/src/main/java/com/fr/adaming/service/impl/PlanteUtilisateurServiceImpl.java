@@ -62,7 +62,7 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 		if (planteUtilisateur == null) {
 			log.info("Objet d'entrée null");
 			return new ServiceResponse<PlanteUtilisateur>("Objet d'entrée null", null);
-		} else if (dao.existsById(planteUtilisateur.getId())) {
+		} else if (!dao.existsById(planteUtilisateur.getId())) {
 			log.info("Id déjà connu dans la BD");
 			return new ServiceResponse<PlanteUtilisateur>("Id déjà connu dans la BD", null);
 		}
@@ -78,24 +78,6 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 		}
 	}
 
-//	public ServiceResponse<List<PlanteUtilisateur>> findByJardin(int idJardin) {
-//		if (!dao.existsById(idJardin)) {
-//			log.info("Jardin inexistant");
-//			return new ServiceResponse<List<PlanteUtilisateur>>("Jardin inexistant", null);
-//		} else {
-//			try {
-//				log.info("Jardin existant");
-//				List<PlanteUtilisateur> planteUtilList = dao.findAll();
-//				ServiceResponse<List<PlanteUtilisateur>> serviceResponse = new ServiceResponse<List<PlanteUtilisateur>>();
-//				serviceResponse.setBody(planteUtilList);
-//				return serviceResponse;
-//			} catch (Exception e) {
-//				log.warn(e.getMessage());
-//				return new ServiceResponse<List<PlanteUtilisateur>>("Erreur lors de l'affichage de la liste", null);
-//			}
-//
-//		}
-//	}
 
 	@Override
 	public ServiceResponse<Page<PlanteUtilisateur>> readByJardin(int idJardin, int p) {
