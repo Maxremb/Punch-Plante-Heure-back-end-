@@ -129,46 +129,30 @@ public class PlanteUtilisateurConverter
 
 	@Override
 	public Page<PlanteUtilisateur> convertPageCreateDtoToEntity(Page<PlanteUtilisateurCreateDto> listeCreateDto) {
-		List<PlanteUtilisateur> listeRetour = new ArrayList<PlanteUtilisateur>();
-		for(PlanteUtilisateurCreateDto p : listeCreateDto.toList()) {
-			
-			listeRetour.add(convertCreateDtoToEntity(p));
-		}
 		
-		Page<PlanteUtilisateur> pageRetour= new PageImpl<PlanteUtilisateur>(listeRetour);
-		return pageRetour;
+		return listeCreateDto.map(this :: convertCreateDtoToEntity);
+		
 	}
 
 	@Override
 	public Page<PlanteUtilisateurCreateDto> convertPageEntityToCreateDto(Page<PlanteUtilisateur> listeEntity) {
-		List<PlanteUtilisateurCreateDto> listeRetour = new ArrayList<PlanteUtilisateurCreateDto>();
-		for(PlanteUtilisateur p: listeEntity.toList()) {
-			listeRetour.add(convertEntityToCreateDto(p));
-		}
 		
-		Page<PlanteUtilisateurCreateDto> pageRetour = new PageImpl<PlanteUtilisateurCreateDto>(listeRetour);
-		return pageRetour;
+		return listeEntity.map(this :: convertEntityToCreateDto);
+	
 	}
 
 	@Override
 	public Page<PlanteUtilisateur> convertPageUpdateDtoToEntity(Page<PlanteUtilisateurUpdateDto> listeUpdateDto) {
-		List<PlanteUtilisateur> listeRetour = new ArrayList<PlanteUtilisateur>();
-		for(PlanteUtilisateurUpdateDto p:listeUpdateDto.toList()) {
-			listeRetour.add(convertUpdateDtoToEntity(p));
-		}
 		
-		Page<PlanteUtilisateur> pageRetour= new PageImpl<PlanteUtilisateur>(listeRetour);
-		return pageRetour;
+		return listeUpdateDto.map(this :: convertUpdateDtoToEntity);
+
 	}
 
 	@Override
 	public Page<PlanteUtilisateurUpdateDto> convertPageEntityToUpdateDto(Page<PlanteUtilisateur> listeEntity) {
-		List<PlanteUtilisateurUpdateDto> listeRetour = new ArrayList<PlanteUtilisateurUpdateDto>();
-		for(PlanteUtilisateur p: listeEntity.toList()) {
-			listeRetour.add(convertEntityToUpdateDto(p));
-		}
-		Page<PlanteUtilisateurUpdateDto> pageRetour = new PageImpl<PlanteUtilisateurUpdateDto>(listeRetour);
-		return pageRetour;
+		
+		return listeEntity.map(this :: convertEntityToUpdateDto);
+		
 	}
 
 	@Override
