@@ -3,6 +3,8 @@ package com.fr.adaming.repositories;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import com.fr.adaming.ModulePersistenceApplication;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
+import com.fr.adaming.entity.Meteo;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.entity.PlanteUtilisateur;
 import com.fr.adaming.entity.Utilisateur;
@@ -43,12 +46,14 @@ public class IPlanteUtilisateurRepositoryTests {
 	 */
 	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_utilisateur values(1,'2020-04-01', '2020-04-01', 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
@@ -58,9 +63,19 @@ public class IPlanteUtilisateurRepositoryTests {
 		utilisateur.setId(1);
 		utilisateur.setNom("Martinez");
 
+		Meteo meteo = new Meteo();
+		meteo.setId(1);
+		meteo.setPluie(5);
+		meteo.setDate(LocalDate.parse("2020-02-20"));
+		meteo.setTemperature(20);
+		
+		
 		Departement dep = new Departement();
 		dep.setNumeroDep(69);
 		dep.setNom("Rhone");
+		List<Meteo> listMeteo = new ArrayList<Meteo>();
+		listMeteo.add(meteo);
+		dep.setMeteoDep(listMeteo);
 
 		Jardin jardin = new Jardin();
 		jardin.setId(1);
