@@ -40,7 +40,7 @@ public interface IJardinRepository extends JpaRepository<Jardin, Integer>{
 	 * @param idDepartement correspondant au numéro unique de département
 	 * @return une liste de jardin localisé dans le département ayant ce numéro
 	 */
-	@Query(value = "select * from jardin where departement_id= :idDepartement", nativeQuery = true)
+	@Query(value = "select * from jardin where departement_numero_dep = :idDepartement", nativeQuery = true)
 	public Page<Jardin> trouveParDepartement(Pageable pageable, @Param(value = "idDepartement") Integer idDepartement);
 	
 	
