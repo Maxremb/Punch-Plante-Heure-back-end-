@@ -4,19 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
-import com.fr.adaming.ModulePersistenceApplication;
 import com.fr.adaming.ModuleServiceApplication;
-import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Departement;
-import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Meteo;
 import com.fr.adaming.service.IDepartementService;
 import com.fr.adaming.service.IService;
@@ -24,7 +19,7 @@ import com.fr.adaming.service.IServiceTests;
 
 /**
  * Cette classe teste la couche service de l'entité département
- * Elle implémente une interface pour le test des méthodes CRUD et définit ses propres méthodes de test pour les autres. 
+ * Elle implémente une interface pour le test des méthodes CRUD (read All, read by Id, exist by Id, delete by Id) et définit ses propres méthodes de test pour les autres. 
  * 
  * @author Isaline MILLET
  * @since 0.0.1
@@ -125,6 +120,62 @@ public class DepartementServiceTest implements IServiceTests {
 		assertFalse(service.existsById(2));
 	}
 	
-	//Ajouter les autres méthodes non CRUD ++ javadoc
+	/**
+	 * 
+	 */
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (2, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadByNomValid_ShouldReturnEntity() {
+		assertThat(serviceDep.readDepartementByNom("nom4Test").getBody()).isNotNull().hasFieldOrPropertyWithValue("numeroDep", 1);
+		assertThat(serviceDep.readDepartementByNom("nom4Test").getBody()).isNotNull().hasFieldOrPropertyWithValue("nom", "nom4Test");
+	}
+	
+	/**
+	 * 
+	 */
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (2, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadByNomInvalid_ShouldReturnNull() {
+		assertThat(serviceDep.readDepartementByNom("nomInvalid").getBody()).isNull();
+		assertThat(serviceDep.readDepartementByNom("nomInvalid").getMessage()).isEqualTo("Récupération d'un département après recherche par nom");
+	}
+	
+	/**
+	 * 
+	 */
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (2, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadMeteoByIdValid_ShouldReturnList() {
+		assertTrue(serviceDep.readMeteoByNumeroDep(1).getBody().size() == 2);
+	}
+	
+	/**
+	 * 
+	 */
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (2, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadMeteoByIdInvalid_ShouldReturnEmptyList() {
+		assertTrue(serviceDep.readMeteoByNumeroDep(2).getBody().isEmpty());
+	}
+	
+	
+	
+//	public void test create et update
 
 }

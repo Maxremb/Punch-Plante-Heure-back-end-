@@ -136,14 +136,14 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 	}
 	
 	@Override
-	public ResponseEntity<ResponseDto<List<D>>> readByName(String name) {
-		ServiceResponse<List<E>> serviceResponse = serviceDep.readDepartementByNom(name);
+	public ResponseEntity<ResponseDto<D>> readByName(String name) {
+		ServiceResponse<E> serviceResponse = serviceDep.readDepartementByNom(name);
 		
-		List<D> returnedList = converter.convertListEntityToDto(serviceResponse.getBody());
-		ResponseDto<List<D>> responseDto = new ResponseDto<List<D>>();
+		D returned = converter.convertEntityToDto(serviceResponse.getBody());
+		ResponseDto<D> responseDto = new ResponseDto<D>();
 		responseDto.setError(false);
 		responseDto.setMessage(serviceResponse.getMessage());
-		responseDto.setBody(returnedList);
+		responseDto.setBody(returned);
 		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 	}
 

@@ -98,7 +98,7 @@ public interface IControllerDepartement<D, MU> {
 	public ResponseEntity<ResponseDto<List<D>>> readAll();
 	
 	@GetMapping(path = "/{name}")
-	public ResponseEntity<ResponseDto<List<D>>> readByName(@PathVariable("name") @NotNull String name);
+	public ResponseEntity<ResponseDto<D>> readByName(@PathVariable("name") @NotNull String name);
 	
 	@GetMapping(path = "/meteo/{id}")
 	public ResponseEntity<ResponseDto<List<MU>>> readMeteoByNumDep(@PathVariable("id") @Positive int id);
