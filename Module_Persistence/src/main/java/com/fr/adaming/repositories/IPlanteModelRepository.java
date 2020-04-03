@@ -10,21 +10,44 @@ import com.fr.adaming.entity.PlanteModel;
 
 /**
  * Interface repository responsable de la communication avec la base de données pour l'entité PlanteModel 
- * @author Léa
+ * @author Léa Coston
  * @since 0.0.1
  */
 
 @Repository
 public interface IPlanteModelRepository extends JpaRepository<PlanteModel, Integer> {
 	
-
+	/**
+	 * Permet la recherche paginée de PlanteModel avec seulement 4 attibuts : nomScientifique, nomCommun, id et photo
+	 * @param pageable les attributs des pages : nombre d'articles par page et optionnel sortBy
+	 * @return une page de PlantModel
+	 * @author Léa Coston
+	 */
 	@Query(value = "select new PlanteModel(x.id, x.nomCommun, x.nomScientifique, x.photo) from PlanteModel x")
 	public Page<PlanteModel> findAllReduced(Pageable pageable);
 
+	/**
+	 * Permet de véridfier l'éxistance d'une instance par nomScientifique
+	 * @param nomScientifique le nom recherché
+	 * @return boolean true si l'objet existe, false sinon
+	 * @author Léa Coston
+	 */
 	public boolean existsByNomScientifique(String nomScientifique);
 	
+	/**
+	 * Permet de rechercher une instance par nomScientifique
+	 * @param nomScientifique le nom recherché
+	 * @return PlanteModel
+	 * @author Léa Coston
+	 */
 	public PlanteModel findByNomScientifique(String nomScientifique);
 	
+	/**
+	 * Permet de rechercher 
+	 * @param pageable, nomCommun, nomScientifique
+	 * @return Page de PlanteModel
+	 * @author Grégoire Brebner
+	 */
 	public Page<PlanteModel> findByNomCommunOrNomScientifiqueContaining(Pageable pageable, String nomCommun, String nomScientifique);
 
 	
