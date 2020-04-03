@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.DepartementDto;
@@ -65,6 +67,54 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 		}
 	}
 
+	@Override
+	public Page<Departement> convertPageDtoToEntity(Page<DepartementDto> pageDto) {
+		if (pageDto.toList().isEmpty()) {
+			log.info("Tentative conversion d'une liste département DTO en département");
+			List<Departement> liste = new ArrayList<Departement>();
+			return new PageImpl<Departement>(liste);
+		}
+		List<Departement> liste = new ArrayList<>();
+		for (DepartementDto dto : pageDto.toList()) {
+			Departement dep = new Departement();
+			dep.setNom(dto.getName());
+			dep.setNumeroDep(dto.getDepNum());
+			if (dto.getWeatherDep().isEmpty()) {
+				dep.setMeteoDep(new ArrayList<Meteo>());
+			} else {
+				dep.setMeteoDep(convertMeteo.convertListUpdateDtoToEntity(dto.getWeatherDep()));
+			}
+			liste.add(dep);
+		}
+		Page<Departement> pageRetour = new PageImpl<Departement>(liste);
+		log.info("Conversion d'une liste départements DTO en liste départements");
+		return pageRetour;
+	}
+
+	@Override
+	public Page<DepartementDto> convertPageEntityToDto(Page<Departement> pageDep) {
+		if (pageDep.toList().isEmpty()) {
+			log.info("Tentative conversion d'une liste département en département DTO");
+			List<DepartementDto> liste = new ArrayList<DepartementDto>();
+			return new PageImpl<DepartementDto>(liste);
+		}
+		List<DepartementDto> liste = new ArrayList<>();
+		for (Departement dep : pageDep.toList()) {
+			DepartementDto dto = new DepartementDto();
+			dto.setName(dep.getNom());
+			dto.setDepNum(dep.getNumeroDep());
+			if (dep.getMeteoDep().isEmpty()) {
+				dto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
+			} else {
+				dto.setWeatherDep(convertMeteo.convertListEntityToUpdateDto(dep.getMeteoDep()));
+			}
+			liste.add(dto);
+		}
+		Page<DepartementDto> pageRetour = new PageImpl<DepartementDto>(liste);
+		log.info("Conversion d'une liste départements DTO en liste départements");
+		return pageRetour;
+	}
+	
 	@Override
 	public List<Departement> convertListDtoToEntity(List<DepartementDto> listeDto) {
 		if (listeDto.isEmpty()) {
