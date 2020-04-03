@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fr.adaming.controller.AbstractController;
 import com.fr.adaming.dto.JardinCreateDto;
 import com.fr.adaming.dto.JardinUpdateDto;
+import com.fr.adaming.dto.PageResponseDto;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Jardin;
@@ -32,29 +33,29 @@ public class JardinControllerImpl extends AbstractController<JardinCreateDto, Ja
 	
 
 	@GetMapping(path = "/name/{nom}")
-	public ResponseEntity<ResponseDto<Page<JardinUpdateDto>>> readByName(@RequestParam(name = "page") int page, @PathVariable(name = "nom") @NotBlank String nom) {
+	public ResponseEntity<PageResponseDto<Page<JardinUpdateDto>>> readByName(@RequestParam(name = "page") int page, @PathVariable(name = "nom") @NotBlank String nom) {
 
 		ServiceResponse<Page<Jardin>> resp = serviceJardin.readByNom(page, nom);
 		
-		return makeUpdateDtoListResponse(resp);
+		return makeUpdateDtoPageResponse(resp);
 		
 	}
 
 	@GetMapping(path = "/user/{identifier}")
-	public ResponseEntity<ResponseDto<Page<JardinUpdateDto>>> readByUser(@RequestParam(name = "page") int page, @PathVariable(name = "identifier") @Positive Integer identifier) {
+	public ResponseEntity<PageResponseDto<Page<JardinUpdateDto>>> readByUser(@RequestParam(name = "page") int page, @PathVariable(name = "identifier") @Positive Integer identifier) {
 		
 		ServiceResponse<Page<Jardin>> resp = serviceJardin.readByUtilisateur(page, identifier);
 		
-		return makeUpdateDtoListResponse(resp);
+		return makeUpdateDtoPageResponse(resp);
 		
 	}
 
 	@GetMapping(path = "/departement/{numDep}")
-	public ResponseEntity<ResponseDto<Page<JardinUpdateDto>>> readByDep(@RequestParam(name = "page") int page, @PathVariable(name = "numDep") @Positive Integer numDep) {
+	public ResponseEntity<PageResponseDto<Page<JardinUpdateDto>>> readByDep(@RequestParam(name = "page") int page, @PathVariable(name = "numDep") @Positive Integer numDep) {
 		
 		ServiceResponse<Page<Jardin>> resp = serviceJardin.readByDepartement(page, numDep);
 		
-		return makeUpdateDtoListResponse(resp);
+		return makeUpdateDtoPageResponse(resp);
 	}
 
 }

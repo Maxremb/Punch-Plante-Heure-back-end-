@@ -28,86 +28,86 @@ import lombok.extern.slf4j.Slf4j;
 //@RestController
 public class JardinControllerImplV1 extends AbstractController<JardinCreateDto, JardinUpdateDto, Jardin> {
 
-	@Autowired
-	private IJardinService serviceJardin;
-	
-	@Autowired
-	private JardinConverter conv;
-	
-
-	@GetMapping(path = "/name/{nom}")
-	public ResponseEntity<ResponseDto<List<JardinUpdateDto>>> readByName(@PathVariable(name = "nom") @NotBlank String nom) {
-		ResponseDto<List<JardinUpdateDto>> respDto = new ResponseDto<List<JardinUpdateDto>>();
-		try {
-			ServiceResponse<List<Jardin>> resp = serviceJardin.readByNom(nom);
-			if(resp.getBody()!= null) {
-				respDto.setError(false);
-				respDto.setMessage("Success");
-				conv.convertListEntityToUpdateDto(resp.getBody());
-				respDto.setBody(conv.convertListEntityToUpdateDto(resp.getBody()));
-				return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.OK);
-			}
-			respDto.setMessage(resp.getMessage());
-			respDto.setError(true);
-			respDto.setBody(null);
-			return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.BAD_REQUEST);
-		} catch (Exception e) {
-			log.warn(e.getMessage());
-			respDto.setMessage(e.getMessage());
-			respDto.setError(true);
-			respDto.setBody(null);
-			return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@GetMapping(path = "/user/{identifier}")
-	public ResponseEntity<ResponseDto<List<JardinUpdateDto>>> readByUser(@PathVariable(name = "identifier") @Positive Integer identifier) {
-		ResponseDto<List<JardinUpdateDto>> respDto = new ResponseDto<List<JardinUpdateDto>>();
-		try {
-			ServiceResponse<List<Jardin>> resp = serviceJardin.readByUtilisateur(identifier);
-			if(resp.getBody()!= null) {
-				respDto.setError(false);
-				respDto.setMessage("Success");
-				conv.convertListEntityToUpdateDto(resp.getBody());
-				respDto.setBody(conv.convertListEntityToUpdateDto(resp.getBody()));
-				return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.OK);
-			}
-			respDto.setMessage(resp.getMessage());
-			respDto.setError(true);
-			respDto.setBody(null);
-			return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.BAD_REQUEST);
-		} catch (Exception e) {
-			log.warn(e.getMessage());
-			respDto.setMessage(e.getMessage());
-			respDto.setError(true);
-			respDto.setBody(null);
-			return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.BAD_REQUEST);
-		}
-	}
-
-	@GetMapping(path = "/departement/{numDep}")
-	public ResponseEntity<ResponseDto<List<JardinUpdateDto>>> readByDep(@PathVariable(name = "numDep") @Positive Integer numDep) {
-		ResponseDto<List<JardinUpdateDto>> respDto = new ResponseDto<List<JardinUpdateDto>>();
-		try {
-			ServiceResponse<List<Jardin>> resp = serviceJardin.readByDepartement(numDep);
-			if(resp.getBody()!= null) {
-				respDto.setError(false);
-				respDto.setMessage("Success");
-				conv.convertListEntityToUpdateDto(resp.getBody());
-				respDto.setBody(conv.convertListEntityToUpdateDto(resp.getBody()));
-				return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.OK);
-			}
-			respDto.setMessage(resp.getMessage());
-			respDto.setError(true);
-			respDto.setBody(null);
-			return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.BAD_REQUEST);
-		} catch (Exception e) {
-			log.warn(e.getMessage());
-			respDto.setMessage(e.getMessage());
-			respDto.setError(true);
-			respDto.setBody(null);
-			return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.BAD_REQUEST);
-		}
-	}
+//	@Autowired
+//	private IJardinService serviceJardin;
+//	
+//	@Autowired
+//	private JardinConverter conv;
+//	
+//
+//	@GetMapping(path = "/name/{nom}")
+//	public ResponseEntity<ResponseDto<List<JardinUpdateDto>>> readByName(@PathVariable(name = "nom") @NotBlank String nom) {
+//		ResponseDto<List<JardinUpdateDto>> respDto = new ResponseDto<List<JardinUpdateDto>>();
+//		try {
+//			ServiceResponse<List<Jardin>> resp = serviceJardin.readByNom(nom);
+//			if(resp.getBody()!= null) {
+//				respDto.setError(false);
+//				respDto.setMessage("Success");
+//				conv.convertListEntityToUpdateDto(resp.getBody());
+//				respDto.setBody(conv.convertListEntityToUpdateDto(resp.getBody()));
+//				return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.OK);
+//			}
+//			respDto.setMessage(resp.getMessage());
+//			respDto.setError(true);
+//			respDto.setBody(null);
+//			return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.BAD_REQUEST);
+//		} catch (Exception e) {
+//			log.warn(e.getMessage());
+//			respDto.setMessage(e.getMessage());
+//			respDto.setError(true);
+//			respDto.setBody(null);
+//			return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.BAD_REQUEST);
+//		}
+//	}
+//
+//	@GetMapping(path = "/user/{identifier}")
+//	public ResponseEntity<ResponseDto<List<JardinUpdateDto>>> readByUser(@PathVariable(name = "identifier") @Positive Integer identifier) {
+//		ResponseDto<List<JardinUpdateDto>> respDto = new ResponseDto<List<JardinUpdateDto>>();
+//		try {
+//			ServiceResponse<List<Jardin>> resp = serviceJardin.readByUtilisateur(identifier);
+//			if(resp.getBody()!= null) {
+//				respDto.setError(false);
+//				respDto.setMessage("Success");
+//				conv.convertListEntityToUpdateDto(resp.getBody());
+//				respDto.setBody(conv.convertListEntityToUpdateDto(resp.getBody()));
+//				return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.OK);
+//			}
+//			respDto.setMessage(resp.getMessage());
+//			respDto.setError(true);
+//			respDto.setBody(null);
+//			return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.BAD_REQUEST);
+//		} catch (Exception e) {
+//			log.warn(e.getMessage());
+//			respDto.setMessage(e.getMessage());
+//			respDto.setError(true);
+//			respDto.setBody(null);
+//			return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.BAD_REQUEST);
+//		}
+//	}
+//
+//	@GetMapping(path = "/departement/{numDep}")
+//	public ResponseEntity<ResponseDto<List<JardinUpdateDto>>> readByDep(@PathVariable(name = "numDep") @Positive Integer numDep) {
+//		ResponseDto<List<JardinUpdateDto>> respDto = new ResponseDto<List<JardinUpdateDto>>();
+//		try {
+//			ServiceResponse<List<Jardin>> resp = serviceJardin.readByDepartement(numDep);
+//			if(resp.getBody()!= null) {
+//				respDto.setError(false);
+//				respDto.setMessage("Success");
+//				conv.convertListEntityToUpdateDto(resp.getBody());
+//				respDto.setBody(conv.convertListEntityToUpdateDto(resp.getBody()));
+//				return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.OK);
+//			}
+//			respDto.setMessage(resp.getMessage());
+//			respDto.setError(true);
+//			respDto.setBody(null);
+//			return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.BAD_REQUEST);
+//		} catch (Exception e) {
+//			log.warn(e.getMessage());
+//			respDto.setMessage(e.getMessage());
+//			respDto.setError(true);
+//			respDto.setBody(null);
+//			return new ResponseEntity<ResponseDto<List<JardinUpdateDto>>>(respDto, HttpStatus.BAD_REQUEST);
+//		}
+//	}
 
 }
