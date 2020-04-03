@@ -74,11 +74,10 @@ public class PlanteModel {
 	private String photo;
 
 	@Column
-	private List<String> assoPositive;
+	private String[] assoPositive;
 
 	@Column
-	
-	private List<String> assoNegative;
+	private String[] assoNegative;
 	
 	@Column
 	private String famille;

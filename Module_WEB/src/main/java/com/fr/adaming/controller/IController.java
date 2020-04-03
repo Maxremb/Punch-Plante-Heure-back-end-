@@ -98,6 +98,6 @@ public interface IController<C, U> {
 	 * @return page d'entité
 	 */
 	@GetMapping(path = "/all/{p}")
-	public ResponseEntity<ResponseDto<Page<U>>> readAll(int p);
+	public ResponseEntity<ResponseDto<Page<U>>> readAll(@PathVariable("p") int p);
 
 }
