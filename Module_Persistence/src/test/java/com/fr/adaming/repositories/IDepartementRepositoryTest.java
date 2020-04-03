@@ -35,18 +35,17 @@ public class IDepartementRepositoryTest {
 	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void testFetchingDepartementByNom_shouldReturnListOfOneDepartement() {
+	public void testFetchingDepartementByNom_shouldReturnOneDepartement() {
 		//préparer les inputs
 		Integer numeroInput = 1 ;
 		String nomInput = "nom4Test";
 		
 		//invoquer l'appli
-		List<Departement> result = depRepo.findDepartementByNom(nomInput);
+		Departement result = depRepo.findDepartementByNom(nomInput);
 		
 		//assertion
-	    assertThat(result).isNotNull().asList().isNotEmpty().hasSize(1);
-	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("nom", nomInput);
-	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("numeroDep", 1);
+		assertThat(result).isNotNull().hasFieldOrPropertyWithValue("nom", nomInput);
+		assertThat(result).isNotNull().hasFieldOrPropertyWithValue("numeroDep", 1);
 	}
 	
 	/**
@@ -80,7 +79,6 @@ public class IDepartementRepositoryTest {
 	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("pluie", pluie);
 	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("temperature", temperature);
 	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("temperature", temperature);
-	
 	}
 
 }

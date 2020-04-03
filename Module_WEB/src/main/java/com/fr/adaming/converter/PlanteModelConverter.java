@@ -1,9 +1,8 @@
 package com.fr.adaming.converter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.PlanteModelCreateDto;
@@ -39,9 +38,9 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		entity.setTemperatureMax(createDto.getMax());
 		entity.setTemperatureMin(createDto.getMin());
 		entity.setHumiditeopti(createDto.getHumidite());
-		entity.setAssoNegative(convertListReducedDtoToEntity(createDto.getNegative()));
-		entity.setAssoPositive(convertListReducedDtoToEntity(createDto.getPositive()));
-		
+		entity.setAssoNegative(createDto.getNegative());
+		entity.setAssoPositive(createDto.getPositive());
+		entity.setFamille(createDto.getMifa());
 		return entity;
 	}
 
@@ -64,8 +63,9 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		createDto.setDesc(entity.getDescription());
 		createDto.setToxi(entity.isToxicite());
 		createDto.setPicture(entity.getPhoto());
-		createDto.setNegative(convertListEntityToReducedDto(entity.getAssoNegative()));
-		createDto.setPositive(convertListEntityToReducedDto(entity.getAssoPositive()));
+		createDto.setNegative(entity.getAssoNegative());
+		createDto.setPositive(entity.getAssoPositive());
+		createDto.setMifa(entity.getFamille());
 		return createDto;
 	}
 
@@ -95,37 +95,38 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 	}
 
 	@Override
-	public List<PlanteModel> convertListCreateDtoToEntity(List<PlanteModelCreateDto> listeCreateDto) {
-		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
-		for(PlanteModelCreateDto p:listeCreateDto) {
-			listeRetour.add(convertCreateDtoToEntity(p));
+	public Page<PlanteModel> convertListCreateDtoToEntity(Page<PlanteModelCreateDto> listeCreateDto) {
+		Page<PlanteModel> listeRetour = new PageImpl<PlanteModel>(null);
+		for(PlanteModelCreateDto p : listeCreateDto) {
+			
+			listeRetour.and(convertCreateDtoToEntity(p));
 		}
 		return listeRetour;
 	}
 
 	@Override
-	public List<PlanteModelCreateDto> convertListEntityToCreateDto(List<PlanteModel> listeEntity) {
-		List<PlanteModelCreateDto> listeRetour = new ArrayList<PlanteModelCreateDto>();
+	public Page<PlanteModelCreateDto> convertListEntityToCreateDto(Page<PlanteModel> listeEntity) {
+		Page<PlanteModelCreateDto> listeRetour = new PageImpl<PlanteModelCreateDto>(null);
 		for(PlanteModel p: listeEntity) {
-			listeRetour.add(convertEntityToCreateDto(p));
+			listeRetour.and(convertEntityToCreateDto(p));
 		}
 		return listeRetour;
 	}
 
 	@Override
-	public List<PlanteModel> convertListUpdateDtoToEntity(List<PlanteModelUpdateDto> listeUpdateDto) {
-		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
+	public Page<PlanteModel> convertListUpdateDtoToEntity(Page<PlanteModelUpdateDto> listeUpdateDto) {
+		Page<PlanteModel> listeRetour = new PageImpl<PlanteModel>(null);
 		for(PlanteModelUpdateDto p:listeUpdateDto) {
-			listeRetour.add(convertUpdateDtoToEntity(p));
+			listeRetour.and(convertUpdateDtoToEntity(p));
 		}
 		return listeRetour;
 	}
 
 	@Override
-	public List<PlanteModelUpdateDto> convertListEntityToUpdateDto(List<PlanteModel> listeEntity) {
-		List<PlanteModelUpdateDto> listeRetour = new ArrayList<PlanteModelUpdateDto>();
+	public Page<PlanteModelUpdateDto> convertListEntityToUpdateDto(Page<PlanteModel> listeEntity) {
+		Page<PlanteModelUpdateDto> listeRetour = new PageImpl<PlanteModelUpdateDto>(null);
 		for(PlanteModel p: listeEntity) {
-			listeRetour.add(convertEntityToUpdateDto(p));
+			listeRetour.and(convertEntityToUpdateDto(p));
 		}
 		return listeRetour;
 	}
@@ -157,18 +158,18 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		return entity;
 	}
 	
-	public List<PlanteModel> convertListReducedDtoToEntity(List<PlanteModelReducedDto> listeReducedDto) {
-		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
+	public Page<PlanteModel> convertListReducedDtoToEntity(Page<PlanteModelReducedDto> listeReducedDto) {
+		Page<PlanteModel> listeRetour = new PageImpl<PlanteModel>(null);
 		for(PlanteModelReducedDto p:listeReducedDto) {
-			listeRetour.add(convertReducedDtoToEntity(p));
+			listeRetour.and(convertReducedDtoToEntity(p));
 		}
 		return listeRetour;
 	}
 
-	public List<PlanteModelReducedDto> convertListEntityToReducedDto(List<PlanteModel> listeEntity) {
-		List<PlanteModelReducedDto> listeRetour = new ArrayList<PlanteModelReducedDto>();
+	public Page<PlanteModelReducedDto> convertListEntityToReducedDto(Page<PlanteModel> listeEntity) {
+		Page<PlanteModelReducedDto> listeRetour = new PageImpl<PlanteModelReducedDto>(null);
 		for(PlanteModel p: listeEntity) {
-			listeRetour.add(convertEntityToReducedDto(p));
+			listeRetour.and(convertEntityToReducedDto(p));
 		}
 		return listeRetour;
 	} 

@@ -40,16 +40,13 @@ public class JardinServiceTest implements IServiceTests {
 	@Override
 	@Test
 	public void testDeletingValidId_shouldReturnTrue() {
-
 		assertTrue(service.deleteById(1));
-
 	}
 
 	@Override
 	@Test
 	public void testDeletingInvalidId_shouldReturnFalse() {
 		assertFalse(service.deleteById(1));
-
 	}
 
 	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)

@@ -61,9 +61,19 @@ public class DepartementServiceImpl extends AbstractService<Departement> impleme
 	@Autowired
 	protected IDepartementRepository depRepo;
 	
-	public ServiceResponse<List<Departement>> readDepartementByNom(String nom) {
-		log.info("Récupération d'une liste de département après recherche par nom");
-		return new ServiceResponse<List<Departement>>("Récupération d'une liste de département après recherche par nom", depRepo.findDepartementByNom(nom));
+	public ServiceResponse<Departement> readDepartementByNom(String nom) {
+		try {
+			if (nom != null) {
+				log.info("Récupération d'un département après recherche par nom");
+				return new ServiceResponse<Departement>("Récupération d'un département après recherche par nom", depRepo.findDepartementByNom(nom));
+			} else {
+				log.info("Tentative de récupération d'un département après recherche via nom NULL");
+				return new ServiceResponse<Departement>("Tentative de récupération d'un département après recherche via nom NULL\"", null);
+			}
+		} catch (Exception e) {
+			log.warn("Problème récupération d'un département après recherche via nom (couche service)" + e.getMessage());
+			return new ServiceResponse<Departement>("Pb tentative de récupération d'un département", null);
+		}
 	}
 
 	public ServiceResponse<List<Meteo>> readMeteoByNumeroDep(Integer numDep) {

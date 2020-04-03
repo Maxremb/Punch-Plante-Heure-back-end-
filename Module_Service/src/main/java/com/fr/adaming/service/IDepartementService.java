@@ -21,7 +21,7 @@ public interface IDepartementService<E, ME> {
 	 * @param nom Nom du département recherché
 	 * @return Dto Service Response avec message selon succes/fail + liste de départements en body
 	 */
-	public ServiceResponse<List<E>> readDepartementByNom(String nom);
+	public ServiceResponse<E> readDepartementByNom(String nom);
 
 	/**
 	 * Méthode permettant de récupérer la liste des conditions météo pour un département

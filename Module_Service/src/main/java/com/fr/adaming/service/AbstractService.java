@@ -3,6 +3,10 @@ package com.fr.adaming.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.fr.adaming.dto.ServiceResponse;
@@ -21,9 +25,10 @@ public abstract class AbstractService<E> implements IService<E> {
 	protected JpaRepository<E, Integer> dao;
 
 	@Override
-	public ServiceResponse<List<E>> readAll() {
-		List<E> entityList = dao.findAll();
-		ServiceResponse<List<E>> serviceResponse = new ServiceResponse<List<E>>();
+	public ServiceResponse<Page<E>> readAll(int p) {
+		Pageable pageable = PageRequest.of(p, 20);
+		Page<E> entityList = dao.findAll(pageable);
+		ServiceResponse<Page<E>> serviceResponse = new ServiceResponse<Page<E>>();
 		serviceResponse.setBody(entityList);
 		return serviceResponse;
 	}
