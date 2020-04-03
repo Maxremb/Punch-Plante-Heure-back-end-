@@ -3,6 +3,9 @@ package com.fr.adaming.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
@@ -76,23 +79,24 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 	 * @author Clara Cadet
 	 */
 	@Override
-	public ServiceResponse<List<Jardin>> readByNom(String nom) {
+	public ServiceResponse<Page<Jardin>> readByNom(int page, String nom) {
 		if (nom != null) {
 			if (nom.length() > 0) {
 				try {
 					log.info("Recherche jardin par nom dans la DB OK");
-					return new ServiceResponse<List<Jardin>>("Success", repo.findByNom(nom));
+					Pageable pageable = PageRequest.of(page, 20);
+					return new ServiceResponse<Page<Jardin>>("Success", repo.findByNom(pageable, nom));
 				} catch (Exception e) {
 					log.warn(e.getMessage());
-					return new ServiceResponse<List<Jardin>>("Exception lors de la recherche jardin par nom", null);
+					return new ServiceResponse<Page<Jardin>>("Exception lors de la recherche jardin par nom", null);
 				}
 
 			}
 			log.info("Recherche jardin par nom non réalisée : nom vide");
-			return new ServiceResponse<List<Jardin>>("Recherche non réalisé : nom vide", null);
+			return new ServiceResponse<Page<Jardin>>("Recherche non réalisé : nom vide", null);
 		}
 		log.info("Recherche jardin par nom non réalisée : nom null");
-		return new ServiceResponse<List<Jardin>>("Recherche non réalisé : nom null", null);
+		return new ServiceResponse<Page<Jardin>>("Recherche non réalisé : nom null", null);
 	}
 
 	/**
@@ -105,20 +109,21 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 	 * @author Clara Cadet
 	 */
 	@Override
-	public ServiceResponse<List<Jardin>> readByUtilisateur(Integer id) {
+	public ServiceResponse<Page<Jardin>> readByUtilisateur(int page, Integer id) {
 		if (id != null) {
 			try {
 				log.info("Recherche jardin par utilisateur dans la DB OK");
-				return new ServiceResponse<List<Jardin>>("Recherche jardin par utilisateur",
-						repo.trouveParUtilisateur(id));
+				Pageable pageable = PageRequest.of(page, 20);
+				return new ServiceResponse<Page<Jardin>>("Recherche jardin par utilisateur",
+						repo.trouveParUtilisateur(pageable, id));
 
 			} catch (Exception e) {
 				log.warn(e.getMessage());
-				return new ServiceResponse<List<Jardin>>("Exception lors de la recherche jardin par utilisateur", null);
+				return new ServiceResponse<Page<Jardin>>("Exception lors de la recherche jardin par utilisateur", null);
 			}
 		}
 		log.info("Recherche jardin par utilisateur non réalisée : id null");
-		return new ServiceResponse<List<Jardin>>("Recherche non réalisé : id null", null);
+		return new ServiceResponse<Page<Jardin>>("Recherche non réalisé : id null", null);
 
 	}
 
@@ -133,21 +138,22 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 	 * @author Clara Cadet
 	 */
 	@Override
-	public ServiceResponse<List<Jardin>> readByDepartement(Integer numDep) {
+	public ServiceResponse<Page<Jardin>> readByDepartement(int page, Integer numDep) {
 
 		if (numDep != null) {
 			try {
 				log.info("Recherche jardin par utilisateur dans la DB OK");
-				return new ServiceResponse<List<Jardin>>("Recherche jardin par departement ok",
-						repo.trouveParDepartement(numDep));
+				Pageable pageable = PageRequest.of(page, 20);
+				return new ServiceResponse<Page<Jardin>>("Recherche jardin par departement ok",
+						repo.trouveParDepartement(pageable, numDep));
 
 			} catch (Exception e) {
 				log.warn(e.getMessage());
-				return new ServiceResponse<List<Jardin>>("Exception lors de la recherche jardin par departement", null);
+				return new ServiceResponse<Page<Jardin>>("Exception lors de la recherche jardin par departement", null);
 			}
 		}
 		log.info("Recherche jardin par departement non réalisée : numDep null");
-		return new ServiceResponse<List<Jardin>>("Recherche non réalisé : numDep null", null);
+		return new ServiceResponse<Page<Jardin>>("Recherche non réalisé : numDep null", null);
 
 	}
 

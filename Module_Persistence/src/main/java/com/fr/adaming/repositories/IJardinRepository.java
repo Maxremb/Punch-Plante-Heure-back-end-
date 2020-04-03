@@ -1,13 +1,15 @@
 package com.fr.adaming.repositories;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.fr.adaming.entity.Jardin;
+
+// TODO verifier si il faut passe les query en sql natif
 
 /**
  * Interface repository responsable de la communication avec la base de données pour l'entité Jardin 
@@ -22,7 +24,7 @@ public interface IJardinRepository extends JpaRepository<Jardin, Integer>{
 	 * @param nom du jardin à rechercher
 	 * @return une liste de jardins ayant exactement ce nom
 	 */
-	public List<Jardin> findByNom(String nom);
+	public Page<Jardin> findByNom(Pageable pageable, String nom);
 	
 	/**
 	 * Permet la recherche de jardins par l'identifiant unique d'un utilisateur propriétaires
@@ -30,7 +32,7 @@ public interface IJardinRepository extends JpaRepository<Jardin, Integer>{
 	 * @return une liste de jardin possédés par l'utilisateur ayant cet identifiant
 	 */
 	@Query(value = "from Jardin where utilisateur_id= :idUtilisateur")
-	public List<Jardin> trouveParUtilisateur(@Param(value = "idUtilisateur") Integer idUtilisateur);
+	public Page<Jardin> trouveParUtilisateur(Pageable pageable, @Param(value = "idUtilisateur") Integer idUtilisateur);
 	
 	/**
 	 * Permet la recherche de jardins par le numéro de département unique où il(s) se trouve(nt)
@@ -38,7 +40,7 @@ public interface IJardinRepository extends JpaRepository<Jardin, Integer>{
 	 * @return une liste de jardin localisé dans le département ayant ce numéro
 	 */
 	@Query(value = "from Jardin where departement_id= :idDepartement")
-	public List<Jardin> trouveParDepartement(@Param(value = "idDepartement") Integer idDepartement);
+	public Page<Jardin> trouveParDepartement(Pageable pageable, @Param(value = "idDepartement") Integer idDepartement);
 	
 	
 }

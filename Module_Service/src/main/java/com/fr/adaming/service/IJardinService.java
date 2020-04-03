@@ -2,6 +2,8 @@ package com.fr.adaming.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Jardin;
 
@@ -21,7 +23,7 @@ public interface IJardinService {
 	 *         un objet null
 	 * @author Clara Cadet
 	 */
-	public ServiceResponse<List<Jardin>> readByNom(String nom);
+	public ServiceResponse<Page<Jardin>> readByNom(int page, String nom);
 
 	/**
 	 * Methode permettant la recherche de jardins par un identifiant utilisateur
@@ -32,7 +34,7 @@ public interface IJardinService {
 	 *         un objet null
 	 * @author Clara Cadet
 	 */
-	public ServiceResponse<List<Jardin>> readByUtilisateur(Integer id);
+	public ServiceResponse<Page<Jardin>> readByUtilisateur(int page, Integer id);
 
 	/**
 	 * Methode permettant la recherche de jardins par un numéro de département
@@ -44,6 +46,6 @@ public interface IJardinService {
 	 *         un objet null
 	 * @author Clara Cadet
 	 */
-	public ServiceResponse<List<Jardin>> readByDepartement(Integer numDep);
+	public ServiceResponse<Page<Jardin>> readByDepartement(int page, Integer numDep);
 
 }

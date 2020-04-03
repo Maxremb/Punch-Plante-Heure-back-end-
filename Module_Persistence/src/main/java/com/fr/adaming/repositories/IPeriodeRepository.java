@@ -10,6 +10,8 @@ import com.fr.adaming.entity.Periode;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.enums.TypePeriod;
 
+//TODO convertir listes en Pages
+
 @Repository
 public interface IPeriodeRepository extends JpaRepository<Periode, Integer>{
 	
