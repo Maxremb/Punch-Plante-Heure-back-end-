@@ -80,7 +80,7 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 	 * 
 	 * 
 	 *
-	 * @author Léa
+	 * @author Léa Coston
 	 */
 	@Override
 	public ServiceResponse<Page<PlanteModel>> readAllReduced(int p) {
@@ -98,7 +98,7 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 	 * @param nomScientique le nom recherché
 	 * @return un ServiceReponse constitué d'un string "succes" et d'une entité
 	 *         PlanteModel
-	 * @author Léa
+	 * @author Léa Coston
 	 */
 	@Override
 	public ServiceResponse<PlanteModel> readByNomScientifique(String nomScientique) {
@@ -114,6 +114,7 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 		return retour;
 	}
 
+	
 	@Override
 	public ServiceResponse<Page<PlanteModel>> findByNom(int page, String nom) {
 

@@ -3,6 +3,7 @@ package com.fr.adaming.service.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -60,7 +61,7 @@ public class PlanteModelServiceTest implements IServiceTests{
 		assertNotNull(service.readAll(0));
 		assertThat(service.readAll(0).getBody().getNumberOfElements()).isEqualTo(1);
 		assertThat(service.readAll(0).getBody().getNumber()).isEqualTo(0);
-		
+		assertThat(service.readAll(0)).hasFieldOrPropertyWithValue("message", "Success");
 	}
 
 	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -69,6 +70,7 @@ public class PlanteModelServiceTest implements IServiceTests{
 	public void testReadAllNoContent_shouldReturnEmptyList() {
 		assertNotNull(service.readAll(0));
 		assertThat(service.readAll(0).getBody().getNumberOfElements()).isEqualTo(0);
+		assertThat(service.readAll(0)).hasFieldOrPropertyWithValue("message", "Success");
 		
 	}
 
@@ -78,28 +80,37 @@ public class PlanteModelServiceTest implements IServiceTests{
 	@Test
 	public void testReadByIdValidId_shouldReturnEntity() {
 		assertThat(service.readById(1)).isNotNull();
-		assertThat(service.readById(1)).isInstanceOf(PlanteModel.class);
+		assertThat(service.readById(1).getBody()).isInstanceOf(PlanteModel.class);
+		assertThat(service.readById(1)).hasFieldOrPropertyWithValue("message", "Success");
 		
 	}
 
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
 	@Test
 	public void testReadByIdInvalidId_shouldReturnNull() {
-		// TODO Auto-generated method stub
+		assertNull(service.readById(2).getBody());
+		assertThat(service.readById(2)).hasFieldOrPropertyWithValue("message", "Une entité avec cet ID n'existe pas dans la base de données");
 		
 	}
 
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
 	@Test
 	public void testExistsByIdValidId_ShouldReturnTrue() {
-		// TODO Auto-generated method stub
+		assertTrue(service.existsById(1));
 		
 	}
 
+
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
 	@Test
 	public void testExistsByIdInValidId_ShouldReturnFalse() {
-		// TODO Auto-generated method stub
+		assertFalse(service.existsById(2));
 		
 	}
 
