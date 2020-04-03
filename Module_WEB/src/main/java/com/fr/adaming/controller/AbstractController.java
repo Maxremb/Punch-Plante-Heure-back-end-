@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 
 import com.fr.adaming.constant.WebMappingConstant;
 import com.fr.adaming.converter.IConverter;
-import com.fr.adaming.dto.PageResponseDto;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.service.IService;
@@ -82,7 +81,7 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 	}
 
 	@Override
-	public ResponseEntity<PageResponseDto<Page<U>>> readAll(int p) {
+	public ResponseEntity<ResponseDto<Page<U>>> readAll(int p) {
 		
 		ServiceResponse<Page<E>> serviceResponse = service.readAll(p);
 		
@@ -133,16 +132,16 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 	 * @param serviceResponse Reponse de la couche service de la méthode
 	 * @return Response Entity contenant la responseDto et une liste d'updateDto
 	 */
-	protected ResponseEntity<PageResponseDto<Page<U>>> makeUpdateDtoPageResponse(
+	protected ResponseEntity<ResponseDto<Page<U>>> makeUpdateDtoPageResponse(
 			ServiceResponse<Page<E>> serviceResponse) {
 
-		PageResponseDto<Page<U>> responseDto = new PageResponseDto<Page<U>>();
+		ResponseDto<Page<U>> responseDto = new ResponseDto<Page<U>>();
 		Page<U> periodeList = converter.convertPageEntityToUpdateDto(serviceResponse.getBody());
 
 		responseDto.setMessage(serviceResponse.getMessage());
 		responseDto.setBody(periodeList);
 		responseDto.setError(false);
-		responseDto.setMaxPages(periodeList.getTotalPages());
+		
 		return ResponseEntity.ok(responseDto);
 
 	}

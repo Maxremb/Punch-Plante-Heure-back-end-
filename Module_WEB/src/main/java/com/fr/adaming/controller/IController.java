@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.fr.adaming.dto.PageResponseDto;
 import com.fr.adaming.dto.ResponseDto;
 
 //TODO ajouter une responseDto
@@ -96,6 +94,6 @@ public interface IController<C, U> {
 	 * @return page d'entité
 	 */
 	@GetMapping(path = "/all/{p}")
-	public ResponseEntity<PageResponseDto<Page<U>>> readAll(@PathVariable("p") int p);
+	public ResponseEntity<ResponseDto<Page<U>>> readAll(@PathVariable("p") int p);
 
 }

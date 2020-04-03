@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fr.adaming.controller.AbstractController;
-import com.fr.adaming.dto.PageResponseDto;
 import com.fr.adaming.dto.PlanteUtilisateurCreateDto;
 import com.fr.adaming.dto.PlanteUtilisateurUpdateDto;
+import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteUtilisateur;
 import com.fr.adaming.service.IPlanteUtilisateurService;
@@ -44,7 +43,7 @@ public class PlanteUtilisateurControllerImpl
 	 * @return List<PlanteUtilisateur>
 	 */
 	@GetMapping(path = "/jardin/{idJardin}")
-	public ResponseEntity<PageResponseDto<Page<PlanteUtilisateurUpdateDto>>> findByJardin(@PathVariable int idJardin, int page) {
+	public ResponseEntity<ResponseDto<Page<PlanteUtilisateurUpdateDto>>> findByJardin(@PathVariable int idJardin, int page) {
 
 		ServiceResponse<Page<PlanteUtilisateur>> serviceResponse1 = planteUtilisateurService.readByJardin(idJardin, page);
 
