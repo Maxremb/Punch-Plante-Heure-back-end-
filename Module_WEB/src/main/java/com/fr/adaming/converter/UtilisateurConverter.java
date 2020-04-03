@@ -37,25 +37,49 @@ public class UtilisateurConverter implements IConverter<UtilisateurCreateDto, Ut
 	}
 
 	@Override
-	public Page<Utilisateur> convertListCreateDtoToEntity(Page<UtilisateurCreateDto> listeCreateDto) {
+	public List<Utilisateur> convertListCreateDtoToEntity(List<UtilisateurCreateDto> listeCreateDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<UtilisateurCreateDto> convertListEntityToCreateDto(Page<Utilisateur> listeEntity) {
+	public List<UtilisateurCreateDto> convertListEntityToCreateDto(List<Utilisateur> listeEntity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<Utilisateur> convertListUpdateDtoToEntity(Page<UtilisateurUpdateDto> listeUpdateDto) {
+	public List<Utilisateur> convertListUpdateDtoToEntity(List<UtilisateurUpdateDto> listeUpdateDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<UtilisateurUpdateDto> convertListEntityToUpdateDto(Page<Utilisateur> listeEntity) {
+	public List<UtilisateurUpdateDto> convertListEntityToUpdateDto(List<Utilisateur> listeEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<Utilisateur> convertPageCreateDtoToEntity(Page<UtilisateurCreateDto> listeCreateDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<UtilisateurCreateDto> convertPageEntityToCreateDto(Page<Utilisateur> listeEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<Utilisateur> convertPageUpdateDtoToEntity(Page<UtilisateurUpdateDto> listeUpdateDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<UtilisateurUpdateDto> convertPageEntityToUpdateDto(Page<Utilisateur> listeEntity) {
 		// TODO Auto-generated method stub
 		return null;
 	}

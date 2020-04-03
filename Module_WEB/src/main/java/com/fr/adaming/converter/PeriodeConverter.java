@@ -37,25 +37,49 @@ public class PeriodeConverter implements IConverter<PeriodeCreateDto, PeriodeUpd
 	}
 
 	@Override
-	public Page<Periode> convertListCreateDtoToEntity(Page<PeriodeCreateDto> listeCreateDto) {
+	public List<Periode> convertListCreateDtoToEntity(List<PeriodeCreateDto> listeCreateDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<PeriodeCreateDto> convertListEntityToCreateDto(Page<Periode> listeEntity) {
+	public List<PeriodeCreateDto> convertListEntityToCreateDto(List<Periode> listeEntity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<Periode> convertListUpdateDtoToEntity(Page<PeriodeUpdateDto> listeUpdateDto) {
+	public List<Periode> convertListUpdateDtoToEntity(List<PeriodeUpdateDto> listeUpdateDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<PeriodeUpdateDto> convertListEntityToUpdateDto(Page<Periode> listeEntity) {
+	public List<PeriodeUpdateDto> convertListEntityToUpdateDto(List<Periode> listeEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<Periode> convertPageCreateDtoToEntity(Page<PeriodeCreateDto> listeCreateDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<PeriodeCreateDto> convertPageEntityToCreateDto(Page<Periode> listeEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<Periode> convertPageUpdateDtoToEntity(Page<PeriodeUpdateDto> listeUpdateDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<PeriodeUpdateDto> convertPageEntityToUpdateDto(Page<Periode> listeEntity) {
 		// TODO Auto-generated method stub
 		return null;
 	}

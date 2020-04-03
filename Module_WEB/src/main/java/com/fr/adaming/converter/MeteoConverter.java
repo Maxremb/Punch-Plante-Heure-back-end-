@@ -37,29 +37,54 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 	}
 
 	@Override
-	public Page<Meteo> convertListCreateDtoToEntity(Page<MeteoCreateDto> listeCreateDto) {
+	public List<Meteo> convertListCreateDtoToEntity(List<MeteoCreateDto> listeCreateDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<MeteoCreateDto> convertListEntityToCreateDto(Page<Meteo> listeEntity) {
+	public List<MeteoCreateDto> convertListEntityToCreateDto(List<Meteo> listeEntity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<Meteo> convertListUpdateDtoToEntity(Page<MeteoUpdateDto> listeUpdateDto) {
+	public List<Meteo> convertListUpdateDtoToEntity(List<MeteoUpdateDto> listeUpdateDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<MeteoUpdateDto> convertListEntityToUpdateDto(Page<Meteo> listeEntity) {
+	public List<MeteoUpdateDto> convertListEntityToUpdateDto(List<Meteo> listeEntity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public Page<Meteo> convertPageCreateDtoToEntity(Page<MeteoCreateDto> listeCreateDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<MeteoCreateDto> convertPageEntityToCreateDto(Page<Meteo> listeEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<Meteo> convertPageUpdateDtoToEntity(Page<MeteoUpdateDto> listeUpdateDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Page<MeteoUpdateDto> convertPageEntityToUpdateDto(Page<Meteo> listeEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	
 	
 }
