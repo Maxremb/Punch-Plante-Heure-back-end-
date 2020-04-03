@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -123,12 +124,12 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 	}
 
 	@Override
-	public ResponseEntity<ResponseDto<List<D>>> readAll() {
+	public ResponseEntity<ResponseDto<Page<D>>> readAll(int p) {
 		
-		ServiceResponse<List<E>> serviceResponse = service.readAll();
+		ServiceResponse<Page<E>> serviceResponse = service.readAll(p);
 		
-		List<D> returnedList = converter.convertListEntityToDto(serviceResponse.getBody());
-		ResponseDto<List<D>> responseDto = new ResponseDto<List<D>>();
+		Page<D> returnedList = converter.convertPageEntityToDto(serviceResponse.getBody());
+		ResponseDto<Page<D>> responseDto = new ResponseDto<Page<D>>();
 		responseDto.setError(false);
 		responseDto.setMessage(serviceResponse.getMessage());
 		responseDto.setBody(returnedList);
