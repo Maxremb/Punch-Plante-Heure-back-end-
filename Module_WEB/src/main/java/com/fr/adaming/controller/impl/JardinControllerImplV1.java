@@ -27,8 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Deprecated
-@RequestMapping(path = "/jardin")
-@RestController
+//@RequestMapping(path = "/jardin")
+//@RestController
 public class JardinControllerImplV1 extends AbstractController<JardinCreateDto, JardinUpdateDto, Jardin> {
 
 	@Autowired
