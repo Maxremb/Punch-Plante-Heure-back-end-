@@ -30,7 +30,7 @@ public class PlanteUtilisateurConverterTests implements IConverterTests{
 	
 	@Test
 	@Override
-	public void testConvertingCreateDtoToEntity() {
+	public void testConvertingCreateDtoToEntity_shouldReturnEntity() {
 		
 		PlanteUtilisateurCreateDto dto = new PlanteUtilisateurCreateDto();
 		
@@ -58,7 +58,7 @@ public class PlanteUtilisateurConverterTests implements IConverterTests{
 
 	@Test
 	@Override
-	public void testConvertingUpdateDtoToEntity() {
+	public void testConvertingUpdateDtoToEntity_shouldReturnEntity() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -72,7 +72,7 @@ public class PlanteUtilisateurConverterTests implements IConverterTests{
 
 	@Test
 	@Override
-	public void testConvertingEntityToCreateDto() {
+	public void testConvertingEntityToCreateDto_shouldReturnCreateDto() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -86,7 +86,7 @@ public class PlanteUtilisateurConverterTests implements IConverterTests{
 
 	@Test
 	@Override
-	public void testConvertingEntityToUpdateDto() {
+	public void testConvertingEntityToUpdateDto_shouldReturnUpdateDto() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -100,56 +100,56 @@ public class PlanteUtilisateurConverterTests implements IConverterTests{
 
 	@Test
 	@Override
-	public void testConvertingListEntityToCreateDto() {
+	public void testConvertingListEntityToCreateDto_shouldReturnCreateDtoList() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Test
 	@Override
-	public void testConvertingNullListEntityToCreateDto_shouldReturnEmptyList() {
+	public void testConvertingListCreateDtoToEntity_shouldReturnEntityList() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Test
 	@Override
-	public void testConvertingListCreateDtoToEntity() {
+	public void testConvertingListEntityToUpdateDto_shouldReturnUpdateDtoList() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Test
 	@Override
-	public void testConvertingNullListCreateDtoToEntity_shouldReturnEmptyList() {
+	public void testConvertingListUpdateDtoToEntity_shouldReturnEntityList() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Test
 	@Override
-	public void testConvertingListEntityToUpdateDto() {
+	public void testConvertingPageCreateDtoToEntity_shouldReturnPageOfEntities() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Test
 	@Override
-	public void testConvertingNullListEntityToUpdateDto_shouldReturnEmptyList() {
+	public void testConvertingPageEntityToCreateDto_shouldReturnPageOfCreateDtos() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Test
 	@Override
-	public void testConvertingListUpdateDtoToEntity() {
+	public void testConvertingPageUpdateDtoToEntity_shouldReturnPageOfEntities() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Test
 	@Override
-	public void testConvertingNullListUpdateDtoToEntity_shouldReturnEmptyList() {
+	public void testConvertingPageEntityToUpdateDto_shouldReturnPageOfUpdateDtos() {
 		// TODO Auto-generated method stub
 		
 	}
