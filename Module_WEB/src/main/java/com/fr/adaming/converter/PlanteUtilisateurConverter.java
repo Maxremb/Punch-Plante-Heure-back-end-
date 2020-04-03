@@ -2,6 +2,7 @@ package com.fr.adaming.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -157,38 +158,50 @@ public class PlanteUtilisateurConverter
 
 	@Override
 	public List<PlanteUtilisateur> convertListCreateDtoToEntity(List<PlanteUtilisateurCreateDto> listeCreateDto) {
-		List<PlanteUtilisateur> listeRetour = new ArrayList<PlanteUtilisateur>();
-		for(PlanteUtilisateurCreateDto p : listeCreateDto) {
-			listeRetour.add(convertCreateDtoToEntity(p));
-		}
-		return listeRetour;
+		
+		return listeCreateDto.stream().map(this :: convertCreateDtoToEntity).collect(Collectors.toList());
+		
+//		List<PlanteUtilisateur> listeRetour = new ArrayList<PlanteUtilisateur>();
+//		for(PlanteUtilisateurCreateDto p : listeCreateDto) {
+//			listeRetour.add(convertCreateDtoToEntity(p));
+//		}
+//		return listeRetour;
 	}
 
 	@Override
 	public List<PlanteUtilisateurCreateDto> convertListEntityToCreateDto(List<PlanteUtilisateur> listeEntity) {
-		List<PlanteUtilisateurCreateDto> listeRetour = new ArrayList<PlanteUtilisateurCreateDto>();
-		for(PlanteUtilisateur p: listeEntity) {
-			listeRetour.add(convertEntityToCreateDto(p));
-		}
-		return listeRetour;
+		
+		return listeEntity.stream().map(this :: convertEntityToCreateDto).collect(Collectors.toList());
+		
+//		List<PlanteUtilisateurCreateDto> listeRetour = new ArrayList<PlanteUtilisateurCreateDto>();
+//		for(PlanteUtilisateur p: listeEntity) {
+//			listeRetour.add(convertEntityToCreateDto(p));
+//		}
+//		return listeRetour;
 	}
 
 	@Override
 	public List<PlanteUtilisateur> convertListUpdateDtoToEntity(List<PlanteUtilisateurUpdateDto> listeUpdateDto) {
-		List<PlanteUtilisateur> listeRetour = new ArrayList<PlanteUtilisateur>();
-		for(PlanteUtilisateurUpdateDto p: listeUpdateDto) {
-			listeRetour.add(convertUpdateDtoToEntity(p));
-		}
-		return listeRetour;
+		
+		return listeUpdateDto.stream().map(this :: convertUpdateDtoToEntity).collect(Collectors.toList());
+		
+//		List<PlanteUtilisateur> listeRetour = new ArrayList<PlanteUtilisateur>();
+//		for(PlanteUtilisateurUpdateDto p: listeUpdateDto) {
+//			listeRetour.add(convertUpdateDtoToEntity(p));
+//		}
+//		return listeRetour;
 	}
 
 	@Override
 	public List<PlanteUtilisateurUpdateDto> convertListEntityToUpdateDto(List<PlanteUtilisateur> listeEntity) {
-		List<PlanteUtilisateurUpdateDto> listeRetour = new ArrayList<PlanteUtilisateurUpdateDto>();
-		for(PlanteUtilisateur p: listeEntity) {
-			listeRetour.add(convertEntityToUpdateDto(p));
-		}
-		return listeRetour;
+		
+		return listeEntity.stream().map(this :: convertEntityToUpdateDto).collect(Collectors.toList());
+		
+//		List<PlanteUtilisateurUpdateDto> listeRetour = new ArrayList<PlanteUtilisateurUpdateDto>();
+//		for(PlanteUtilisateur p: listeEntity) {
+//			listeRetour.add(convertEntityToUpdateDto(p));
+//		}
+//		return listeRetour;
 	}
 
 }
