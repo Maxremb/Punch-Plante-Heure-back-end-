@@ -17,6 +17,7 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import com.fr.adaming.ModulePersistenceApplication;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
+import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.entity.PlanteUtilisateur;
 import com.fr.adaming.entity.Utilisateur;
 import com.fr.adaming.enums.EtatPlante;
@@ -44,8 +45,9 @@ public class IPlanteUtilisateurRepositoryTests {
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into plante_utilisateur values(1,'2020-04-01', '2020-04-01', 0, 1, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur values(1,'2020-04-01', '2020-04-01', 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -65,6 +67,10 @@ public class IPlanteUtilisateurRepositoryTests {
 		jardin.setNom("Jardin1");
 		jardin.setDepartement(dep);
 		jardin.setUtilisateur(utilisateur);
+		
+		PlanteModel planteModel = new PlanteModel();
+		planteModel.setId(2);
+		planteModel.setNomScientifique("Hibiscus");
 
 		PlanteUtilisateur planteUtilisateur = new PlanteUtilisateur();
 		planteUtilisateur.setId(1);
@@ -78,10 +84,12 @@ public class IPlanteUtilisateurRepositoryTests {
 
 		// Invoquer l'appli
 		Pageable pageable = PageRequest.of(0, 6, Sort.by("planteModel"));
-		Page<PlanteUtilisateur> result = repo.findByJardin(1, pageable);
+		Page<PlanteUtilisateur> result = repo.findByJardin(1, pageable); //problème
 
 		// assertion
-		assertThat(result).getBody().ToList().isNotEmpty();
+		assertThat(result).isNotNull();
+		assertThat(result.getSize()).isEqualTo(3);
+		assertThat(result.getNumber()).isEqualTo(0);
 
 	}
 
@@ -92,8 +100,9 @@ public class IPlanteUtilisateurRepositoryTests {
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into plante_utilisateur values(1,'2020-04-01', '2020-04-01', 0, 1, 1, null)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur values(1,'2020-04-01', '2020-04-01', 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)

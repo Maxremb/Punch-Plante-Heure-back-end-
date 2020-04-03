@@ -108,9 +108,9 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 		ServiceResponse<Page<PlanteUtilisateur>> list = planteUtilisateurService.readAll(0);
 		
 		
-		assertTrue(planteUtilisateurService.readAll(0).getBody().toList().size() == 1);
-		assertThat(planteUtilisateurService.readAll(0).getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("dateSemis", LocalDate.parse("2020-04-01"));
-		assertThat(planteUtilisateurService.readAll(0).getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("datePlantation", LocalDate.parse("2020-04-01"));
+		assertTrue(list.getBody().toList().size() == 1);
+		assertThat(list.getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("dateSemis", LocalDate.parse("2020-04-01"));
+		assertThat(list.getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("datePlantation", LocalDate.parse("2020-04-01"));
 //		assertThat(planteUtilisateurService.readAll(0).getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("etatPlante", 0);
 //		assertThat(planteUtilisateurService.readAll(0).getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("etatSante", 1);
 		
