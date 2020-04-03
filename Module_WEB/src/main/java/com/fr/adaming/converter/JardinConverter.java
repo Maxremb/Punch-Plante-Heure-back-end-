@@ -94,48 +94,24 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 
 	@Override
 	public Page<Jardin> convertPageCreateDtoToEntity(Page<JardinCreateDto> listeCreateDto) {
-		List<Jardin> listeRetour = new ArrayList<Jardin>();
-		for(JardinCreateDto p : listeCreateDto.toList()) {
-			
-			listeRetour.add(convertCreateDtoToEntity(p));
-		}
-		
-		Page<Jardin> pageRetour= new PageImpl<Jardin>(listeRetour);
-		return pageRetour;
+		return listeCreateDto.map(this::convertCreateDtoToEntity);
 	}
 
 	@Override
 	public Page<JardinCreateDto> convertPageEntityToCreateDto(Page<Jardin> listeEntity) {
-		List<JardinCreateDto> listeRetour = new ArrayList<JardinCreateDto>();
-		for(Jardin p: listeEntity.toList()) {
-			listeRetour.add(convertEntityToCreateDto(p));
-		}
-		
-		Page<JardinCreateDto> pageRetour = new PageImpl<JardinCreateDto>(listeRetour);
-		return pageRetour;
+		return listeEntity.map(this::convertEntityToCreateDto);
 	
 	}
 
 	@Override
 	public Page<Jardin> convertPageUpdateDtoToEntity(Page<JardinUpdateDto> listeUpdateDto) {
-		List<Jardin> listeRetour = new ArrayList<Jardin>();
-		for(JardinUpdateDto p:listeUpdateDto.toList()) {
-			listeRetour.add(convertUpdateDtoToEntity(p));
-		}
-		
-		Page<Jardin> pageRetour= new PageImpl<Jardin>(listeRetour);
-		return pageRetour;
+		return listeUpdateDto.map(this::convertUpdateDtoToEntity);
 	
 	}
 
 	@Override
 	public Page<JardinUpdateDto> convertPageEntityToUpdateDto(Page<Jardin> listeEntity) {
-		List<JardinUpdateDto> listeRetour = new ArrayList<JardinUpdateDto>();
-		for(Jardin p: listeEntity.toList()) {
-			listeRetour.add(convertEntityToUpdateDto(p));
-		}
-		Page<JardinUpdateDto> pageRetour = new PageImpl<JardinUpdateDto>(listeRetour);
-		return pageRetour;
+		return listeEntity.map(this::convertEntityToUpdateDto);
 	}
 
 	@Override

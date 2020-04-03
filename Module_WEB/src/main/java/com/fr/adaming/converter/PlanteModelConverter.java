@@ -112,48 +112,22 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 
 	@Override
 	public Page<PlanteModel> convertPageCreateDtoToEntity(Page<PlanteModelCreateDto> listeCreateDto) {
-		
-		
-		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
-		for(PlanteModelCreateDto p : listeCreateDto.toList()) {
-			
-			listeRetour.add(convertCreateDtoToEntity(p));
-		}
-		
-		Page<PlanteModel> pageRetour= new PageImpl<PlanteModel>(listeRetour);
-		return pageRetour;
+		return listeCreateDto.map(this::convertCreateDtoToEntity);
 	}
 
 	@Override
 	public Page<PlanteModelCreateDto> convertPageEntityToCreateDto(Page<PlanteModel> listeEntity) {
-		List<PlanteModelCreateDto> listeRetour = new ArrayList<PlanteModelCreateDto>();
-		for(PlanteModel p: listeEntity.toList()) {
-			listeRetour.add(convertEntityToCreateDto(p));
-		}
-		
-		Page<PlanteModelCreateDto> pageRetour = new PageImpl<PlanteModelCreateDto>(listeRetour);
-		return pageRetour;
+		return listeEntity.map(this::convertEntityToCreateDto);
 	}
 
 	@Override
 	public Page<PlanteModel> convertPageUpdateDtoToEntity(Page<PlanteModelUpdateDto> listeUpdateDto) {
-		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
-		for(PlanteModelUpdateDto p:listeUpdateDto.toList()) {
-			listeRetour.add(convertUpdateDtoToEntity(p));
-		}
-		
-		Page<PlanteModel> pageRetour= new PageImpl<PlanteModel>(listeRetour);
-		return pageRetour;
+		return listeUpdateDto.map(this::convertUpdateDtoToEntity);
 	}
 
 	@Override
 	public Page<PlanteModelUpdateDto> convertPageEntityToUpdateDto(Page<PlanteModel> listeEntity) {
-		List<PlanteModelUpdateDto> listeRetour = new ArrayList<PlanteModelUpdateDto>();
-		for(PlanteModel p: listeEntity.toList()) {
-			listeRetour.add(convertEntityToUpdateDto(p));
-		}
-		Page<PlanteModelUpdateDto> pageRetour = new PageImpl<PlanteModelUpdateDto>(listeRetour);
-		return pageRetour;
+		return listeEntity.map(this::convertEntityToUpdateDto);
 	}
 	
 	public PlanteModelReducedDto convertEntityToReducedDto(PlanteModel entity) {
@@ -184,19 +158,14 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 	}
 	
 	public Page<PlanteModel> convertListReducedDtoToEntity(Page<PlanteModelReducedDto> listeReducedDto) {
-		Page<PlanteModel> listeRetour = new PageImpl<PlanteModel>(null);
-		for(PlanteModelReducedDto p:listeReducedDto) {
-			listeRetour.and(convertReducedDtoToEntity(p));
-		}
-		return listeRetour;
+		Page<PlanteModel> retour = listeReducedDto.map(this::convertReducedDtoToEntity);
+		return retour;
+		
 	}
 
 	public Page<PlanteModelReducedDto> convertListEntityToReducedDto(Page<PlanteModel> listeEntity) {
-		Page<PlanteModelReducedDto> listeRetour = new PageImpl<PlanteModelReducedDto>(null);
-		for(PlanteModel p: listeEntity) {
-			listeRetour.and(convertEntityToReducedDto(p));
-		}
-		return listeRetour;
+		Page<PlanteModelReducedDto> retour = listeEntity.map(this::convertEntityToReducedDto);
+		return retour;
 	}
 
 	@Override
