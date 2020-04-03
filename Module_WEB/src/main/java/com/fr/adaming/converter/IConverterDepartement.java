@@ -2,9 +2,8 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.data.domain.Page;
 
-import com.fr.adaming.dto.DepartementDto;
 
 /**
  * Interface IConverter pour département
@@ -42,5 +41,19 @@ public interface IConverterDepartement<E, D> {
 	 * @return resultat de la conversion (liste d'objets Dto, pouvant etre vide)
 	 */
 	public List<D> convertListEntityToDto(List<E> listeDep);
+	
+	/**
+	 * Methode permettant de convertir une liste d'objets Dto en une liste d'objets Entite consideres
+	 * @param listeDto objet liste d'objets Dto a convertir
+	 * @return resultat de la conversion (liste d'objets Entite, pouvant etre vide)
+	 */
+	public Page<E> convertPageDtoToEntity(Page<D> pageDto);
+	
+	/**
+	 * Methode permettant de convertir une liste d'objets Entite en une liste d'objets Dto consideres
+	 * @param listeEntity objet liste d'objets Entite a convertir
+	 * @return resultat de la conversion (liste d'objets Dto, pouvant etre vide)
+	 */
+	public Page<D> convertPageEntityToDto(Page<E> pageDep);
 
 }
