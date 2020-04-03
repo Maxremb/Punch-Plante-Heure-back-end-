@@ -98,12 +98,12 @@ public class IPlanteUtilisateurRepositoryTests {
 		planteUtilisateur.setJardin(jardin);
 
 		// Invoquer l'appli
-		Pageable pageable = PageRequest.of(0, 6, Sort.by("planteModel"));
+		Pageable pageable = PageRequest.of(0, 6);
 		Page<PlanteUtilisateur> result = repo.findByJardin(1, pageable); //problème
 
 		// assertion
 		assertThat(result).isNotNull();
-		assertThat(result.getSize()).isEqualTo(3);
+		assertThat(result.getSize()).isEqualTo(6);
 		assertThat(result.getNumber()).isEqualTo(0);
 
 	}
