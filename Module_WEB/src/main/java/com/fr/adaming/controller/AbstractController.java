@@ -57,7 +57,7 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
 			responseDto.setError(true);
-			responseDto.setMessage(WebMappingConstant.SUCCESS_DELETE_BY_ID);
+			responseDto.setMessage(WebMappingConstant.FAIL_DELETE_BY_ID);
 			responseDto.setBody(null);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		}
