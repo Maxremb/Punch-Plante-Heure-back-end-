@@ -121,7 +121,7 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 			ServiceResponse<Page<E>> serviceResponse) {
 
 		ResponseDto<Page<U>> responseDto = new ResponseDto<Page<U>>();
-		Page<U> periodeList = converter.convertListEntityToUpdateDto(serviceResponse.getBody());
+		Page<U> periodeList = converter.convertPageEntityToUpdateDto(serviceResponse.getBody());
 
 		responseDto.setMessage(serviceResponse.getMessage());
 		responseDto.setBody(periodeList);
