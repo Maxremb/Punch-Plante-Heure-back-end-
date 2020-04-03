@@ -11,6 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PlanteModelUpdateDto extends PlanteModelCreateDto {
 	
-	int identifiant;
+	int identifiant = 0;
 
 }

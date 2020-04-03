@@ -2,6 +2,7 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.UtilisateurCreateDto;
@@ -36,28 +37,28 @@ public class UtilisateurConverter implements IConverter<UtilisateurCreateDto, Ut
 	}
 
 	@Override
-	public List<Utilisateur> convertListCreateDtoToEntity(List<UtilisateurCreateDto> listeCreateDto) {
+	public Page<Utilisateur> convertListCreateDtoToEntity(Page<UtilisateurCreateDto> listeCreateDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<UtilisateurCreateDto> convertListEntityToCreateDto(List<Utilisateur> listeEntity) {
+	public Page<UtilisateurCreateDto> convertListEntityToCreateDto(Page<Utilisateur> listeEntity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Utilisateur> convertListUpdateDtoToEntity(List<UtilisateurUpdateDto> listeUpdateDto) {
+	public Page<Utilisateur> convertListUpdateDtoToEntity(Page<UtilisateurUpdateDto> listeUpdateDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<UtilisateurUpdateDto> convertListEntityToUpdateDto(List<Utilisateur> listeEntity) {
+	public Page<UtilisateurUpdateDto> convertListEntityToUpdateDto(Page<Utilisateur> listeEntity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
+	
 }

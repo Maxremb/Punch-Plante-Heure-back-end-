@@ -30,7 +30,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		PlanteModel entity = new PlanteModel();
 		entity.setNomCommun(createDto.getCommun());
 		entity.setNomScientifique(createDto.getScientifique());
-		entity.setDates(periodeConverter.convertListUpdateDtoToEntity(createDto.getPeriodes()));
+		entity.setDates(null);
 		entity.setDescription(createDto.getDesc());
 		entity.setEnsoleillementOpti(createDto.getEnsoleillement());
 		entity.setHumiditeopti(createDto.getHumidite());
@@ -56,7 +56,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		PlanteModelCreateDto createDto= new PlanteModelCreateDto();
 		createDto.setCommun(entity.getNomCommun());
 		createDto.setScientifique(entity.getNomScientifique());
-		createDto.setPeriodes(periodeConverter.convertListEntityToUpdateDto(entity.getDates()));
+		createDto.setPeriodes(null);
 		createDto.setArrosage(entity.getIntervalArrosage());
 		createDto.setEnsoleillement(entity.getEnsoleillementOpti());
 		createDto.setHumidite(entity.getHumiditeopti());
@@ -89,11 +89,24 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		if(entity==null) {
 			return null;
 		}
-		PlanteModelUpdateDto updateDto = new PlanteModelUpdateDto();
-		updateDto=(PlanteModelUpdateDto) convertEntityToCreateDto(entity);
-		updateDto.setIdentifiant(entity.getId());
-			
-		return updateDto;
+		PlanteModelUpdateDto createDto= new PlanteModelUpdateDto();
+		createDto.setCommun(entity.getNomCommun());
+		createDto.setScientifique(entity.getNomScientifique());
+		createDto.setPeriodes(null);
+		createDto.setArrosage(entity.getIntervalArrosage());
+		createDto.setEnsoleillement(entity.getEnsoleillementOpti());
+		createDto.setHumidite(entity.getHumiditeopti());
+		createDto.setRepiquage(entity.getRepiquage());
+		createDto.setMin(entity.getTemperatureMin());
+		createDto.setMax(entity.getTemperatureMax());
+		createDto.setDesc(entity.getDescription());
+		createDto.setToxi(entity.isToxicite());
+		createDto.setPicture(entity.getPhoto());
+		createDto.setNegative(entity.getAssoNegative());
+		createDto.setPositive(entity.getAssoPositive());
+		createDto.setMifa(entity.getFamille());
+		createDto.setIdentifiant(entity.getId());
+		return createDto;
 		
 	}
 

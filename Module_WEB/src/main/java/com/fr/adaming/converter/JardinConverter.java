@@ -4,15 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.DepartementDto;
 import com.fr.adaming.dto.JardinCreateDto;
 import com.fr.adaming.dto.JardinUpdateDto;
+import com.fr.adaming.dto.PlanteModelCreateDto;
+import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.UtilisateurCreateDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
+import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.entity.Utilisateur;
 
 @Component
@@ -91,49 +96,49 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 	}
 
 	@Override
-	public List<Jardin> convertListCreateDtoToEntity(List<JardinCreateDto> listeCreateDto) {
-		List<Jardin> listEntite = new ArrayList<Jardin>();
-		if(listeCreateDto != null) {
-			for (JardinCreateDto createDto : listeCreateDto) {
-				listEntite.add(convertCreateDtoToEntity(createDto));
-			}
+	public Page<Jardin> convertListCreateDtoToEntity(Page<JardinCreateDto> listeCreateDto) {
+		List<Jardin> listeRetour = new ArrayList<Jardin>();
+		for(JardinCreateDto p : listeCreateDto.toList()) {
+			
+			listeRetour.add(convertCreateDtoToEntity(p));
 		}
-		return listEntite;
+		
+		Page<Jardin> pageRetour= new PageImpl<Jardin>(listeRetour);
+		return pageRetour;
 	}
 
 	@Override
-	public List<JardinCreateDto> convertListEntityToCreateDto(List<Jardin> listeEntity) {
-		List<JardinCreateDto> listCreateDto = new ArrayList<JardinCreateDto>();
-		if(listeEntity != null) {
-			for (Jardin entite : listeEntity) {
-				listCreateDto.add(convertEntityToCreateDto((entite)));
-			}
+	public Page<JardinCreateDto> convertListEntityToCreateDto(Page<Jardin> listeEntity) {
+		List<JardinCreateDto> listeRetour = new ArrayList<JardinCreateDto>();
+		for(Jardin p: listeEntity.toList()) {
+			listeRetour.add(convertEntityToCreateDto(p));
 		}
-		return listCreateDto;
+		
+		Page<JardinCreateDto> pageRetour = new PageImpl<JardinCreateDto>(listeRetour);
+		return pageRetour;
 	
 	}
 
 	@Override
-	public List<Jardin> convertListUpdateDtoToEntity(List<JardinUpdateDto> listeUpdateDto) {
-		List<Jardin> listEntite = new ArrayList<Jardin>();
-		if(listeUpdateDto != null) {
-			for (JardinUpdateDto updateDto : listeUpdateDto) {
-				listEntite.add(convertUpdateDtoToEntity(updateDto));
-			}
+	public Page<Jardin> convertListUpdateDtoToEntity(Page<JardinUpdateDto> listeUpdateDto) {
+		List<Jardin> listeRetour = new ArrayList<Jardin>();
+		for(JardinUpdateDto p:listeUpdateDto.toList()) {
+			listeRetour.add(convertUpdateDtoToEntity(p));
 		}
-		return listEntite;
+		
+		Page<Jardin> pageRetour= new PageImpl<Jardin>(listeRetour);
+		return pageRetour;
 	
 	}
 
 	@Override
-	public List<JardinUpdateDto> convertListEntityToUpdateDto(List<Jardin> listeEntity) {
-		List<JardinUpdateDto> listUpdateDto = new ArrayList<JardinUpdateDto>();
-		if(listeEntity != null) {
-			for (Jardin entite : listeEntity) {
-				listUpdateDto.add(convertEntityToUpdateDto((entite)));
-			}
+	public Page<JardinUpdateDto> convertListEntityToUpdateDto(Page<Jardin> listeEntity) {
+		List<JardinUpdateDto> listeRetour = new ArrayList<JardinUpdateDto>();
+		for(Jardin p: listeEntity.toList()) {
+			listeRetour.add(convertEntityToUpdateDto(p));
 		}
-		return listUpdateDto;
+		Page<JardinUpdateDto> pageRetour = new PageImpl<JardinUpdateDto>(listeRetour);
+		return pageRetour;
 	}
 
 }

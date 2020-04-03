@@ -2,6 +2,7 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.MeteoCreateDto;
@@ -36,28 +37,29 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 	}
 
 	@Override
-	public List<Meteo> convertListCreateDtoToEntity(List<MeteoCreateDto> listeCreateDto) {
+	public Page<Meteo> convertListCreateDtoToEntity(Page<MeteoCreateDto> listeCreateDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<MeteoCreateDto> convertListEntityToCreateDto(List<Meteo> listeEntity) {
+	public Page<MeteoCreateDto> convertListEntityToCreateDto(Page<Meteo> listeEntity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Meteo> convertListUpdateDtoToEntity(List<MeteoUpdateDto> listeUpdateDto) {
+	public Page<Meteo> convertListUpdateDtoToEntity(Page<MeteoUpdateDto> listeUpdateDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<MeteoUpdateDto> convertListEntityToUpdateDto(List<Meteo> listeEntity) {
+	public Page<MeteoUpdateDto> convertListEntityToUpdateDto(Page<Meteo> listeEntity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	
 	
 }
