@@ -2,6 +2,8 @@ package com.fr.adaming.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.fr.adaming.dto.ServiceResponse;
 
 //TODO adapter les methodes au demandes du projet
@@ -28,7 +30,7 @@ public interface IService<E> {
 	 * 
 	 * @return Une liste d'entité
 	 */
-	public ServiceResponse<List<E>> readAll();
+	public ServiceResponse<Page<E>> readAll(int p);
 
 	/**
 	 * <p>Methode permettant l'affichage d'une entite par son ID</p>

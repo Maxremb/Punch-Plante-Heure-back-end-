@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
@@ -83,11 +87,11 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel>  implem
 	 * @author Léa
 	 */
 	@Override
-	public ServiceResponse<List<PlanteModel>> readAllReduced(){
-		ServiceResponse<List<PlanteModel>> retour = new ServiceResponse<List<PlanteModel>>();
-			List<PlanteModel> retListe = new ArrayList<PlanteModel>();
-		//	retListe = repo.findAllReduced();
-			retour.setBody(retListe);
+	public ServiceResponse<Page<PlanteModel>> readAllReduced(int p){
+		ServiceResponse<Page<PlanteModel>> retour = new ServiceResponse<Page<PlanteModel>>();
+		Pageable pageable = PageRequest.of(p, 3, Sort.by("nomScientifique"));	
+		Page<PlanteModel> page = repo.findAllReduced(pageable);
+			retour.setBody(page);
 			retour.setMessage("Succes");
 			return retour;
 	}

@@ -3,6 +3,7 @@ package com.fr.adaming.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -82,9 +83,9 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 	}
 
 	@Override
-	public ResponseEntity<ResponseDto<List<U>>> readAll() {
+	public ResponseEntity<ResponseDto<Page<U>>> readAll(int p) {
 		
-		ServiceResponse<List<E>> serviceResponse = service.readAll();
+		ServiceResponse<Page<E>> serviceResponse = service.readAll(p);
 		
 		return makeUpdateDtoListResponse(serviceResponse);
 		
@@ -116,11 +117,11 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 	 * @param serviceResponse Reponse de la couche service de la méthode
 	 * @return Response Entity contenant la responseDto et une liste d'updateDto
 	 */
-	protected ResponseEntity<ResponseDto<List<U>>> makeUpdateDtoListResponse(
-			ServiceResponse<List<E>> serviceResponse) {
+	protected ResponseEntity<ResponseDto<Page<U>>> makeUpdateDtoListResponse(
+			ServiceResponse<Page<E>> serviceResponse) {
 
-		ResponseDto<List<U>> responseDto = new ResponseDto<List<U>>();
-		List<U> periodeList = converter.convertListEntityToUpdateDto(serviceResponse.getBody());
+		ResponseDto<Page<U>> responseDto = new ResponseDto<Page<U>>();
+		Page<U> periodeList = converter.convertListEntityToUpdateDto(serviceResponse.getBody());
 
 		responseDto.setMessage(serviceResponse.getMessage());
 		responseDto.setBody(periodeList);

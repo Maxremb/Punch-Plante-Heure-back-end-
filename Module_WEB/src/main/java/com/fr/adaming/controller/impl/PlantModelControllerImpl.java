@@ -4,6 +4,7 @@ package com.fr.adaming.controller.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,9 +28,9 @@ public class PlantModelControllerImpl extends AbstractController<PlanteModelCrea
 	private IPlanteModelService servicePM;
 	
 	@Override
-	public ResponseEntity<ResponseDto<List<PlanteModelUpdateDto>>> readAll() {
+	public ResponseEntity<ResponseDto<Page<PlanteModelUpdateDto>>> readAll(int p) {
 		
-		ServiceResponse<List<PlanteModel>> serviceResponse = servicePM.readAllReduced();
+		ServiceResponse<Page<PlanteModel>> serviceResponse = servicePM.readAllReduced(p);
 		
 		return makeUpdateDtoListResponse(serviceResponse);
 		
