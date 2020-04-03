@@ -85,7 +85,7 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 	@Override
 	public ServiceResponse<Page<PlanteModel>> readAllReduced(int p) {
 		ServiceResponse<Page<PlanteModel>> retour = new ServiceResponse<Page<PlanteModel>>();
-		Pageable pageable = PageRequest.of(p, 3, Sort.by("nomScientifique"));
+		Pageable pageable = PageRequest.of(p, 20, Sort.by("nomScientifique"));
 		Page<PlanteModel> page = repo.findAllReduced(pageable);
 		retour.setBody(page);
 		retour.setMessage("Succes");
