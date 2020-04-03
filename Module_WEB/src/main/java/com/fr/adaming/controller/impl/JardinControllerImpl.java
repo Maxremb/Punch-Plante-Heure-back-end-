@@ -32,8 +32,8 @@ public class JardinControllerImpl extends AbstractController<JardinCreateDto, Ja
 	private IJardinService serviceJardin;
 	
 
-	@GetMapping(path = "/name/{nom}")
-	public ResponseEntity<PageResponseDto<Page<JardinUpdateDto>>> readByName(@RequestParam(name = "page") int page, @PathVariable(name = "nom") @NotBlank String nom) {
+	@GetMapping(path = "/name")
+	public ResponseEntity<PageResponseDto<Page<JardinUpdateDto>>> readByName(@RequestParam(name = "page") int page, @RequestParam(name = "nom") @NotBlank String nom) {
 
 		ServiceResponse<Page<Jardin>> resp = serviceJardin.readByNom(page, nom);
 		
@@ -41,8 +41,8 @@ public class JardinControllerImpl extends AbstractController<JardinCreateDto, Ja
 		
 	}
 
-	@GetMapping(path = "/user/{identifier}")
-	public ResponseEntity<PageResponseDto<Page<JardinUpdateDto>>> readByUser(@RequestParam(name = "page") int page, @PathVariable(name = "identifier") @Positive Integer identifier) {
+	@GetMapping(path = "/user")
+	public ResponseEntity<PageResponseDto<Page<JardinUpdateDto>>> readByUser(@RequestParam(name = "page") int page, @RequestParam(name = "identifier") @Positive Integer identifier) {
 		
 		ServiceResponse<Page<Jardin>> resp = serviceJardin.readByUtilisateur(page, identifier);
 		
@@ -50,8 +50,8 @@ public class JardinControllerImpl extends AbstractController<JardinCreateDto, Ja
 		
 	}
 
-	@GetMapping(path = "/departement/{numDep}")
-	public ResponseEntity<PageResponseDto<Page<JardinUpdateDto>>> readByDep(@RequestParam(name = "page") int page, @PathVariable(name = "numDep") @Positive Integer numDep) {
+	@GetMapping(path = "/departement")
+	public ResponseEntity<PageResponseDto<Page<JardinUpdateDto>>> readByDep(@RequestParam(name = "page") int page, @RequestParam(name = "numDep") @Positive Integer numDep) {
 		
 		ServiceResponse<Page<Jardin>> resp = serviceJardin.readByDepartement(page, numDep);
 		
