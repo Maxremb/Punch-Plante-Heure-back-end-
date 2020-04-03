@@ -11,10 +11,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.ModuleServiceApplication;
-import com.fr.adaming.entity.Departement;
-import com.fr.adaming.entity.Meteo;
 import com.fr.adaming.entity.PlanteModel;
-import com.fr.adaming.service.IDepartementService;
 import com.fr.adaming.service.IService;
 import com.fr.adaming.service.IServiceTests;
 

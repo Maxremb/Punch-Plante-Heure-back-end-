@@ -1,10 +1,7 @@
 package com.fr.adaming.dto;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import com.fr.adaming.enums.Sol;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -3,7 +3,6 @@ package com.fr.adaming.converter;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Component;
 
 /**
  * Interface IConverter implementant les classes Converter de chaque entite

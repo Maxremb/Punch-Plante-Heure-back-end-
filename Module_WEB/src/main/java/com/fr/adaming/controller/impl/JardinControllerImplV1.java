@@ -10,14 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.controller.AbstractController;
 import com.fr.adaming.converter.JardinConverter;
 import com.fr.adaming.dto.JardinCreateDto;
 import com.fr.adaming.dto.JardinUpdateDto;
-import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Jardin;

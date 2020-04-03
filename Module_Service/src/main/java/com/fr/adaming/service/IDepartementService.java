@@ -3,8 +3,6 @@ package com.fr.adaming.service;
 import java.util.List;
 
 import com.fr.adaming.dto.ServiceResponse;
-import com.fr.adaming.entity.Departement;
-import com.fr.adaming.entity.Meteo;
 
 /**
  * Cette interface manage les méthodes différentes des CRUD de la couche Service de l'entité Département

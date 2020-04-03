@@ -1,7 +1,5 @@
 package com.fr.adaming.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -9,10 +7,8 @@ import org.springframework.http.ResponseEntity;
 
 import com.fr.adaming.constant.WebMappingConstant;
 import com.fr.adaming.converter.IConverter;
-import com.fr.adaming.dto.PeriodeUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
-import com.fr.adaming.entity.Periode;
 import com.fr.adaming.service.IService;
 
 //TODO adapter au front

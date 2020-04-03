@@ -1,7 +1,5 @@
 package com.fr.adaming.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteUtilisateur;
-
 import com.fr.adaming.repositories.IPlanteUtilisateurRepository;
 import com.fr.adaming.service.AbstractService;
 import com.fr.adaming.service.IPlanteUtilisateurService;

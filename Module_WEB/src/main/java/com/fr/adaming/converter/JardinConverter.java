@@ -11,13 +11,10 @@ import org.springframework.stereotype.Component;
 import com.fr.adaming.dto.DepartementDto;
 import com.fr.adaming.dto.JardinCreateDto;
 import com.fr.adaming.dto.JardinUpdateDto;
-import com.fr.adaming.dto.PlanteModelCreateDto;
-import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.UtilisateurCreateDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
-import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.entity.Utilisateur;
 
 @Component

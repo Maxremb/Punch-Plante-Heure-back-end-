@@ -1,14 +1,10 @@
 package com.fr.adaming.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +20,6 @@ import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.entity.PlanteUtilisateur;
 import com.fr.adaming.entity.Utilisateur;
-import com.fr.adaming.enums.EtatPlante;
-import com.fr.adaming.enums.EtatSante;
-import com.fr.adaming.service.IPlanteUtilisateurService;
 import com.fr.adaming.service.IServiceTests;
 
 /**

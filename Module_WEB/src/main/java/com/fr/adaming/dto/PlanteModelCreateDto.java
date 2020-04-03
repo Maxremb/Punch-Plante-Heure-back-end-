@@ -2,10 +2,8 @@ package com.fr.adaming.dto;
 
 import java.util.List;
 
-
-
-
 import com.fr.adaming.enums.Sol;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
