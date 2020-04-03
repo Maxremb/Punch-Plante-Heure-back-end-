@@ -111,7 +111,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 	}
 
 	@Override
-	public Page<PlanteModel> convertListCreateDtoToEntity(Page<PlanteModelCreateDto> listeCreateDto) {
+	public Page<PlanteModel> convertPageCreateDtoToEntity(Page<PlanteModelCreateDto> listeCreateDto) {
 		
 		
 		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
@@ -125,7 +125,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 	}
 
 	@Override
-	public Page<PlanteModelCreateDto> convertListEntityToCreateDto(Page<PlanteModel> listeEntity) {
+	public Page<PlanteModelCreateDto> convertPageEntityToCreateDto(Page<PlanteModel> listeEntity) {
 		List<PlanteModelCreateDto> listeRetour = new ArrayList<PlanteModelCreateDto>();
 		for(PlanteModel p: listeEntity.toList()) {
 			listeRetour.add(convertEntityToCreateDto(p));
@@ -136,7 +136,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 	}
 
 	@Override
-	public Page<PlanteModel> convertListUpdateDtoToEntity(Page<PlanteModelUpdateDto> listeUpdateDto) {
+	public Page<PlanteModel> convertPageUpdateDtoToEntity(Page<PlanteModelUpdateDto> listeUpdateDto) {
 		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
 		for(PlanteModelUpdateDto p:listeUpdateDto.toList()) {
 			listeRetour.add(convertUpdateDtoToEntity(p));
@@ -147,7 +147,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 	}
 
 	@Override
-	public Page<PlanteModelUpdateDto> convertListEntityToUpdateDto(Page<PlanteModel> listeEntity) {
+	public Page<PlanteModelUpdateDto> convertPageEntityToUpdateDto(Page<PlanteModel> listeEntity) {
 		List<PlanteModelUpdateDto> listeRetour = new ArrayList<PlanteModelUpdateDto>();
 		for(PlanteModel p: listeEntity.toList()) {
 			listeRetour.add(convertEntityToUpdateDto(p));
@@ -197,6 +197,44 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 			listeRetour.and(convertEntityToReducedDto(p));
 		}
 		return listeRetour;
-	} 
+	}
+
+	@Override
+	public List<PlanteModel> convertListCreateDtoToEntity(List<PlanteModelCreateDto> listeCreateDto) {
+		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
+		for(PlanteModelCreateDto p: listeCreateDto) {
+			listeRetour.add(convertCreateDtoToEntity(p));
+		}
+		return listeRetour;
+	}
+
+	@Override
+	public List<PlanteModelCreateDto> convertListEntityToCreateDto(List<PlanteModel> listeEntity) {
+		List<PlanteModelCreateDto> listeRetour = new ArrayList<PlanteModelCreateDto>();
+		for(PlanteModel p: listeEntity) {
+			listeRetour.add(convertEntityToCreateDto(p));
+		}
+		return listeRetour;
+	}
+
+	@Override
+	public List<PlanteModel> convertListUpdateDtoToEntity(List<PlanteModelUpdateDto> listeUpdateDto) {
+		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
+		for(PlanteModelUpdateDto p: listeUpdateDto) {
+			listeRetour.add(convertUpdateDtoToEntity(p));
+		}
+		return listeRetour;
+	}
+
+	@Override
+	public List<PlanteModelUpdateDto> convertListEntityToUpdateDto(List<PlanteModel> listeEntity) {
+		List<PlanteModelUpdateDto> listeRetour = new ArrayList<PlanteModelUpdateDto>();
+		for(PlanteModel p: listeEntity) {
+			listeRetour.add(convertEntityToUpdateDto(p));
+		}
+		return listeRetour;
+	}
+
+	
 
 }

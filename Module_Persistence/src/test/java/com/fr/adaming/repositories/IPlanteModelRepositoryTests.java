@@ -14,7 +14,11 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.ModulePersistenceApplication;
 import com.fr.adaming.entity.PlanteModel;
-
+/**
+ * Cette classe teste la couche repository de l'entité PlanteModel
+ * @author Léa Coston
+ * @since 0.0.1
+ */
 @SpringBootTest(classes = ModulePersistenceApplication.class)
 public class IPlanteModelRepositoryTests {
 
@@ -26,7 +30,7 @@ public class IPlanteModelRepositoryTests {
 	@Test
 	void testGettingPageOf10ItemsOfPlants_shouldReturnPageOfTenPlantsSortedByNomScientifique() {
 		
-		Pageable pageable = PageRequest.of(0, 3, Sort.by("nomScientifique"));
+		Pageable pageable = PageRequest.of(0, 10, Sort.by("nomScientifique"));
 		
 		Page<PlanteModel> page = repo.findAll(pageable);
 
