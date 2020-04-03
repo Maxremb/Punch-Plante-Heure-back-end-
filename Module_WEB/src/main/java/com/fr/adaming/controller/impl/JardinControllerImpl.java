@@ -6,6 +6,7 @@ import javax.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping(path = "/jardin")
 @RestController
+@CrossOrigin
 public class JardinControllerImpl extends AbstractController<JardinCreateDto, JardinUpdateDto, Jardin> {
 
 	@Autowired
