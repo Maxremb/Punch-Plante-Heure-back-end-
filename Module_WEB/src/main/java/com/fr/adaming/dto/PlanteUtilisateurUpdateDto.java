@@ -1,5 +1,7 @@
 package com.fr.adaming.dto;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +16,7 @@ import lombok.Setter;
 @Setter
 public class PlanteUtilisateurUpdateDto extends PlanteUtilisateurCreateDto {
 	
+	@NotNull
 	private int identifiant;
 
 }

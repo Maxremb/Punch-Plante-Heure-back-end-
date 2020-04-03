@@ -2,12 +2,17 @@ package com.fr.adaming.service.impl;
 
 import java.util.List;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteUtilisateur;
 
+import com.fr.adaming.repositories.IPlanteUtilisateurRepository;
 import com.fr.adaming.service.AbstractService;
 import com.fr.adaming.service.IPlanteUtilisateurService;
 
@@ -29,6 +34,10 @@ import lombok.extern.slf4j.Slf4j;
 public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisateur>
 		implements IPlanteUtilisateurService {
 
+	
+	@Autowired
+	private IPlanteUtilisateurRepository repo;
+	
 	@Override
 	public ServiceResponse<PlanteUtilisateur> create(PlanteUtilisateur planteUtilisateur) {
 
@@ -63,9 +72,8 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 
 		else {
 			try {
-				dao.save(planteUtilisateur);
 				log.info("Plante Utilisateur enregistré dans la BD");
-				return new ServiceResponse<PlanteUtilisateur>("Succes", planteUtilisateur);
+				return new ServiceResponse<PlanteUtilisateur>("Succes", dao.save(planteUtilisateur));
 			} catch (Exception e) {
 				log.warn(e.getMessage());
 				return new ServiceResponse<PlanteUtilisateur>("Erreur lors de la sauvegarde des modifications", null);
@@ -73,20 +81,43 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 		}
 	}
 
-	public ServiceResponse<List<PlanteUtilisateur>> findByJardin(int idJardin) {
+//	public ServiceResponse<List<PlanteUtilisateur>> findByJardin(int idJardin) {
+//		if (!dao.existsById(idJardin)) {
+//			log.info("Jardin inexistant");
+//			return new ServiceResponse<List<PlanteUtilisateur>>("Jardin inexistant", null);
+//		} else {
+//			try {
+//				log.info("Jardin existant");
+//				List<PlanteUtilisateur> planteUtilList = dao.findAll();
+//				ServiceResponse<List<PlanteUtilisateur>> serviceResponse = new ServiceResponse<List<PlanteUtilisateur>>();
+//				serviceResponse.setBody(planteUtilList);
+//				return serviceResponse;
+//			} catch (Exception e) {
+//				log.warn(e.getMessage());
+//				return new ServiceResponse<List<PlanteUtilisateur>>("Erreur lors de l'affichage de la liste", null);
+//			}
+//
+//		}
+//	}
+
+	@Override
+	public ServiceResponse<Page<PlanteUtilisateur>> readByJardin(int idJardin, int p) {
 		if (!dao.existsById(idJardin)) {
 			log.info("Jardin inexistant");
-			return new ServiceResponse<List<PlanteUtilisateur>>("Jardin inexistant", null);
+			return new ServiceResponse<Page<PlanteUtilisateur>>("Jardin inexistant", null);
 		} else {
 			try {
 				log.info("Jardin existant");
-				List<PlanteUtilisateur> planteUtilList = dao.findAll();
-				ServiceResponse<List<PlanteUtilisateur>> serviceResponse = new ServiceResponse<List<PlanteUtilisateur>>();
-				serviceResponse.setBody(planteUtilList);
+				ServiceResponse<Page<PlanteUtilisateur>> serviceResponse = new ServiceResponse<Page<PlanteUtilisateur>>();
+				Pageable pageable = PageRequest.of(p, 6, Sort.by("planteModel"));
+				Page<PlanteUtilisateur> page = repo.findByJardin(idJardin, pageable);
+				
+				serviceResponse.setBody(page);
+				serviceResponse.setMessage("Succes");
 				return serviceResponse;
 			} catch (Exception e) {
 				log.warn(e.getMessage());
-				return new ServiceResponse<List<PlanteUtilisateur>>("Erreur lors de l'affichage de la liste", null);
+				return new ServiceResponse<Page<PlanteUtilisateur>>("Erreur lors de l'affichage de la liste", null);
 			}
 
 		}

@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.JardinCreateDto;
@@ -18,14 +20,18 @@ import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.entity.PlanteUtilisateur;
 
 /**
- * <p>Converter pour l'entite Plante Utilisateur en dto et inversement <br>
- * Implemente IConverter.</p>
+ * <p>
+ * Converter pour l'entite Plante Utilisateur en dto et inversement <br>
+ * Implemente IConverter.
+ * </p>
+ * 
  * @author lucie
  * @since 0.0.1
  *
  */
 @Component
-public class PlanteUtilisateurConverter implements IConverter<PlanteUtilisateurCreateDto, PlanteUtilisateurUpdateDto, PlanteUtilisateur> {
+public class PlanteUtilisateurConverter
+		implements IConverter<PlanteUtilisateurCreateDto, PlanteUtilisateurUpdateDto, PlanteUtilisateur> {
 
 	@Autowired
 	private IConverter<PlanteModelCreateDto, PlanteModelUpdateDto, PlanteModel> plantModelConverter;
@@ -121,62 +127,49 @@ public class PlanteUtilisateurConverter implements IConverter<PlanteUtilisateurC
 		}
 	}
 
-	@Override
-	public List<PlanteUtilisateur> convertListCreateDtoToEntity(List<PlanteUtilisateurCreateDto> listeCreateDto) {
-		if (listeCreateDto != null) {
-			List<PlanteUtilisateur> planteUtilisateurListe = new ArrayList<>();
 
-			for (PlanteUtilisateurCreateDto planteUtilisateurDto : listeCreateDto) {
-				planteUtilisateurListe.add(convertCreateDtoToEntity(planteUtilisateurDto));
-			}
-			return planteUtilisateurListe;
-		} else {
-			return Collections.emptyList();
+	@Override
+	public Page<PlanteUtilisateur> convertListCreateDtoToEntity(Page<PlanteUtilisateurCreateDto> listeCreateDto) {
+		List<PlanteUtilisateur> listeRetour = new ArrayList<PlanteUtilisateur>();
+		for(PlanteUtilisateurCreateDto p : listeCreateDto.toList()) {
+			
+			listeRetour.add(convertCreateDtoToEntity(p));
 		}
+		
+		Page<PlanteUtilisateur> pageRetour= new PageImpl<PlanteUtilisateur>(listeRetour);
+		return pageRetour;
 	}
 
 	@Override
-	public List<PlanteUtilisateurCreateDto> convertListEntityToCreateDto(List<PlanteUtilisateur> listeEntity) {
-		if (listeEntity != null) {
-			List<PlanteUtilisateurCreateDto> planteUtilisateurdtolist = new ArrayList<>();
-
-			for (PlanteUtilisateur p : listeEntity) {
-
-				planteUtilisateurdtolist.add(convertEntityToCreateDto(p));
-			}
-			return planteUtilisateurdtolist;
-		} else {
-			return Collections.emptyList();
+	public Page<PlanteUtilisateurCreateDto> convertListEntityToCreateDto(Page<PlanteUtilisateur> listeEntity) {
+		List<PlanteUtilisateurCreateDto> listeRetour = new ArrayList<PlanteUtilisateurCreateDto>();
+		for(PlanteUtilisateur p: listeEntity.toList()) {
+			listeRetour.add(convertEntityToCreateDto(p));
 		}
+		
+		Page<PlanteUtilisateurCreateDto> pageRetour = new PageImpl<PlanteUtilisateurCreateDto>(listeRetour);
+		return pageRetour;
 	}
 
 	@Override
-	public List<PlanteUtilisateur> convertListUpdateDtoToEntity(List<PlanteUtilisateurUpdateDto> listeUpdateDto) {
-		if (listeUpdateDto != null) {
-			List<PlanteUtilisateur> planteUtilisateurListe = new ArrayList<>();
-
-			for (PlanteUtilisateurUpdateDto planteUtilisateurDto : listeUpdateDto) {
-				planteUtilisateurListe.add(convertUpdateDtoToEntity(planteUtilisateurDto));
-			}
-			return planteUtilisateurListe;
-		} else {
-			return Collections.emptyList();
+	public Page<PlanteUtilisateur> convertListUpdateDtoToEntity(Page<PlanteUtilisateurUpdateDto> listeUpdateDto) {
+		List<PlanteUtilisateur> listeRetour = new ArrayList<PlanteUtilisateur>();
+		for(PlanteUtilisateurUpdateDto p:listeUpdateDto.toList()) {
+			listeRetour.add(convertUpdateDtoToEntity(p));
 		}
+		
+		Page<PlanteUtilisateur> pageRetour= new PageImpl<PlanteUtilisateur>(listeRetour);
+		return pageRetour;
 	}
 
 	@Override
-	public List<PlanteUtilisateurUpdateDto> convertListEntityToUpdateDto(List<PlanteUtilisateur> listeEntity) {
-		if (listeEntity != null) {
-			List<PlanteUtilisateurUpdateDto> planteUtilisateurdtolist = new ArrayList<>();
-
-			for (PlanteUtilisateur p : listeEntity) {
-
-				planteUtilisateurdtolist.add(convertEntityToUpdateDto(p));
-			}
-			return planteUtilisateurdtolist;
-		} else {
-			return Collections.emptyList();
+	public Page<PlanteUtilisateurUpdateDto> convertListEntityToUpdateDto(Page<PlanteUtilisateur> listeEntity) {
+		List<PlanteUtilisateurUpdateDto> listeRetour = new ArrayList<PlanteUtilisateurUpdateDto>();
+		for(PlanteUtilisateur p: listeEntity.toList()) {
+			listeRetour.add(convertEntityToUpdateDto(p));
 		}
+		Page<PlanteUtilisateurUpdateDto> pageRetour = new PageImpl<PlanteUtilisateurUpdateDto>(listeRetour);
+		return pageRetour;
 	}
 
 }

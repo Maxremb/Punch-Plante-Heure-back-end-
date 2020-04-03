@@ -1,6 +1,8 @@
 package com.fr.adaming.service;
 
-import java.util.List;
+
+
+import org.springframework.data.domain.Page;
 
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteUtilisateur;
@@ -12,5 +14,5 @@ import com.fr.adaming.entity.PlanteUtilisateur;
  */
 public interface IPlanteUtilisateurService {
 
-	public ServiceResponse<List<PlanteUtilisateur>> findByJardin(int idJardin);
+	public ServiceResponse<Page<PlanteUtilisateur>> readByJardin(int idJardin, int p);
 }

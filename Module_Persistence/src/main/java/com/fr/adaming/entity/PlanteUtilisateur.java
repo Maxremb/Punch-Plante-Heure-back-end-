@@ -46,10 +46,10 @@ public class PlanteUtilisateur {
 	@Column
 	private LocalDate datePlantation;
 	
-	@ManyToOne
+	@ManyToOne (optional = false)
 	private Jardin jardin;
 	
-	@ManyToOne
+	@ManyToOne (optional = false)
 	private PlanteModel planteModel;
 	
 }

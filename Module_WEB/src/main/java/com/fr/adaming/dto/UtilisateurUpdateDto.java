@@ -3,8 +3,7 @@ package com.fr.adaming.dto;
 import lombok.Data;
 
 @Data
-public class UtilisateurUpdateDto {
+public class UtilisateurUpdateDto extends UtilisateurCreateDto {
 
-	private String lastName;
-	private String firstName;
+	 private int identifier;
 }
