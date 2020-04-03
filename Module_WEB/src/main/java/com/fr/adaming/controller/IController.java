@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -91,12 +92,12 @@ public interface IController<C, U> {
 	/**
 	 * <b>Description : </b>
 	 * <p>
-	 * Methode pour afficher la liste des donnees d'une entite.
+	 * Methode pour afficher la page p de la liste complète des instances d'une entité
 	 * </p>
-	 * 
-	 * @return listDto
+	 * @param p le numéro de la page souhaitée
+	 * @return page d'entité
 	 */
-	@GetMapping(path = "/all")
-	public ResponseEntity<ResponseDto<List<U>>> readAll();
+	@GetMapping(path = "/all/{p}")
+	public ResponseEntity<ResponseDto<Page<U>>> readAll(int p);
 
 }
