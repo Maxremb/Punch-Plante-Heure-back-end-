@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
@@ -33,58 +34,70 @@ public class PlanteModelServiceTest implements IServiceTests{
 	private IService<PlanteModel> service;
 
 
-	@Sql(statements = "INSERT INTO PlanteModel (id, nomCommun, nomScientifique) VALUES (1, 'nomCommun', 'nomScientifique)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM PlanteModel", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
+	@Test
 	public void testDeletingValidId_shouldReturnTrue() {
 		assertTrue(service.deleteById(1));
 		
 	}
 
-	@Sql(statements = "INSERT INTO PlanteModel (id, nomCommun, nomScientifique) VALUES (1, 'nomCommun', 'nomScientifique)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM PlanteModel", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
+	@Test
 	public void testDeletingInvalidId_shouldReturnFalse() {
 		assertFalse(service.deleteById(2));
 		
 	}
 
-	@Sql(statements = "INSERT INTO PlanteModel (id, nomCommun, nomScientifique) VALUES (1, 'nomCommun', 'nomScientifique)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM PlanteModel", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
+	@Test
 	public void testReadAllWithContent_shouldReturnList() {
 		assertNotNull(service.readAll(0));
-		assertThat(service.readAll(0).getBody().getSize()).isEqualTo(1);
+		assertThat(service.readAll(0).getBody().getNumberOfElements()).isEqualTo(1);
 		assertThat(service.readAll(0).getBody().getNumber()).isEqualTo(0);
 		
 	}
 
-	@Sql(statements = "DELETE FROM PlanteModel", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
+	@Test
 	public void testReadAllNoContent_shouldReturnEmptyList() {
-		// TODO Auto-generated method stub
+		assertNotNull(service.readAll(0));
+		assertThat(service.readAll(0).getBody().getNumberOfElements()).isEqualTo(0);
 		
 	}
 
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
+	@Test
 	public void testReadByIdValidId_shouldReturnEntity() {
-		// TODO Auto-generated method stub
+		assertThat(service.readById(1)).isNotNull();
+		assertThat(service.readById(1)).isInstanceOf(PlanteModel.class);
 		
 	}
 
 	@Override
+	@Test
 	public void testReadByIdInvalidId_shouldReturnNull() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
+	@Test
 	public void testExistsByIdValidId_ShouldReturnTrue() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
+	@Test
 	public void testExistsByIdInValidId_ShouldReturnFalse() {
 		// TODO Auto-generated method stub
 		

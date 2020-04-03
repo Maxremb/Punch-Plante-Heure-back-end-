@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import com.fr.adaming.constant.WebMappingConstant;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.converter.IConverterDepartement;
-import com.fr.adaming.dto.PageResponseDto;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.service.IDepartementService;
@@ -130,11 +129,10 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 		ServiceResponse<Page<E>> serviceResponse = service.readAll(p);
 		
 		Page<D> returnedPage = converter.convertPageEntityToDto(serviceResponse.getBody());
-		PageResponseDto<Page<D>> responseDto = new PageResponseDto<Page<D>>();
+		ResponseDto<Page<D>> responseDto = new ResponseDto<Page<D>>();
 		responseDto.setError(false);
 		responseDto.setMessage(serviceResponse.getMessage());
 		responseDto.setBody(returnedPage);
-		responseDto.setMaxPages(returnedPage.getTotalPages());
 		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 	}
 	

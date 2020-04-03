@@ -17,7 +17,7 @@ import com.fr.adaming.service.IPlanteModelService;
  * Classe Service relative à l'entité Plante Model ettend AbstractService,
  * Implement IPlanteModelService
  * 
- * @author Léa
+ * @author Léa Coston
  * @since 0.0.1-SNAPSHOT
  */
 

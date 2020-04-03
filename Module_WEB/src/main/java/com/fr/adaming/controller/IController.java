@@ -5,6 +5,7 @@ import javax.validation.constraints.Positive;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.fr.adaming.dto.PageResponseDto;
 import com.fr.adaming.dto.ResponseDto;
 
 //TODO ajouter une responseDto
@@ -34,7 +33,7 @@ import com.fr.adaming.dto.ResponseDto;
  * @param <U> UpdateDto
  * 
  */
-
+@CrossOrigin
 @RequestMapping
 public interface IController<C, U> {
 
@@ -95,6 +94,6 @@ public interface IController<C, U> {
 	 * @return page d'entité
 	 */
 	@GetMapping(path = "/all/{p}")
-	public ResponseEntity<PageResponseDto<Page<U>>> readAll(@PathVariable("p") int p);
+	public ResponseEntity<ResponseDto<Page<U>>> readAll(@PathVariable("p") int p);
 
 }
