@@ -8,7 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.controller.AbstractController;
@@ -31,6 +33,15 @@ public class PlantModelControllerImpl extends AbstractController<PlanteModelCrea
 	public ResponseEntity<ResponseDto<Page<PlanteModelUpdateDto>>> readAll(int p) {
 		
 		ServiceResponse<Page<PlanteModel>> serviceResponse = servicePM.readAllReduced(p);
+		
+		return makeUpdateDtoListResponse(serviceResponse);
+		
+	}
+	
+	@GetMapping(path = "/nom")
+	public ResponseEntity<ResponseDto<Page<PlanteModelUpdateDto>>> readByNom(@RequestParam(name = "page") int page,@RequestParam(name = "nom") String nom){
+		
+		ServiceResponse<Page<PlanteModel>> serviceResponse = servicePM.findByNom(page, nom);
 		
 		return makeUpdateDtoListResponse(serviceResponse);
 		

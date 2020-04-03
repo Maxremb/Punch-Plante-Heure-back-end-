@@ -13,6 +13,6 @@ public interface IPlanteModelService {
 	
 	public ServiceResponse<Page<PlanteModel>> readAllReduced(int p);
 	
-	
+	public ServiceResponse<Page<PlanteModel>> findByNom(int page, String nom);
 
 }

@@ -1,7 +1,5 @@
 package com.fr.adaming.repositories;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,10 +24,8 @@ public interface IPlanteModelRepository extends JpaRepository<PlanteModel, Integ
 	public boolean existsByNomScientifique(String nomScientifique);
 	
 	public PlanteModel findByNomScientifique(String nomScientifique);
-
 	
-	
-	
+	public Page<PlanteModel> findByNomCommunOrNomScientifiqueContaining(Pageable pageable, String nomCommun, String nomScientifique);
 
 	
 }
