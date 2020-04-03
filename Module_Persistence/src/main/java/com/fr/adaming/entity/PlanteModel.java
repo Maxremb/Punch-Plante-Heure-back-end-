@@ -74,12 +74,14 @@ public class PlanteModel {
 	private String photo;
 
 	@Column
-	@ManyToMany
-	private List<PlanteModel> assoPositive;
+	private List<String> assoPositive;
 
 	@Column
-	@ManyToMany
-	private List<PlanteModel> assoNegative;
+	
+	private List<String> assoNegative;
+	
+	@Column
+	private String famille;
 
 	public PlanteModel(int id, String nomCommun, String nomScientifique, String photo) {
 		super();

@@ -29,6 +29,7 @@ public class PlanteModelCreateDto {
 	private String desc;
 	private boolean toxi;
 	private String picture;
-	private List<PlanteModelReducedDto> positive;
-	private List<PlanteModelReducedDto> negative;
+	private List<String> positive;
+	private List<String> negative;
+	private String mifa;
 }
