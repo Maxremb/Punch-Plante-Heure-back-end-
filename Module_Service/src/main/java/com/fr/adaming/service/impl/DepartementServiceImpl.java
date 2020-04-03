@@ -2,7 +2,9 @@ package com.fr.adaming.service.impl;
 
 import java.util.List;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
@@ -28,8 +30,9 @@ public class DepartementServiceImpl extends AbstractService<Departement> impleme
 
 	@Override
 	public ServiceResponse<Departement> create(Departement departement) {
-		if (departement != null) {
-			if (!dao.existsById(departement.getNumeroDep())) {
+		try {
+			if (departement != null) {
+				if (!dao.existsById(departement.getNumeroDep())) {
 				log.info("Un département a été créé et enregistré dans la BD via la couche service.");
 				return new ServiceResponse<Departement>("Création d'un département via couche service OK", dao.save(departement));
 			} else {
@@ -40,10 +43,15 @@ public class DepartementServiceImpl extends AbstractService<Departement> impleme
 			log.info("Tentative échouée de création d'un département null via couche service");
 			return new ServiceResponse<Departement>("Tentative de création d'un département NULL", null);
 		}
+		} catch (DataIntegrityViolationException dive) {
+			log.warn("Tentative échouée de création d'un département avec un nom déjà utilisé");
+			return new ServiceResponse<Departement>("Tentative de création d'un département avec nom déjà utilisé", null);
+		}
 	}
 
 	@Override
 	public ServiceResponse<Departement> update(Departement departement) {
+		try {
 		if (departement != null) {
 			if (dao.existsById(departement.getNumeroDep())) {
 				log.info("Un département a été modifié dans la BD via la couche service.");
@@ -55,6 +63,10 @@ public class DepartementServiceImpl extends AbstractService<Departement> impleme
 		} else {
 			log.info("Tentative échouée de modification d'un département NULL");
 			return new ServiceResponse<Departement>("Tentative de modification d'un département NULL", null);
+		}
+		} catch (DataIntegrityViolationException dive) {
+			log.warn("Tentative échouée de modification d'un département avec un nom déjà utilisé");
+			return new ServiceResponse<Departement>("Tentative de modification d'un département avec nom déjà utilisé", null);
 		}
 	}
 
@@ -68,7 +80,7 @@ public class DepartementServiceImpl extends AbstractService<Departement> impleme
 				return new ServiceResponse<Departement>("Récupération d'un département après recherche par nom", depRepo.findDepartementByNom(nom));
 			} else {
 				log.info("Tentative de récupération d'un département après recherche via nom NULL");
-				return new ServiceResponse<Departement>("Tentative de récupération d'un département après recherche via nom NULL\"", null);
+				return new ServiceResponse<Departement>("Tentative de récupération d'un département après recherche via nom NULL", null);
 			}
 		} catch (Exception e) {
 			log.warn("Problème récupération d'un département après recherche via nom (couche service)" + e.getMessage());
