@@ -10,6 +10,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
@@ -22,6 +25,14 @@ import com.fr.adaming.service.IJardinService;
 import com.fr.adaming.service.IService;
 import com.fr.adaming.service.IServiceTests;
 
+/**
+ * Cette classe teste la couche service de l'entité Jardin
+ * Elle implémente une interface pour le test des méthodes CRUD (read All, read by Id, exist by Id, delete by Id) et définit ses propres méthodes de test pour les autres. 
+ * 
+ * @author Isaline MILLET / Clara CADET
+ * @since 0.0.1
+ *
+ */
 @SpringBootTest(classes = ModuleServiceApplication.class)
 public class JardinServiceTest implements IServiceTests {
 
@@ -32,282 +43,401 @@ public class JardinServiceTest implements IServiceTests {
 	private IService<Jardin> service;
 
 
-	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "Delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Override
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
+	@Override
 	public void testDeletingValidId_shouldReturnTrue() {
 		assertTrue(service.deleteById(1));
 	}
 
-	@Override
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
+	@Override
 	public void testDeletingInvalidId_shouldReturnFalse() {
-		assertFalse(service.deleteById(1));
+		assertFalse(service.deleteById(2));
 	}
 
-	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Delete from jardin, Delete from utilisateur, Delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Override
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
+	@Override
 	public void testReadAllWithContent_shouldReturnList() {
-		ServiceResponse<List<Jardin>> resp = service.readAll();
-		assertTrue(resp.getBody().size() == 1);
+		assertTrue(service.readAll(0).getBody().toList().size() == 1);
+		assertThat(service.readAll(0).getBody().toList().get(0)).isNotNull();
 	}
 
-	@Override
 	@Test
+	@Override
 	public void testReadAllNoContent_shouldReturnEmptyList() {
-		ServiceResponse<List<Jardin>> resp = service.readAll();
-		assertTrue(resp.getBody().isEmpty());
+		assertTrue(service.readAll(0).getBody().toList().isEmpty());
 	}
 
-	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Delete from jardin, Delete from utilisateur, Delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Override
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
+	@Override
 	public void testReadByIdValidId_shouldReturnEntity() {
-		assertThat(service.readById(1).getBody()).isNotNull().hasFieldOrPropertyWithValue("nom", "Jardinblabla");
+		assertThat(service.readById(1).getBody()).isNotNull().hasFieldOrPropertyWithValue("nom", "nom4Test");
 	}
 
 
-	@Override
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
+	@Override
 	public void testReadByIdInvalidId_shouldReturnNull() {
-		assertThat(service.readById(1).getBody()).isNull();
-		assertThat(service.readById(1).getMessage())
-				.isEqualTo("Une entité avec cet ID n'existe pas dans la base de données");
-
+		assertThat(service.readById(2).getBody()).isNull();
+		assertThat(service.readById(2).getMessage()).isEqualTo("Une entité avec cet ID n'existe pas dans la base de données");
 	}
 
 
-	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Delete from jardin, Delete from utilisateur, Delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Override
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
+	@Override
 	public void testExistsByIdValidId_ShouldReturnTrue() {
 		assertTrue(service.existsById(1));
 	}
 
 
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
 	@Override
-	@Test
 	public void testExistsByIdInValidId_ShouldReturnFalse() {
-		assertFalse(service.existsById(1));
+		assertFalse(service.existsById(2));
 
 	}
 
-	/**
-	 * Teste la création d'une entité valide 
-	 */
-	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Delete from jardin, Delete from departement, Delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Test
-	public void testCreateValid_ShouldReturnEntity() {
-		Utilisateur user = new Utilisateur();
-		Departement dep = new Departement();
-		Jardin jardin = new Jardin();
-		jardin.setId(1);
-		jardin.setNom("blabla");
-		jardin.setDepartement(dep);
-		jardin.setUtilisateur(user);
-		assertThat(service.create(jardin).getBody()).isEqualTo(jardin);
-		assertThat(service.create(jardin).getMessage()).isEqualTo("Success");
+//	/**
+//	 * Cette méthode teste la création d'un jardin - conditions valides
+//	 */
+//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void testCreateValid_ShouldReturnEntity() {
+//		Utilisateur user = new Utilisateur();
+//		Departement dep = new Departement();
+//		Jardin jardin = new Jardin();
+//		jardin.setId(1);
+//		jardin.setNom("blabla");
+//		jardin.setDepartement(dep);
+//		jardin.setUtilisateur(user);
+//		assertThat(service.create(jardin).getBody()).isEqualTo(jardin);
+//		assertThat(service.create(jardin).getMessage()).isEqualTo("Success");
+//
+//	}
 
-	}
+//	/**
+//	 * Teste la création existence par identifiant avec identifiant inconnu
+//	 */
+//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void testCreateNull_ShouldReturnNull() {
+//		assertNull(service.create(null).getBody());
+//
+//	}
 
-	/**
-	 * Teste la création existence par identifiant avec identifiant inconnu
-	 */
-	@Test
-	public void testCreateNull_ShouldReturnNull() {
-		assertNull(service.create(null).getBody());
-
-	}
-
-	/**
-	 * Teste la création avec un id déjà connu dans la DB
-	 */
-	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Delete from jardin, Delete from utilisateur, Delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Test
-	public void testCreateExistingId_ShouldReturnNull() {
-		Utilisateur user = new Utilisateur();
-		Departement dep = new Departement();
-		Jardin jardin = new Jardin();
-		jardin.setId(1);
-		jardin.setNom("blabla");
-		jardin.setDepartement(dep);
-		jardin.setUtilisateur(user);
-		assertNull(service.create(jardin).getBody());
-
-	}
+//	/**
+//	 * Teste la création avec un id déjà connu dans la DB
+//	 */
+//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void testCreateExistingId_ShouldReturnNull() {
+//		Utilisateur user = new Utilisateur();
+//		Departement dep = new Departement();
+//		Jardin jardin = new Jardin();
+//		jardin.setId(1);
+//		jardin.setNom("blabla");
+//		jardin.setDepartement(dep);
+//		jardin.setUtilisateur(user);
+//		assertNull(service.create(jardin).getBody());
+//
+//	}
+	
+//	/**
+//	 * Teste la modification avec un id déjà connu dans la DB
+//	 */
+//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void testUpdateExistingJardin_ShouldReturnEntite() {
+//		Utilisateur user = new Utilisateur();
+//		Departement dep = new Departement();
+//		Jardin jardin = new Jardin();
+//		jardin.setId(1);
+//		jardin.setNom("blabla");
+//		jardin.setDepartement(dep);
+//		jardin.setUtilisateur(user);
+//		assertThat(service.update(jardin).getMessage()).isEqualTo("Success");
+//		assertThat(service.update(jardin).getBody()).hasFieldOrPropertyWithValue("nom", "blabla");
+//
+//	}
+	
+//	/**
+//	 * Teste la modification avec un id inconnu dans la DB
+//	 */
+//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void testUpdateNotExistingJardin_ShouldReturnEntite() {
+//		Utilisateur user = new Utilisateur();
+//		Departement dep = new Departement();
+//		Jardin jardin = new Jardin();
+//		jardin.setId(1);
+//		jardin.setNom("blabla");
+//		jardin.setDepartement(dep);
+//		jardin.setUtilisateur(user);
+//		assertNull(service.update(jardin).getBody());
+//
+//	}
+	
+//	/**
+//	 * Teste la modification avec une entité null
+//	 */
+//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void testUpdateNullJardin_ShouldReturnEntite() {
+//		assertNull(service.update(null).getBody());
+//
+//	}
+	
 	
 	/**
-	 * Teste la modification avec un id déjà connu dans la DB
+	 * Cette méthode teste la récupération d'un jardin via son nom - conditions valides
 	 */
-	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Delete from jardin, Delete from utilisateur, Delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Test
-	public void testUpdateExistingJardin_ShouldReturnEntite() {
-		Utilisateur user = new Utilisateur();
-		Departement dep = new Departement();
-		Jardin jardin = new Jardin();
-		jardin.setId(1);
-		jardin.setNom("blabla");
-		jardin.setDepartement(dep);
-		jardin.setUtilisateur(user);
-		assertThat(service.update(jardin).getMessage()).isEqualTo("Success");
-		assertThat(service.update(jardin).getBody()).hasFieldOrPropertyWithValue("nom", "blabla");
-
-	}
-	
-	/**
-	 * Teste la modification avec un id inconnu dans la DB
-	 */
-	@Test
-	public void testUpdateNotExistingJardin_ShouldReturnEntite() {
-		Utilisateur user = new Utilisateur();
-		Departement dep = new Departement();
-		Jardin jardin = new Jardin();
-		jardin.setId(1);
-		jardin.setNom("blabla");
-		jardin.setDepartement(dep);
-		jardin.setUtilisateur(user);
-		assertNull(service.update(jardin).getBody());
-
-	}
-	
-	/**
-	 * Teste la modification avec une entité null
-	 */
-	@Test
-	public void testUpdateNullJardin_ShouldReturnEntite() {
-		assertNull(service.update(null).getBody());
-
-	}
-	
-	
-	/**
-	 * Teste la lecture par nom avec un nom existant
-	 */
-	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Delete from jardin, Delete from utilisateur, Delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testReadNameExistingName_ShouldReturnEntite() {
-		ServiceResponse<List<Jardin>> resp = serviceJardin.readByNom("Jardinblabla");
-		assertThat(resp.getBody().get(0)).hasFieldOrPropertyWithValue("nom", "Jardinblabla");
-
+		assertThat(serviceJardin.readByNom(0, "nom4Test")).isNotNull();
+		assertThat(serviceJardin.readByNom(0, "nom4Test").getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("nom", "nom4Test");
 	}
 	
 	/**
-	 * Teste la lecture par nom avec un nom non existant
+	 * Cette méthode teste la récupération d'un jardin via son nom - conditions invalides (nom inexistant)
 	 */
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testReadNameNotExistingName_ShouldReturnEntite() {
-		assertTrue(serviceJardin.readByNom("Jardinblabla").getBody().isEmpty());
-
+		assertThat(serviceJardin.readByNom(0, "nomInvalid").getBody().toList()).isEmpty();
+		assertThat(serviceJardin.readByNom(0, "nomInvalid").getMessage()).isEqualTo("Recherche jardin par nom");
 	}
 	
 	/**
-	 * Teste la lecture par nom avec un nom vide
+	 * Cette méthode teste la récupération d'un jardin via son nom - conditions invalides (nom null)
 	 */
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void testReadNameWithBlankName_ShouldReturnEntite() {
-		assertNull(serviceJardin.readByNom("").getBody());
-
+	public void testReadNameWithNullName_ShouldReturnNull() {
+		assertThat(serviceJardin.readByNom(0, null).getBody()).isNull();
+		assertThat(serviceJardin.readByNom(0, null).getMessage()).isEqualTo("Recherche non réalisé : nom null");
 	}
 	
 	/**
-	 * Teste la lecture par nom avec un nom null
+	 * Cette méthode teste la récupération des jardins d'un utilisateur via son id - conditions valides
 	 */
-	@Test
-	public void testReadNameWithNullName_ShouldReturnEntite() {
-		assertNull(serviceJardin.readByNom(null).getBody());
-
-	}
-	
-	/**
-	 * Teste la lecture par utilisateur avec un utilisateur existant
-	 */
-	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Delete from jardin, Delete from utilisateur, Delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testReadUserExistingUser_ShouldReturnEntite() {
-		ServiceResponse<List<Jardin>> resp = serviceJardin.readByUtilisateur(1);
-		assertTrue(resp.getBody().size()==1);
-		assertThat(resp.getBody().get(0)).hasFieldOrPropertyWithValue("nom", "Jardinblabla");
-
+		assertTrue(serviceJardin.readByUtilisateur(0, 2).getBody().toList().size() == 1);
 	}
 	
 	/**
-	 * Teste la lecture par utilisateur avec un utilisateur non existant
+	 * Cette méthode teste la récupération des jardins d'un utilisateur via son id - conditions invalides (id inexistant)
 	 */
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testReadUserNotExistingUser_ShouldReturnEntite() {
-		assertTrue(serviceJardin.readByUtilisateur(1).getBody().isEmpty());
-
+		assertNull(serviceJardin.readByUtilisateur(0, 1).getBody());
 	}
 	
-	/**
-	 * Teste la lecture par utilisateur avec un id utilisateur null
-	 */
-	@Test
-	public void testReadUserWithIdNull_ShouldReturnEntite() {
-		assertNull(serviceJardin.readByUtilisateur(null).getBody());
-
-	}
-	
-	/**
-	 * Teste la lecture par département avec un département existant
-	 */
-	@Sql(statements = "Insert into utilisateur (id) values (1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into departement (numero_dep, nom) values (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Insert into jardin (id, nom, utilisateur_id, departement_numero_dep) values (1, 'Jardinblabla', 1, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "Delete from jardin, Delete from utilisateur, Delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Test
-	public void testReadDepExistingDep_ShouldReturnEntite() {
-		ServiceResponse<List<Jardin>> resp = serviceJardin.readByDepartement(69);
-		assertTrue(resp.getBody().size()==1);
-		assertThat(resp.getBody().get(0)).hasFieldOrPropertyWithValue("nom", "Jardinblabla");
-
-	}
-	
-	/**
-	 * Teste la lecture par département avec un département non existant
-	 */
-	@Test
-	public void testReadDepNotExistingDep_ShouldReturnEntite() {
-		assertTrue(serviceJardin.readByDepartement(1).getBody().isEmpty());
-
-	}
-	
-	/**
-	 * Teste la lecture par département avec un numéro département null
-	 */
-	@Test
-	public void testReadDepWithIdNull_ShouldReturnEntite() {
-		assertNull(serviceJardin.readByDepartement(null).getBody());
-
-	}
+//	/**
+//	 * Teste la lecture par utilisateur avec un id utilisateur null
+//	 */
+//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void testReadUserWithIdNull_ShouldReturnEntite() {
+//		assertNull(serviceJardin.readByUtilisateur(null).getBody());
+//
+//	}
+//	
+//	/**
+//	 * Teste la lecture par département avec un département existant
+//	 */
+//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void testReadDepExistingDep_ShouldReturnEntite() {
+//		ServiceResponse<List<Jardin>> resp = serviceJardin.readByDepartement(69);
+//		assertTrue(resp.getBody().size()==1);
+//		assertThat(resp.getBody().get(0)).hasFieldOrPropertyWithValue("nom", "Jardinblabla");
+//
+//	}
+//	
+//	/**
+//	 * Teste la lecture par département avec un département non existant
+//	 */
+//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void testReadDepNotExistingDep_ShouldReturnEntite() {
+//		assertTrue(serviceJardin.readByDepartement(1).getBody().isEmpty());
+//
+//	}
+//	
+//	/**
+//	 * Teste la lecture par département avec un numéro département null
+//	 */
+//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+//	@Test
+//	public void testReadDepWithIdNull_ShouldReturnEntite() {
+//		assertNull(serviceJardin.readByDepartement(null).getBody());
+//
+//	}
 
 }
 
