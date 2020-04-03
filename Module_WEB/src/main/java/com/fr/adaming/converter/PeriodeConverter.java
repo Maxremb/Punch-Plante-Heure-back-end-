@@ -2,6 +2,7 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.PeriodeCreateDto;
@@ -36,28 +37,30 @@ public class PeriodeConverter implements IConverter<PeriodeCreateDto, PeriodeUpd
 	}
 
 	@Override
-	public List<Periode> convertListCreateDtoToEntity(List<PeriodeCreateDto> listeCreateDto) {
+	public Page<Periode> convertListCreateDtoToEntity(Page<PeriodeCreateDto> listeCreateDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<PeriodeCreateDto> convertListEntityToCreateDto(List<Periode> listeEntity) {
+	public Page<PeriodeCreateDto> convertListEntityToCreateDto(Page<Periode> listeEntity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Periode> convertListUpdateDtoToEntity(List<PeriodeUpdateDto> listeUpdateDto) {
+	public Page<Periode> convertListUpdateDtoToEntity(Page<PeriodeUpdateDto> listeUpdateDto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<PeriodeUpdateDto> convertListEntityToUpdateDto(List<Periode> listeEntity) {
+	public Page<PeriodeUpdateDto> convertListEntityToUpdateDto(Page<Periode> listeEntity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 	
 }

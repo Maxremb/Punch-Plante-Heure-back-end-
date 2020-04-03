@@ -1,5 +1,8 @@
 package com.fr.adaming.converter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -11,7 +14,7 @@ import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.entity.PlanteModel;
 
 @Component
-public class PlanteModelConverter extends AbstractConverter<PlanteModelCreateDto, PlanteModelUpdateDto, PlanteModel> {
+public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, PlanteModelUpdateDto, PlanteModel> {
 
 	@Autowired
 	private PeriodeConverter periodeConverter;
@@ -94,42 +97,51 @@ public class PlanteModelConverter extends AbstractConverter<PlanteModelCreateDto
 		
 	}
 
-//	@Override
-//	public Page<PlanteModel> convertListCreateDtoToEntity(Page<PlanteModelCreateDto> listeCreateDto) {
-//		Page<PlanteModel> listeRetour = new PageImpl<PlanteModel>(null);
-//		for(PlanteModelCreateDto p : listeCreateDto) {
-//			
-//			listeRetour.and(convertCreateDtoToEntity(p));
-//		}
-//		return listeRetour;
-//	}
-//
-//	@Override
-//	public Page<PlanteModelCreateDto> convertListEntityToCreateDto(Page<PlanteModel> listeEntity) {
-//		Page<PlanteModelCreateDto> listeRetour = new PageImpl<PlanteModelCreateDto>(null);
-//		for(PlanteModel p: listeEntity) {
-//			listeRetour.and(convertEntityToCreateDto(p));
-//		}
-//		return listeRetour;
-//	}
-//
-//	@Override
-//	public Page<PlanteModel> convertListUpdateDtoToEntity(Page<PlanteModelUpdateDto> listeUpdateDto) {
-//		Page<PlanteModel> listeRetour = new PageImpl<PlanteModel>(null);
-//		for(PlanteModelUpdateDto p:listeUpdateDto) {
-//			listeRetour.and(convertUpdateDtoToEntity(p));
-//		}
-//		return listeRetour;
-//	}
-//
-//	@Override
-//	public Page<PlanteModelUpdateDto> convertListEntityToUpdateDto(Page<PlanteModel> listeEntity) {
-//		Page<PlanteModelUpdateDto> listeRetour = new PageImpl<PlanteModelUpdateDto>(null);
-//		for(PlanteModel p: listeEntity) {
-//			listeRetour.and(convertEntityToUpdateDto(p));
-//		}
-//		return listeRetour;
-//	}
+	@Override
+	public Page<PlanteModel> convertListCreateDtoToEntity(Page<PlanteModelCreateDto> listeCreateDto) {
+		
+		
+		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
+		for(PlanteModelCreateDto p : listeCreateDto.toList()) {
+			
+			listeRetour.add(convertCreateDtoToEntity(p));
+		}
+		
+		Page<PlanteModel> pageRetour= new PageImpl<PlanteModel>(listeRetour);
+		return pageRetour;
+	}
+
+	@Override
+	public Page<PlanteModelCreateDto> convertListEntityToCreateDto(Page<PlanteModel> listeEntity) {
+		List<PlanteModelCreateDto> listeRetour = new ArrayList<PlanteModelCreateDto>();
+		for(PlanteModel p: listeEntity.toList()) {
+			listeRetour.add(convertEntityToCreateDto(p));
+		}
+		
+		Page<PlanteModelCreateDto> pageRetour = new PageImpl<PlanteModelCreateDto>(listeRetour);
+		return pageRetour;
+	}
+
+	@Override
+	public Page<PlanteModel> convertListUpdateDtoToEntity(Page<PlanteModelUpdateDto> listeUpdateDto) {
+		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
+		for(PlanteModelUpdateDto p:listeUpdateDto.toList()) {
+			listeRetour.add(convertUpdateDtoToEntity(p));
+		}
+		
+		Page<PlanteModel> pageRetour= new PageImpl<PlanteModel>(listeRetour);
+		return pageRetour;
+	}
+
+	@Override
+	public Page<PlanteModelUpdateDto> convertListEntityToUpdateDto(Page<PlanteModel> listeEntity) {
+		List<PlanteModelUpdateDto> listeRetour = new ArrayList<PlanteModelUpdateDto>();
+		for(PlanteModel p: listeEntity.toList()) {
+			listeRetour.add(convertEntityToUpdateDto(p));
+		}
+		Page<PlanteModelUpdateDto> pageRetour = new PageImpl<PlanteModelUpdateDto>(listeRetour);
+		return pageRetour;
+	}
 	
 	public PlanteModelReducedDto convertEntityToReducedDto(PlanteModel entity) {
 		if(entity==null) {
