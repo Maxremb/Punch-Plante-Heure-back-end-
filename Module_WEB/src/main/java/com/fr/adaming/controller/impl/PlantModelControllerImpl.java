@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.controller.AbstractController;
+import com.fr.adaming.dto.PageResponseDto;
 import com.fr.adaming.dto.PlanteModelCreateDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
-import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.service.IPlanteModelService;
@@ -27,20 +27,20 @@ public class PlantModelControllerImpl extends AbstractController<PlanteModelCrea
 	private IPlanteModelService servicePM;
 	
 	@Override
-	public ResponseEntity<ResponseDto<Page<PlanteModelUpdateDto>>> readAll(int p) {
+	public ResponseEntity<PageResponseDto<Page<PlanteModelUpdateDto>>> readAll(int p) {
 		
 		ServiceResponse<Page<PlanteModel>> serviceResponse = servicePM.readAllReduced(p);
 		
-		return makeUpdateDtoListResponse(serviceResponse);
+		return makeUpdateDtoPageResponse(serviceResponse);
 		
 	}
 	
 	@GetMapping(path = "/nom")
-	public ResponseEntity<ResponseDto<Page<PlanteModelUpdateDto>>> readByNom(@RequestParam(name = "page") int page,@RequestParam(name = "nom") String nom){
+	public ResponseEntity<PageResponseDto<Page<PlanteModelUpdateDto>>> readByNom(@RequestParam(name = "page") int page,@RequestParam(name = "nom") String nom){
 		
 		ServiceResponse<Page<PlanteModel>> serviceResponse = servicePM.findByNom(page, nom);
 		
-		return makeUpdateDtoListResponse(serviceResponse);
+		return makeUpdateDtoPageResponse(serviceResponse);
 		
 	}
 
