@@ -1,5 +1,7 @@
 package com.fr.adaming.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -7,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import com.fr.adaming.constant.WebMappingConstant;
 import com.fr.adaming.converter.IConverter;
+import com.fr.adaming.dto.PageResponseDto;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.service.IService;
@@ -79,11 +82,11 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 	}
 
 	@Override
-	public ResponseEntity<ResponseDto<Page<U>>> readAll(int p) {
+	public ResponseEntity<PageResponseDto<Page<U>>> readAll(int p) {
 		
 		ServiceResponse<Page<E>> serviceResponse = service.readAll(p);
 		
-		return makeUpdateDtoListResponse(serviceResponse);
+		return makeUpdateDtoPageResponse(serviceResponse);
 		
 	}
 	
@@ -113,15 +116,33 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 	 * @param serviceResponse Reponse de la couche service de la méthode
 	 * @return Response Entity contenant la responseDto et une liste d'updateDto
 	 */
-	protected ResponseEntity<ResponseDto<Page<U>>> makeUpdateDtoListResponse(
+	protected ResponseEntity<ResponseDto<List<U>>> makeUpdateDtoListResponse(
+			ServiceResponse<List<E>> serviceResponse) {
+
+		ResponseDto<List<U>> responseDto = new ResponseDto<List<U>>();
+		List<U> periodeList = converter.convertListEntityToUpdateDto(serviceResponse.getBody());
+
+		responseDto.setMessage(serviceResponse.getMessage());
+		responseDto.setBody(periodeList);
+		responseDto.setError(false);
+		return ResponseEntity.ok(responseDto);
+
+	}
+	
+	/**Regroupe les elements communs des méthodes qui retournent des listes d'updateDto
+	 * @param serviceResponse Reponse de la couche service de la méthode
+	 * @return Response Entity contenant la responseDto et une liste d'updateDto
+	 */
+	protected ResponseEntity<PageResponseDto<Page<U>>> makeUpdateDtoPageResponse(
 			ServiceResponse<Page<E>> serviceResponse) {
 
-		ResponseDto<Page<U>> responseDto = new ResponseDto<Page<U>>();
+		PageResponseDto<Page<U>> responseDto = new PageResponseDto<Page<U>>();
 		Page<U> periodeList = converter.convertPageEntityToUpdateDto(serviceResponse.getBody());
 
 		responseDto.setMessage(serviceResponse.getMessage());
 		responseDto.setBody(periodeList);
 		responseDto.setError(false);
+		responseDto.setMaxPages(periodeList.getTotalPages());
 		return ResponseEntity.ok(responseDto);
 
 	}
