@@ -5,6 +5,7 @@ import javax.validation.constraints.Positive;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ import com.fr.adaming.dto.ResponseDto;
  * @param <U> UpdateDto
  * 
  */
-
+@CrossOrigin
 @RequestMapping
 public interface IController<C, U> {
 
