@@ -26,12 +26,32 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AbstractTestMethods<U> {
 
+	// ***runMockMvc***
+	
 	@Autowired
 	private MockMvc mockMvc;
 	private ObjectMapper mapper = new ObjectMapper();
+	
+	/**
+	 * Lance la partie du code test qui utilise mockMvc et objectMapper. Version sans entrée de dto.
+	 * 
+	 * @param requestType       Le type de la requete html
+	 * @param path              Le chemin vers le controller (ex: "/plantemodel")
+	 * @param expectedStatus    Le statut attendu (ex: 200)
+	 * @param responseBodyClass La class du retour attendu dans le body de
+	 *                          responseDto (ex planteUpdateDto.class)
+	 * @return ResponseDto contenant un body de type
+	 * @throws Exception
+	 */
+	protected ResponseDto<U> runMockMvc(String requestType, String path, int expectedStatus,
+			Class<U> responseBodyClass) throws Exception {
+
+		return runMockMvc(requestType, path, expectedStatus, null, responseBodyClass);
+
+	}
 
 	/**
-	 * Lance la partie du code test qui utilise mockMvc et objectMapper
+	 * Lance la partie du code test qui utilise mockMvc et objectMapper. Version sans type de request specifié
 	 * 
 	 * @param path              Le chemin vers le controller (ex: "/plantemodel")
 	 * @param expectedStatus    Le statut attendu (ex: 200)
@@ -44,13 +64,7 @@ public class AbstractTestMethods<U> {
 	protected ResponseDto<U> runMockMvc(String path, int expectedStatus, Object dto, Class<U> responseBodyClass)
 			throws Exception {
 
-		// Execution de MockMvc et recuperation de las responseDto en format string
-		String responseAsString = runMockMvcLite("post", path, expectedStatus, dto);
-		// Recuperation du type
-		JavaType responseDtoType = mapper.getTypeFactory().constructParametricType(ResponseDto.class,
-				responseBodyClass);
-		// Conversion de responseAsString en ResponseDto
-		return mapper.readValue(responseAsString, responseDtoType);
+		return runMockMvc("post", path, expectedStatus, dto, responseBodyClass);
 
 	}
 
@@ -78,11 +92,25 @@ public class AbstractTestMethods<U> {
 		return mapper.readValue(responseAsString, responseDtoType);
 
 	}
-
-	/**
 	
+	// *** runMockMvcLite ***
+	
+	/**
+	 * Lance le mockmvc et retourne la version string de responseDto
 	 * 
+	 * @param requestType    Le type de la requete html
+	 * @param path           Le chemin vers le controller (ex: "/plantemodel")
+	 * @param expectedStatus Le statut attendu (ex: 200)
+	 * @param dto            Le dto recu par le controller
+	 * @return Version string du ResponseDto
+	 * @throws Exception
 	 */
+	protected String runMockMvcLite(String requestType, String path, int expectedStatus) throws Exception {
+
+		return runMockMvcLite(requestType, path, expectedStatus, null);
+
+	}
+
 
 	/**
 	 * Lance le mockmvc et retourne la version string de responseDto
@@ -95,7 +123,7 @@ public class AbstractTestMethods<U> {
 	 * @throws Exception
 	 */
 	protected String runMockMvcLite(String requestType, String path, int expectedStatus, Object dto) throws Exception {
-		String dtoAsJson = mapper.writeValueAsString(dto); // Le controller prend une createDto
+		String dtoAsJson;
 		String responseAsString = null;
 
 		// Execution de la requete
@@ -103,6 +131,7 @@ public class AbstractTestMethods<U> {
 		switch (requestType) {
 
 		case "post":
+			dtoAsJson = mapper.writeValueAsString(dto);
 			responseAsString = mockMvc
 					.perform(post(path).contentType(MediaType.APPLICATION_JSON_VALUE).content(dtoAsJson))
 					.andExpect(status().is(expectedStatus)).andReturn().getResponse()
@@ -121,6 +150,7 @@ public class AbstractTestMethods<U> {
 			break;
 
 		case "put":
+			dtoAsJson = mapper.writeValueAsString(dto);
 			responseAsString = mockMvc
 					.perform(put(path).contentType(MediaType.APPLICATION_JSON_VALUE).content(dtoAsJson))
 					.andExpect(status().is(expectedStatus)).andReturn().getResponse()
@@ -132,5 +162,7 @@ public class AbstractTestMethods<U> {
 		return responseAsString;
 
 	}
+	
+
 
 }

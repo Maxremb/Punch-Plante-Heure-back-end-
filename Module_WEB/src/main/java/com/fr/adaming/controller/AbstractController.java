@@ -48,12 +48,12 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 	}
 
 	@Override
-	public ResponseEntity<ResponseDto<?>> deleteById(int id) {
+	public ResponseEntity<ResponseDto<U>> deleteById(int id) {
 		
 		log.info("Controller: méthode DELETE appelée");
 		
 		boolean result = service.deleteById(id);
-		ResponseDto<?> responseDto = new ResponseDto<Object>();
+		ResponseDto<U> responseDto = new ResponseDto<U>();
 
 		if (result) {
 			responseDto.setError(false);

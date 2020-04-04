@@ -58,7 +58,7 @@ public interface IController<C, U> {
 	 * @return ResponseEntity avec ResponseDto. Body: boolean true or false
 	 */
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto<?>> deleteById(@PathVariable("id") @Positive int id);
+	public ResponseEntity<ResponseDto<U>> deleteById(@PathVariable("id") @Positive int id);
 
 	/**
 	 * <b>Description : </b>

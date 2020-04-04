@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -102,30 +103,55 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
-	public void testDeletingEntityWithValidId_shouldReturn200() {
+	public void testDeletingEntityWithValidId_shouldReturn200() throws Exception {
 
+		String path = BASE_URL + "/1";
+		ResponseDto<PlanteModelUpdateDto> responseDto = runMockMvc("delete", path, 200, PlanteModelUpdateDto.class);
+		
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertNull(responseDto.getBody());
+		assertNotNull(responseDto.getMessage());
+		
+
+	}
+
+	@Test
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Override
+	public void testDeletingEntityWithInvalidId_shouldReturn400() throws Exception {
+
+
+		String path = BASE_URL + "/9001";
+		ResponseDto<PlanteModelUpdateDto> responseDto = runMockMvc("delete", path, 400, PlanteModelUpdateDto.class);
+		
+		assertNotNull(responseDto);
+		assertTrue(responseDto.isError());
+		assertNull(responseDto.getBody());
+		assertNotNull(responseDto.getMessage());
+
+	}
+
+	@Test
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Override
+	public void testDeletingEntityWithNegativeId_shouldReturn400() throws Exception {
+		
+		String path = BASE_URL + "/-1";
+		
+		String responseAsString = runMockMvcLite("delete", path, 400, null);
+		
+		assertThat(responseAsString).isEmpty();
 		
 
 	}
 
 	@Test
 	@Override
-	public void testDeletingEntityWithInvalidId_shouldReturn400() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Test
-	@Override
-	public void testDeletingEntityWithNegativeId_shouldReturn400() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Test
-	@Override
 	public void testUpdatingEntityWithValidId_shouldReturn200() {
-		// TODO Auto-generated method stub
+
+		
 
 	}
 
