@@ -44,6 +44,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		entity.setAssoNegative(createDto.getNegative());
 		entity.setAssoPositive(createDto.getPositive());
 		entity.setFamille(createDto.getMifa());
+		entity.setSolOpti(createDto.getSol());
 		return entity;
 	}
 
@@ -69,6 +70,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		createDto.setNegative(entity.getAssoNegative());
 		createDto.setPositive(entity.getAssoPositive());
 		createDto.setMifa(entity.getFamille());
+		createDto.setSol(entity.getSolOpti());
 		return createDto;
 	}
 
