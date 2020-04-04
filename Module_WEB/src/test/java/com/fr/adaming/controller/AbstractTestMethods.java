@@ -1,8 +1,5 @@
 package com.fr.adaming.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -16,7 +13,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,6 +23,11 @@ import com.fr.adaming.page.RestPageImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author Gregoire
+ *
+ * @param <U> le type de dto retourné par la plupart des controllers en tant que body de responseDto. Probablement updateDto 
+ */
 @AutoConfigureMockMvc
 @Slf4j
 public class AbstractTestMethods<U> {
@@ -262,7 +263,5 @@ public class AbstractTestMethods<U> {
 		return responseAsString;
 
 	}
-	
-
 
 }
