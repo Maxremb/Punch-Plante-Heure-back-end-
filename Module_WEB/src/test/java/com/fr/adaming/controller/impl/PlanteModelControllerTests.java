@@ -7,9 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
@@ -136,59 +139,89 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
-	public void testDeletingEntityWithNegativeId_shouldReturn400() throws Exception {
+	public void testUpdatingEntityWithValidId_shouldReturn200() throws Exception {
+
+		PlanteModelUpdateDto dto = makeNewUpdateDto();
+		dto.setCommun("bob");
 		
-		String path = BASE_URL + "/-1";
+		ResponseDto<PlanteModelUpdateDto> responseDto = runMockMvc("put", BASE_URL, 200, dto, PlanteModelUpdateDto.class);
 		
-		String responseAsString = runMockMvcLite("delete", path, 400, null);
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Succes de la mise à jour", responseDto.getMessage());
+		assertNotNull(responseDto.getBody());
+
+	}
+
+	@Test
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Override
+	public void testUpdatingEntityWithInvalidId_shouldReturn400() throws Exception {
+
+		PlanteModelUpdateDto dto = makeNewUpdateDto();
+		dto.setCommun("bob");
+		dto.setIdentifiant(12345);
 		
-		assertThat(responseAsString).isEmpty();
+		ResponseDto<PlanteModelUpdateDto> responseDto = runMockMvc("put", BASE_URL, 400, dto, PlanteModelUpdateDto.class);
 		
+		assertNotNull(responseDto);
+		assertTrue(responseDto.isError());
+		assertEquals("Update non réalisé : vous avez renseigné un id inexistant dans la base de donnée", responseDto.getMessage());
+		assertNull(responseDto.getBody());
 
 	}
 
 	@Test
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
-	public void testUpdatingEntityWithValidId_shouldReturn200() {
+	public void testReadingEntityWithValidId_shouldReturn200() throws Exception {
 
+		String path=BASE_URL + "/1";
 		
+		ResponseDto<PlanteModelUpdateDto> responseDto = runMockMvc("get", path, 200, PlanteModelUpdateDto.class);
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Success",responseDto.getMessage());
+		assertNotNull(responseDto.getBody());
 
 	}
 
 	@Test
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
-	public void testUpdatingEntityWithInvalidId_shouldReturn400() {
-		// TODO Auto-generated method stub
+	public void testReadingEntityWithInvalidId_shouldReturn400() throws Exception {
+		
+		String path=BASE_URL + "/100000";
+		
+		ResponseDto<PlanteModelUpdateDto> responseDto = runMockMvc("get", path, 400, PlanteModelUpdateDto.class);
+		assertNotNull(responseDto);
+		assertTrue(responseDto.isError());
+		assertEquals("Une entité avec cet ID n'existe pas dans la base de données",responseDto.getMessage());
+		assertNull(responseDto.getBody());
 
 	}
 
 	@Test
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (2, 'Alice', 'Alicium')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
-	public void testReadingEntityWithValidId_shouldReturn200() {
-		// TODO Auto-generated method stub
+	public void testReadingAllEntity_shouldReturn200() throws Exception {
+
+		String path=BASE_URL + "/all/0";
+		
+		ResponseDto<Page<PlanteModelUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, PlanteModelUpdateDto.class);
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Succes",responseDto.getMessage());
+		assertNotNull(responseDto.getBody());
 
 	}
-
-	@Test
-	@Override
-	public void testReadingEntityWithInvalidId_shouldReturn400() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Test
-	@Override
-	public void testReadingEntityWithNegativeId_shouldReturn400() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Test
-	@Override
-	public void testReadingAllEntity_shouldReturn200() {
-		// TODO Auto-generated method stub
-
-	}
+	
+	// *** Méthodes privés ***
 	
 	private PlanteModelUpdateDto makeNewUpdateDto() {
 		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison
