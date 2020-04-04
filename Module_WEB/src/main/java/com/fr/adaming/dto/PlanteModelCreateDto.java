@@ -2,6 +2,8 @@ package com.fr.adaming.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import com.fr.adaming.enums.Sol;
 
 import lombok.Getter;
@@ -15,6 +17,7 @@ public class PlanteModelCreateDto {
 
 
 	private String commun;
+	@NotNull (message = "Le nom scientifique de la plante ne peut pas être null")
 	private String scientifique;
 	private List<PeriodeUpdateDto> periodes;
 	private int arrosage;

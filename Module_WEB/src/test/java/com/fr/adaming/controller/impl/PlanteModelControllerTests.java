@@ -1,18 +1,24 @@
 package com.fr.adaming.controller.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.ModuleWebApplication;
 import com.fr.adaming.controller.AbstractTestMethods;
 import com.fr.adaming.controller.IControllerTests;
+import com.fr.adaming.dto.PlanteModelCreateDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.enums.Sol;
 
 @SpringBootTest(classes = ModuleWebApplication.class)
@@ -43,9 +49,122 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 	// Méthodes
 
 	@Test
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
 	public void testCreatingEntityWithValidBody_shouldReturn200() throws Exception {
 
+		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison
+		PlanteModelUpdateDto dto = makeNewUpdateDto();
+		
+		ResponseDto<PlanteModelUpdateDto> responseDto = runMockMvc(BASE_URL, 200, dto, PlanteModelUpdateDto.class);
+
+		// Verifier la responseDto
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Succes de la création", responseDto.getMessage());
+		assertNotNull(responseDto.getBody());
+		
+		
+		
+//		assertEquals(dto, responseDto.getBody()); //ne marche pas sans toString :(
+
+//		updateDtoCompare(dto, responseDto.getBody()); //teste quelque chose qui est normallement
+		// déjà testé dans les testes converter et service.
+	}
+
+	@Test
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Override
+	public void testCreatingEntityWithInvalidBody_shouldReturn400() throws Exception {
+
+		PlanteModel plante = new PlanteModel(identifiant, commun, scientifique, picture);
+		
+		String responseAsString = runMockMvcLite("post", BASE_URL, 400, plante);
+		
+		assertThat(responseAsString).isEmpty();
+
+	}
+	
+	@Test
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testCreatingPlanteModelWithNullScientifique_shouldReturn400() throws Exception {
+
+		PlanteModelUpdateDto dto = makeNewUpdateDto();
+		dto.setScientifique(null);
+		
+		String responseAsString = runMockMvcLite("post", BASE_URL, 400, dto);
+		
+		assertThat(responseAsString).isEmpty();
+
+	}
+
+	@Test
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Override
+	public void testDeletingEntityWithValidId_shouldReturn200() {
+
+		
+
+	}
+
+	@Test
+	@Override
+	public void testDeletingEntityWithInvalidId_shouldReturn400() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Test
+	@Override
+	public void testDeletingEntityWithNegativeId_shouldReturn400() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Test
+	@Override
+	public void testUpdatingEntityWithValidId_shouldReturn200() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Test
+	@Override
+	public void testUpdatingEntityWithInvalidId_shouldReturn400() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Test
+	@Override
+	public void testReadingEntityWithValidId_shouldReturn200() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Test
+	@Override
+	public void testReadingEntityWithInvalidId_shouldReturn400() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Test
+	@Override
+	public void testReadingEntityWithNegativeId_shouldReturn400() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Test
+	@Override
+	public void testReadingAllEntity_shouldReturn200() {
+		// TODO Auto-generated method stub
+
+	}
+	
+	private PlanteModelUpdateDto makeNewUpdateDto() {
 		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison
 		PlanteModelUpdateDto dto = new PlanteModelUpdateDto();
 		dto.setIdentifiant(identifiant);
@@ -64,80 +183,9 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 		dto.setScientifique(scientifique);
 		dto.setSol(sol);
 		dto.setToxi(toxi);
-
-		ResponseDto<PlanteModelUpdateDto> responseDto = runMockMvc(BASE_URL, 200, dto, PlanteModelUpdateDto.class);
-
-		// Verifier la responseDto
-		assertNotNull(responseDto);
-		assertFalse(responseDto.isError());
-		assertEquals("Succes de la création", responseDto.getMessage());
-//		assertEquals(dto, responseDto.getBody()); //ne marche pas sans toString :(
-
-//		updateDtoCompare(dto, responseDto.getBody()); //teste quelque chose qui est normallement
-		// déjà testé dans les testes converter et service.
-
-		assertNotNull(responseDto.getBody());
-
-	}
-
-	@Override
-	public void testCreatingEntityWithInvalidBody_shouldReturn400() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void testDeletingEntityWithValidId_shouldReturn200() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void testDeletingEntityWithInvalidId_shouldReturn400() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void testDeletingEntityWithNegativeId_shouldReturn400() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void testUpdatingEntityWithValidId_shouldReturn200() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void testUpdatingEntityWithInvalidId_shouldReturn400() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void testReadingEntityWithValidId_shouldReturn200() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void testReadingEntityWithInvalidId_shouldReturn400() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void testReadingEntityWithNegativeId_shouldReturn400() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void testReadingAllEntity_shouldReturn200() {
-		// TODO Auto-generated method stub
-
+		
+		return dto;
+		
 	}
 
 //	/**

@@ -2,6 +2,8 @@ package com.fr.adaming.dto;
 
 
 
+import javax.validation.constraints.Positive;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PlanteModelUpdateDto extends PlanteModelCreateDto {
 	
+	@Positive (message = "PlanteModelUpdateDto: Un identifiant ne peut pas etre 0 ou negatif")
 	int identifiant = 0;
 
 }
