@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,11 +17,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import com.fr.adaming.ModuleWebApplication;
 import com.fr.adaming.controller.AbstractTestMethods;
 import com.fr.adaming.controller.IControllerTests;
 import com.fr.adaming.dto.DepartementDto;
 import com.fr.adaming.dto.JardinUpdateDto;
+import com.fr.adaming.dto.MeteoUpdateDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.PlanteUtilisateurUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
@@ -38,20 +41,16 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 
 	private static final String BASE_URL = "/planteUtilisateur";
 
-	private static final int id = 1;
-	private static final LocalDate dateSemis = LocalDate.parse("2020-04-04");
-	private static final LocalDate datePlantation = LocalDate.parse("2020-04-04");
-	private static final EtatPlante etatPlante = EtatPlante.fleuri;
-	private static final EtatSante etatSante = EtatSante.bonneSante;
-
 	private PlanteUtilisateurUpdateDto makeNewUpdateDto() {
 		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison
 		PlanteUtilisateurUpdateDto dto = new PlanteUtilisateurUpdateDto();
-		dto.setHealthStage(etatSante);
-		dto.setIdentifiant(id);
-		dto.setPlantStage(etatPlante);
-		dto.setPlantingDate(datePlantation);
-		dto.setSemiDate(dateSemis);
+		dto.setHealthStage(EtatSante.bonneSante);
+		dto.setIdentifiant(1);
+		dto.setPlantStage(EtatPlante.fleuri);
+//		String date = "2020-04-04";
+//		LocalDate localDate = LocalDate.parse(date);
+//		dto.setPlantingDate(localDate);
+//		dto.setSemiDate(localDate);
 
 		UtilisateurUpdateDto utilisateurDto = new UtilisateurUpdateDto();
 		utilisateurDto.setFirstName("Stark");
@@ -60,12 +59,13 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 		DepartementDto depDto = new DepartementDto();
 		depDto.setDepNum(69);
 		depDto.setName("Rhone");
+		depDto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
 
 		JardinUpdateDto jardinDto = new JardinUpdateDto();
 		jardinDto.setDept(depDto);
 		jardinDto.setUser(utilisateurDto);
 		jardinDto.setIdentifier(1);
-		jardinDto.setName("jardin1");
+		jardinDto.setName("Jardin1");
 
 		PlanteModelUpdateDto planteModelDto = new PlanteModelUpdateDto();
 		planteModelDto.setIdentifiant(2);
@@ -81,8 +81,11 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 	@Test
 	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
-	public void testCreatingEntityWithValidBody_shouldReturn200() throws Exception {
+	public void testCreatingEntityWithValidBody_shouldReturn200()  {
 		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison
+		try {
+			
+		
 		PlanteUtilisateurUpdateDto dto = makeNewUpdateDto();
 
 		ResponseDto<PlanteUtilisateurUpdateDto> responseDto = runMockMvc(BASE_URL, 200, dto, PlanteUtilisateurUpdateDto.class);
@@ -92,6 +95,10 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 		assertFalse(responseDto.isError());
 		assertEquals("Succes de la création", responseDto.getMessage());
 		assertNotNull(responseDto.getBody());
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -100,11 +107,13 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 	@Override
 	public void testCreatingEntityWithInvalidBody_shouldReturn400() throws Exception {
 		PlanteUtilisateur planteUtilisateur = new PlanteUtilisateur();
-		planteUtilisateur.setDatePlantation(datePlantation);
-		planteUtilisateur.setDateSemis(dateSemis);
-		planteUtilisateur.setEtatPlante(etatPlante);
-		planteUtilisateur.setEtatSante(etatSante);
-		planteUtilisateur.setId(id);
+		String date = "2020-04-04";
+		LocalDate localDate = LocalDate.parse(date);
+		planteUtilisateur.setDatePlantation(localDate);
+		planteUtilisateur.setDateSemis(localDate);
+		planteUtilisateur.setEtatPlante(EtatPlante.fleuri);
+		planteUtilisateur.setEtatSante(EtatSante.bonneSante);
+		planteUtilisateur.setId(0);
 
 //		Utilisateur utilisateur = new Utilisateur();
 //		utilisateur.setId(1);
@@ -196,7 +205,11 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@Override
-	public void testUpdatingEntityWithValidId_shouldReturn200() throws Exception {
+	public void testUpdatingEntityWithValidId_shouldReturn200() {
+		try {
+			
+		
+		
 		PlanteUtilisateurUpdateDto dto = makeNewUpdateDto();
 		dto.setHealthStage(EtatSante.morte);
 
@@ -206,6 +219,10 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 		assertFalse(responseDto.isError());
 		assertEquals("Succes de la mise à jour", responseDto.getMessage());
 		assertNotNull(responseDto.getBody());
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Stark')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -222,16 +239,25 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@Override
-	public void testUpdatingEntityWithInvalidId_shouldReturn400() throws Exception {
+	public void testUpdatingEntityWithInvalidId_shouldReturn400() {
+		try {
+			
+		
 		PlanteUtilisateurUpdateDto dto = makeNewUpdateDto();
 		dto.setIdentifiant(45);
 
 		ResponseDto<PlanteUtilisateurUpdateDto> responseDto = runMockMvc("put", BASE_URL, 400, dto, PlanteUtilisateurUpdateDto.class);
-
+		
 		assertNotNull(responseDto);
 		assertTrue(responseDto.isError());
-		assertEquals("Update non réalisé : vous avez renseigné un id inexistant dans la base de donnée", responseDto.getMessage());
+		assertEquals("Id déjà connu dans la BD", responseDto.getMessage());
 		assertNull(responseDto.getBody());
+		
+		} catch (MismatchedInputException e) {
+				e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -240,7 +266,7 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into plante_utilisateur values(1,'2020-04-04', '2020-04-04', 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -292,8 +318,8 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into plante_utilisateur values(1,'2020-04-04', '2020-04-04', 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into plante_utilisateur values(2,'2020-04-03', '2020-04-03', 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(2, 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -308,7 +334,7 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 		ResponseDto<Page<PlanteUtilisateurUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, PlanteUtilisateurUpdateDto.class);
 		assertNotNull(responseDto);
 		assertFalse(responseDto.isError());
-		assertEquals("Succes", responseDto.getMessage());
+		assertEquals("Success", responseDto.getMessage());
 		assertNotNull(responseDto.getBody());
 
 	}

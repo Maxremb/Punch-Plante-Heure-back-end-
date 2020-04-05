@@ -204,7 +204,7 @@ public class DepartementServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testReadMeteoByIdInvalid_ShouldReturnEmptyList() {
-		assertTrue(serviceDep.readMeteoByNumeroDep(2).getBody().isEmpty());
+		assertNull(serviceDep.readMeteoByNumeroDep(2).getBody());
 	}
 	
 	
@@ -296,7 +296,7 @@ public class DepartementServiceTest implements IServiceTests {
 		ServiceResponse<Departement> resp = service.create(dep);
 		
 		assertThat(resp.getBody()).isNull();
-		assertThat(resp.getMessage()).isEqualTo("Tentative de création d'un département avec nom déjà utilisé");
+		assertThat(resp.getMessage()).isEqualTo("Tentative échouée de création d'un département");
 	}
 	
 	/**

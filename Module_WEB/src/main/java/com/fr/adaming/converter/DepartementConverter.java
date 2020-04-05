@@ -31,7 +31,8 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 	
 	@Override
 	public Departement convertDtoToEntity(DepartementDto dto) {
-		if (dto == null) {
+		try {
+			if (dto == null) {
 			log.info("Tentative de conversion d'un DepartementDto NULL vers entité");
 			return null;
 		} else {
@@ -45,6 +46,10 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 			}
 			log.info("Conversion d'un département DTO en département");
 			return entite;
+		}
+		} catch (NullPointerException npe) {
+			log.warn("Erreur conversion");
+			return null;
 		}
 	}
 
