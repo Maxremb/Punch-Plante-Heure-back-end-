@@ -27,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author Gregoire
  *
  * @param <U> le type de dto retourné par la plupart des controllers en tant que body de responseDto. Probablement updateDto 
+ * @since 0.0.1
  */
 @AutoConfigureMockMvc
 @Slf4j
@@ -41,7 +42,7 @@ public class AbstractTestMethods<U> {
 	/**
 	 * Lance la partie du code test qui utilise mockMvc et objectMapper. Version sans entrée de dto.
 	 * 
-	 * @param requestType       Le type de la requete html
+	 * @param requestType       Le type de la requete html (ex: "get")
 	 * @param path              Le chemin vers le controller (ex: "/plantemodel")
 	 * @param expectedStatus    Le statut attendu (ex: 200)
 	 * @param responseBodyClass La class du retour attendu dans le body de
@@ -258,7 +259,7 @@ public class AbstractTestMethods<U> {
 					.getContentAsString(StandardCharsets.UTF_8);
 			break;
 		default:
-			log.error("type de requete non-reconnu");
+			log.error("AbstractTestMethods: type de requete non-reconnu");
 		}
 		return responseAsString;
 

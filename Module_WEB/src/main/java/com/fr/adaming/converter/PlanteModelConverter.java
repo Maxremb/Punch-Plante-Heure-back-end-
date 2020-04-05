@@ -108,6 +108,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		createDto.setPositive(entity.getAssoPositive());
 		createDto.setMifa(entity.getFamille());
 		createDto.setIdentifiant(entity.getId());
+		createDto.setSol(entity.getSolOpti());
 		return createDto;
 		
 	}

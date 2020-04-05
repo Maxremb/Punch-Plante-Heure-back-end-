@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +17,6 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import com.fr.adaming.ModuleWebApplication;
 import com.fr.adaming.controller.AbstractTestMethods;
 import com.fr.adaming.controller.IControllerTests;
-import com.fr.adaming.dto.PlanteModelCreateDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.entity.PlanteModel;
@@ -220,6 +217,24 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 		assertNotNull(responseDto.getBody());
 
 	}
+	
+	@Test
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (2, 'Alice', 'Alicium')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testReadByNom_shouldReturn200() throws Exception {
+		
+		String path = BASE_URL + "/nom?page=0&nom=Alicium";
+		
+		ResponseDto<Page<PlanteModelUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, PlanteModelUpdateDto.class);
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Success",responseDto.getMessage());
+		assertThat(responseDto.getBody().toList()).asList().isNotEmpty();
+		
+	}
+
+	
 	
 	// *** Méthodes privés ***
 	
