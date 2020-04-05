@@ -156,12 +156,20 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 		
 		ServiceResponse<E> serviceResponse = serviceDep.readDepartementByNom(name);
 		
+		ResponseDto<D> responseDto = new ResponseDto<>();
+
+		if (serviceResponse.getBody() == null) {
+			responseDto.setError(true);
+			responseDto.setMessage(serviceResponse.getMessage());
+			responseDto.setBody(null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		} else {		
 		D returned = converter.convertEntityToDto(serviceResponse.getBody());
-		ResponseDto<D> responseDto = new ResponseDto<D>();
 		responseDto.setError(false);
 		responseDto.setMessage(serviceResponse.getMessage());
 		responseDto.setBody(returned);
 		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		}
 	}
 
 	@Override
@@ -171,12 +179,20 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 		
 		ServiceResponse<List<ME>> serviceResponse = serviceDep.readMeteoByNumeroDep(id);
 		
-		List<MU> returnedList = converterMeteo.convertListEntityToUpdateDto(serviceResponse.getBody());
 		ResponseDto<List<MU>> responseDto = new ResponseDto<List<MU>>();
-		responseDto.setError(false);
-		responseDto.setMessage(serviceResponse.getMessage());
-		responseDto.setBody(returnedList);
-		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		
+		if (serviceResponse.getBody() == null) {
+			responseDto.setError(true);
+			responseDto.setMessage(serviceResponse.getMessage());
+			responseDto.setBody(null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		} else {
+			List<MU> returnedList = converterMeteo.convertListEntityToUpdateDto(serviceResponse.getBody());
+			responseDto.setError(false);
+			responseDto.setMessage(serviceResponse.getMessage());
+			responseDto.setBody(returnedList);
+			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		}
 	}
 
 }

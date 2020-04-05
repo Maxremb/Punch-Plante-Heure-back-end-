@@ -112,8 +112,6 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 		assertFalse(responseDto.isError());
 		assertNull(responseDto.getBody());
 		assertNotNull(responseDto.getMessage());
-		
-
 	}
 
 	@Test
@@ -141,12 +139,7 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 		PlanteModelUpdateDto dto = makeNewUpdateDto();
 		dto.setCommun("bob");
 		
-		ResponseDto<PlanteModelUpdateDto> responseDto = runMockMvc("put", BASE_URL, 200, dto, PlanteModelUpdateDto.class);
-		
-		assertNotNull(responseDto);
-		assertFalse(responseDto.isError());
-		assertEquals("Succes de la mise à jour", responseDto.getMessage());
-		assertNotNull(responseDto.getBody());
+		 
 
 	}
 
@@ -208,7 +201,7 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 	@Override
 	public void testReadingAllEntity_shouldReturn200() throws Exception {
 
-		String path=BASE_URL + "/all/0";
+String path=BASE_URL + "/all/0";
 		
 		ResponseDto<Page<PlanteModelUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, PlanteModelUpdateDto.class);
 		assertNotNull(responseDto);
