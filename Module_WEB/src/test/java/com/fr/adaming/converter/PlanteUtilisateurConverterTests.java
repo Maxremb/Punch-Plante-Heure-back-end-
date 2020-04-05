@@ -10,6 +10,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import com.fr.adaming.ModuleWebApplication;
 import com.fr.adaming.dto.PlanteUtilisateurCreateDto;
@@ -162,9 +164,14 @@ public class PlanteUtilisateurConverterTests implements IConverterTests {
 		List<PlanteUtilisateurCreateDto> listeDto = planteUtilisateurConverter.convertListEntityToCreateDto(liste);
 
 		assertThat(listeDto).isNotNull().hasSize(2);
-
-//		assertThat(listeDto).contains(planteUtilisateurConverter.convertEntityToCreateDto(planteUtilisateur1));
-//		assertThat(listeDto).contains(planteUtilisateurConverter.convertEntityToCreateDto(planteUtilisateur2));
+		assertThat(listeDto.get(0)).hasFieldOrPropertyWithValue("healthStage", planteUtilisateur1.getEtatSante());
+		assertThat(listeDto.get(1)).hasFieldOrPropertyWithValue("healthStage", planteUtilisateur2.getEtatSante());
+		assertThat(listeDto.get(0)).hasFieldOrPropertyWithValue("plantStage", planteUtilisateur1.getEtatPlante());
+		assertThat(listeDto.get(1)).hasFieldOrPropertyWithValue("plantStage", planteUtilisateur2.getEtatPlante());
+		assertThat(listeDto.get(0)).hasFieldOrPropertyWithValue("plantingDate", planteUtilisateur1.getDatePlantation());
+		assertThat(listeDto.get(1)).hasFieldOrPropertyWithValue("plantingDate", planteUtilisateur2.getDatePlantation());
+		assertThat(listeDto.get(0)).hasFieldOrPropertyWithValue("semiDate",planteUtilisateur1.getDateSemis());
+		assertThat(listeDto.get(1)).hasFieldOrPropertyWithValue("semiDate", planteUtilisateur2.getDateSemis());
 	}
 
 	@Test
@@ -175,14 +182,14 @@ public class PlanteUtilisateurConverterTests implements IConverterTests {
 		dto1.setHealthStage(EtatSante.bonneSante);
 		dto1.setPlantStage(EtatPlante.fleuri);
 		dto1.setPlantingDate(LocalDate.parse("2020-04-03"));
-		dto1.setPlantingDate(LocalDate.parse("2020-04-03"));
+		dto1.setSemiDate(LocalDate.parse("2020-04-03"));
 
 		PlanteUtilisateurCreateDto dto2 = new PlanteUtilisateurCreateDto();
 
 		dto2.setHealthStage(EtatSante.bonneSante);
 		dto2.setPlantStage(EtatPlante.fleuri);
 		dto2.setPlantingDate(LocalDate.parse("2020-04-03"));
-		dto2.setPlantingDate(LocalDate.parse("2020-04-03"));
+		dto2.setSemiDate(LocalDate.parse("2020-04-03"));
 
 		List<PlanteUtilisateurCreateDto> listeDto = new ArrayList<>();
 		listeDto.add(dto1);
@@ -191,9 +198,16 @@ public class PlanteUtilisateurConverterTests implements IConverterTests {
 		List<PlanteUtilisateur> liste = planteUtilisateurConverter.convertListCreateDtoToEntity(listeDto);
 
 		assertThat(liste).isNotNull().hasSize(2);
-
-//		assertThat(liste).contains(planteUtilisateurConverter.convertCreateDtoToEntity(dto1));
-//		assertThat(liste).contains(planteUtilisateurConverter.convertCreateDtoToEntity(dto2));
+		assertThat(liste).isNotNull().hasSize(2);
+		assertThat(liste.get(0)).hasFieldOrPropertyWithValue("etatSante", dto1.getHealthStage());
+		assertThat(liste.get(1)).hasFieldOrPropertyWithValue("etatSante", dto2.getHealthStage());
+		assertThat(liste.get(0)).hasFieldOrPropertyWithValue("etatPlante", dto1.getPlantStage());
+		assertThat(liste.get(1)).hasFieldOrPropertyWithValue("etatPlante", dto2.getPlantStage());
+		assertThat(liste.get(0)).hasFieldOrPropertyWithValue("datePlantation", dto1.getPlantingDate());
+		assertThat(liste.get(1)).hasFieldOrPropertyWithValue("datePlantation", dto2.getPlantingDate());
+		assertThat(liste.get(0)).hasFieldOrPropertyWithValue("dateSemis", dto1.getSemiDate());
+		assertThat(liste.get(1)).hasFieldOrPropertyWithValue("dateSemis", dto2.getSemiDate());
+		
 	}
 
 	@Test
@@ -220,7 +234,14 @@ public class PlanteUtilisateurConverterTests implements IConverterTests {
 		List<PlanteUtilisateurUpdateDto> listeDto = planteUtilisateurConverter.convertListEntityToUpdateDto(liste);
 
 		assertThat(listeDto).isNotNull().hasSize(2);
-//		assertThat(listeDto).contains(planteUtilisateurConverter.convertEntityToUpdateDto(planteUtilisateur2));
+		assertThat(listeDto.get(0)).hasFieldOrPropertyWithValue("healthStage", planteUtilisateur1.getEtatSante());
+		assertThat(listeDto.get(1)).hasFieldOrPropertyWithValue("healthStage", planteUtilisateur2.getEtatSante());
+		assertThat(listeDto.get(0)).hasFieldOrPropertyWithValue("plantStage", planteUtilisateur1.getEtatPlante());
+		assertThat(listeDto.get(1)).hasFieldOrPropertyWithValue("plantStage", planteUtilisateur2.getEtatPlante());
+		assertThat(listeDto.get(0)).hasFieldOrPropertyWithValue("plantingDate", planteUtilisateur1.getDatePlantation());
+		assertThat(listeDto.get(1)).hasFieldOrPropertyWithValue("plantingDate", planteUtilisateur2.getDatePlantation());
+		assertThat(listeDto.get(0)).hasFieldOrPropertyWithValue("semiDate",planteUtilisateur1.getDateSemis());
+		assertThat(listeDto.get(1)).hasFieldOrPropertyWithValue("semiDate", planteUtilisateur2.getDateSemis());
 
 	}
 
@@ -232,14 +253,14 @@ public class PlanteUtilisateurConverterTests implements IConverterTests {
 		dto1.setHealthStage(EtatSante.bonneSante);
 		dto1.setPlantStage(EtatPlante.fleuri);
 		dto1.setPlantingDate(LocalDate.parse("2020-04-03"));
-		dto1.setPlantingDate(LocalDate.parse("2020-04-03"));
+		dto1.setSemiDate(LocalDate.parse("2020-04-03"));
 
 		PlanteUtilisateurUpdateDto dto2 = new PlanteUtilisateurUpdateDto();
 
 		dto2.setHealthStage(EtatSante.bonneSante);
 		dto2.setPlantStage(EtatPlante.fleuri);
 		dto2.setPlantingDate(LocalDate.parse("2020-04-03"));
-		dto2.setPlantingDate(LocalDate.parse("2020-04-03"));
+		dto2.setSemiDate(LocalDate.parse("2020-04-03"));
 
 		List<PlanteUtilisateurUpdateDto> listeDto = new ArrayList<>();
 		listeDto.add(dto1);
@@ -248,38 +269,175 @@ public class PlanteUtilisateurConverterTests implements IConverterTests {
 		List<PlanteUtilisateur> liste = planteUtilisateurConverter.convertListUpdateDtoToEntity(listeDto);
 
 		assertThat(liste).isNotNull().hasSize(2);
-
-//		assertThat(liste).contains(planteUtilisateurConverter.convertUpdateDtoToEntity(dto1));
-//		assertThat(liste).contains(planteUtilisateurConverter.convertUpdateDtoToEntity(dto2));
-
+		assertThat(liste.get(0)).hasFieldOrPropertyWithValue("etatSante", dto1.getHealthStage());
+		assertThat(liste.get(1)).hasFieldOrPropertyWithValue("etatSante", dto2.getHealthStage());
+		assertThat(liste.get(0)).hasFieldOrPropertyWithValue("etatPlante", dto1.getPlantStage());
+		assertThat(liste.get(1)).hasFieldOrPropertyWithValue("etatPlante", dto2.getPlantStage());
+		assertThat(liste.get(0)).hasFieldOrPropertyWithValue("datePlantation", dto1.getPlantingDate());
+		assertThat(liste.get(1)).hasFieldOrPropertyWithValue("datePlantation", dto2.getPlantingDate());
+		assertThat(liste.get(0)).hasFieldOrPropertyWithValue("dateSemis", dto1.getSemiDate());
+		assertThat(liste.get(1)).hasFieldOrPropertyWithValue("dateSemis", dto2.getSemiDate());
 	}
 
 	@Test
 	@Override
 	public void testConvertingPageCreateDtoToEntity_shouldReturnPageOfEntities() {
-//		Page<PlanteUtilisateurCreateDto> page = new Page<PlanteUtilisateurCreateDto>();
+		PlanteUtilisateurCreateDto dto1 = new PlanteUtilisateurCreateDto();
+
+		dto1.setHealthStage(EtatSante.bonneSante);
+		dto1.setPlantStage(EtatPlante.fleuri);
+		dto1.setPlantingDate(LocalDate.parse("2020-04-03"));
+		dto1.setSemiDate(LocalDate.parse("2020-04-03"));
+
+		PlanteUtilisateurCreateDto dto2 = new PlanteUtilisateurCreateDto();
+
+		dto2.setHealthStage(EtatSante.bonneSante);
+		dto2.setPlantStage(EtatPlante.fleuri);
+		dto2.setPlantingDate(LocalDate.parse("2020-04-03"));
+		dto2.setSemiDate(LocalDate.parse("2020-04-03"));
+
+		List<PlanteUtilisateurCreateDto> listeDto = new ArrayList<>();
+		listeDto.add(dto1);
+		listeDto.add(dto2);
+		
+		Page<PlanteUtilisateurCreateDto> page = new PageImpl<PlanteUtilisateurCreateDto>(listeDto);
+		
+		Page<PlanteUtilisateur> pagePlteUtil = planteUtilisateurConverter.convertPageCreateDtoToEntity(page);
+		
+		assertThat(pagePlteUtil).isNotNull();
+		assertThat(pagePlteUtil.toList()).hasSize(2).hasOnlyElementsOfType(PlanteUtilisateur.class);
+		assertThat(pagePlteUtil.getNumberOfElements()).isEqualTo(2);
+		assertThat(pagePlteUtil.getNumber()).isEqualTo(0);
+		assertThat(pagePlteUtil.toList().get(0)).hasFieldOrPropertyWithValue("etatSante", dto1.getHealthStage());
+		assertThat(pagePlteUtil.toList().get(1)).hasFieldOrPropertyWithValue("etatSante", dto2.getHealthStage());
+		assertThat(pagePlteUtil.toList().get(0)).hasFieldOrPropertyWithValue("etatPlante", dto1.getPlantStage());
+		assertThat(pagePlteUtil.toList().get(1)).hasFieldOrPropertyWithValue("etatPlante", dto2.getPlantStage());
+		assertThat(pagePlteUtil.toList().get(0)).hasFieldOrPropertyWithValue("datePlantation", dto1.getPlantingDate());
+		assertThat(pagePlteUtil.toList().get(1)).hasFieldOrPropertyWithValue("datePlantation", dto2.getPlantingDate());
+		assertThat(pagePlteUtil.toList().get(0)).hasFieldOrPropertyWithValue("dateSemis", dto1.getSemiDate());
+		assertThat(pagePlteUtil.toList().get(1)).hasFieldOrPropertyWithValue("dateSemis", dto2.getSemiDate());
 
 	}
 
 	@Test
 	@Override
 	public void testConvertingPageEntityToCreateDto_shouldReturnPageOfCreateDtos() {
-		// TODO Auto-generated method stub
+		PlanteUtilisateur planteUtilisateur1 = new PlanteUtilisateur();
+
+		planteUtilisateur1.setEtatSante(EtatSante.moyenne);
+		planteUtilisateur1.setEtatPlante(EtatPlante.plant);
+		planteUtilisateur1.setDatePlantation(LocalDate.parse("2020-04-04"));
+		planteUtilisateur1.setDateSemis(LocalDate.parse("2020-03-01"));
+
+		PlanteUtilisateur planteUtilisateur2 = new PlanteUtilisateur();
+
+		planteUtilisateur2.setEtatSante(EtatSante.bonneSante);
+		planteUtilisateur2.setEtatPlante(EtatPlante.fleuri);
+		planteUtilisateur2.setDatePlantation(LocalDate.parse("2020-04-04"));
+		planteUtilisateur2.setDateSemis(LocalDate.parse("2020-03-01"));
+
+		List<PlanteUtilisateur> liste = new ArrayList<>();
+		liste.add(planteUtilisateur1);
+		liste.add(planteUtilisateur2);
+		
+		Page<PlanteUtilisateur> page = new PageImpl<PlanteUtilisateur>(liste);
+		
+		Page<PlanteUtilisateurCreateDto> returnedPageDto = planteUtilisateurConverter.convertPageEntityToCreateDto(page);
+
+		assertThat(returnedPageDto).isNotNull();
+		assertThat(returnedPageDto.toList()).hasSize(2).hasOnlyElementsOfType(PlanteUtilisateurCreateDto.class);
+		assertThat(returnedPageDto.getNumberOfElements()).isEqualTo(2);
+		assertThat(returnedPageDto.getNumber()).isEqualTo(0);
+		assertThat(returnedPageDto.toList().get(0)).hasFieldOrPropertyWithValue("healthStage", planteUtilisateur1.getEtatSante());
+		assertThat(returnedPageDto.toList().get(1)).hasFieldOrPropertyWithValue("healthStage", planteUtilisateur2.getEtatSante());
+		assertThat(returnedPageDto.toList().get(0)).hasFieldOrPropertyWithValue("plantStage", planteUtilisateur1.getEtatPlante());
+		assertThat(returnedPageDto.toList().get(1)).hasFieldOrPropertyWithValue("plantStage", planteUtilisateur2.getEtatPlante());
+		assertThat(returnedPageDto.toList().get(0)).hasFieldOrPropertyWithValue("plantingDate", planteUtilisateur1.getDatePlantation());
+		assertThat(returnedPageDto.toList().get(1)).hasFieldOrPropertyWithValue("plantingDate", planteUtilisateur2.getDatePlantation());
+		assertThat(returnedPageDto.toList().get(0)).hasFieldOrPropertyWithValue("semiDate",planteUtilisateur1.getDateSemis());
+		assertThat(returnedPageDto.toList().get(1)).hasFieldOrPropertyWithValue("semiDate", planteUtilisateur2.getDateSemis());
 
 	}
 
 	@Test
 	@Override
 	public void testConvertingPageUpdateDtoToEntity_shouldReturnPageOfEntities() {
-		// TODO Auto-generated method stub
+		PlanteUtilisateurUpdateDto dto1 = new PlanteUtilisateurUpdateDto();
 
+		dto1.setHealthStage(EtatSante.bonneSante);
+		dto1.setPlantStage(EtatPlante.fleuri);
+		dto1.setPlantingDate(LocalDate.parse("2020-04-03"));
+		dto1.setSemiDate(LocalDate.parse("2020-04-03"));
+
+		PlanteUtilisateurUpdateDto dto2 = new PlanteUtilisateurUpdateDto();
+
+		dto2.setHealthStage(EtatSante.bonneSante);
+		dto2.setPlantStage(EtatPlante.fleuri);
+		dto2.setPlantingDate(LocalDate.parse("2020-04-03"));
+		dto2.setSemiDate(LocalDate.parse("2020-04-03"));
+
+		List<PlanteUtilisateurUpdateDto> listeDto = new ArrayList<>();
+		listeDto.add(dto1);
+		listeDto.add(dto2);
+		
+		Page<PlanteUtilisateurUpdateDto> page = new PageImpl<PlanteUtilisateurUpdateDto>(listeDto);
+		
+		Page<PlanteUtilisateur> pagePlteUtil = planteUtilisateurConverter.convertPageUpdateDtoToEntity(page);
+		
+		assertThat(pagePlteUtil).isNotNull();
+		assertThat(pagePlteUtil.toList()).hasSize(2).hasOnlyElementsOfType(PlanteUtilisateur.class);
+		assertThat(pagePlteUtil.getNumberOfElements()).isEqualTo(2);
+		assertThat(pagePlteUtil.getNumber()).isEqualTo(0);
+		assertThat(pagePlteUtil.toList().get(0)).hasFieldOrPropertyWithValue("etatSante", dto1.getHealthStage());
+		assertThat(pagePlteUtil.toList().get(1)).hasFieldOrPropertyWithValue("etatSante", dto2.getHealthStage());
+		assertThat(pagePlteUtil.toList().get(0)).hasFieldOrPropertyWithValue("etatPlante", dto1.getPlantStage());
+		assertThat(pagePlteUtil.toList().get(1)).hasFieldOrPropertyWithValue("etatPlante", dto2.getPlantStage());
+		assertThat(pagePlteUtil.toList().get(0)).hasFieldOrPropertyWithValue("datePlantation", dto1.getPlantingDate());
+		assertThat(pagePlteUtil.toList().get(1)).hasFieldOrPropertyWithValue("datePlantation", dto2.getPlantingDate());
+		assertThat(pagePlteUtil.toList().get(0)).hasFieldOrPropertyWithValue("dateSemis", dto1.getSemiDate());
+		assertThat(pagePlteUtil.toList().get(1)).hasFieldOrPropertyWithValue("dateSemis", dto2.getSemiDate());
+		
+		
 	}
 
 	@Test
 	@Override
 	public void testConvertingPageEntityToUpdateDto_shouldReturnPageOfUpdateDtos() {
-		// TODO Auto-generated method stub
+		PlanteUtilisateur planteUtilisateur1 = new PlanteUtilisateur();
 
+		planteUtilisateur1.setEtatSante(EtatSante.moyenne);
+		planteUtilisateur1.setEtatPlante(EtatPlante.plant);
+		planteUtilisateur1.setDatePlantation(LocalDate.parse("2020-04-04"));
+		planteUtilisateur1.setDateSemis(LocalDate.parse("2020-03-01"));
+
+		PlanteUtilisateur planteUtilisateur2 = new PlanteUtilisateur();
+
+		planteUtilisateur2.setEtatSante(EtatSante.bonneSante);
+		planteUtilisateur2.setEtatPlante(EtatPlante.fleuri);
+		planteUtilisateur2.setDatePlantation(LocalDate.parse("2020-04-04"));
+		planteUtilisateur2.setDateSemis(LocalDate.parse("2020-03-01"));
+
+		List<PlanteUtilisateur> liste = new ArrayList<>();
+		liste.add(planteUtilisateur1);
+		liste.add(planteUtilisateur2);
+		
+		Page<PlanteUtilisateur> page = new PageImpl<PlanteUtilisateur>(liste);
+		
+		Page<PlanteUtilisateurUpdateDto> returnedPageDto = planteUtilisateurConverter.convertPageEntityToUpdateDto(page);
+
+		assertThat(returnedPageDto).isNotNull();
+		assertThat(returnedPageDto.toList()).hasSize(2).hasOnlyElementsOfType(PlanteUtilisateurUpdateDto.class);
+		assertThat(returnedPageDto.getNumberOfElements()).isEqualTo(2);
+		assertThat(returnedPageDto.getNumber()).isEqualTo(0);
+		assertThat(returnedPageDto.toList().get(0)).hasFieldOrPropertyWithValue("healthStage", planteUtilisateur1.getEtatSante());
+		assertThat(returnedPageDto.toList().get(1)).hasFieldOrPropertyWithValue("healthStage", planteUtilisateur2.getEtatSante());
+		assertThat(returnedPageDto.toList().get(0)).hasFieldOrPropertyWithValue("plantStage", planteUtilisateur1.getEtatPlante());
+		assertThat(returnedPageDto.toList().get(1)).hasFieldOrPropertyWithValue("plantStage", planteUtilisateur2.getEtatPlante());
+		assertThat(returnedPageDto.toList().get(0)).hasFieldOrPropertyWithValue("plantingDate", planteUtilisateur1.getDatePlantation());
+		assertThat(returnedPageDto.toList().get(1)).hasFieldOrPropertyWithValue("plantingDate", planteUtilisateur2.getDatePlantation());
+		assertThat(returnedPageDto.toList().get(0)).hasFieldOrPropertyWithValue("semiDate",planteUtilisateur1.getDateSemis());
+		assertThat(returnedPageDto.toList().get(1)).hasFieldOrPropertyWithValue("semiDate", planteUtilisateur2.getDateSemis());
+		
 	}
 
 }

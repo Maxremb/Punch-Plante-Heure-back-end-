@@ -7,7 +7,9 @@ import javax.validation.constraints.NotNull;
 import com.fr.adaming.enums.EtatPlante;
 import com.fr.adaming.enums.EtatSante;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -22,6 +24,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@EqualsAndHashCode
+@NoArgsConstructor
 public class PlanteUtilisateurCreateDto {
 
 	private EtatPlante plantStage;
