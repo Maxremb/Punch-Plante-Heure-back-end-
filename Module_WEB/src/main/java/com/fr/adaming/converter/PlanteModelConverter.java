@@ -5,21 +5,29 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
-
 import com.fr.adaming.dto.PlanteModelCreateDto;
 import com.fr.adaming.dto.PlanteModelReducedDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.entity.PlanteModel;
 
+
+/**
+ * <p>
+ * Converter pour l'entite PlanteModel en dto et inversement <br>
+ * converti aussi depuis et vers reducedDto <br>
+ *  Implements IConverter.
+ * </p>
+ * 
+ * @author Léa Coston
+ * @since 0.0.1
+ *
+ */
 @Component
 public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, PlanteModelUpdateDto, PlanteModel> {
 
 	@Autowired
 	private PeriodeConverter periodeConverter;
-	
-	
 	
 	@Override
 	public PlanteModel convertCreateDtoToEntity(PlanteModelCreateDto createDto) {
@@ -133,6 +141,17 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		return listeEntity.map(this::convertEntityToUpdateDto);
 	}
 	
+	
+	/**
+	 * 
+	 * Converter Entity to reducedDto
+	 * 
+	 *	@param entity l'entité a convertir
+	 * 	@return une instance de planteModelReducedDto
+	 * @author Léa Coston
+	 * @since 0.0.1
+	 *
+	 */
 	public PlanteModelReducedDto convertEntityToReducedDto(PlanteModel entity) {
 		if(entity==null) {
 			return null;
@@ -145,6 +164,17 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		return reducedDto;
 	}
 	
+
+	/**
+	 * 
+	 * Converter  reducedDto to entity
+	 * 
+	 *	@param reducedDto la dto a convertir
+	 * @return une instance de planteModel
+	 * @author Léa Coston
+	 * @since 0.0.1
+	 *
+	 */
 	public PlanteModel convertReducedDtoToEntity(PlanteModelReducedDto reducedDto) {
 		if(reducedDto==null) {
 			return null;
@@ -160,17 +190,38 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		return entity;
 	}
 	
+	/**
+	 * 
+	 * Converter  page entity to page reduced dto
+	 * 
+	 *	@param listeReducedDto la page dto a convertir
+	 * @return une page de planteModel
+	 * @author Léa Coston
+	 * @since 0.0.1
+	 *
+	 */
 	public Page<PlanteModel> convertListReducedDtoToEntity(Page<PlanteModelReducedDto> listeReducedDto) {
 		Page<PlanteModel> retour = listeReducedDto.map(this::convertReducedDtoToEntity);
 		return retour;
 		
 	}
 
+	/**
+	 * 
+	 * Converter  page reducedDto to page entity
+	 * 
+	 *	@param listeEntity la page a convertir
+	 * @return une page de planteModelReducedDto
+	 * @author Léa Coston
+	 * @since 0.0.1
+	 *
+	 */
 	public Page<PlanteModelReducedDto> convertListEntityToReducedDto(Page<PlanteModel> listeEntity) {
 		Page<PlanteModelReducedDto> retour = listeEntity.map(this::convertEntityToReducedDto);
 		return retour;
 	}
 
+	
 	@Override
 	public List<PlanteModel> convertListCreateDtoToEntity(List<PlanteModelCreateDto> listeCreateDto) {
 		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();

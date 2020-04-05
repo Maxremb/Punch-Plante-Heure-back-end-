@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.enums.Sol;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 public class PlanteModelCreateDto {
 
 
