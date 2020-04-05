@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class JardinCreateDto {
 
-	private Enum<Sol> ground;
+	private Sol ground;
 
 	@NotBlank
 	@NotNull

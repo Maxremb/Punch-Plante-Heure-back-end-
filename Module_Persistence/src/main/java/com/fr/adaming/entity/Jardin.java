@@ -27,7 +27,7 @@ public class Jardin {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column 
-	private Enum<Sol> sol;
+	private Sol sol;
 	@Column (nullable = false)
 	private String nom;
 	@Column
