@@ -39,6 +39,9 @@ public class PlanteModelServiceTest implements IServiceTests {
 
 	@Autowired
 	private IService<PlanteModel> service;
+	
+	@Autowired
+	private IPlanteModelService servicePlante;
 
 	@Autowired
 	private IPlanteModelService pMService;
@@ -226,6 +229,166 @@ public class PlanteModelServiceTest implements IServiceTests {
 //		assertThat(serviceResponse.getBody().getContent()).asList()
 //				.allSatisfy(plant -> assertThat(plant).isInstanceOf(PlanteModel.class));
 
+	}
+	
+	/**
+	 * Test de create argument valid, devrait retourner un ServiceResponse avec le message Succes et l'objet créé en body.
+	 */
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCreateValidArgs_shouldReturnServiceResponseSucces() {
+		PlanteModel plante= new PlanteModel();
+		plante.setNomCommun("nomCommun");
+		plante.setNomScientifique("nomScientifique");
+		assertThat(service.create(plante)).hasFieldOrPropertyWithValue("message","Succes de la création");
+		assertThat(service.create(plante).getBody().getNomScientifique()).isEqualTo("nomScientifique");
+		assertThat(service.create(plante).getBody().getId()).isGreaterThan(0);
+	}
+	
+	
+
+	/**
+	 * Test de create argument null, devrait retourner un ServiceResponse avec un body null et un message d'erreur.
+	 */
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCreateNullEntity_shouldReturnResponseNullBodyFailureMessage() {
+		assertThat(service.create(null)).hasFieldOrPropertyWithValue("message","Création non réalisé : objet d'entrée null");
+		assertThat(service.create(null).getBody()).isNull();
+		
+	}
+	
+	/**
+	 * Test de create argument au nom Scientifique null, devrait retourner un ServiceResponse avec un body null et un message d'erreur.
+	 */
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCreateNullNomScien_shouldReturnResponseNullBodyFailureMessage() {
+		PlanteModel plante= new PlanteModel();
+		plante.setNomScientifique(null);
+		assertThat(service.create(plante)).hasFieldOrPropertyWithValue("message","Création non réalisé : Le nom Scientifique ne doit pas etre null");
+		assertThat(service.create(plante).getBody()).isNull();
+		
+	}
+	
+	/**
+	 * Test de create argument avec id déjà utilisé, devrait retourner un ServiceResponse avec un body null et un message d'erreur.
+	 */
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'Alice', 'Alicium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCreateUsedId_shouldReturnResponseNullBodyFailureMessage() {
+		PlanteModel plante= new PlanteModel();
+		plante.setId(1);
+		plante.setNomScientifique("nom");
+		assertThat(service.create(plante)).hasFieldOrPropertyWithValue("message","Création non réalisé : vous avez renseigné un id déjà présent dans la base de donnée");
+		assertThat(service.create(plante).getBody()).isNull();
+		
+	}
+	
+	/**
+	 * Test de create argument avec un nom Scientifique déja utilisé, devrait retourner un ServiceResponse avec un body null et un message d'erreur.
+	 */
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'Alice', 'Alicium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCreateUsedNomScien_shouldReturnResponseNullBodyFailureMessage() {
+		PlanteModel plante= new PlanteModel();
+		plante.setNomScientifique("Alicium Vulgaris");
+		plante.setNomScientifique("nom");
+		assertThat(service.create(plante)).hasFieldOrPropertyWithValue("message","Création non réalisé : vous avez renseigné un nom scientifique déjà présent dans la base de donnée");
+		assertThat(service.create(plante).getBody()).isNull();
+		
+	}
+	
+	/**
+	 * Test de update argument avec id inexistant, devrait retourner un ServiceResponse avec un body null et un message d'erreur.
+	 */
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'Alice', 'Alicium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testUpdateNotUsedId_shouldReturnResponseNullBodyFailureMessage() {
+		PlanteModel plante= new PlanteModel();
+		plante.setId(2);
+		plante.setNomScientifique("nom");
+		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Update non réalisé : vous avez renseigné un id inexistant dans la base de donnée");
+		assertThat(service.update(plante).getBody()).isNull();
+		
+	}
+	
+	/**
+	 * Test de update argument null, devrait retourner un ServiceResponse avec un body null et un message d'erreur.
+	 */
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testUpdateNullEntity_shouldReturnResponseNullBodyFailureMessage() {
+
+		assertThat(service.update(null)).hasFieldOrPropertyWithValue("message","Update non réalisé : objet d'entrée null");
+		assertThat(service.update(null).getBody()).isNull();
+		
+	}
+	
+	
+	/**
+	 * Test de update argument avec nom scientifique null, devrait retourner un ServiceResponse avec un body null et un message d'erreur.
+	 */
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'Alice', 'Alicium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testUpdateNullNomScien_shouldReturnResponseNullBodyFailureMessage() {
+		PlanteModel plante= new PlanteModel();
+		plante.setId(1);
+		plante.setNomCommun("Alice");
+		plante.setNomScientifique(null);
+		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Update non réalisé : Le nom Scientifique ne doit pas etre null");
+		assertThat(service.update(plante).getBody()).isNull();
+		
+	}
+	
+	/**
+	 * Test de update argument avec nom scientifique déjà utilisé, devrait retourner un ServiceResponse avec un body null et un message d'erreur.
+	 */
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'Alice', 'Alicium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (2, 'Bob', 'Bobium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testUpdateUsedNomScien_shouldReturnResponseNullBodyFailureMessage() {
+		PlanteModel plante= new PlanteModel();
+		plante.setId(1);
+		plante.setNomCommun("Alice");
+		plante.setNomScientifique("Bobium Vulgaris");
+		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Update non réalisé : vous avez renseigné un nom scientifique déjà présent dans la base de donnée");
+		assertThat(service.update(plante).getBody()).isNull();
+		
+	}
+	
+	/**
+	 * Test de update argument valide, devrait retourner un ServiceResponse avec un message Succes et un body contenant l'objet updater.
+	 */
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'Alice', 'Alicium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testUpdateValidArgs_shouldReturnResponseWithBody() {
+		PlanteModel plante= new PlanteModel();
+		plante.setId(1);
+		plante.setNomCommun("Alice");
+		plante.setNomScientifique("nouveauNom");
+		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Succes de la mise à jour");
+		assertThat(service.update(plante).getBody()).isNotNull().hasFieldOrPropertyWithValue("nomScientifique", "nouveauNom" );
+		
+	}
+	
+	
+	/**
+	 * Test de ReadAllReduced, devrait retourner un ServiceResponse avec un message succes et un body contenant une page de PlanteModel dont seulement 4 attributs peuvent etre non null.
+	 */
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'Alice', 'Alicium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadAllReduced_shouldReturnServiceResponseWithBodyPageOfPlantModel() {
+		assertThat(servicePlante.readAllReduced(0)).hasFieldOrPropertyWithValue("message", "Succes");
+		assertThat(servicePlante.readAllReduced(0).getBody().getNumber()).isEqualTo(0);
+		assertThat(servicePlante.readAllReduced(0).getBody().getTotalElements()).isEqualTo(1);
 	}
 
 }

@@ -7,6 +7,7 @@ import com.fr.adaming.entity.PlanteModel;
 
 public interface IPlanteModelService {
 
+	@Deprecated
 	public ServiceResponse<PlanteModel> readByNomScientifique(String nomScientique);
 
 	public ServiceResponse<Page<PlanteModel>> readAllReduced(int p);

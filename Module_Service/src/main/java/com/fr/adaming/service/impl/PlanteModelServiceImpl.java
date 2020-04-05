@@ -100,6 +100,7 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 	 *         PlanteModel
 	 * @author Léa Coston
 	 */
+	@Deprecated
 	@Override
 	public ServiceResponse<PlanteModel> readByNomScientifique(String nomScientique) {
 		ServiceResponse<PlanteModel> retour = new ServiceResponse<PlanteModel>();
