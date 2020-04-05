@@ -117,28 +117,6 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 		assertTrue(list.getBody().toList().size() == 1);
 		assertThat(list.getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("dateSemis", LocalDate.parse("2020-04-01"));
 		assertThat(list.getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("datePlantation", LocalDate.parse("2020-04-01"));
-//		assertThat(planteUtilisateurService.readAll(0).getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("etatPlante", 0);
-//		assertThat(planteUtilisateurService.readAll(0).getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("etatSante", 1);
-		
-//		assertThat(planteUtilisateurService.readAll(0).getBody().toList().get(0).getJardin()).isNotNull().hasFieldOrPropertyWithValue("jardin", jardin);
-//		assertThat(planteUtilisateurService.readAll(0).getBody().toList().get(0).getPlanteModel()).isNotNull().hasFieldOrPropertyWithValue("planteModel", planteModel);
-		
-		
-//		PlanteUtilisateur planteUtilisateur = new PlanteUtilisateur();
-//		planteUtilisateur.setId(1);
-//		String date = "2020-04-01";
-//		LocalDate localDate = LocalDate.parse(date);
-//		planteUtilisateur.setDatePlantation(localDate);
-//		planteUtilisateur.setDateSemis(localDate);
-//		planteUtilisateur.setEtatPlante(EtatPlante.semis);
-//		planteUtilisateur.setEtatSante(EtatSante.bonneSante);
-//		
-//		List<PlanteUtilisateur> expectedList = new ArrayList();
-//		
-//		expectedList.add(planteUtilisateur);
-//		
-//		ServiceResponse<List<PlanteUtilisateur>> list = planteUtilisateurService.readAll();
-//		assertEquals(expectedList, list);
 	}
 	
 
