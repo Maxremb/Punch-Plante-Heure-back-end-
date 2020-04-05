@@ -63,7 +63,7 @@ public interface IControllerDepartement<D, MU> {
 	 * @return boolean true or false
 	 */
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto<?>> deleteById(@PathVariable("id") @Positive int id);
+	public ResponseEntity<ResponseDto<D>> deleteById(@PathVariable("id") @Positive int id);
 
 	/**
 	 * <b>Description : </b>

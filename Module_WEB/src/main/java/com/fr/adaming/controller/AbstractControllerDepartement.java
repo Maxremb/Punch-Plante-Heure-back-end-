@@ -17,6 +17,8 @@ import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.service.IDepartementService;
 import com.fr.adaming.service.IService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @author Isaline<br>
  * 
@@ -30,6 +32,7 @@ import com.fr.adaming.service.IService;
  * @param <M> MeteoUpdateDto
  * @param <E> Entite Departement
  */
+@Slf4j
 public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements IControllerDepartement<D, MU> {
 
 	@Autowired
@@ -46,6 +49,8 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 
 	@Override
 	public ResponseEntity<ResponseDto<D>> create(D dto) {
+		
+		log.info("Controller: méthode CREATE appelée");
 
 		ServiceResponse<E> serviceResponse = service.create(converter.convertDtoToEntity(dto));
 
@@ -66,9 +71,11 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 	}
 
 	@Override
-	public ResponseEntity<ResponseDto<?>> deleteById(int id) {
+	public ResponseEntity<ResponseDto<D>> deleteById(int id) {
+		log.info("Controller: méthode DELETE appelée");
+		
 		boolean result = service.deleteById(id);
-		ResponseDto<?> responseDto = new ResponseDto<Object>();
+		ResponseDto<D> responseDto = new ResponseDto<>();
 
 		if (result) {
 			responseDto.setError(false);
@@ -85,6 +92,8 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 
 	@Override
 	public ResponseEntity<ResponseDto<D>> update(D dto) {
+		
+		log.info("Controller: méthode UPDATE appelée");
 
 		ServiceResponse<E> serviceResponse = service.update(converter.convertDtoToEntity(dto));
 
@@ -105,6 +114,8 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 
 	@Override
 	public ResponseEntity<ResponseDto<D>> readById(int id) {
+		
+		log.info("Controller: méthode READBYID appelée");
 
 		ServiceResponse<E> serviceResponse = service.readById(id);
 
@@ -126,10 +137,12 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 	@Override
 	public ResponseEntity<ResponseDto<Page<D>>> readAll(int p) {
 		
+		log.info("Controller: méthode READALL appelée");
+		
 		ServiceResponse<Page<E>> serviceResponse = service.readAll(p);
 		
 		Page<D> returnedPage = converter.convertPageEntityToDto(serviceResponse.getBody());
-		ResponseDto<Page<D>> responseDto = new ResponseDto<Page<D>>();
+		ResponseDto<Page<D>> responseDto = new ResponseDto<>();
 		responseDto.setError(false);
 		responseDto.setMessage(serviceResponse.getMessage());
 		responseDto.setBody(returnedPage);
@@ -138,6 +151,9 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 	
 	@Override
 	public ResponseEntity<ResponseDto<D>> readByName(String name) {
+		
+		log.info("Controller: méthode READBYNAME appelée");
+		
 		ServiceResponse<E> serviceResponse = serviceDep.readDepartementByNom(name);
 		
 		D returned = converter.convertEntityToDto(serviceResponse.getBody());
@@ -150,6 +166,9 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 
 	@Override
 	public ResponseEntity<ResponseDto<List<MU>>> readMeteoByNumDep(@Positive int id) {
+		
+		log.info("Controller: méthode READMETEOBYNUMDEP appelée");
+		
 		ServiceResponse<List<ME>> serviceResponse = serviceDep.readMeteoByNumeroDep(id);
 		
 		List<MU> returnedList = converterMeteo.convertListEntityToUpdateDto(serviceResponse.getBody());

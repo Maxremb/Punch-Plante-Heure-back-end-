@@ -69,69 +69,25 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 
 	@Override
 	public Page<Departement> convertPageDtoToEntity(Page<DepartementDto> pageDto) {
-		if (pageDto.toList().isEmpty()) {
-			log.info("Tentative conversion d'une liste département DTO en département");
-			List<Departement> liste = new ArrayList<Departement>();
-			return new PageImpl<Departement>(liste);
-		}
-		List<Departement> liste = new ArrayList<>();
-		for (DepartementDto dto : pageDto.toList()) {
-			Departement dep = new Departement();
-			dep.setNom(dto.getName());
-			dep.setNumeroDep(dto.getDepNum());
-			if (dto.getWeatherDep().isEmpty()) {
-				dep.setMeteoDep(new ArrayList<Meteo>());
-			} else {
-				dep.setMeteoDep(convertMeteo.convertListUpdateDtoToEntity(dto.getWeatherDep()));
-			}
-			liste.add(dep);
-		}
-		Page<Departement> pageRetour = new PageImpl<Departement>(liste);
 		log.info("Conversion d'une liste départements DTO en liste départements");
-		return pageRetour;
+		return pageDto.map(this::convertDtoToEntity);
 	}
 
 	@Override
 	public Page<DepartementDto> convertPageEntityToDto(Page<Departement> pageDep) {
-		if (pageDep.toList().isEmpty()) {
-			log.info("Tentative conversion d'une liste département en département DTO");
-			List<DepartementDto> liste = new ArrayList<DepartementDto>();
-			return new PageImpl<DepartementDto>(liste);
-		}
-		List<DepartementDto> liste = new ArrayList<>();
-		for (Departement dep : pageDep.toList()) {
-			DepartementDto dto = new DepartementDto();
-			dto.setName(dep.getNom());
-			dto.setDepNum(dep.getNumeroDep());
-			if (dep.getMeteoDep().isEmpty()) {
-				dto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
-			} else {
-				dto.setWeatherDep(convertMeteo.convertListEntityToUpdateDto(dep.getMeteoDep()));
-			}
-			liste.add(dto);
-		}
-		Page<DepartementDto> pageRetour = new PageImpl<DepartementDto>(liste);
 		log.info("Conversion d'une liste départements DTO en liste départements");
-		return pageRetour;
+		return pageDep.map(this::convertEntityToDto);
 	}
 	
 	@Override
 	public List<Departement> convertListDtoToEntity(List<DepartementDto> listeDto) {
 		if (listeDto.isEmpty()) {
-			log.info("Tentative conversion d'une liste département DTO en département");
+			log.info("Tentative conversion d'une liste département DTO vide en département");
 			return new ArrayList<>();
 		}
 		List<Departement> liste = new ArrayList<>();
 		for (DepartementDto dto : listeDto) {
-			Departement dep = new Departement();
-			dep.setNom(dto.getName());
-			dep.setNumeroDep(dto.getDepNum());
-			if (dto.getWeatherDep().isEmpty()) {
-				dep.setMeteoDep(new ArrayList<Meteo>());
-			} else {
-				dep.setMeteoDep(convertMeteo.convertListUpdateDtoToEntity(dto.getWeatherDep()));
-			}
-			liste.add(dep);
+			liste.add(convertDtoToEntity(dto));
 		}
 		log.info("Conversion d'une liste départements DTO en liste départements");
 		return liste;
@@ -140,20 +96,12 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 	@Override
 	public List<DepartementDto> convertListEntityToDto(List<Departement> listeDep) {
 		if (listeDep.isEmpty()) {
-			log.info("Tentative conversion d'une liste département en département DTO");
+			log.info("Tentative conversion d'une liste département vide en département DTO");
 			return new ArrayList<>();
 		}
 		List<DepartementDto> liste = new ArrayList<>();
 		for (Departement dep : listeDep) {
-			DepartementDto dto = new DepartementDto();
-			dto.setName(dep.getNom());
-			dto.setDepNum(dep.getNumeroDep());
-			if (dep.getMeteoDep().isEmpty()) {
-				dto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
-			} else {
-				dto.setWeatherDep(convertMeteo.convertListEntityToUpdateDto(dep.getMeteoDep()));
-			}
-			liste.add(dto);
+			liste.add(convertEntityToDto(dep));
 		}
 		log.info("Conversion d'une liste départements DTO en liste départements");
 		return liste;
