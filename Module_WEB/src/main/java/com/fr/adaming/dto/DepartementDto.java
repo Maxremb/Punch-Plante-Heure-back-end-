@@ -7,10 +7,11 @@ import javax.validation.constraints.Positive;
 
 import com.sun.istack.NotNull;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter @Setter @EqualsAndHashCode
 public class DepartementDto {
 	
 	@Positive

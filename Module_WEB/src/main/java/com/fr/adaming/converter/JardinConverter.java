@@ -86,6 +86,7 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 			updateDto.setName(entity.getNom());
 			updateDto.setUser(convertUtil.convertEntityToUpdateDto(entity.getUtilisateur()));
 			updateDto.setWidth(entity.getLargeur());
+			updateDto.setIdentifier(entity.getId());;
 
 			return updateDto;
 		}
@@ -136,7 +137,7 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 	public List<Jardin> convertListUpdateDtoToEntity(List<JardinUpdateDto> listeUpdateDto) {
 		List<Jardin> listeRetour = new ArrayList<Jardin>();
 		for(JardinUpdateDto j: listeUpdateDto) {
-			listeRetour.add(convertCreateDtoToEntity(j));
+			listeRetour.add(convertUpdateDtoToEntity(j));
 		}
 		return listeRetour;
 	}
