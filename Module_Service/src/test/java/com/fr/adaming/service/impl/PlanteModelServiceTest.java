@@ -1,6 +1,7 @@
 package com.fr.adaming.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -9,11 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.ModuleServiceApplication;
+import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteModel;
+import com.fr.adaming.service.IPlanteModelService;
 import com.fr.adaming.service.IService;
 import com.fr.adaming.service.IServiceTests;
 
@@ -33,6 +37,9 @@ public class PlanteModelServiceTest implements IServiceTests{
 	
 	@Autowired
 	private IService<PlanteModel> service;
+	
+	@Autowired
+	private IPlanteModelService pMService;
 
 
 	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -114,7 +121,71 @@ public class PlanteModelServiceTest implements IServiceTests{
 		
 	}
 	
-
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'Alice', 'Alicium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (2, 'Bob', 'Bobium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (3, 'Bobby', 'Bobium Mendax')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testFindByNomUsingNomScientifique_shouldReturnPageOfOneEntity() {
+		
+		ServiceResponse<Page<PlanteModel>> serviceResponse = pMService.findByNom(0, "Alicium Vulgaris");
+		
+		assertNotNull(serviceResponse);
+		assertEquals("Success", serviceResponse.getMessage());
+		assertFalse(serviceResponse.getBody().isEmpty());
+		assertTrue(serviceResponse.getBody().toList().size() == 1);
+		assertThat(serviceResponse.getBody().getContent().get(0)).isInstanceOf(PlanteModel.class);
+		
+	}
+	
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'Alice', 'Alicium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (2, 'Bob', 'Bobium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (3, 'Bobby', 'Bobium Mendax')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testFindByNomUsingNomCommun_shouldReturnPageOfEntities() {
+		
+		ServiceResponse<Page<PlanteModel>> serviceResponse = pMService.findByNom(0, "Bob");
+		
+		assertNotNull(serviceResponse);
+		assertEquals("Success", serviceResponse.getMessage());
+		assertFalse(serviceResponse.getBody().isEmpty());
+		assertTrue(serviceResponse.getBody().toList().size() == 2);
+		assertThat(serviceResponse.getBody().getContent()).asList().allSatisfy(plant -> assertThat(plant).isInstanceOf(PlanteModel.class));
+		
+	}
+	
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'Alice', 'Alicium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (2, 'Bob', 'Bobium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (3, 'Bobby', 'Bobium Mendax')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testFindByNomUsingIncompleteNom_shouldReturnPageOfEntities() {
+		
+		ServiceResponse<Page<PlanteModel>> serviceResponse = pMService.findByNom(0, "i");
+		
+		assertNotNull(serviceResponse);
+		assertEquals("Success", serviceResponse.getMessage());
+		assertFalse(serviceResponse.getBody().isEmpty());
+		assertTrue(serviceResponse.getBody().toList().size() == 3);
+		assertThat(serviceResponse.getBody().getContent()).asList().allSatisfy(plant -> assertThat(plant).isInstanceOf(PlanteModel.class));
+	
+	}
+	
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'Alice', 'Alicium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (2, 'Bob', 'Bobium Vulgaris')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (3, 'Bobby', 'Bobium Mendax')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testFindByNomUsingInvalidNom_shouldReturnEmptyPage() {
+		
+		ServiceResponse<Page<PlanteModel>> serviceResponse = pMService.findByNom(0, "AardvarkPlant");
+		
+		assertNotNull(serviceResponse);
+		assertEquals("Success", serviceResponse.getMessage());
+		assertTrue(serviceResponse.getBody().isEmpty());
+		
+	}
 	
 	
 }

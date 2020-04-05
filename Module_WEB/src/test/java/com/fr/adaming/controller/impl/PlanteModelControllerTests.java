@@ -231,6 +231,7 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 		assertFalse(responseDto.isError());
 		assertEquals("Success",responseDto.getMessage());
 		assertThat(responseDto.getBody().toList()).asList().isNotEmpty();
+		assertTrue(responseDto.getBody().toList().size() == 1);
 		
 	}
 
