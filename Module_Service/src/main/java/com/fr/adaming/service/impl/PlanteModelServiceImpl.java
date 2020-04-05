@@ -114,13 +114,11 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 		return retour;
 	}
 
-	
 	@Override
 	public ServiceResponse<Page<PlanteModel>> findByNom(int page, String nom) {
 
 		Pageable pageable = PageRequest.of(page, 20);
-		Page<PlanteModel> entityList = repo.findByNomCommunOrNomScientifiqueContaining(pageable, nom,
-				nom);
+		Page<PlanteModel> entityList = repo.findByNomCommunOrNomScientifiqueContainingIgnoreCase(pageable, nom, nom);
 		ServiceResponse<Page<PlanteModel>> serviceResponse = new ServiceResponse<Page<PlanteModel>>();
 		serviceResponse.setBody(entityList);
 		return serviceResponse;
