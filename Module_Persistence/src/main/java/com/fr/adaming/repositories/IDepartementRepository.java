@@ -26,12 +26,12 @@ public interface IDepartementRepository extends JpaRepository<Departement, Integ
 	 */
 	public Departement findDepartementByNom(String nom);
 	
-	/**
-	 * Cette méthode retourne une liste de 'météos' pour un département
-	 * @param numeroDep - le numéro du département dont on veut récupérer la météo
-	 * @return liste d'objets de type météo
-	 */
-	@Query(value = "select * from meteo WHERE departement_id = :numeroDep", nativeQuery = true)
-	public Page<Meteo> findMeteoByNumeroDep(Pageable pageable, Integer numeroDep);
+//	/**
+//	 * Cette méthode retourne une liste de 'météos' pour un département
+//	 * @param numeroDep - le numéro du département dont on veut récupérer la météo
+//	 * @return liste d'objets de type météo
+//	 */
+//	@Query(value = "select * from meteo WHERE departement_id = :numeroDep", nativeQuery = true)
+//	public Page<Meteo> findMeteoByNumeroDep(Pageable pageable, Integer numeroDep);
 
 }

@@ -12,6 +12,7 @@ import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Meteo;
 import com.fr.adaming.repositories.IDepartementRepository;
+import com.fr.adaming.repositories.IMeteoRepository;
 import com.fr.adaming.service.AbstractService;
 import com.fr.adaming.service.IDepartementService;
 
@@ -30,6 +31,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DepartementServiceImpl extends AbstractService<Departement>
 		implements IDepartementService<Departement, Meteo> {
+	
+	@Autowired
+	private IMeteoRepository metRepo;
 
 	@Override
 	public ServiceResponse<Departement> create(Departement departement) {
@@ -99,7 +103,7 @@ public class DepartementServiceImpl extends AbstractService<Departement>
 	}
 
 	public ServiceResponse<Page<Meteo>> readMeteoByNumeroDep(Pageable pageable, Integer numDep) {
-		try {
+//		try {
 			if (!dao.existsById(numDep)) {
 				log.info("Récupération d'une liste de conditions météo après recherche par département inexistant");
 				return new ServiceResponse<Page<Meteo>>(
@@ -107,13 +111,13 @@ public class DepartementServiceImpl extends AbstractService<Departement>
 			} else {
 				log.info("Récupération d'une liste de conditions météo après recherche par département");
 				return new ServiceResponse<Page<Meteo>>("Récupération d'une liste de conditions météo par département",
-						depRepo.findMeteoByNumeroDep(pageable, numDep));
+						metRepo.findMeteoByNumeroDep(pageable, numDep));
 			}
-		} catch (Exception e) {
-			log.warn("Problème readMeteoByNumDep");
-			log.error(e.getLocalizedMessage());
-			return new ServiceResponse<Page<Meteo>>("Problème readMeteoByNumDep", depRepo.findMeteoByNumeroDep(pageable, numDep));
-		}
+//		} catch (Exception e) {
+//			log.warn("Problème readMeteoByNumDep");
+//			log.error(e.getLocalizedMessage());
+//			return new ServiceResponse<Page<Meteo>>("Problème readMeteoByNumDep", depRepo.findMeteoByNumeroDep(pageable, numDep));
+//		}
 
 	}
 
