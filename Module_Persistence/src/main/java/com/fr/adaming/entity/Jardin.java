@@ -38,7 +38,7 @@ public class Jardin {
 	@Column
 	private Float ProfSol;
 	@Column
-	private float reserveUtile;
+	private double reserveUtile;
 	@Column
 	private boolean estArroser ;
 	

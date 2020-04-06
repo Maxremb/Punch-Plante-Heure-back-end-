@@ -31,6 +31,7 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 
 		if (createDto != null) {
 			Jardin entite = new Jardin();
+			entite.setReserveUtile(createDto.getUsefullReserve());
 			entite.setEstArroser(createDto.isArrosed());
 			entite.setProfSol(createDto.getDepthGround());
 			entite.setDepartement(convertDep.convertDtoToEntity((createDto.getDept())));
@@ -50,6 +51,7 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 	public JardinCreateDto convertEntityToCreateDto(Jardin entity) {
 		if (entity != null) {
 			JardinCreateDto createDto = new JardinCreateDto();
+			createDto.setUsefullReserve(entity.getReserveUtile());
 			createDto.setArrosed(entity.isEstArroser());
 			createDto.setDepthGround(entity.getProfSol());
 			createDto.setDept(convertDep.convertEntityToDto((entity.getDepartement())));
@@ -68,6 +70,7 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 	public Jardin convertUpdateDtoToEntity(JardinUpdateDto updateDto) {
 		if (updateDto != null) {
 			Jardin entite = new Jardin();
+			entite.setReserveUtile(updateDto.getUsefullReserve());
 			entite.setEstArroser(updateDto.isArrosed());
 			entite.setProfSol(updateDto.getDepthGround());
 			entite.setDepartement(convertDep.convertDtoToEntity((updateDto.getDept())));
@@ -86,6 +89,7 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 	public JardinUpdateDto convertEntityToUpdateDto(Jardin entity) {
 		if (entity != null) {
 			JardinUpdateDto updateDto = new JardinUpdateDto();
+			updateDto.setUsefullReserve(entity.getReserveUtile());
 			updateDto.setArrosed(entity.isEstArroser());
 			updateDto.setDepthGround(entity.getProfSol());
 			updateDto.setDept(convertDep.convertEntityToDto((entity.getDepartement())));
