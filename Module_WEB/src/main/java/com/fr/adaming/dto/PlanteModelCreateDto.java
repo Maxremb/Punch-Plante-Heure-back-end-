@@ -37,6 +37,6 @@ public class PlanteModelCreateDto {
 	private String[] negative;
 	private String mifa;
 	private String feuille;
-	private String height;
+	private float height;
 	private String veget;
 }

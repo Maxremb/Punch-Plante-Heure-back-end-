@@ -53,6 +53,9 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		entity.setAssoPositive(createDto.getPositive());
 		entity.setFamille(createDto.getMifa());
 		entity.setSolOpti(createDto.getSol());
+		entity.setFeuillage(createDto.getFeuille());
+		entity.setHauteur(createDto.getHeight());
+		entity.setVegetaion(createDto.getVeget());
 		return entity;
 	}
 
@@ -79,6 +82,9 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		createDto.setPositive(entity.getAssoPositive());
 		createDto.setMifa(entity.getFamille());
 		createDto.setSol(entity.getSolOpti());
+		createDto.setFeuille(entity.getFeuillage());
+		createDto.setHeight(entity.getHauteur());
+		createDto.setVeget(entity.getVegetaion());
 		return createDto;
 	}
 
@@ -117,6 +123,9 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		createDto.setMifa(entity.getFamille());
 		createDto.setIdentifiant(entity.getId());
 		createDto.setSol(entity.getSolOpti());
+		createDto.setHeight(entity.getHauteur());
+		createDto.setVeget(entity.getVegetaion());
+		createDto.setFeuille(entity.getFeuillage());
 		return createDto;
 		
 	}

@@ -13,9 +13,14 @@ import com.fr.adaming.service.IRetentionService;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * CLasse service relative à l'entité Retention
+ * @author maxime
+ * @since 0.0.1-SNAPSHOT
+ */
 @Service
 @Slf4j
-public class RetentionService extends AbstractService<Retention> implements IRetentionService{
+public class RetentionServiceImpl extends AbstractService<Retention> implements IRetentionService{
 	
 	@Autowired
 	private IRetentionRepository repo;
@@ -73,5 +78,6 @@ public class RetentionService extends AbstractService<Retention> implements IRet
 			return new ServiceResponse<Retention>("Recherche par type de sol non réalisée", null);
 		}
 	}
+	
 
 }
