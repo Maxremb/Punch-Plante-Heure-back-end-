@@ -26,7 +26,7 @@ public interface IService<E> {
 
 	/**
 	 * <p>Methode permettant l'affichage de la liste de toutes les entites</p>
-	 * 
+	 * @param p numéro de la page à afficher
 	 * @return serviceResponse contenant une page d'entités avec 20 élements maximum
 	 */
 	public ServiceResponse<Page<E>> readAll(int p);
