@@ -114,8 +114,6 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 
 		if (serviceResponse.getBody() != null) {
 			
-
-			
 			log.debug("Controller/makeUpdateDtoResponse: retour de la couche service NON-NULL");
 			
 			U returnedDto = converter.convertEntityToUpdateDto(serviceResponse.getBody());	
@@ -123,6 +121,7 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 			responseDto.setError(false);
 			
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+			
 		} else {
 			
 			log.debug("Controller/makeUpdateDtoResponse: Statut 400. Cause: " + serviceResponse.getMessage());
@@ -130,6 +129,7 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 			responseDto.setError(true);
 			responseDto.setBody(null);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+			
 		}
 		
 	}

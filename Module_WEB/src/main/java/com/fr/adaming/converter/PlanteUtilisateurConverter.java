@@ -127,81 +127,70 @@ public class PlanteUtilisateurConverter
 		}
 	}
 
-
 	@Override
-	public Page<PlanteUtilisateur> convertPageCreateDtoToEntity(Page<PlanteUtilisateurCreateDto> listeCreateDto) {
-		
-		return listeCreateDto.map(this :: convertCreateDtoToEntity);
-		
-	}
+	public Page<PlanteUtilisateur> convertPageCreateDtoToEntity(Page<PlanteUtilisateurCreateDto> pageCreateDto) {
 
-	@Override
-	public Page<PlanteUtilisateurCreateDto> convertPageEntityToCreateDto(Page<PlanteUtilisateur> listeEntity) {
-		
-		return listeEntity.map(this :: convertEntityToCreateDto);
-	
-	}
-
-	@Override
-	public Page<PlanteUtilisateur> convertPageUpdateDtoToEntity(Page<PlanteUtilisateurUpdateDto> listeUpdateDto) {
-		
-		return listeUpdateDto.map(this :: convertUpdateDtoToEntity);
+		return pageCreateDto == null ? new PageImpl<PlanteUtilisateur>(new ArrayList<PlanteUtilisateur>())
+				: pageCreateDto.map(this::convertCreateDtoToEntity);
 
 	}
 
 	@Override
-	public Page<PlanteUtilisateurUpdateDto> convertPageEntityToUpdateDto(Page<PlanteUtilisateur> listeEntity) {
-		
-		return listeEntity.map(this :: convertEntityToUpdateDto);
-		
+	public Page<PlanteUtilisateurCreateDto> convertPageEntityToCreateDto(Page<PlanteUtilisateur> pageEntity) {
+
+		return pageEntity == null
+				? new PageImpl<PlanteUtilisateurCreateDto>(new ArrayList<PlanteUtilisateurCreateDto>())
+				: pageEntity.map(this::convertEntityToCreateDto);
+
+	}
+
+	@Override
+	public Page<PlanteUtilisateur> convertPageUpdateDtoToEntity(Page<PlanteUtilisateurUpdateDto> pageUpdateDto) {
+
+		return pageUpdateDto == null ? new PageImpl<PlanteUtilisateur>(new ArrayList<PlanteUtilisateur>())
+				: pageUpdateDto.map(this::convertUpdateDtoToEntity);
+
+	}
+
+	@Override
+	public Page<PlanteUtilisateurUpdateDto> convertPageEntityToUpdateDto(Page<PlanteUtilisateur> pageEntity) {
+
+		return pageEntity == null
+				? new PageImpl<PlanteUtilisateurUpdateDto>(new ArrayList<PlanteUtilisateurUpdateDto>())
+				: pageEntity.map(this::convertEntityToUpdateDto);
+
 	}
 
 	@Override
 	public List<PlanteUtilisateur> convertListCreateDtoToEntity(List<PlanteUtilisateurCreateDto> listeCreateDto) {
-		
-		return listeCreateDto.stream().map(this :: convertCreateDtoToEntity).collect(Collectors.toList());
-		
-//		List<PlanteUtilisateur> listeRetour = new ArrayList<PlanteUtilisateur>();
-//		for(PlanteUtilisateurCreateDto p : listeCreateDto) {
-//			listeRetour.add(convertCreateDtoToEntity(p));
-//		}
-//		return listeRetour;
+
+		return listeCreateDto == null ? new ArrayList<PlanteUtilisateur>()
+				: listeCreateDto.stream().map(this::convertCreateDtoToEntity).collect(Collectors.toList());
+
 	}
 
 	@Override
 	public List<PlanteUtilisateurCreateDto> convertListEntityToCreateDto(List<PlanteUtilisateur> listeEntity) {
-		
-		return listeEntity.stream().map(this :: convertEntityToCreateDto).collect(Collectors.toList());
-		
-//		List<PlanteUtilisateurCreateDto> listeRetour = new ArrayList<PlanteUtilisateurCreateDto>();
-//		for(PlanteUtilisateur p: listeEntity) {
-//			listeRetour.add(convertEntityToCreateDto(p));
-//		}
-//		return listeRetour;
+
+		return listeEntity == null ? new ArrayList<PlanteUtilisateurCreateDto>()
+				: listeEntity.stream().map(this::convertEntityToCreateDto).collect(Collectors.toList());
+
 	}
 
 	@Override
 	public List<PlanteUtilisateur> convertListUpdateDtoToEntity(List<PlanteUtilisateurUpdateDto> listeUpdateDto) {
-		
-		return listeUpdateDto.stream().map(this :: convertUpdateDtoToEntity).collect(Collectors.toList());
-		
-//		List<PlanteUtilisateur> listeRetour = new ArrayList<PlanteUtilisateur>();
-//		for(PlanteUtilisateurUpdateDto p: listeUpdateDto) {
-//			listeRetour.add(convertUpdateDtoToEntity(p));
-//		}
-//		return listeRetour;
+
+		return listeUpdateDto == null ? new ArrayList<PlanteUtilisateur>()
+				: listeUpdateDto.stream().map(this::convertUpdateDtoToEntity).collect(Collectors.toList());
+
 	}
 
 	@Override
 	public List<PlanteUtilisateurUpdateDto> convertListEntityToUpdateDto(List<PlanteUtilisateur> listeEntity) {
-		
-		return listeEntity.stream().map(this :: convertEntityToUpdateDto).collect(Collectors.toList());
-		
-//		List<PlanteUtilisateurUpdateDto> listeRetour = new ArrayList<PlanteUtilisateurUpdateDto>();
-//		for(PlanteUtilisateur p: listeEntity) {
-//			listeRetour.add(convertEntityToUpdateDto(p));
-//		}
-//		return listeRetour;
+
+		return listeEntity == null ? new ArrayList<PlanteUtilisateurUpdateDto>()
+				: listeEntity.stream().map(this::convertEntityToUpdateDto).collect(Collectors.toList());
+
 	}
 
 }

@@ -132,14 +132,14 @@ public class PeriodeConverter implements IConverter<PeriodeCreateDto, PeriodeUpd
 	@Override
 	public Page<Periode> convertPageCreateDtoToEntity(Page<PeriodeCreateDto> pageCreateDto) {
 
-		return pageCreateDto.map(this::convertCreateDtoToEntity);
+		return pageCreateDto == null ? new PageImpl<Periode>(new ArrayList<Periode>()) : pageCreateDto.map(this::convertCreateDtoToEntity);
 
 	}
 
 	@Override
 	public Page<PeriodeCreateDto> convertPageEntityToCreateDto(Page<Periode> pageEntity) {
 
-		return pageEntity.map(this::convertEntityToCreateDto);
+		return pageEntity == null ? new PageImpl<PeriodeCreateDto>(new ArrayList<PeriodeCreateDto>()) :pageEntity.map(this::convertEntityToCreateDto);
 
 	}
 
@@ -157,7 +157,7 @@ public class PeriodeConverter implements IConverter<PeriodeCreateDto, PeriodeUpd
 	@Override
 	public Page<PeriodeUpdateDto> convertPageEntityToUpdateDto(Page<Periode> pageEntity) {
 
-		return pageEntity.map(this::convertEntityToUpdateDto);
+		return pageEntity == null ? new PageImpl<PeriodeUpdateDto>(new ArrayList<PeriodeUpdateDto>()) : pageEntity.map(this::convertEntityToUpdateDto);
 
 	}
 
