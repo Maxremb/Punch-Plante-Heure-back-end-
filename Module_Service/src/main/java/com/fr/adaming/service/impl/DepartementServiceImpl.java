@@ -35,8 +35,7 @@ public class DepartementServiceImpl extends AbstractService<Departement>
 			if (departement != null) {
 				if (!dao.existsById(departement.getNumeroDep())) {
 					log.info("Un département a été créé et enregistré dans la BD via la couche service.");
-					return new ServiceResponse<Departement>("Création d'un département via couche service OK",
-							dao.save(departement));
+					return new ServiceResponse<Departement>("Création d'un département via couche service OK",dao.save(departement));
 				} else {
 					log.info(
 							"Tentative échouée de création d'un département avec un ID déjà enregistré dans la BD via couche service");

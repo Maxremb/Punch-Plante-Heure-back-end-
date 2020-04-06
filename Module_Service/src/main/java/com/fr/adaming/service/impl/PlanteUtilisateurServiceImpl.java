@@ -63,8 +63,8 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 			log.info("Objet d'entrée null");
 			return new ServiceResponse<PlanteUtilisateur>("Objet d'entrée null", null);
 		} else if (!dao.existsById(planteUtilisateur.getId())) {
-			log.info("Id déjà connu dans la BD");
-			return new ServiceResponse<PlanteUtilisateur>("Id déjà connu dans la BD", null);
+			log.info("Id inconnu dans la BD");
+			return new ServiceResponse<PlanteUtilisateur>("Id inconnu dans la BD", null);
 		}
 
 		else {

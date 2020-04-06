@@ -29,7 +29,11 @@ public class Meteo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private double temperature; //pas dessous de -273.15
-	private int pluie;	//positive
+	private double pluie;	//positive
+	private double rayonnement;
+	private double evapoTranspirationPotentielle;
+	private double evapoTranspirationReelle;
+	private int humidite;
 	@Column(nullable = false, unique = true)
 	private LocalDate date;
 

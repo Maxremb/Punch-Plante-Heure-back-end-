@@ -1,7 +1,5 @@
 package com.fr.adaming.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -53,7 +51,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 
 	@Override
 	public ServiceResponse<Jardin> update(Jardin entite) {
-		if (entite != null && existsById(entite.getId())) {
+		if (entite != null && dao.existsById(entite.getId())) {
 			try {
 				dao.save(entite);
 				log.info("Jardin modifié dans la DB");
@@ -64,8 +62,8 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 			}
 
 		}
-		log.info("Modification non réalisé : id inconnu dans la database");
-		return new ServiceResponse<Jardin>("Modification non réalisé : id inconnu dans la database", null);
+		log.info("Modification non réalisée : id inconnu dans la database ou entité nulle");
+		return new ServiceResponse<Jardin>("Modification non réalisée : id inconnu dans la database ou entité nulle", null);
 	}
 
 	@Override
