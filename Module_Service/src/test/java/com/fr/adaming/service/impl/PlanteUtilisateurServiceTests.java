@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,6 @@ import com.fr.adaming.ModuleServiceApplication;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
-import com.fr.adaming.entity.Meteo;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.entity.PlanteUtilisateur;
 import com.fr.adaming.entity.Utilisateur;
@@ -285,18 +282,10 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 		utilisateur.setId(1);
 		utilisateur.setNom("Martinez");
 
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
 		
 		Departement dep = new Departement();
 		dep.setNumeroDep(69);
 		dep.setNom("Rhone");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 
 		Jardin jardin = new Jardin();
 		jardin.setId(1);
@@ -348,19 +337,10 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setId(1);
 		utilisateur.setNom("Martinez");
-
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
 		
 		Departement dep = new Departement();
 		dep.setNumeroDep(69);
 		dep.setNom("Rhone");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 
 		Jardin jardin = new Jardin();
 		jardin.setId(1);
@@ -415,18 +395,9 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 		utilisateur.setNom("Martinez");
 
 
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
-		
 		Departement dep = new Departement();
 		dep.setNumeroDep(69);
 		dep.setNom("Rhone");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 
 		Jardin jardin = new Jardin();
 		jardin.setId(1);

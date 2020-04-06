@@ -58,7 +58,6 @@ public class IJardinRepositoryTests {
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomTestDepartement");
-		dep.setMeteoDep(listMeteo);
 		Utilisateur util = new Utilisateur();
 		util.setId(1);
 		util.setNom("nomTestUtilisateur");
@@ -76,10 +75,6 @@ public class IJardinRepositoryTests {
 	    assertThat(result.toList().get(0).getUtilisateur()).hasFieldOrPropertyWithValue("nom", "nomTestUtilisateur");
 	    assertThat(result.toList().get(0).getDepartement()).hasFieldOrPropertyWithValue("numeroDep", 1);
 	    assertThat(result.toList().get(0).getDepartement()).hasFieldOrPropertyWithValue("nom", "nomTestDepartement");
-	    assertThat(result.toList().get(0).getDepartement().getMeteoDep().get(0)).hasFieldOrPropertyWithValue("id", 1);
-	    assertThat(result.toList().get(0).getDepartement().getMeteoDep().get(0)).hasFieldOrPropertyWithValue("pluie", 5);
-	    assertThat(result.toList().get(0).getDepartement().getMeteoDep().get(0)).hasFieldOrPropertyWithValue("temperature", (double)20);
-	    assertThat(result.toList().get(0).getDepartement().getMeteoDep().get(0)).hasFieldOrPropertyWithValue("date", LocalDate.parse("2020-02-20"));
 	}
 	
 	/**
@@ -132,7 +127,6 @@ public class IJardinRepositoryTests {
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomTestDepartement");
-		dep.setMeteoDep(listMeteo);
 		Utilisateur util = new Utilisateur();
 		util.setId(1);
 		util.setNom("nomTestUtilisateur");
@@ -150,10 +144,6 @@ public class IJardinRepositoryTests {
 	    assertThat(result.toList().get(0).getUtilisateur()).hasFieldOrPropertyWithValue("nom", "nomTestUtilisateur");
 	    assertThat(result.toList().get(0).getDepartement()).hasFieldOrPropertyWithValue("numeroDep", 1);
 	    assertThat(result.toList().get(0).getDepartement()).hasFieldOrPropertyWithValue("nom", "nomTestDepartement");
-	    assertThat(result.toList().get(0).getDepartement().getMeteoDep().get(0)).hasFieldOrPropertyWithValue("id", 1);
-	    assertThat(result.toList().get(0).getDepartement().getMeteoDep().get(0)).hasFieldOrPropertyWithValue("pluie", 5);
-	    assertThat(result.toList().get(0).getDepartement().getMeteoDep().get(0)).hasFieldOrPropertyWithValue("temperature", (double)20);
-	    assertThat(result.toList().get(0).getDepartement().getMeteoDep().get(0)).hasFieldOrPropertyWithValue("date", LocalDate.parse("2020-02-20"));
 	}
 	
 	/**
@@ -203,7 +193,6 @@ public class IJardinRepositoryTests {
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomTestDepartement");
-		dep.setMeteoDep(listMeteo);
 		Utilisateur util = new Utilisateur();
 		util.setId(1);
 		util.setNom("nomTestUtilisateur");
@@ -221,10 +210,6 @@ public class IJardinRepositoryTests {
 	    assertThat(result.toList().get(0).getUtilisateur()).hasFieldOrPropertyWithValue("nom", "nomTestUtilisateur");
 	    assertThat(result.toList().get(0).getDepartement()).hasFieldOrPropertyWithValue("numeroDep", 1);
 	    assertThat(result.toList().get(0).getDepartement()).hasFieldOrPropertyWithValue("nom", "nomTestDepartement");
-	    assertThat(result.toList().get(0).getDepartement().getMeteoDep().get(0)).hasFieldOrPropertyWithValue("id", 1);
-	    assertThat(result.toList().get(0).getDepartement().getMeteoDep().get(0)).hasFieldOrPropertyWithValue("pluie", 5);
-	    assertThat(result.toList().get(0).getDepartement().getMeteoDep().get(0)).hasFieldOrPropertyWithValue("temperature", (double)20);
-	    assertThat(result.toList().get(0).getDepartement().getMeteoDep().get(0)).hasFieldOrPropertyWithValue("date", LocalDate.parse("2020-02-20"));
 	}
 	
 	/**

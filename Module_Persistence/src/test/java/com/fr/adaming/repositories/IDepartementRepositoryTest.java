@@ -8,6 +8,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
@@ -57,7 +60,7 @@ public class IDepartementRepositoryTest {
 	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void testFetchingMeteoByDepartement_shouldReturnListOfMeteo() {
+	public void testFetchingMeteoByDepartement_shouldReturnPageOfMeteo() {
 		//préparer les inputs
 		int idMeteo1 = 1 ;
 		int idMeteo2 = 2 ;
@@ -66,19 +69,22 @@ public class IDepartementRepositoryTest {
 		double temperature = 20 ; 
 		int idDep = 1 ;
 				
+		Pageable pageable = PageRequest.of(0, 20);
+		
 		//invoquer l'appli
-		List<Meteo> result = depRepo.findMeteoByNumeroDep(idDep);
+		Page<Meteo> resultPage = depRepo.findMeteoByNumeroDep(pageable, idDep);
 		
 		//assertion
-	    assertThat(result).isNotNull().asList().isNotEmpty().hasSize(2);
-	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("id", idMeteo1);
-	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("id", idMeteo2);
-	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("date", date);
-	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("date", date);
-	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("pluie", pluie);
-	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("pluie", pluie);
-	    assertThat(result.get(0)).hasFieldOrPropertyWithValue("temperature", temperature);
-	    assertThat(result.get(1)).hasFieldOrPropertyWithValue("temperature", temperature);
+	    assertThat(resultPage).isNotNull().asList().isNotEmpty().hasSize(2);
+	    List<Meteo> resultList = resultPage.getContent();
+	    assertThat(resultList.get(0)).hasFieldOrPropertyWithValue("id", idMeteo1);
+	    assertThat(resultList.get(1)).hasFieldOrPropertyWithValue("id", idMeteo2);
+	    assertThat(resultList.get(0)).hasFieldOrPropertyWithValue("date", date);
+	    assertThat(resultList.get(1)).hasFieldOrPropertyWithValue("date", date);
+	    assertThat(resultList.get(0)).hasFieldOrPropertyWithValue("pluie", pluie);
+	    assertThat(resultList.get(1)).hasFieldOrPropertyWithValue("pluie", pluie);
+	    assertThat(resultList.get(0)).hasFieldOrPropertyWithValue("temperature", temperature);
+	    assertThat(resultList.get(1)).hasFieldOrPropertyWithValue("temperature", temperature);
 	}
 
 }

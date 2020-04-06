@@ -6,16 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
@@ -23,7 +16,6 @@ import com.fr.adaming.ModuleServiceApplication;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
-import com.fr.adaming.entity.Meteo;
 import com.fr.adaming.entity.Utilisateur;
 import com.fr.adaming.enums.Sol;
 import com.fr.adaming.service.IJardinService;
@@ -332,17 +324,9 @@ public class JardinServiceTest implements IServiceTests {
 		Utilisateur user = new Utilisateur();
 		user.setId(2);
 		user.setNom("nomTestUtilisateur");
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomTestDepartement");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 
 		Jardin jardin = new Jardin();
 		jardin.setId(1);
@@ -395,17 +379,9 @@ public class JardinServiceTest implements IServiceTests {
 		Utilisateur user = new Utilisateur();
 		user.setId(2);
 		user.setNom("nomTestUtilisateur");
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomTestDepartement");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 
 		Jardin jardin = new Jardin();
 		jardin.setId(1);
@@ -438,17 +414,9 @@ public class JardinServiceTest implements IServiceTests {
 		Utilisateur user = new Utilisateur();
 		user.setId(2);
 		user.setNom("nomTestUtilisateur");
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomTestDepartement");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 
 		Jardin jardin = new Jardin();
 		jardin.setId(1);
@@ -481,17 +449,9 @@ public class JardinServiceTest implements IServiceTests {
 		Utilisateur user = new Utilisateur();
 		user.setId(2);
 		user.setNom("nomTestUtilisateur");
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomTestDepartement");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 
 		Jardin jardin = new Jardin();
 		jardin.setId(2);

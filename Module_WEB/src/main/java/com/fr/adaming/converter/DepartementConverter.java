@@ -3,15 +3,12 @@ package com.fr.adaming.converter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.DepartementDto;
-import com.fr.adaming.dto.MeteoCreateDto;
-import com.fr.adaming.dto.MeteoUpdateDto;
 import com.fr.adaming.entity.Departement;
-import com.fr.adaming.entity.Meteo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,9 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class DepartementConverter implements IConverterDepartement<Departement, DepartementDto> {
-
-	@Autowired
-	private IConverter<MeteoCreateDto, MeteoUpdateDto, Meteo> convertMeteo;
 
 	@Override
 	public Departement convertDtoToEntity(DepartementDto dto) {

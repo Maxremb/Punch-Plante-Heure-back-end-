@@ -75,7 +75,6 @@ public class IPlanteUtilisateurRepositoryTests {
 		dep.setNom("Rhone");
 		List<Meteo> listMeteo = new ArrayList<Meteo>();
 		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 
 		Jardin jardin = new Jardin();
 		jardin.setId(1);

@@ -50,7 +50,6 @@ public class JardinConverterTest implements IConverterTests {
 		DepartementDto depDto = new DepartementDto();
 		depDto.setDepNum(1);
 		depDto.setName("nomDep4Test");
-		depDto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
 
 		UtilisateurUpdateDto utilUpDto = new UtilisateurUpdateDto();
 		utilUpDto.setIdentifier(1);
@@ -89,7 +88,6 @@ public class JardinConverterTest implements IConverterTests {
 		DepartementDto depDto = new DepartementDto();
 		depDto.setDepNum(1);
 		depDto.setName("nomDep4Test");
-		depDto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
 
 		UtilisateurUpdateDto utilUpDto = new UtilisateurUpdateDto();
 		utilUpDto.setIdentifier(1);
@@ -130,7 +128,6 @@ public class JardinConverterTest implements IConverterTests {
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomDep4Test");
-		dep.setMeteoDep(new ArrayList<Meteo>());
 
 		Utilisateur util = new Utilisateur();
 		util.setId(1);
@@ -170,7 +167,6 @@ public class JardinConverterTest implements IConverterTests {
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomDep4Test");
-		dep.setMeteoDep(new ArrayList<Meteo>());
 
 		Utilisateur util = new Utilisateur();
 		util.setId(1);
@@ -210,7 +206,6 @@ public class JardinConverterTest implements IConverterTests {
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomDep4Test");
-		dep.setMeteoDep(new ArrayList<Meteo>());
 
 		Utilisateur util = new Utilisateur();
 		util.setId(1);
@@ -266,7 +261,6 @@ public class JardinConverterTest implements IConverterTests {
 		DepartementDto depDto = new DepartementDto();
 		depDto.setDepNum(1);
 		depDto.setName("nomDep4Test");
-		depDto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
 
 		UtilisateurUpdateDto utilUpDto = new UtilisateurUpdateDto();
 		utilUpDto.setIdentifier(1);
@@ -320,7 +314,6 @@ public class JardinConverterTest implements IConverterTests {
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomDep4Test");
-		dep.setMeteoDep(new ArrayList<Meteo>());
 
 		Utilisateur util = new Utilisateur();
 		util.setId(1);
@@ -378,7 +371,6 @@ public class JardinConverterTest implements IConverterTests {
 		DepartementDto depDto = new DepartementDto();
 		depDto.setDepNum(1);
 		depDto.setName("nomDep4Test");
-		depDto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
 
 		UtilisateurUpdateDto utilUpDto = new UtilisateurUpdateDto();
 		utilUpDto.setIdentifier(1);
@@ -436,7 +428,6 @@ public class JardinConverterTest implements IConverterTests {
 		DepartementDto depDto = new DepartementDto();
 		depDto.setDepNum(1);
 		depDto.setName("nomDep4Test");
-		depDto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
 
 		UtilisateurUpdateDto utilUpDto = new UtilisateurUpdateDto();
 		utilUpDto.setIdentifier(1);
@@ -494,7 +485,6 @@ public class JardinConverterTest implements IConverterTests {
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomDep4Test");
-		dep.setMeteoDep(new ArrayList<Meteo>());
 
 		Utilisateur util = new Utilisateur();
 		util.setId(1);
@@ -555,7 +545,6 @@ public class JardinConverterTest implements IConverterTests {
 		DepartementDto depDto = new DepartementDto();
 		depDto.setDepNum(1);
 		depDto.setName("nomDep4Test");
-		depDto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
 
 		UtilisateurUpdateDto utilUpDto = new UtilisateurUpdateDto();
 		utilUpDto.setIdentifier(1);
@@ -617,7 +606,6 @@ public class JardinConverterTest implements IConverterTests {
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomDep4Test");
-		dep.setMeteoDep(new ArrayList<Meteo>());
 
 		Utilisateur util = new Utilisateur();
 		util.setId(1);

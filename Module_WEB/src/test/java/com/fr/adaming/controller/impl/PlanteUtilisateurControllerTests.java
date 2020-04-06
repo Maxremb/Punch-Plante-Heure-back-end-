@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,7 +22,6 @@ import com.fr.adaming.controller.AbstractTestMethods;
 import com.fr.adaming.controller.IControllerTests;
 import com.fr.adaming.dto.DepartementDto;
 import com.fr.adaming.dto.JardinUpdateDto;
-import com.fr.adaming.dto.MeteoUpdateDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.PlanteUtilisateurUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
@@ -61,7 +59,6 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 		DepartementDto depDto = new DepartementDto();
 		depDto.setDepNum(69);
 		depDto.setName("Rhone");
-		depDto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
 
 		JardinUpdateDto jardinDto = new JardinUpdateDto();
 		jardinDto.setDept(depDto);

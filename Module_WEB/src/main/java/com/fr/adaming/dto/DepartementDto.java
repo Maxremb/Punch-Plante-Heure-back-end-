@@ -1,8 +1,5 @@
 package com.fr.adaming.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.constraints.Positive;
 
 import com.sun.istack.NotNull;

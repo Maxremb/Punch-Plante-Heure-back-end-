@@ -5,13 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
@@ -33,6 +31,8 @@ import com.fr.adaming.service.IServiceTests;
  */
 @SpringBootTest(classes = ModuleServiceApplication.class)
 public class DepartementServiceTest implements IServiceTests {
+	
+	private static final Pageable pageable = PageRequest.of(0, 20);
 	
 	@Autowired
 	private IDepartementService<Departement, Meteo> serviceDep;
@@ -70,19 +70,10 @@ public class DepartementServiceTest implements IServiceTests {
 	@Test
 	@Override
 	public void testReadAllWithContent_shouldReturnPage() {
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		int pluie = 5;
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
 		
 		assertTrue(service.readAll(0).getBody().toList().size() == 1);
 		assertThat(service.readAll(0).getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("nom", "nom4Test");
 		assertThat(service.readAll(0).getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("numeroDep", 1);
-		assertThat(service.readAll(0).getBody().toList().get(0).getMeteoDep().get(0)).isNotNull().hasFieldOrPropertyWithValue("pluie", pluie);
 	}
 
 	@Test
@@ -191,7 +182,7 @@ public class DepartementServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testReadMeteoByIdValid_ShouldReturnList() {
-		assertTrue(serviceDep.readMeteoByNumeroDep(1).getBody().size() == 2);
+		assertTrue(serviceDep.readMeteoByNumeroDep(pageable, 1).getBody().getContent().size() == 2);
 	}
 	
 	/**
@@ -204,7 +195,7 @@ public class DepartementServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testReadMeteoByIdInvalid_ShouldReturnEmptyList() {
-		assertNull(serviceDep.readMeteoByNumeroDep(2).getBody());
+		assertNull(serviceDep.readMeteoByNumeroDep(pageable, 2).getBody());
 	}
 	
 	
@@ -216,17 +207,10 @@ public class DepartementServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testCreateValid_ShouldReturnEntity() {
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
+
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nom4Test");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 		
 		ServiceResponse<Departement> resp = service.create(dep);
 		
@@ -254,17 +238,10 @@ public class DepartementServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testCreateExistingId_ShouldReturnNull() {
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
+
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nom2Test");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 		
 		ServiceResponse<Departement> resp = service.create(dep);
 		
@@ -281,17 +258,10 @@ public class DepartementServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testCreateExistingName_ShouldReturnNull() {
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
+
 		Departement dep = new Departement();
 		dep.setNumeroDep(2);
 		dep.setNom("nom4Test");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 		
 		ServiceResponse<Departement> resp = service.create(dep);
 		
@@ -308,17 +278,10 @@ public class DepartementServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testUpdateExistingDep_ShouldReturnEntite() {
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
+
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nom4Test");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 		
 		ServiceResponse<Departement> resp = service.update(dep);
 		
@@ -335,17 +298,10 @@ public class DepartementServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testUpdateNotExistingDep_ShouldReturnNull() {
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
+
 		Departement dep = new Departement();
 		dep.setNumeroDep(2);
 		dep.setNom("nom4Test");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 		
 		ServiceResponse<Departement> resp = service.update(dep);
 		
@@ -364,17 +320,10 @@ public class DepartementServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testUpdateDepWithExistingName_ShouldReturnEntite() {
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
+
 		Departement dep = new Departement();
 		dep.setNumeroDep(1);
 		dep.setNom("nomUtilise");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-		dep.setMeteoDep(listMeteo);
 		
 		ServiceResponse<Departement> resp = service.update(dep);
 		

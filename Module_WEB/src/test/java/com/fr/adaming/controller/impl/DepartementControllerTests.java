@@ -49,7 +49,6 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 
 		dto.setDepNum(1);
 		dto.setName("nom4Test");
-		dto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
 
 		return dto;
 	}
@@ -73,8 +72,6 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingEntityWithInvalidBody_shouldReturn400() throws Exception {
 		DepartementDto wrongDto = new DepartementDto();
-
-		wrongDto.setWeatherDep(null);
 
 		ResponseDto<DepartementDto> responseDto = runMockMvc(BASE_URL, 400, wrongDto, DepartementDto.class);
 
