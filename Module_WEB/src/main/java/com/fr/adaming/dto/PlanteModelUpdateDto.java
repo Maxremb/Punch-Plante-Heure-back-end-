@@ -16,6 +16,6 @@ import lombok.Setter;
 public class PlanteModelUpdateDto extends PlanteModelCreateDto {
 	
 	@Positive (message = "PlanteModelUpdateDto: Un identifiant ne peut pas etre 0 ou negatif")
-	int identifiant = 0;
+	int identifiant;
 
 }
