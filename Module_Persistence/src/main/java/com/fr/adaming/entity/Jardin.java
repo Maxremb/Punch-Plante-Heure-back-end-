@@ -35,6 +35,8 @@ public class Jardin {
 	private Float longueur;
 	@Column
 	private Float largeur;
+	@Column
+	private Float ProfSol;
 	
 	@ManyToOne (optional = false, fetch = FetchType.EAGER)
 	private Departement departement;  // Ne devrait pas être nul 

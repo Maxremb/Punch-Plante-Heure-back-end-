@@ -28,6 +28,8 @@ public class JardinCreateDto {
 
 	private Float width;
 	
+	private Float depthGround ;
+	
 	@NotNull
 	private DepartementDto dept;  // Ne devrais pas être nul 
 	
