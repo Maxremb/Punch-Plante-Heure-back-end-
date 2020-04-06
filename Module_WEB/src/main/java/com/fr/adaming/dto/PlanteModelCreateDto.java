@@ -2,10 +2,12 @@ package com.fr.adaming.dto;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
 
-
-
+import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.enums.Sol;
+
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,10 +15,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 public class PlanteModelCreateDto {
 
 
 	private String commun;
+	@NotNull (message = "Le nom scientifique de la plante ne peut pas être null")
 	private String scientifique;
 	private List<PeriodeUpdateDto> periodes;
 	private int arrosage;
@@ -29,6 +33,7 @@ public class PlanteModelCreateDto {
 	private String desc;
 	private boolean toxi;
 	private String picture;
-	private List<PlanteModelReducedDto> positive;
-	private List<PlanteModelReducedDto> negative;
+	private String[] positive;
+	private String[] negative;
+	private String mifa;
 }

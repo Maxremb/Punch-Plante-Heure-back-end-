@@ -20,9 +20,9 @@ public interface IDepartementRepository extends JpaRepository<Departement, Integ
 	/**
 	 * Cette méthode retourne une liste de départements via une recherche par nom
 	 * @param nom - le nom du département recherché
-	 * @return liste de Département
+	 * @return Département
 	 */
-	public List<Departement> findDepartementByNom(String nom);
+	public Departement findDepartementByNom(String nom);
 	
 	/**
 	 * Cette méthode retourne une liste de 'météos' pour un département

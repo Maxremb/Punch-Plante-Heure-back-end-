@@ -2,6 +2,7 @@ package com.fr.adaming.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,6 +10,7 @@ import javax.persistence.ManyToOne;
 
 import com.fr.adaming.enums.Sol;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,14 +21,14 @@ import lombok.Setter;
  * @since 0.0.1-SNAPSHOT
  */
 @Getter @Setter @NoArgsConstructor
-@Entity
+@Entity @EqualsAndHashCode
 public class Jardin {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column 
-	private Enum<Sol> sol;
+	private Sol sol;
 	@Column (nullable = false)
 	private String nom;
 	@Column
@@ -34,10 +36,10 @@ public class Jardin {
 	@Column
 	private Float largeur;
 	
-	@ManyToOne (optional = false)
-	private Departement departement;  // Ne devrais pas être nul 
+	@ManyToOne (optional = false, fetch = FetchType.EAGER)
+	private Departement departement;  // Ne devrait pas être nul 
 	
-	@ManyToOne (optional = false)
-	private Utilisateur utilisateur; // Ne devrais pas être nul
+	@ManyToOne ( fetch = FetchType.EAGER)//optional = false,
+	private Utilisateur utilisateur; // Ne devrait pas être nul
 	
 }

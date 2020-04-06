@@ -2,7 +2,7 @@ package com.fr.adaming.converter;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.springframework.data.domain.Page;
 
 /**
  * Interface IConverter implementant les classes Converter de chaque entite
@@ -69,5 +69,33 @@ public interface IConverter<C, U, E> {
 	 * @return resultat de la conversion (liste d'objets UpdateDto, pouvant etre vide)
 	 */
 	public List<U> convertListEntityToUpdateDto(List<E> listeEntity);
+	
+	/**
+	 * Methode permettant de convertir une liste d'objets CreateDto en une liste d'objets Entite consideres
+	 * @param listeCreateDto objet liste d'objets CreateDto a convertir
+	 * @return resultat de la conversion (liste d'objets Entite, pouvant etre vide)
+	 */
+	public Page<E> convertPageCreateDtoToEntity(Page<C> listeCreateDto);
+	
+	/**
+	 * Methode permettant de convertir une liste d'objets Entite en une liste d'objets CreateDto consideres
+	 * @param listeEntity objet liste d'objets Entite a convertir
+	 * @return resultat de la conversion (liste d'objets CreateDto, pouvant etre vide)
+	 */
+	public Page<C> convertPageEntityToCreateDto(Page<E> listeEntity);
+	
+	/**
+	 * Methode permettant de convetir une liste d'objets UpdateDto en une liste d'objets Entite consideres
+	 * @param listeUpdateDto objet liste d'objets UpdateDto a convertir
+	 * @return resultat de la conversion (liste d'objets Entite, pouvant etre vide)
+	 */
+	public Page<E> convertPageUpdateDtoToEntity(Page<U> listeUpdateDto);
+	
+	/**
+	 * Methode permettant de convertir une liste d'objets Entite en une liste d'objets UpdateDto consideres
+	 * @param listeEntity objet liste d'objets Entite a convertir
+	 * @return resultat de la conversion (liste d'objets UpdateDto, pouvant etre vide)
+	 */
+	public Page<U> convertPageEntityToUpdateDto(Page<E> listeEntity);
 
 }

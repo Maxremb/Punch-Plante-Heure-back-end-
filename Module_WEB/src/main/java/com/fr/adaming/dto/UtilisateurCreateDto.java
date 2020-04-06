@@ -1,10 +1,11 @@
 package com.fr.adaming.dto;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter @Setter @EqualsAndHashCode
 public class UtilisateurCreateDto {
 
-	private String lastName;
-	private String firstName;
+	private String nom;
 }

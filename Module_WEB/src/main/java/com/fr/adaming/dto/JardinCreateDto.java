@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fr.adaming.enums.Sol;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,10 +15,10 @@ import lombok.Setter;
  * @author Clara Cadet
  * @since 0.0.1-SNAPSHOT
  */
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @EqualsAndHashCode
 public class JardinCreateDto {
 
-	private Enum<Sol> ground;
+	private Sol ground;
 
 	@NotBlank
 	@NotNull
@@ -30,7 +31,7 @@ public class JardinCreateDto {
 	@NotNull
 	private DepartementDto dept;  // Ne devrais pas être nul 
 	
-	@NotNull
-	private UtilisateurCreateDto user; // Ne devrais pas être nul
+	//@NotNull Utilisateur n'existe pas pour le moment
+	private UtilisateurUpdateDto user; // Ne devrais pas être nul
 	
 }

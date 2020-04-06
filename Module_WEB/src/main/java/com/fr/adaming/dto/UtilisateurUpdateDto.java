@@ -1,10 +1,11 @@
 package com.fr.adaming.dto;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class UtilisateurUpdateDto {
+@Getter @Setter @EqualsAndHashCode
+public class UtilisateurUpdateDto extends UtilisateurCreateDto {
 
-	private String lastName;
-	private String firstName;
+	 private int identifier;
 }

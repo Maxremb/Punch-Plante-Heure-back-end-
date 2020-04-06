@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 
 import com.fr.adaming.enums.TypePeriod;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,7 @@ import lombok.Setter;
  */
 @Entity
 @Getter @Setter
+@EqualsAndHashCode
 public class Periode {
 
 	@Id

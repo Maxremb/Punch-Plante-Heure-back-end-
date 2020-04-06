@@ -4,20 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
 import com.fr.adaming.dto.PlanteModelCreateDto;
 import com.fr.adaming.dto.PlanteModelReducedDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.entity.PlanteModel;
 
+
+/**
+ * <p>
+ * Converter pour l'entite PlanteModel en dto et inversement <br>
+ * converti aussi depuis et vers reducedDto <br>
+ *  Implements IConverter.
+ * </p>
+ * 
+ * @author Léa Coston
+ * @since 0.0.1
+ *
+ */
 @Component
 public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, PlanteModelUpdateDto, PlanteModel> {
 
 	@Autowired
 	private PeriodeConverter periodeConverter;
-	
-	
 	
 	@Override
 	public PlanteModel convertCreateDtoToEntity(PlanteModelCreateDto createDto) {
@@ -28,7 +38,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		PlanteModel entity = new PlanteModel();
 		entity.setNomCommun(createDto.getCommun());
 		entity.setNomScientifique(createDto.getScientifique());
-		entity.setDates(periodeConverter.convertListUpdateDtoToEntity(createDto.getPeriodes()));
+		entity.setDates(null);
 		entity.setDescription(createDto.getDesc());
 		entity.setEnsoleillementOpti(createDto.getEnsoleillement());
 		entity.setHumiditeopti(createDto.getHumidite());
@@ -39,9 +49,10 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		entity.setTemperatureMax(createDto.getMax());
 		entity.setTemperatureMin(createDto.getMin());
 		entity.setHumiditeopti(createDto.getHumidite());
-		entity.setAssoNegative(convertListReducedDtoToEntity(createDto.getNegative()));
-		entity.setAssoPositive(convertListReducedDtoToEntity(createDto.getPositive()));
-		
+		entity.setAssoNegative(createDto.getNegative());
+		entity.setAssoPositive(createDto.getPositive());
+		entity.setFamille(createDto.getMifa());
+		entity.setSolOpti(createDto.getSol());
 		return entity;
 	}
 
@@ -54,7 +65,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		PlanteModelCreateDto createDto= new PlanteModelCreateDto();
 		createDto.setCommun(entity.getNomCommun());
 		createDto.setScientifique(entity.getNomScientifique());
-		createDto.setPeriodes(periodeConverter.convertListEntityToUpdateDto(entity.getDates()));
+		createDto.setPeriodes(null);
 		createDto.setArrosage(entity.getIntervalArrosage());
 		createDto.setEnsoleillement(entity.getEnsoleillementOpti());
 		createDto.setHumidite(entity.getHumiditeopti());
@@ -64,8 +75,10 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		createDto.setDesc(entity.getDescription());
 		createDto.setToxi(entity.isToxicite());
 		createDto.setPicture(entity.getPhoto());
-		createDto.setNegative(convertListEntityToReducedDto(entity.getAssoNegative()));
-		createDto.setPositive(convertListEntityToReducedDto(entity.getAssoPositive()));
+		createDto.setNegative(entity.getAssoNegative());
+		createDto.setPositive(entity.getAssoPositive());
+		createDto.setMifa(entity.getFamille());
+		createDto.setSol(entity.getSolOpti());
 		return createDto;
 	}
 
@@ -86,18 +99,133 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		if(entity==null) {
 			return null;
 		}
-		PlanteModelUpdateDto updateDto = new PlanteModelUpdateDto();
-		updateDto=(PlanteModelUpdateDto) convertEntityToCreateDto(entity);
-		updateDto.setIdentifiant(entity.getId());
-			
-		return updateDto;
+		PlanteModelUpdateDto createDto= new PlanteModelUpdateDto();
+		createDto.setCommun(entity.getNomCommun());
+		createDto.setScientifique(entity.getNomScientifique());
+		createDto.setPeriodes(null);
+		createDto.setArrosage(entity.getIntervalArrosage());
+		createDto.setEnsoleillement(entity.getEnsoleillementOpti());
+		createDto.setHumidite(entity.getHumiditeopti());
+		createDto.setRepiquage(entity.getRepiquage());
+		createDto.setMin(entity.getTemperatureMin());
+		createDto.setMax(entity.getTemperatureMax());
+		createDto.setDesc(entity.getDescription());
+		createDto.setToxi(entity.isToxicite());
+		createDto.setPicture(entity.getPhoto());
+		createDto.setNegative(entity.getAssoNegative());
+		createDto.setPositive(entity.getAssoPositive());
+		createDto.setMifa(entity.getFamille());
+		createDto.setIdentifiant(entity.getId());
+		createDto.setSol(entity.getSolOpti());
+		return createDto;
 		
 	}
 
 	@Override
+	public Page<PlanteModel> convertPageCreateDtoToEntity(Page<PlanteModelCreateDto> listeCreateDto) {
+		return listeCreateDto.map(this::convertCreateDtoToEntity);
+	}
+
+	@Override
+	public Page<PlanteModelCreateDto> convertPageEntityToCreateDto(Page<PlanteModel> listeEntity) {
+		return listeEntity.map(this::convertEntityToCreateDto);
+	}
+
+	@Override
+	public Page<PlanteModel> convertPageUpdateDtoToEntity(Page<PlanteModelUpdateDto> listeUpdateDto) {
+		return listeUpdateDto.map(this::convertUpdateDtoToEntity);
+	}
+
+	@Override
+	public Page<PlanteModelUpdateDto> convertPageEntityToUpdateDto(Page<PlanteModel> listeEntity) {
+		return listeEntity.map(this::convertEntityToUpdateDto);
+	}
+	
+	
+	/**
+	 * 
+	 * Converter Entity to reducedDto
+	 * 
+	 *	@param entity l'entité a convertir
+	 * 	@return une instance de planteModelReducedDto
+	 * @author Léa Coston
+	 * @since 0.0.1
+	 *
+	 */
+	public PlanteModelReducedDto convertEntityToReducedDto(PlanteModel entity) {
+		if(entity==null) {
+			return null;
+		}
+		PlanteModelReducedDto reducedDto= new PlanteModelReducedDto();
+		reducedDto.setIdentifiant(entity.getId());
+		reducedDto.setCommun(entity.getNomCommun());
+		reducedDto.setScientifique(entity.getNomScientifique());
+		reducedDto.setPicture(entity.getPhoto());
+		return reducedDto;
+	}
+	
+
+	/**
+	 * 
+	 * Converter  reducedDto to entity
+	 * 
+	 *	@param reducedDto la dto a convertir
+	 * @return une instance de planteModel
+	 * @author Léa Coston
+	 * @since 0.0.1
+	 *
+	 */
+	public PlanteModel convertReducedDtoToEntity(PlanteModelReducedDto reducedDto) {
+		if(reducedDto==null) {
+			return null;
+		}
+		PlanteModel entity = new PlanteModel();
+		entity.setNomCommun(reducedDto.getCommun());
+		entity.setNomScientifique(reducedDto.getScientifique());
+		entity.setPhoto(reducedDto.getPicture());
+		entity.setId(reducedDto.getIdentifiant());
+		
+		
+		
+		return entity;
+	}
+	
+	/**
+	 * 
+	 * Converter  page entity to page reduced dto
+	 * 
+	 *	@param listeReducedDto la page dto a convertir
+	 * @return une page de planteModel
+	 * @author Léa Coston
+	 * @since 0.0.1
+	 *
+	 */
+	public Page<PlanteModel> convertListReducedDtoToEntity(Page<PlanteModelReducedDto> listeReducedDto) {
+		Page<PlanteModel> retour = listeReducedDto.map(this::convertReducedDtoToEntity);
+		return retour;
+		
+	}
+
+	/**
+	 * 
+	 * Converter  page reducedDto to page entity
+	 * 
+	 *	@param listeEntity la page a convertir
+	 * @return une page de planteModelReducedDto
+	 * @author Léa Coston
+	 * @since 0.0.1
+	 *
+	 */
+	public Page<PlanteModelReducedDto> convertListEntityToReducedDto(Page<PlanteModel> listeEntity) {
+		Page<PlanteModelReducedDto> retour = listeEntity.map(this::convertEntityToReducedDto);
+		return retour;
+	}
+
+	
+	@Override
 	public List<PlanteModel> convertListCreateDtoToEntity(List<PlanteModelCreateDto> listeCreateDto) {
 		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
-		for(PlanteModelCreateDto p:listeCreateDto) {
+		for(PlanteModelCreateDto p: listeCreateDto) {
 			listeRetour.add(convertCreateDtoToEntity(p));
 		}
 		return listeRetour;
@@ -115,7 +243,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 	@Override
 	public List<PlanteModel> convertListUpdateDtoToEntity(List<PlanteModelUpdateDto> listeUpdateDto) {
 		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
-		for(PlanteModelUpdateDto p:listeUpdateDto) {
+		for(PlanteModelUpdateDto p: listeUpdateDto) {
 			listeRetour.add(convertUpdateDtoToEntity(p));
 		}
 		return listeRetour;
@@ -129,48 +257,7 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		}
 		return listeRetour;
 	}
-	
-	public PlanteModelReducedDto convertEntityToReducedDto(PlanteModel entity) {
-		if(entity==null) {
-			return null;
-		}
-		PlanteModelReducedDto reducedDto= new PlanteModelReducedDto();
-		reducedDto.setIdentifiant(entity.getId());
-		reducedDto.setCommun(entity.getNomCommun());
-		reducedDto.setScientifique(entity.getNomScientifique());
-		reducedDto.setPicture(entity.getPhoto());
-		return reducedDto;
-	}
-	
-	public PlanteModel convertReducedDtoToEntity(PlanteModelReducedDto reducedDto) {
-		if(reducedDto==null) {
-			return null;
-		}
-		PlanteModel entity = new PlanteModel();
-		entity.setNomCommun(reducedDto.getCommun());
-		entity.setNomScientifique(reducedDto.getScientifique());
-		entity.setPhoto(reducedDto.getPicture());
-		entity.setId(reducedDto.getIdentifiant());
-		
-		
-		
-		return entity;
-	}
-	
-	public List<PlanteModel> convertListReducedDtoToEntity(List<PlanteModelReducedDto> listeReducedDto) {
-		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
-		for(PlanteModelReducedDto p:listeReducedDto) {
-			listeRetour.add(convertReducedDtoToEntity(p));
-		}
-		return listeRetour;
-	}
 
-	public List<PlanteModelReducedDto> convertListEntityToReducedDto(List<PlanteModel> listeEntity) {
-		List<PlanteModelReducedDto> listeRetour = new ArrayList<PlanteModelReducedDto>();
-		for(PlanteModel p: listeEntity) {
-			listeRetour.add(convertEntityToReducedDto(p));
-		}
-		return listeRetour;
-	} 
+	
 
 }

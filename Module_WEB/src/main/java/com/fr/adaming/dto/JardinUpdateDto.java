@@ -1,11 +1,9 @@
 package com.fr.adaming.dto;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.fr.adaming.enums.Sol;
-
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,27 +13,12 @@ import lombok.Setter;
  * @author Clara Cadet
  * @since 0.0.1-SNAPSHOT
  */
-@Getter @Setter @NoArgsConstructor
-public class JardinUpdateDto {
+@Getter @Setter @NoArgsConstructor @EqualsAndHashCode(callSuper = true)
+public class JardinUpdateDto extends JardinCreateDto{
 
 	@NotNull
 	@Min(value = 1)
 	private Integer identifier;
 
-	private Enum<Sol> ground;
-
-	@NotBlank
-	@NotNull
-	private String name;
-
-	private Float length;
-
-	private Float width;
-	
-	@NotNull
-	private DepartementDto dept;  // Ne devrais pas être nul 
-	
-	@NotNull
-	private UtilisateurUpdateDto user; // Ne devrais pas être nul
 	
 }

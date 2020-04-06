@@ -1,10 +1,10 @@
 package com.fr.adaming.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
+import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,11 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.fr.adaming.dto.ResponseDto;
-
-//TODO ajouter une responseDto
 
 /**
  * @author Gregoire
@@ -36,9 +32,7 @@ import com.fr.adaming.dto.ResponseDto;
  * @param <U> UpdateDto
  * 
  */
-
-//@CrossOrigin
-//@RestController
+@CrossOrigin
 @RequestMapping
 public interface IController<C, U> {
 
@@ -49,7 +43,7 @@ public interface IController<C, U> {
 	 * </p>
 	 * 
 	 * @param dto : CreateDTO de l'Entité
-	 * @return ResponseDto : null ou objet CreateDto
+	 * @return Response entity avec ResponseDto. Body : null ou objet UpdateDto
 	 */
 	@PostMapping
 	public ResponseEntity<ResponseDto<U>> create(@RequestBody @Valid C dto);
@@ -61,10 +55,10 @@ public interface IController<C, U> {
 	 * </p>
 	 * 
 	 * @param id : id de l'entite
-	 * @return boolean true or false
+	 * @return ResponseEntity avec ResponseDto. Body: boolean true or false
 	 */
 	@DeleteMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto<?>> deleteById(@PathVariable @Positive int id);
+	public ResponseEntity<ResponseDto<U>> deleteById(@PathVariable("id") @Positive int id);
 
 	/**
 	 * <b>Description : </b>
@@ -73,7 +67,7 @@ public interface IController<C, U> {
 	 * </p>
 	 * 
 	 * @param dto : Updatedto de l'entite
-	 * @return boolean true or false
+	 * @return ResponseEntity avec ResponseDto. Body: UpdateDto
 	 */
 	@PutMapping
 	public ResponseEntity<ResponseDto<U>> update(@RequestBody @Valid U dto);
@@ -85,20 +79,20 @@ public interface IController<C, U> {
 	 * </p>
 	 * 
 	 * @param id : id de l'entite
-	 * @return UpdateDto
+	 * @return ResponseEntity avec ResponseDto. Body: UpdateDto
 	 */
 	@GetMapping(path = "/{id}")
-	public ResponseEntity<ResponseDto<U>> readById(@PathVariable @Positive int id);
+	public ResponseEntity<ResponseDto<U>> readById(@PathVariable("id") @Positive int id);
 
 	/**
 	 * <b>Description : </b>
 	 * <p>
-	 * Methode pour afficher la liste des donnees d'une entite.
+	 * Methode pour afficher la page p de la liste complète des instances d'une entité
 	 * </p>
-	 * 
-	 * @return listDto
+	 * @param p le numéro de la page souhaitée
+	 * @return ResponseEntity avec ResponseDto. Body: page d'entité
 	 */
-	@GetMapping(path = "/all")
-	public ResponseEntity<ResponseDto<List<U>>> readAll();
+	@GetMapping(path = "/all/{p}")
+	public ResponseEntity<ResponseDto<Page<U>>> readAll(@PathVariable("p") int p);
 
 }

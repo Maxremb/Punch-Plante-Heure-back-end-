@@ -13,7 +13,7 @@ public interface IConverterTests {
 	 * <b>Description : </b>
 	 * <p>Methode pour convertir une CreateDto en Entite</p>
 	 */
-	public void testConvertingCreateDtoToEntity();
+	public void testConvertingCreateDtoToEntity_shouldReturnEntity();
 	
 	/**
 	 * <b>Description : </b>
@@ -25,7 +25,7 @@ public interface IConverterTests {
 	 * <b>Description : </b>
 	 * <p>Methode pour convertir une UpdateDto en Entite</p>
 	 */
-	public void testConvertingUpdateDtoToEntity();
+	public void testConvertingUpdateDtoToEntity_shouldReturnEntity();
 	
 	/**
 	 * <b>Description : </b>
@@ -37,7 +37,7 @@ public interface IConverterTests {
 	 * <b>Description : </b>
 	 * <p>Methode pour convertir une Entite en CreateDto</p>
 	 */
-	public void testConvertingEntityToCreateDto();
+	public void testConvertingEntityToCreateDto_shouldReturnCreateDto();
 	
 	/**
 	 * <b>Description : </b>
@@ -49,7 +49,7 @@ public interface IConverterTests {
 	 * <b>Description : </b>
 	 * <p>Methode pour convertir une Entite en UpdateDto</p>
 	 */
-	public void testConvertingEntityToUpdateDto();
+	public void testConvertingEntityToUpdateDto_shouldReturnUpdateDto();
 	
 	/**
 	 * <b>Description : </b>
@@ -61,48 +61,73 @@ public interface IConverterTests {
 	 * <b>Description : </b>
 	 * <p>Methode pour convertir une Liste d'Entite en Liste de CreateDto</p>
 	 */
-	public void testConvertingListEntityToCreateDto();
+	public void testConvertingListEntityToCreateDto_shouldReturnCreateDtoList();
 	
-	/**
-	 * <b>Description : </b>
-	 * <p>Methode pour convertir une Liste d'Entite Null en Liste de CreateDto, doit retourner une liste vide</p>
-	 */
-	public void testConvertingNullListEntityToCreateDto_shouldReturnEmptyList();
+//	/**
+//	 * <b>Description : </b>
+//	 * <p>Methode pour convertir une Liste d'Entite Null en Liste de CreateDto, doit retourner une liste vide</p>
+//	 */
+//	public void testConvertingNullListEntityToCreateDto_shouldReturnEmptyList();
 	
 	/**
 	 * <b>Description : </b>
 	 * <p>Methode pour convertir une Liste de CreateDto en Liste d'Entite</p>
 	 */
-	public void testConvertingListCreateDtoToEntity ();
+	public void testConvertingListCreateDtoToEntity_shouldReturnEntityList ();
 	
-	/**
-	 * <b>Description : </b>
-	 * <p>Methode pour convertir une Liste de CreateDto Null en Liste d'Entite, doit retourner une liste vide</p>
-	 */
-	public void testConvertingNullListCreateDtoToEntity_shouldReturnEmptyList() ;
+//	/**
+//	 * <b>Description : </b>
+//	 * <p>Methode pour convertir une Liste de CreateDto Null en Liste d'Entite, doit retourner une liste vide</p>
+//	 */
+//	public void testConvertingNullListCreateDtoToEntity_shouldReturnEmptyList() ;
 	
 	/**
 	 * <b>Description : </b>
 	 * <p>Methode pour convertir une Liste d'Entite en Liste de CreateDto</p>
 	 */
-	public void testConvertingListEntityToUpdateDto();
+	public void testConvertingListEntityToUpdateDto_shouldReturnUpdateDtoList();
+	
+//	/**
+//	 * <b>Description : </b>
+//	 * <p>Methode pour convertir une Liste d'Entite Null en Liste de UpdateDto, doit retourner une liste vide</p>
+//	 */
+//	public void testConvertingNullListEntityToUpdateDto_shouldReturnEmptyList();
 	
 	/**
 	 * <b>Description : </b>
-	 * <p>Methode pour convertir une Liste d'Entite Null en Liste de UpdateDto, doit retourner une liste vide</p>
+	 * <p>Methode pour convertir une Liste de UpdateDto en Liste d'Entite, doit retourner une liste d'entités</p>
 	 */
-	public void testConvertingNullListEntityToUpdateDto_shouldReturnEmptyList();
+	public void testConvertingListUpdateDtoToEntity_shouldReturnEntityList ();
+	
+//	/**
+//	 * <b>Description : </b>
+//	 * <p>Methode pour convertir une Liste de UpdateDto Null en Liste d'Entite, doit retourner une liste vide</p>
+//	 */
+//	public void testConvertingNullListUpdateDtoToEntity_shouldReturnEmptyList() ;
+	
 	
 	/**
 	 * <b>Description : </b>
-	 * <p>Methode pour convertir une Liste de UpdateDto en Liste d'Entite, doit retourner une liste vide</p>
+	 * <p>Methode pour convertir une Page de CreateDto en Page d'Entites, doit retourner une liste d'entités</p>
 	 */
-	public void testConvertingListUpdateDtoToEntity ();
-	
-	/**
-	 * <b>Description : </b>
-	 * <p>Methode pour convertir une Liste de UpdateDto Null en Liste d'Entite, doit retourner une liste vide</p>
-	 */
-	public void testConvertingNullListUpdateDtoToEntity_shouldReturnEmptyList() ;
+	public void testConvertingPageCreateDtoToEntity_shouldReturnPageOfEntities();
 
+	/**
+	 * <b>Description : </b>
+	 * <p>Methode pour convertir une Page d'entites en Page de createDto, doit retourner une liste d'entités</p>
+	 */
+	public void testConvertingPageEntityToCreateDto_shouldReturnPageOfCreateDtos() ;
+
+	/**
+	 * <b>Description : </b>
+	 * <p>Methode pour convertir une Page de UpdateDto en Page d'Entites, doit retourner une liste d'entités</p>
+	 */
+	public void testConvertingPageUpdateDtoToEntity_shouldReturnPageOfEntities();
+
+	/**
+	 * <b>Description : </b>
+	 * <p>Methode pour convertir une Page de UpdateDto en Page d'Entites, doit retourner une liste d'entités</p>
+	 */
+	public void testConvertingPageEntityToUpdateDto_shouldReturnPageOfUpdateDtos();
+	
 }

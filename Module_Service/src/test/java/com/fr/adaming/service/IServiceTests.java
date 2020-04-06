@@ -22,15 +22,15 @@ public interface IServiceTests {
 	
 	/**
 	 * Methode permettant de tester l'impression de tous les objets d'une table contenant des lignes
-	 * le resultat du test devrait etre une liste d'objet
+	 * le resultat du test devrait etre une page d'objet
 	 */
-	public void testReadAllWithContent_shouldReturnList();
+	public void testReadAllWithContent_shouldReturnPage();
 	
 	/**
 	 * Methode permettant de tester l'impression de tous les objets d'une table vide
-	 * le resultat du test devrait etre une liste vide
+	 * le resultat du test devrait etre une page vide
 	 */
-	public void testReadAllNoContent_shouldReturnEmptyList();
+	public void testReadAllNoContent_shouldReturnEmptyPage();
 	
 	/**
 	 * Methode permettant de tester la recherche par Id avec un parametre valide

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ import lombok.Setter;
  */
 @Entity
 @Getter @Setter
+@EqualsAndHashCode
 public class Meteo {
 	
 	@Id
@@ -28,7 +30,7 @@ public class Meteo {
 	private int id;
 	private double temperature; //pas dessous de -273.15
 	private int pluie;	//positive
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private LocalDate date;
 
 }
