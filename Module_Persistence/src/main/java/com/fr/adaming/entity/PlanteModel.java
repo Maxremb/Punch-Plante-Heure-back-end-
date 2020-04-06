@@ -83,6 +83,15 @@ public class PlanteModel {
 	
 	@Column
 	private String famille;
+	
+	@Column
+	private String vegetaion ;
+	
+	@Column
+	private String feuillage ;
+	
+	@Column
+	private float hauteur ;
 
 	public PlanteModel(int id, String nomCommun, String nomScientifique, String photo) {
 		super();
