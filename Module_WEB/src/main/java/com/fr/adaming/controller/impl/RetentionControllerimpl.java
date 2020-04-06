@@ -14,7 +14,7 @@ import com.fr.adaming.service.IRetentionService;
 @RequestMapping (path = "/retention")
 @RestController
 @CrossOrigin
-public class RetentionControllerimpl extends AbstractController<RetentionCreateDto, RetentionUpdateDto, Retention>{
+public class RetentionControllerimpl{ // extends AbstractController<RetentionCreateDto, RetentionUpdateDto, Retention>{ // Faire l'heritage quand converter existe!
 	
 	@Autowired
 	private IRetentionService serviceRetention;

@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Implémentation de IConverterDépartement
+ * 
  * @author Isaline MILLET
  * @since 0.0.1
  *
@@ -27,25 +28,25 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 
 	@Autowired
 	private IConverter<MeteoCreateDto, MeteoUpdateDto, Meteo> convertMeteo;
-	
+
 	@Override
 	public Departement convertDtoToEntity(DepartementDto dto) {
 		try {
 			if (dto == null) {
-			log.info("Tentative de conversion d'un DepartementDto NULL vers entité");
-			return null;
-		} else {
-			Departement entite = new Departement();
-			entite.setNumeroDep(dto.getDepNum());
-			entite.setNom(dto.getName());
-			if (dto.getWeatherDep().isEmpty()) {
-				entite.setMeteoDep(new ArrayList<Meteo>());
+				log.info("Tentative de conversion d'un DepartementDto NULL vers entité");
+				return null;
 			} else {
-				entite.setMeteoDep(convertMeteo.convertListUpdateDtoToEntity(dto.getWeatherDep()));
+				Departement entite = new Departement();
+				entite.setNumeroDep(dto.getDepNum());
+				entite.setNom(dto.getName());
+				if (dto.getWeatherDep().isEmpty()) {
+					entite.setMeteoDep(new ArrayList<Meteo>());
+				} else {
+					entite.setMeteoDep(convertMeteo.convertListUpdateDtoToEntity(dto.getWeatherDep()));
+				}
+				log.info("Conversion d'un département DTO en département");
+				return entite;
 			}
-			log.info("Conversion d'un département DTO en département");
-			return entite;
-		}
 		} catch (NullPointerException npe) {
 			log.warn("Erreur conversion");
 			return null;
@@ -74,19 +75,31 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 	@Override
 	public Page<Departement> convertPageDtoToEntity(Page<DepartementDto> pageDto) {
 		log.info("Conversion d'une liste départements DTO en liste départements");
-		return pageDto.map(this::convertDtoToEntity);
+
+		if (pageDto != null) {
+			return pageDto.map(this::convertDtoToEntity);
+		} else {
+			return new PageImpl<Departement>(new ArrayList<Departement>());
+		}
+
 	}
 
 	@Override
 	public Page<DepartementDto> convertPageEntityToDto(Page<Departement> pageDep) {
 		log.info("Conversion d'une liste départements DTO en liste départements");
-		return pageDep.map(this::convertEntityToDto);
+
+		if (pageDep != null) {
+			return pageDep.map(this::convertEntityToDto);
+		} else {
+			return new PageImpl<DepartementDto>(new ArrayList<DepartementDto>());
+		}
 	}
-	
+
 	@Override
 	public List<Departement> convertListDtoToEntity(List<DepartementDto> listeDto) {
-		if (listeDto.isEmpty()) {
-			log.info("Tentative conversion d'une liste département DTO vide en département");
+		
+		if (listeDto == null || listeDto.isEmpty()) {
+			log.info("Tentative conversion d'une liste département DTO vide ou null en département");
 			return new ArrayList<>();
 		}
 		List<Departement> liste = new ArrayList<>();
@@ -99,7 +112,7 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 
 	@Override
 	public List<DepartementDto> convertListEntityToDto(List<Departement> listeDep) {
-		if (listeDep.isEmpty()) {
+		if (listeDep == null || listeDep.isEmpty()) {
 			log.info("Tentative conversion d'une liste département vide en département DTO");
 			return new ArrayList<>();
 		}

@@ -1,10 +1,12 @@
 package com.fr.adaming.converter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.DepartementDto;
@@ -95,58 +97,68 @@ public class PeriodeConverter implements IConverter<PeriodeCreateDto, PeriodeUpd
 
 	@Override
 	public List<Periode> convertListCreateDtoToEntity(List<PeriodeCreateDto> listeCreateDto) {
-		
-		return listeCreateDto.stream().map(this :: convertCreateDtoToEntity).collect(Collectors.toList());
-		
+
+		return listeCreateDto == null ? new ArrayList<Periode>()
+				: listeCreateDto.stream().map(this::convertCreateDtoToEntity).collect(Collectors.toList());
+
 	}
 
 	@Override
 	public List<PeriodeCreateDto> convertListEntityToCreateDto(List<Periode> listeEntity) {
-		
-		return listeEntity.stream().map(this :: convertEntityToCreateDto).collect(Collectors.toList());
-		
+
+		if (listeEntity != null) {
+			return listeEntity.stream().map(this::convertEntityToCreateDto).collect(Collectors.toList());
+		} else {
+			return new ArrayList<PeriodeCreateDto>();
+		}
+
 	}
 
 	@Override
 	public List<Periode> convertListUpdateDtoToEntity(List<PeriodeUpdateDto> listeUpdateDto) {
-		
-		return listeUpdateDto.stream().map(this :: convertUpdateDtoToEntity).collect(Collectors.toList());
-		
+
+		return listeUpdateDto == null ? new ArrayList<Periode>()
+				: listeUpdateDto.stream().map(this::convertUpdateDtoToEntity).collect(Collectors.toList());
+
 	}
 
 	@Override
 	public List<PeriodeUpdateDto> convertListEntityToUpdateDto(List<Periode> listeEntity) {
 
-		return listeEntity.stream().map(this :: convertEntityToUpdateDto).collect(Collectors.toList());
-		
+		return listeEntity == null ? new ArrayList<PeriodeUpdateDto>() : listeEntity.stream().map(this::convertEntityToUpdateDto).collect(Collectors.toList());
+
 	}
 
 	@Override
-	public Page<Periode> convertPageCreateDtoToEntity(Page<PeriodeCreateDto> listeCreateDto) {
+	public Page<Periode> convertPageCreateDtoToEntity(Page<PeriodeCreateDto> pageCreateDto) {
 
-		return listeCreateDto.map(this :: convertCreateDtoToEntity);
-		
+		return pageCreateDto == null ? new PageImpl<Periode>(new ArrayList<Periode>()) : pageCreateDto.map(this::convertCreateDtoToEntity);
+
 	}
 
 	@Override
-	public Page<PeriodeCreateDto> convertPageEntityToCreateDto(Page<Periode> listeEntity) {
+	public Page<PeriodeCreateDto> convertPageEntityToCreateDto(Page<Periode> pageEntity) {
 
-		return listeEntity.map(this :: convertEntityToCreateDto);
-		
+		return pageEntity == null ? new PageImpl<PeriodeCreateDto>(new ArrayList<PeriodeCreateDto>()) :pageEntity.map(this::convertEntityToCreateDto);
+
 	}
 
 	@Override
-	public Page<Periode> convertPageUpdateDtoToEntity(Page<PeriodeUpdateDto> listeUpdateDto) {
+	public Page<Periode> convertPageUpdateDtoToEntity(Page<PeriodeUpdateDto> pageUpdateDto) {
 
-		return listeUpdateDto.map(this :: convertUpdateDtoToEntity);
-		
+		if (pageUpdateDto != null) {
+			return pageUpdateDto.map(this::convertUpdateDtoToEntity);
+		} else {
+			return new PageImpl<Periode>(new ArrayList<Periode>());
+		}
+
 	}
 
 	@Override
-	public Page<PeriodeUpdateDto> convertPageEntityToUpdateDto(Page<Periode> listeEntity) {
+	public Page<PeriodeUpdateDto> convertPageEntityToUpdateDto(Page<Periode> pageEntity) {
 
-		return listeEntity.map(this :: convertEntityToUpdateDto);
-		
+		return pageEntity == null ? new PageImpl<PeriodeUpdateDto>(new ArrayList<PeriodeUpdateDto>()) : pageEntity.map(this::convertEntityToUpdateDto);
+
 	}
 
 }
