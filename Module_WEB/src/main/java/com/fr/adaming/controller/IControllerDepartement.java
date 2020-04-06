@@ -27,10 +27,10 @@ import com.sun.istack.NotNull;
  * 
  *         <b>Description : </b>
  *         <p>
- *         Interface pour le Controller département, implemente une classe abstraite
+ *         Interface pour le Controller département, implémente une classe abstraite
  *         AbstractControllerDepartement
  *         Définit les méthodes CRUD : Create, Update, Read
- *         (all et ByID) et Delete.
+ *         (all, ByID, ByName et MeteoByNumDep) et Delete.
  *         </p>
  *
  * @param <D> DepartementDto
@@ -44,11 +44,11 @@ public interface IControllerDepartement<D, MU> {
 	/**
 	 * <b>Description : </b>
 	 * <p>
-	 * Methode pour creer une Entite.
+	 * Methode pour creer un département.
 	 * </p>
 	 * 
-	 * @param dto : CreateDTO de l'Entité
-	 * @return ResponseDto : null ou objet CreateDto
+	 * @param dto : DepartementDto
+	 * @return ResponseDto : erreur true or false / body null ou objet DepartementDto / message
 	 */
 	@PostMapping
 	public ResponseEntity<ResponseDto<D>> create(@RequestBody @Valid D dto);
@@ -56,11 +56,11 @@ public interface IControllerDepartement<D, MU> {
 	/**
 	 * <b>Description : </b>
 	 * <p>
-	 * Methode pour supprimer une Entite via son id.
+	 * Methode pour supprimer un département via son id.
 	 * </p>
 	 * 
-	 * @param id : id de l'entite
-	 * @return boolean true or false
+	 * @param id : id du département
+	 * @return ResponseDto : error true or false / body null / Message
 	 */
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<ResponseDto<D>> deleteById(@PathVariable("id") @Positive int id);
@@ -68,11 +68,11 @@ public interface IControllerDepartement<D, MU> {
 	/**
 	 * <b>Description : </b>
 	 * <p>
-	 * Methode pour modifer une Entite.
+	 * Methode pour modifer un département.
 	 * </p>
 	 * 
-	 * @param dto : Updatedto de l'entite
-	 * @return boolean true or false
+	 * @param dto : DepartementDto de l'entite
+	 * @return ResponseDto : erreur true or false / body null ou objet DepartementDto / message
 	 */
 	@PutMapping
 	public ResponseEntity<ResponseDto<D>> update(@RequestBody @Valid D dto);
@@ -80,11 +80,11 @@ public interface IControllerDepartement<D, MU> {
 	/**
 	 * <b>Description : </b>
 	 * <p>
-	 * Methode pour afficher une Entite via son id.
+	 * Methode pour afficher un département via son id.
 	 * </p>
 	 * 
 	 * @param id : id de l'entite
-	 * @return UpdateDto
+	 * @return ResponseDto : erreur true or false / body null ou objet DepartementDto / message
 	 */
 	@GetMapping(path = "/one/{id}")
 	public ResponseEntity<ResponseDto<D>> readById(@PathVariable("id") @Positive int id);
@@ -92,18 +92,36 @@ public interface IControllerDepartement<D, MU> {
 	/**
 	 * <b>Description : </b>
 	 * <p>
-	 * Méthode pour afficher la page p de la liste complète des instances de l'entité département
+	 * Methode pour afficher la page p de la liste complete des instances de l'entite département
 	 * </p>
 	 * 
-	 * @param p le numéro de la page souhaitée
-	 * @return page DepartementDto
+	 * @param p le numero de la page souhaitee
+	 * @return ResponseDto : erreur true or false / body null ou objet page DepartementDto / message
 	 */
 	@GetMapping(path = "/all/{p}")
 	public ResponseEntity<ResponseDto<Page<D>>> readAll(@PathVariable("p") int p);
 	
+	/**
+	 * <b>Description : </b>
+	 * <p>
+	 * Methode pour afficher un département via son nom
+	 * </p>
+	 * 
+	 * @param name le nom du département recherché
+	 * @return ResponseDto : erreur true or false / body null ou objet DepartementDto / message
+	 */
 	@GetMapping(path = "/{name}")
 	public ResponseEntity<ResponseDto<D>> readByName(@PathVariable("name") @NotNull String name);
 	
+	/**
+	 * <b>Description : </b>
+	 * <p>
+	 * Methode pour afficher des conditions météo d'un département après recherche via le numéro du département
+	 * </p>
+	 * 
+	 * @param id le numéro du département
+	 * @return ResponseDto : erreur true or false / body null ou objet liste MeteoUpdateDto / message
+	 */
 	@GetMapping(path = "/meteo/{id}")
 	public ResponseEntity<ResponseDto<List<MU>>> readMeteoByNumDep(@PathVariable("id") @Positive int id);
 

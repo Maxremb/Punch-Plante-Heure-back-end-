@@ -6,10 +6,11 @@ import javax.validation.constraints.NotNull;
 
 import com.fr.adaming.enums.TypePeriod;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter @Setter @EqualsAndHashCode
 public class PeriodeCreateDto {
 	
 	private TypePeriod periodType;

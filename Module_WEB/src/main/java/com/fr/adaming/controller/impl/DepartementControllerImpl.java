@@ -10,6 +10,13 @@ import com.fr.adaming.dto.MeteoUpdateDto;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Meteo;
 
+/**
+ * Cette classe étend la classe abstraite AbstractControllerDepartement quu implémente une interface de définition des méthodes du controller Département
+ * 
+ * @author Isaline MILLET
+ * @since 0.0.1
+ *
+ */
 @RestController
 @CrossOrigin
 public class DepartementControllerImpl extends AbstractControllerDepartement<DepartementDto, MeteoUpdateDto, Meteo, MeteoCreateDto, Departement> {

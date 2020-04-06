@@ -25,12 +25,14 @@ import lombok.extern.slf4j.Slf4j;
  *         <b>Description : </b>
  *         <p>
  *         Classe abstraite qui implemente IControllerDepartement Redefinition des méthodes
- *         CRUD
+ *         CRUD + readByName + readMeteoByNumDep
  *         </p>
  *
  * @param <D> DepartementDto
- * @param <M> MeteoUpdateDto
- * @param <E> Entite Departement
+ * @param <MU> MeteoUpdateDto
+ * @param <MC> MeteoCreateDto
+ * @param <ME> Meteo entité
+ * @param <E> Departement entité
  */
 @Slf4j
 public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements IControllerDepartement<D, MU> {
@@ -63,9 +65,11 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 
 		if (returnedDto != null) {
 			responseDto.setError(false);
+			log.info("Controller: méthode CREATE - Succes");
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
 			responseDto.setError(true);
+			log.info("Controller: méthode CREATE - Erreur");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		}
 	}
@@ -81,11 +85,13 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 			responseDto.setError(false);
 			responseDto.setMessage(WebMappingConstant.SUCCESS_DELETE_BY_ID);
 			responseDto.setBody(null);
+			log.info("Controller: méthode DELETE - Succes");
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
 			responseDto.setError(true);
 			responseDto.setMessage(WebMappingConstant.SUCCESS_DELETE_BY_ID);
 			responseDto.setBody(null);
+			log.info("Controller: méthode DELETE - Erreur");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		}
 	}
@@ -105,9 +111,11 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 
 		if (returnedDto != null) {
 			responseDto.setError(false);
+			log.info("Controller: méthode UPDATE - Succes");
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
 			responseDto.setError(true);
+			log.info("Controller: méthode UPDATE - Echec");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		}
 	}
@@ -127,9 +135,11 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 
 		if (returnedDto != null) {
 			responseDto.setError(false);
+			log.info("Controller: méthode READBYID - Succes");
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
 			responseDto.setError(true);
+			log.info("Controller: méthode READBYID - Erreur");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		}
 	}
@@ -146,6 +156,7 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 		responseDto.setError(false);
 		responseDto.setMessage(serviceResponse.getMessage());
 		responseDto.setBody(returnedPage);
+		log.info("Controller: méthode READALL - Succes");
 		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 	}
 	
@@ -162,12 +173,14 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 			responseDto.setError(true);
 			responseDto.setMessage(serviceResponse.getMessage());
 			responseDto.setBody(null);
+			log.info("Controller: méthode READBYNAME - Erreur");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		} else {		
 		D returned = converter.convertEntityToDto(serviceResponse.getBody());
 		responseDto.setError(false);
 		responseDto.setMessage(serviceResponse.getMessage());
 		responseDto.setBody(returned);
+		log.info("Controller: méthode READBYNAME - Succes");
 		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		}
 	}
@@ -185,12 +198,14 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 			responseDto.setError(true);
 			responseDto.setMessage(serviceResponse.getMessage());
 			responseDto.setBody(null);
+			log.info("Controller: méthode READMETEOBYNUMDEP - Erreur");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		} else {
 			List<MU> returnedList = converterMeteo.convertListEntityToUpdateDto(serviceResponse.getBody());
 			responseDto.setError(false);
 			responseDto.setMessage(serviceResponse.getMessage());
 			responseDto.setBody(returnedList);
+			log.info("Controller: méthode READMETEOBYNUMDEP - Succes");
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		}
 	}

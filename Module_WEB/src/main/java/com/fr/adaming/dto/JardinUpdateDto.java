@@ -3,6 +3,7 @@ package com.fr.adaming.dto;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import lombok.Setter;
  * @author Clara Cadet
  * @since 0.0.1-SNAPSHOT
  */
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @EqualsAndHashCode(callSuper = true)
 public class JardinUpdateDto extends JardinCreateDto{
 
 	@NotNull

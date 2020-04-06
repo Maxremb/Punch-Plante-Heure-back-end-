@@ -1,6 +1,5 @@
 package com.fr.adaming.controller.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -22,7 +21,6 @@ import com.fr.adaming.controller.AbstractTestMethods;
 import com.fr.adaming.controller.IControllerTests;
 import com.fr.adaming.dto.DepartementDto;
 import com.fr.adaming.dto.MeteoUpdateDto;
-import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
 
 @SpringBootTest(classes = ModuleWebApplication.class)
@@ -87,6 +85,11 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 
 	}
 
+	/**
+	 * Test de la méthode create avec entité invalide (sans param requis name). Doit retourner statut 400. ResponseDto doit avoir un body null.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingEntityWithNullName_shouldReturn400() throws Exception {
@@ -220,6 +223,11 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 	
 	// Méthodes propres au controller département
 	
+	/**
+	 * Test de la méthode readByName avec nom valide. Doit retourner statut 200. ResponseDto doit avoir un DepartementDto dans son body.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -236,6 +244,11 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 		assertNotNull(responseDto.getBody());
 	}
 	
+	/**
+	 * Test de la méthode readByName avec nom invalide (inexistant en BD). Doit retourner statut 400. ResponseDto doit avoir un body null.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -252,6 +265,11 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 		assertNull(responseDto.getBody());
 	}
 	
+	/**
+	 * Test de la méthode readMeteoByNumDep avec numDep valide. Doit retourner statut 200. ResponseDto doit avoir un MeteoUpdateDto dans son body.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -269,6 +287,11 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 		// assertNotNull(responseDto.getBody()); A changer quand météo sera construit (enlever ligne précédente) (pour l'instant le converter de météo retourne des null)
 	}
 	
+	/**
+	 * Test de la méthode readByName avec numDep invalide (inexistant). Doit retourner statut 400. ResponseDto doit avoir un body null.
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)

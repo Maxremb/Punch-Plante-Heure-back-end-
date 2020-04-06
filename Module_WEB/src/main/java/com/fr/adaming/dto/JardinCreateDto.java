@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fr.adaming.enums.Sol;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +15,7 @@ import lombok.Setter;
  * @author Clara Cadet
  * @since 0.0.1-SNAPSHOT
  */
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @EqualsAndHashCode
 public class JardinCreateDto {
 
 	private Sol ground;

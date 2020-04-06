@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 
 import com.fr.adaming.enums.Sol;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,7 @@ import lombok.Setter;
  * @since 0.0.1-SNAPSHOT
  */
 @Getter @Setter @NoArgsConstructor
-@Entity
+@Entity @EqualsAndHashCode
 public class Jardin {
 
 	@Id
