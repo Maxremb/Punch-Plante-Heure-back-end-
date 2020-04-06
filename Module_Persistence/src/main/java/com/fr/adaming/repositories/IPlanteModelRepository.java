@@ -53,7 +53,10 @@ public interface IPlanteModelRepository extends JpaRepository<PlanteModel, Integ
 	 * Permet de rechercher tous les elements qui contiennent les caracteres
 	 * nomCommun dans nom_commun ou nomScientifique dans nom_scientifique
 	 * 
-	 * @param pageable, nomCommun, nomScientifique
+	 * @param pageable les attributs des pages : nombre d'articles par page et
+	 *                 optionnel sortBy
+	 * @param nomCommun nom commun à rechercher
+	 * @param nomScientifique nom scientifique à rechercher
 	 * @return Page de PlanteModel
 	 * @author Grégoire Brebner
 	 */

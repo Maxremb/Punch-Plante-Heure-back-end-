@@ -1,9 +1,5 @@
 package com.fr.adaming.dto;
 
-
-
-
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteModel;
 
+// TODO
 public interface IPlanteModelService extends IService<PlanteModel> {
 
 	@Deprecated
@@ -21,5 +22,5 @@ public interface IPlanteModelService extends IService<PlanteModel> {
 	 * @return Service response contenant une page de planteModel
 	 */
 	public ServiceResponse<Page<PlanteModel>> findByNom(int page, String nom);
-
+	
 }

@@ -12,7 +12,7 @@ public class RetentionCreateDto {
 	
 	private Sol ground;
 	
-	private double quantity;
+	private double relativeReserve;
 	
 
 }

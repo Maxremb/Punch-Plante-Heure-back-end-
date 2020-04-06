@@ -22,7 +22,8 @@ public abstract class AbstractService<E> implements IService<E> {
 
 	@Autowired
 	protected JpaRepository<E, Integer> dao;
-
+	
+	
 	@Override
 	public ServiceResponse<Page<E>> readAll(int p) {
 		log.debug("Service: readAll pour la page: " + p);
