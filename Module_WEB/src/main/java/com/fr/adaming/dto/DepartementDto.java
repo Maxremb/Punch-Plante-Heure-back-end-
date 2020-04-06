@@ -20,7 +20,7 @@ import lombok.Setter;
 @Getter @Setter @EqualsAndHashCode
 public class DepartementDto {
 	
-	@Positive
+	@Positive @NotNull
 	private Integer depNum;
 	
 	@NotNull

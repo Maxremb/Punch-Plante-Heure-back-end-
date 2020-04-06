@@ -1,12 +1,21 @@
 package com.fr.adaming.converter;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 
 import com.fr.adaming.ModuleWebApplication;
+import com.fr.adaming.entity.Periode;
 
 @SpringBootTest(classes = ModuleWebApplication.class)
 public class PeriodeConverterTests implements IConverterTests{
+	
+	@Autowired
+	private PeriodeConverter converter;
 
 	@Test
 	@Override
@@ -158,7 +167,11 @@ public class PeriodeConverterTests implements IConverterTests{
 	@Test
 	@Override
 	public void testConvertingNullPageUpdateDtoToEntity_shouldReturnEmptyPage() {
-		// TODO Auto-generated method stub
+		
+		Page<Periode> periode = converter.convertPageUpdateDtoToEntity(null);
+		
+		assertNotNull(periode);
+		assertThat(periode.getContent()).asList().isEmpty();
 		
 	}
 
