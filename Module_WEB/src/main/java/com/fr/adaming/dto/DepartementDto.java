@@ -25,7 +25,5 @@ public class DepartementDto {
 	
 	@NotNull
 	private String name; 
-	
-	private List<MeteoUpdateDto> weatherDep = new ArrayList<MeteoUpdateDto>();
 
 }

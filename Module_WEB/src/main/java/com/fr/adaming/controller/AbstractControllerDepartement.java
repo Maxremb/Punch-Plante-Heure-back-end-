@@ -6,6 +6,9 @@ import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -185,13 +188,15 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 	}
 
 	@Override
-	public ResponseEntity<ResponseDto<List<MU>>> readMeteoByNumDep(@Positive int id) {
+	public ResponseEntity<ResponseDto<Page<MU>>> readMeteoByNumDep(int id, int page, int elementsPerPage, String sortName) {
 		
 		log.info("Controller: méthode READMETEOBYNUMDEP appelée");
 		
-		ServiceResponse<List<ME>> serviceResponse = serviceDep.readMeteoByNumeroDep(id);
+		Pageable pageable = PageRequest.of(page, elementsPerPage, Sort.by(sortName));
 		
-		ResponseDto<List<MU>> responseDto = new ResponseDto<List<MU>>();
+		ServiceResponse<Page<ME>> serviceResponse = serviceDep.readMeteoByNumeroDep(pageable, id);
+		
+		ResponseDto<Page<MU>> responseDto = new ResponseDto<Page<MU>>();
 		
 		if (serviceResponse.getBody() == null) {
 			responseDto.setError(true);
@@ -200,7 +205,7 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 			log.info("Controller: méthode READMETEOBYNUMDEP - Erreur");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		} else {
-			List<MU> returnedList = converterMeteo.convertListEntityToUpdateDto(serviceResponse.getBody());
+			Page<MU> returnedList = converterMeteo.convertPageEntityToUpdateDto(serviceResponse.getBody());
 			responseDto.setError(false);
 			responseDto.setMessage(serviceResponse.getMessage());
 			responseDto.setBody(returnedList);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fr.adaming.dto.ResponseDto;
 import com.sun.istack.NotNull;
@@ -122,7 +123,7 @@ public interface IControllerDepartement<D, MU> {
 	 * @param id le numéro du département
 	 * @return ResponseDto : erreur true or false / body null ou objet liste MeteoUpdateDto / message
 	 */
-	@GetMapping(path = "/meteo/{id}")
-	public ResponseEntity<ResponseDto<List<MU>>> readMeteoByNumDep(@PathVariable("id") @Positive int id);
+	@GetMapping(path = "/meteo")
+	public ResponseEntity<ResponseDto<Page<MU>>> readMeteoByNumDep(@RequestParam(name = "id") @Positive int id, @RequestParam(name = "page") int page, @RequestParam(name = "elemsPerPage") int elementsPerPage, @RequestParam(name = "sortName") String sortName);
 
 }

@@ -28,9 +28,5 @@ public class Departement {
 	
 	@Column(nullable = false, length = 100, unique = true)
 	private String nom;
-	
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "departement_id")
-	private List<Meteo> meteoDep;
 
 }

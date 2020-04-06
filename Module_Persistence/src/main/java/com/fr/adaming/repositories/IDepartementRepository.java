@@ -2,6 +2,8 @@ package com.fr.adaming.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -30,6 +32,6 @@ public interface IDepartementRepository extends JpaRepository<Departement, Integ
 	 * @return liste d'objets de type météo
 	 */
 	@Query(value = "FROM Meteo WHERE departement_id = :numeroDep")
-	public List<Meteo> findMeteoByNumeroDep(Integer numeroDep);
+	public Page<Meteo> findMeteoByNumeroDep(Pageable pageable, Integer numeroDep);
 
 }

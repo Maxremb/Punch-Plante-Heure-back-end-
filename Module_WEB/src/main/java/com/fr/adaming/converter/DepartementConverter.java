@@ -40,11 +40,6 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 				Departement entite = new Departement();
 				entite.setNumeroDep(dto.getDepNum());
 				entite.setNom(dto.getName());
-				if (dto.getWeatherDep().isEmpty()) {
-					entite.setMeteoDep(new ArrayList<Meteo>());
-				} else {
-					entite.setMeteoDep(convertMeteo.convertListUpdateDtoToEntity(dto.getWeatherDep()));
-				}
 				log.info("Conversion d'un département DTO en département");
 				return entite;
 			}
@@ -63,11 +58,7 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 			DepartementDto dto = new DepartementDto();
 			dto.setDepNum(dep.getNumeroDep());
 			dto.setName(dep.getNom());
-			if (dep.getMeteoDep().isEmpty()) {
-				dto.setWeatherDep(new ArrayList<MeteoUpdateDto>());
-			} else {
-				dto.setWeatherDep(convertMeteo.convertListEntityToUpdateDto(dep.getMeteoDep()));
-			}
+
 			log.info("Conversion d'un département en département DTO");
 			return dto;
 		}

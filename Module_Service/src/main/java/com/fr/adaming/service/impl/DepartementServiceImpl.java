@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
@@ -97,20 +99,21 @@ public class DepartementServiceImpl extends AbstractService<Departement>
 		}
 	}
 
-	public ServiceResponse<List<Meteo>> readMeteoByNumeroDep(Integer numDep) {
+	public ServiceResponse<Page<Meteo>> readMeteoByNumeroDep(Pageable pageable, Integer numDep) {
 		try {
 			if (!dao.existsById(numDep)) {
 				log.info("Récupération d'une liste de conditions météo après recherche par département inexistant");
-				return new ServiceResponse<List<Meteo>>(
+				return new ServiceResponse<Page<Meteo>>(
 						"Tentative récupération d'une liste de conditions météo par département inexistant", null);
 			} else {
 				log.info("Récupération d'une liste de conditions météo après recherche par département");
-				return new ServiceResponse<List<Meteo>>("Récupération d'une liste de conditions météo par département",
-						depRepo.findMeteoByNumeroDep(numDep));
+				return new ServiceResponse<Page<Meteo>>("Récupération d'une liste de conditions météo par département",
+						depRepo.findMeteoByNumeroDep(pageable, numDep));
 			}
 		} catch (Exception e) {
 			log.warn("Problème readMeteoByNumDep");
-			return new ServiceResponse<List<Meteo>>("Problème readMeteoByNumDep", depRepo.findMeteoByNumeroDep(numDep));
+			log.error(e.getLocalizedMessage());
+			return new ServiceResponse<Page<Meteo>>("Problème readMeteoByNumDep", depRepo.findMeteoByNumeroDep(pageable, numDep));
 		}
 
 	}

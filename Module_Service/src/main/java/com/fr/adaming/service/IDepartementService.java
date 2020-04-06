@@ -2,6 +2,9 @@ package com.fr.adaming.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.fr.adaming.dto.ServiceResponse;
 
 /**
@@ -26,6 +29,6 @@ public interface IDepartementService<E, ME> {
 	 * @param numDep numéro du département concerné
 	 * @return Dto Service Response avec message selon succes/fail + liste d'objets météo en body 
 	 */
-	public ServiceResponse<List<ME>> readMeteoByNumeroDep(Integer numDep);
+	public ServiceResponse<Page<ME>> readMeteoByNumeroDep(Pageable pageable, Integer numDep);
 	
 }
