@@ -31,7 +31,7 @@ public interface IDepartementRepository extends JpaRepository<Departement, Integ
 	 * @param numeroDep - le numéro du département dont on veut récupérer la météo
 	 * @return liste d'objets de type météo
 	 */
-	@Query(value = "FROM Meteo WHERE departement_id = :numeroDep")
+	@Query(value = "select * from meteo WHERE departement_id = :numeroDep", nativeQuery = true)
 	public Page<Meteo> findMeteoByNumeroDep(Pageable pageable, Integer numeroDep);
 
 }
