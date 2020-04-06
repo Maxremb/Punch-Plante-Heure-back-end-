@@ -4,12 +4,16 @@ import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Meteo;
 import com.fr.adaming.entity.PlanteUtilisateur;
+import com.fr.adaming.repositories.IDepartementRepository;
 import com.fr.adaming.repositories.IMeteoRepository;
 import com.fr.adaming.service.AbstractService;
 import com.fr.adaming.service.IMeteoService;
@@ -29,6 +33,7 @@ public class MeteoServiceImpl extends AbstractService<Meteo> implements IMeteoSe
 	// Injection de dependances
 	@Autowired
 	private IMeteoRepository repo;
+	private IDepartementRepository repoD;
 	// + dao via AbstractService d'une dépendance de l'interface JpaRepository de la couche Meteo
 	
 	@Override
@@ -87,21 +92,35 @@ public class MeteoServiceImpl extends AbstractService<Meteo> implements IMeteoSe
 	}
 
 	@Override
-	public ServiceResponse<Meteo> readByDate(LocalDate date) {
-		if (date !=  null) {
+	public ServiceResponse<Meteo> readByDateAndDepartement(LocalDate date, int numDepartement) {
+		if (date != null && repoD.existsById(numDepartement) ) {
 			try {
-				repo.findByDate(date);
-				return new ServiceResponse<Meteo>("Recuperation de la meteo à la date indiquée", repo.findByDate(date));
-			} catch (Exception e) {
+				return new ServiceResponse<Meteo>("Recuperation de la meteo du departement indiqué et à la date indiquée", repo.findByDateAndDepartement(repoD.findById(numDepartement).orElse(null), date));
+			} catch (Exception e){
 				log.warn(e.getMessage());
-				return new ServiceResponse<Meteo>("Echec lors de la récupération de la météo à la date indiquée", null);
+				return new ServiceResponse<Meteo>("Echec lors de la récupération de la météo", null);
 			}
 		} else {
-			log.info("Echec lors de la récupération de la météo à la date indiquée : la date est NULLE");
-			return new ServiceResponse<Meteo>("Echec lors de la récupération de la météo à la date indiquée : la date est NULLE", null);
+			log.info("Echec lors de la récupération de la météo : la date est NULLE et/ou le département n'existe pas dans la base de données");
+			return new ServiceResponse<Meteo>("Echec lors de la récupération  de la météo : la date est NULLE et/ou le département n'existe pas dans la base de données", null);
 		}
-		
-		
+	}
+
+	@Override
+	public ServiceResponse<Page<Meteo>> readByDate(LocalDate date, int page) {
+		if (date != null) {
+			try {
+				Pageable pageable = PageRequest.of(page, 20);
+				Page<Meteo> pageMeteo = repo.findByDate(date, pageable);
+				return new ServiceResponse<Page<Meteo>>("Recupération de la météo à la date indiquée", pageMeteo);
+			} catch (Exception e) {
+				log.warn(e.getMessage());
+				return new ServiceResponse<Page<Meteo>> ("Echec lors de la récupération de la météo", null);
+			}
+		} else {
+			log.info("Echec lors de la récupération de la météo : la date est NULLE");
+			return new ServiceResponse<Page<Meteo>> ("Echec lors de la récupération de la météo", null);
+		}
 	}
 
 }

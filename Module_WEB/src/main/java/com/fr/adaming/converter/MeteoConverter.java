@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
+import com.fr.adaming.dto.DepartementDto;
 import com.fr.adaming.dto.MeteoCreateDto;
 import com.fr.adaming.dto.MeteoUpdateDto;
+import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Meteo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto, Meteo>{
 
+	@Autowired
+	private IConverterDepartement<Departement, DepartementDto> convertDep;
+	
 	@Override
 	public Meteo convertCreateDtoToEntity(MeteoCreateDto createDto) {
 		if (createDto == null) {
@@ -33,6 +39,7 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 			meteo.setEvapoTranspirationReelle(createDto.getEtr());
 			meteo.setHumidite(createDto.getHumidity());
 			meteo.setDate(createDto.getDateMeteo());
+			meteo.setDepartement(convertDep.convertDtoToEntity(createDto.getDepartement()));
 			return meteo;
 		}
 		
@@ -53,6 +60,7 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 			dto.setEtr(meteo.getEvapoTranspirationReelle());
 			dto.setHumidity(meteo.getHumidite());
 			dto.setDateMeteo(meteo.getDate());
+			dto.setDepartement(convertDep.convertEntityToDto(meteo.getDepartement()));
 			return dto;
 		}
 	}
@@ -73,6 +81,7 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 			meteo.setEvapoTranspirationReelle(updateDto.getEtr());
 			meteo.setHumidite(updateDto.getHumidity());
 			meteo.setDate(updateDto.getDateMeteo());
+			meteo.setDepartement(convertDep.convertDtoToEntity(updateDto.getDepartement()));
 			return meteo;
 		}
 	}
@@ -93,6 +102,7 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 			dto.setEtr(meteo.getEvapoTranspirationReelle());
 			dto.setHumidity(meteo.getHumidite());
 			dto.setDateMeteo(meteo.getDate());
+			dto.setDepartement(convertDep.convertEntityToDto(meteo.getDepartement()));
 			return dto;
 		}
 	}

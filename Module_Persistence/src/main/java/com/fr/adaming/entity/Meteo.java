@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,10 +17,9 @@ import lombok.Setter;
 
 
 /**
- * @author Gregoire
+ * @author Jeanne-Marie MATHEVET
  *
- *	La température et la quantité de pluie pour une date
- *	\nJointures controllés par d'autres classes: Département
+ *	Classe meteo 
  */
 @Entity
 @Getter @Setter
@@ -28,13 +29,24 @@ public class Meteo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
 	private double temperature; //pas dessous de -273.15
+	
 	private double pluie;	//positive
+	
 	private double rayonnement;
+	
 	private double evapoTranspirationPotentielle;
+	
 	private double evapoTranspirationReelle;
+	
 	private int humidite;
-	@Column(nullable = false, unique = true)
+	
+	@Column(nullable = false)
 	private LocalDate date;
+	
+	@ManyToOne
+	@JoinColumn(name = "departement_id")
+	private Departement departement;
 
 }

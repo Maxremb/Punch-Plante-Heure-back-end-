@@ -32,21 +32,21 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 		ServiceResponse<PlanteModel> retour = new ServiceResponse<PlanteModel>();
 		if (entity == null) {
 			retour.setBody(null);
-			retour.setMessage("Création non réalisé : objet d'entrée null");
+			retour.setMessage("Création non réalisée : objet d'entrée nul");
 		} else if (entity.getNomScientifique() == null) {
 			retour.setBody(null);
-			retour.setMessage("Création non réalisé : Le nom Scientifique ne doit pas etre null");
+			retour.setMessage("Création non réalisée : Le nom Scientifique ne doit pas etre nul");
 		} else if (dao.existsById(entity.getId())) {
 			retour.setBody(null);
-			retour.setMessage("Création non réalisé : vous avez renseigné un id déjà présent dans la base de donnée");
+			retour.setMessage("Création non réalisée : cet id est déjà présent dans la base de donnée");
 		} else if (repo.existsByNomScientifique(entity.getNomScientifique())) {
 			retour.setBody(null);
 			retour.setMessage(
-					"Création non réalisé : vous avez renseigné un nom scientifique déjà présent dans la base de donnée");
+					"Création non réalisée : ce nom scientifique est déjà présent dans la base de donnée");
 		} else {
 	
 			retour.setBody(dao.save(entity));
-			retour.setMessage("Succes de la création");
+			retour.setMessage("Création de la plante modele réussie");
 		}
 		return retour;
 	}
@@ -56,21 +56,21 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 		ServiceResponse<PlanteModel> retour = new ServiceResponse<PlanteModel>();
 		if (entity == null) {
 			retour.setBody(null);
-			retour.setMessage("Update non réalisé : objet d'entrée null");
+			retour.setMessage("Mise à jour non réalisée : objet d'entrée null");
 		} else if (entity.getNomScientifique() == null) {
 			retour.setBody(null);
-			retour.setMessage("Update non réalisé : Le nom Scientifique ne doit pas etre null");
+			retour.setMessage("Mise à jour non réalisée : Le nom Scientifique ne doit pas etre null");
 		} else if (!dao.existsById(entity.getId())) {
 			retour.setBody(null);
-			retour.setMessage("Update non réalisé : vous avez renseigné un id inexistant dans la base de donnée");
+			retour.setMessage("Mise à jour non réalisée : cet id n'existe pas dans la base de donnée");
 		} else if (repo.existsByNomScientifique(entity.getNomScientifique())
 				&& entity.getId() != repo.findByNomScientifique(entity.getNomScientifique()).getId()) {
 			retour.setBody(null);
 			retour.setMessage(
-					"Update non réalisé : vous avez renseigné un nom scientifique déjà présent dans la base de donnée");
+					"Mise à jour non réalisée : le nom scientifique est déjà présent dans la base de donnée");
 		} else {
 			retour.setBody(dao.save(entity));
-			retour.setMessage("Succes de la mise à jour");
+			retour.setMessage("Mise à jour de la plante modele réussie");
 		}
 		return retour;
 	}

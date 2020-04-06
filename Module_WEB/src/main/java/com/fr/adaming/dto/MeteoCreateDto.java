@@ -24,8 +24,11 @@ public class MeteoCreateDto {
 	
 	private int humidity;
 	
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private LocalDate dateMeteo;
+	
+	@Column(nullable = false)
+	private DepartementDto departement;
 	
 	
 }
