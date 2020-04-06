@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.fr.adaming.constant.WebMappingConstant;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.converter.IConverterDepartement;
 import com.fr.adaming.dto.ResponseDto;
@@ -83,13 +82,13 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 
 		if (result) {
 			responseDto.setError(false);
-			responseDto.setMessage(WebMappingConstant.SUCCESS_DELETE_BY_ID);
+			responseDto.setMessage("Suppression réussie");
 			responseDto.setBody(null);
 			log.info("Controller: méthode DELETE - Succes");
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
 			responseDto.setError(true);
-			responseDto.setMessage(WebMappingConstant.SUCCESS_DELETE_BY_ID);
+			responseDto.setMessage("Erreur pendant la suppression de l'entité: " +id);
 			responseDto.setBody(null);
 			log.info("Controller: méthode DELETE - Erreur");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);

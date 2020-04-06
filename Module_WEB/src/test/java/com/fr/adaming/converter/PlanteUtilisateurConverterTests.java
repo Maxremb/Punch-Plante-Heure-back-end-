@@ -440,4 +440,52 @@ public class PlanteUtilisateurConverterTests implements IConverterTests {
 		
 	}
 
+	@Override
+	public void testConvertingNullListEntityToCreateDto_shouldReturnEmptyList() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testConvertingNullListCreateDtoToEntity_shouldReturnEmptyList() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testConvertingNullListEntityToUpdateDto_shouldReturnEmptyList() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testConvertingNullListUpdateDtoToEntity_shouldReturnEmptyList() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testConvertingNullPageCreateDtoToEntity_shouldReturnEmptyPage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testConvertingNullPageEntityToCreateDto_shouldReturnEmptyPage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testConvertingNullPageUpdateDtoToEntity_shouldReturnEmptyPage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void testConvertingNullPageEntityToUpdateDto_shouldReturnEmptyPage() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
