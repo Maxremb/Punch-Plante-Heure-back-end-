@@ -90,7 +90,7 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
-	public void testReadAllWithContent_shouldReturnList() {
+	public void testReadAllWithContent_shouldReturnPage() {
 		
 		
 		Utilisateur utilisateur = new Utilisateur();
@@ -122,7 +122,7 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 
 	@Test
 	@Override
-	public void testReadAllNoContent_shouldReturnEmptyList() {
+	public void testReadAllNoContent_shouldReturnEmptyPage() {
 		ServiceResponse<Page<PlanteUtilisateur>> list = planteUtilisateurService.readAll(0);
 		assertTrue(list.getBody().toList().isEmpty());
 

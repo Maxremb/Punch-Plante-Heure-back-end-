@@ -1,6 +1,7 @@
 package com.fr.adaming.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -81,14 +82,14 @@ public class JardinServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@Override
-	public void testReadAllWithContent_shouldReturnList() {
+	public void testReadAllWithContent_shouldReturnPage() {
 		assertTrue(service.readAll(0).getBody().toList().size() == 1);
 		assertThat(service.readAll(0).getBody().toList().get(0)).isNotNull();
 	}
 
 	@Test
 	@Override
-	public void testReadAllNoContent_shouldReturnEmptyList() {
+	public void testReadAllNoContent_shouldReturnEmptyPage() {
 		assertTrue(service.readAll(0).getBody().toList().isEmpty());
 	}
 
@@ -298,7 +299,7 @@ public class JardinServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void testReadNameExistingName_ShouldReturnEntite() {
+	public void testReadNameExistingName_ShouldReturnPage() {
 		assertThat(serviceJardin.readByNom(0, "nom4Test")).isNotNull();
 		assertThat(serviceJardin.readByNom(0, "nom4Test").getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("nom", "nom4Test");
 	}
@@ -315,7 +316,7 @@ public class JardinServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void testReadNameNotExistingName_ShouldReturnEntite() {
+	public void testReadNameNotExistingName_ShouldReturnEmptyPage() {
 		assertThat(serviceJardin.readByNom(0, "nomInvalid").getBody().toList()).isEmpty();
 		assertThat(serviceJardin.readByNom(0, "nomInvalid").getMessage()).isEqualTo("Recherche jardin par nom");
 	}
@@ -349,7 +350,7 @@ public class JardinServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void testReadUserExistingUser_ShouldReturnEntite() {
+	public void testReadUserExistingUser_ShouldReturnPage() {
 		assertTrue(serviceJardin.readByUtilisateur(0, 2).getBody().toList().size() == 1);
 	}
 	
@@ -365,79 +366,77 @@ public class JardinServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void testReadUserNotExistingUser_ShouldReturnEntite() {
-		assertNull(serviceJardin.readByUtilisateur(0, 1).getBody());
+	public void testReadUserNotExistingUser_ShouldReturnEmptyPage() {
+		assertThat(serviceJardin.readByUtilisateur(0, 1).getBody().toList()).isEmpty();
+		assertEquals(serviceJardin.readByUtilisateur(0, 1).getMessage(), "Recherche jardin par utilisateur");
 	}
 	
-//	/**
-//	 * Teste la lecture par utilisateur avec un id utilisateur null
-//	 */
-//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Test
-//	public void testReadUserWithIdNull_ShouldReturnEntite() {
-//		assertNull(serviceJardin.readByUtilisateur(null).getBody());
-//
-//	}
-//	
-//	/**
-//	 * Teste la lecture par département avec un département existant
-//	 */
-//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Test
-//	public void testReadDepExistingDep_ShouldReturnEntite() {
-//		ServiceResponse<List<Jardin>> resp = serviceJardin.readByDepartement(69);
-//		assertTrue(resp.getBody().size()==1);
-//		assertThat(resp.getBody().get(0)).hasFieldOrPropertyWithValue("nom", "Jardinblabla");
-//
-//	}
-//	
-//	/**
-//	 * Teste la lecture par département avec un département non existant
-//	 */
-//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Test
-//	public void testReadDepNotExistingDep_ShouldReturnEntite() {
-//		assertTrue(serviceJardin.readByDepartement(1).getBody().isEmpty());
-//
-//	}
-//	
-//	/**
-//	 * Teste la lecture par département avec un numéro département null
-//	 */
-//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Test
-//	public void testReadDepWithIdNull_ShouldReturnEntite() {
-//		assertNull(serviceJardin.readByDepartement(null).getBody());
-//
-//	}
+	/**
+	 * Cette méthode teste la récupération des jardins d'un utilisateur via son id - conditions invalides (id inexistant)
+	 */
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadUserWithIdNull_ShouldReturnNull() {
+		assertNull(serviceJardin.readByUtilisateur(0, null).getBody());
+		assertEquals(serviceJardin.readByUtilisateur(0, null).getMessage(), "Recherche non réalisé : id null");
+	}
+	
+	/**
+	 * Cette méthode teste la récupération des jardins d'un département via son id - conditions valides
+	 */
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadDepExistingDep_ShouldReturnPage() {
+		assertTrue(serviceJardin.readByDepartement(0, 1).getBody().toList().size() == 1);
+	}
+	
+	/**
+	 * Cette méthode teste la récupération des jardins d'un département via son id - conditions invalides (id dep inexistant)
+	 */
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadDepNotExistingDep_ShouldReturnEmptyPage() {
+		assertThat(serviceJardin.readByDepartement(0, 2).getBody().toList()).isEmpty();
+		assertEquals(serviceJardin.readByDepartement(0, 2).getMessage(), "Recherche jardin par departement");
+	}
+	
+	/**
+	 * Cette méthode teste la récupération des jardins d'un département via son id - conditions invalides (id dep null)
+	 */
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadDepWithIdNull_ShouldReturnNull() {
+		assertNull(serviceJardin.readByDepartement(0, null).getBody());
+		assertEquals(serviceJardin.readByDepartement(0, null).getMessage(), "Recherche non réalisé : numDep null");
+	}
 
 }
 

@@ -69,7 +69,7 @@ public class DepartementServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@Override
-	public void testReadAllWithContent_shouldReturnList() {
+	public void testReadAllWithContent_shouldReturnPage() {
 		Meteo meteo = new Meteo();
 		meteo.setId(1);
 		meteo.setPluie(5);
@@ -87,7 +87,7 @@ public class DepartementServiceTest implements IServiceTests {
 
 	@Test
 	@Override
-	public void testReadAllNoContent_shouldReturnEmptyList() {
+	public void testReadAllNoContent_shouldReturnEmptyPage() {
 		assertTrue(service.readAll(0).getBody().toList().isEmpty());
 	}
 	

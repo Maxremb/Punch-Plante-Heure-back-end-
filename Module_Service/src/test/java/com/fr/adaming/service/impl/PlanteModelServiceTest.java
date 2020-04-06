@@ -61,7 +61,7 @@ public class PlanteModelServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
 	@Test
-	public void testReadAllWithContent_shouldReturnList() {
+	public void testReadAllWithContent_shouldReturnPage() {
 		assertNotNull(service.readAll(0));
 		assertThat(service.readAll(0).getBody().getNumberOfElements()).isEqualTo(1);
 		assertThat(service.readAll(0).getBody().getNumber()).isEqualTo(0);
@@ -71,7 +71,7 @@ public class PlanteModelServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
 	@Test
-	public void testReadAllNoContent_shouldReturnEmptyList() {
+	public void testReadAllNoContent_shouldReturnEmptyPage() {
 		assertNotNull(service.readAll(0));
 		assertThat(service.readAll(0).getBody().getNumberOfElements()).isEqualTo(0);
 		assertThat(service.readAll(0)).hasFieldOrPropertyWithValue("message", "Success");
