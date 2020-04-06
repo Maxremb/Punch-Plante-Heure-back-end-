@@ -2,6 +2,9 @@ package com.fr.adaming.service.impl;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
@@ -76,11 +79,12 @@ public class PeriodeServiceImpl extends AbstractService<Periode> implements IPer
 	}
 
 	@Override
-	public ServiceResponse<List<Periode>> readByDepartementId(int depId) {
+	public ServiceResponse<Page<Periode>> readByDepartementId(int page, int depId) {
 
-		ServiceResponse<List<Periode>> serviceResponse = new ServiceResponse<List<Periode>>();
+		ServiceResponse<Page<Periode>> serviceResponse = new ServiceResponse<Page<Periode>>();
+		Pageable pageable = PageRequest.of(page, 20);
 		Departement departement = depRepo.findById(depId).orElse(null);
-		List<Periode> periodeList = periodeRepo.findByDepartement(departement);
+		Page<Periode> periodeList = periodeRepo.findByDepartement(pageable, departement);
 		serviceResponse.setBody(periodeList);
 
 		return serviceResponse;
@@ -88,12 +92,12 @@ public class PeriodeServiceImpl extends AbstractService<Periode> implements IPer
 	}
 
 	@Override
-	public ServiceResponse<List<Periode>> readByPlanteModelId(int planteId) {
+	public ServiceResponse<Page<Periode>> readByPlanteModelId(int page, int planteId) {
 
-		ServiceResponse<List<Periode>> serviceResponse = new ServiceResponse<List<Periode>>();
+		ServiceResponse<Page<Periode>> serviceResponse = new ServiceResponse<Page<Periode>>();
 		PlanteModel planteModel = planteRepo.findById(planteId).orElse(null);
-
-		List<Periode> periodeList = periodeRepo.findByPlanteModel(planteModel);
+		Pageable pageable = PageRequest.of(page, 20);
+		Page<Periode> periodeList = periodeRepo.findByPlanteModel(pageable, planteModel);
 		serviceResponse.setBody(periodeList);
 
 		return serviceResponse;
