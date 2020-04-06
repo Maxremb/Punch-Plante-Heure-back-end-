@@ -30,7 +30,7 @@ public class Meteo {
 	private int id;
 	private double temperature; //pas dessous de -273.15
 	private int pluie;	//positive
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private LocalDate date;
 
 }

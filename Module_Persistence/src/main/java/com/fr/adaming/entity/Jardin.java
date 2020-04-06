@@ -39,7 +39,7 @@ public class Jardin {
 	@ManyToOne (optional = false, fetch = FetchType.EAGER)
 	private Departement departement;  // Ne devrait pas être nul 
 	
-	@ManyToOne (optional = false, fetch = FetchType.EAGER)
+	@ManyToOne ( fetch = FetchType.EAGER)//optional = false,
 	private Utilisateur utilisateur; // Ne devrait pas être nul
 	
 }

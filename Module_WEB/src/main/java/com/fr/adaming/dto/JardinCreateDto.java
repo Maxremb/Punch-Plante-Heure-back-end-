@@ -31,7 +31,7 @@ public class JardinCreateDto {
 	@NotNull
 	private DepartementDto dept;  // Ne devrais pas être nul 
 	
-	@NotNull
+	//@NotNull Utilisateur n'existe pas pour le moment
 	private UtilisateurUpdateDto user; // Ne devrais pas être nul
 	
 }
