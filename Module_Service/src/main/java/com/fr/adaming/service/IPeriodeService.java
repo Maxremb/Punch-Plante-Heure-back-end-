@@ -2,6 +2,8 @@ package com.fr.adaming.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Periode;
 import com.fr.adaming.enums.TypePeriod;
@@ -18,13 +20,13 @@ public interface IPeriodeService {
 	 * @param idDepartement L'identifiant du département dans la base de données 
 	 * @return Un dto serviceResponse contenant une liste de periodes ou une liste vide
 	 */
-	public ServiceResponse<List<Periode>> readByDepartementId(int idDepartement);
+	public ServiceResponse<Page<Periode>> readByDepartementId(int page, int idDepartement);
 	
 	/**Cherche les periodes associés à un model de plante dans la base de données.
 	 * @param idPlante L'identifiant de la plante
 	 * @return Un dto serviceResponse contenant une liste de periodes ou une liste vide
 	 */
-	public ServiceResponse<List<Periode>> readByPlanteModelId(int idPlante);
+	public ServiceResponse<Page<Periode>> readByPlanteModelId(int page, int idPlante);
 	
 	/**Cherche les periodes associés à un departement et à une plante dans la base de données. 
 	 * @param depId L'identifiant du département dans la base de données 

@@ -3,6 +3,7 @@ package com.fr.adaming.controller.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,11 +44,11 @@ public class PeriodeControllerImpl extends AbstractController<PeriodeCreateDto, 
 	 * @return ResponseEntity contenant une ResponseDto avec une liste de dto
 	 */
 	@GetMapping(path = "/departement/{depId}")
-	public ResponseEntity<ResponseDto<List<PeriodeUpdateDto>>> readByDepartementId(@PathVariable("depId") int id) {
+	public ResponseEntity<ResponseDto<Page<PeriodeUpdateDto>>> readByDepartementId(@PathVariable("depId") int id, @RequestParam(name = "page") int page) {
 
-		ServiceResponse<List<Periode>> serviceResponse = periodeService.readByDepartementId(id);
+		ServiceResponse<Page<Periode>> serviceResponse = periodeService.readByDepartementId(page, id);
 
-		return makeUpdateDtoListResponse(serviceResponse);
+		return makeUpdateDtoPageResponse(serviceResponse);
 
 	}
 
@@ -56,11 +57,11 @@ public class PeriodeControllerImpl extends AbstractController<PeriodeCreateDto, 
 	 * @return
 	 */
 	@GetMapping(path = "/plant/{plantId}")
-	public ResponseEntity<ResponseDto<List<PeriodeUpdateDto>>> readByPlanteId(@PathVariable("plantId") int id) {
+	public ResponseEntity<ResponseDto<Page<PeriodeUpdateDto>>> readByPlanteId(@PathVariable("plantId") int id, @RequestParam("page") int page) {
 
-		ServiceResponse<List<Periode>> serviceResponse = periodeService.readByPlanteModelId(id);
+		ServiceResponse<Page<Periode>> serviceResponse = periodeService.readByPlanteModelId(page, id);
 
-		return makeUpdateDtoListResponse(serviceResponse);
+		return makeUpdateDtoPageResponse(serviceResponse);
 
 	}
 

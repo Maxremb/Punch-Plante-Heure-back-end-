@@ -2,6 +2,8 @@ package com.fr.adaming.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,8 +17,8 @@ import com.fr.adaming.enums.TypePeriod;
 @Repository
 public interface IPeriodeRepository extends JpaRepository<Periode, Integer>{
 	
-	public List<Periode> findByDepartement(Departement departement);
-	public List<Periode> findByPlanteModel(PlanteModel planteModel);
+	public Page<Periode> findByDepartement(Pageable pageable, Departement departement);
+	public Page<Periode> findByPlanteModel(Pageable pageable, PlanteModel planteModel);
 	public List<Periode> findByDepartementAndPlanteModel(Departement departement, PlanteModel planteModel);
 	public Periode findByDepartementAndPlanteModelAndType(Departement departement, PlanteModel planteModel, TypePeriod type);
 
