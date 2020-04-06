@@ -26,7 +26,7 @@ public class Retention {
 	@Column (unique = true)
 	private Sol sol;
 	@Column
-	private double volume;
+	private double reserveRelative;
 	
 
 }
