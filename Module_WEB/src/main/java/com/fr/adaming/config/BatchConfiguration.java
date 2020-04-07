@@ -26,9 +26,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import com.fr.adaming.dto.MeteoXlsDto;
 import com.fr.adaming.entity.Meteo;
 
-/** Config de la recuperation de meteo à partir d'une source externe
+/**
+ * Config de la recuperation de meteo à partir d'une source externe
+ * 
  * @author Gregoire
  * @since 0.0.1
  *
@@ -40,30 +43,30 @@ public class BatchConfiguration {
 
 	@Autowired
 	public StepBuilderFactory stepBuilderFactory;
-	
+
 	@Autowired
-    public JobBuilderFactory jobBuilderFactory;
+	public JobBuilderFactory jobBuilderFactory;
 
-    @Autowired
-    public JobLauncher jobLauncher;
-    
-    @Autowired 
-    public MeteoItemProcessor processor;
-    
-    @Autowired
-    public MeteoWriter writer;
+	@Autowired
+	public JobLauncher jobLauncher;
 
+	@Autowired
+	public MeteoItemProcessor processor;
 
-	@Value("classpath:/meteo.csv")
+	@Autowired
+	public MeteoWriter writer;
+
+	@Value("classpath:/Meteo.csv")
 	private Resource inputResource;
 
 	@Bean
-	public FlatFileItemReader<Meteo> reader() {
-		return new FlatFileItemReaderBuilder<Meteo>().name("meteoItemReader").linesToSkip(1)
-				.resource(inputResource).delimited().names(new String[] { "nom", "prenom", "email", "cni", "adresse", "cp", "ville", "sexe", "num" })
-				.fieldSetMapper(new BeanWrapperFieldSetMapper<Meteo>() {
+	public FlatFileItemReader<MeteoXlsDto> reader() {
+		return new FlatFileItemReaderBuilder<MeteoXlsDto>().name("meteoItemReader").linesToSkip(1).resource(inputResource)
+				.delimited().names(new String[] { "station", "nom", "longitude", "latitude", "altitude", "date", "rr",
+						"tn", "tx", "fxi", "dxy", "inst", "eptmon" })
+				.fieldSetMapper(new BeanWrapperFieldSetMapper<MeteoXlsDto>() {
 					{
-						setTargetType(Meteo.class);
+						setTargetType(MeteoXlsDto.class);
 
 					}
 				}).build();
@@ -76,26 +79,22 @@ public class BatchConfiguration {
 
 	@Bean
 	public Step step1() {
-		return stepBuilderFactory.get("step1").<Meteo, Meteo>chunk(10).faultTolerant()
-				.skip(ValidationException.class).skip(FlatFileParseException.class).skip(ItemStreamException.class)
-				.skipLimit(9).reader(reader()).processor(processor).writer(writer).build();
+		return stepBuilderFactory.get("step1").<MeteoXlsDto, Meteo>chunk(10).faultTolerant().skip(ValidationException.class)
+				.skip(FlatFileParseException.class).skip(ItemStreamException.class).skipLimit(9).reader(reader())
+				.processor(processor).writer(writer).build();
 	}
 
-	@Scheduled(cron = " 0 0 0 ? * * "  )
+	@Scheduled(cron = " 0 0 0 ? * * ")
 	public void scheduleFixedDelayTask() throws Exception {
 
 		System.out.println("job lancé" + new Date());
 		JobParameters param = new JobParametersBuilder().addString("JobId", String.valueOf(System.currentTimeMillis()))
 				.toJobParameters();
-		
-		Job job = jobBuilderFactory
-				.get("importUserJob")
-				.incrementer(new RunIdIncrementer())
-				.flow(step1())
-				.end()
+
+		Job job = jobBuilderFactory.get("importUserJob").incrementer(new RunIdIncrementer()).flow(step1()).end()
 				.build();
-		
-		JobExecution execution = jobLauncher.run(job,  param);
+
+		JobExecution execution = jobLauncher.run(job, param);
 		System.out.println("Job finish with status :" + execution.getStatus());
 
 	}

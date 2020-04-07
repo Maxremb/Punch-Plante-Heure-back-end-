@@ -6,6 +6,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.fr.adaming.dto.MeteoXlsDto;
 import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Meteo;
 import com.fr.adaming.metier.ICalculMetier;
@@ -16,15 +17,19 @@ import com.fr.adaming.metier.ICalculMetier;
  *@since 0.0.1
  */
 @Component
-public class MeteoItemProcessor implements ItemProcessor<Meteo, Meteo> {
+public class MeteoItemProcessor implements ItemProcessor<MeteoXlsDto, Meteo> {
 
 	@Autowired
 	private ICalculMetier calcul;
 	
+//	@Autowired
+//	private IConverterMeteo converter;
+	
 	@Override
-	public Meteo process(Meteo meteo) throws Exception {
+	public Meteo process(MeteoXlsDto meteoXls) throws Exception {
 		
-		meteo = calcul.calculEtpEtRU(meteo);
+		Meteo meteo = null; // = converter....
+		
 		Set<Jardin> jardinSet = calcul.calculRU(meteo);
 		
 		for (Jardin j : jardinSet) {
