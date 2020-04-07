@@ -32,11 +32,11 @@ public interface IMeteoRepository extends JpaRepository<Meteo, Integer>{
 	
 	/**
 	 * Methode retournant une Météo pour une date et un departement donnés en paramètres
-	 * @param departement departement duquel on veut connaitre la meteo
 	 * @param date a laquelle on veut connaitre la meteo
+	 * @param departement departement duquel on veut connaitre la meteo
 	 * @return une entité Météo
 	 */
-	public Meteo findByDateAndDepartement(Departement departement, LocalDate date);
+	public Meteo findByDateAndDepartement(LocalDate date, Departement departement);
 	
 	/**
 	 * Cette méthode retourne une liste de 'météos' pour un département

@@ -10,9 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
-import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Meteo;
-import com.fr.adaming.entity.PlanteUtilisateur;
 import com.fr.adaming.repositories.IDepartementRepository;
 import com.fr.adaming.repositories.IMeteoRepository;
 import com.fr.adaming.service.AbstractService;
@@ -33,6 +31,8 @@ public class MeteoServiceImpl extends AbstractService<Meteo> implements IMeteoSe
 	// Injection de dependances
 	@Autowired
 	private IMeteoRepository repo;
+	
+	@Autowired
 	private IDepartementRepository repoD;
 	// + dao via AbstractService d'une dépendance de l'interface JpaRepository de la couche Meteo
 	
@@ -95,7 +95,7 @@ public class MeteoServiceImpl extends AbstractService<Meteo> implements IMeteoSe
 	public ServiceResponse<Meteo> readByDateAndDepartement(LocalDate date, int numDepartement) {
 		if (date != null && repoD.existsById(numDepartement) ) {
 			try {
-				return new ServiceResponse<Meteo>("Recuperation de la meteo du departement indiqué et à la date indiquée", repo.findByDateAndDepartement(repoD.findById(numDepartement).orElse(null), date));
+				return new ServiceResponse<Meteo>("Recuperation de la meteo du departement indiqué et à la date indiquée", repo.findByDateAndDepartement(date, repoD.findById(numDepartement).orElse(null)));
 			} catch (Exception e){
 				log.warn(e.getMessage());
 				return new ServiceResponse<Meteo>("Echec lors de la récupération de la météo", null);
@@ -119,7 +119,7 @@ public class MeteoServiceImpl extends AbstractService<Meteo> implements IMeteoSe
 			}
 		} else {
 			log.info("Echec lors de la récupération de la météo : la date est NULLE");
-			return new ServiceResponse<Page<Meteo>> ("Echec lors de la récupération de la météo", null);
+			return new ServiceResponse<Page<Meteo>> ("Echec lors de la récupération de la météo : la date est NULLE", null);
 		}
 	}
 

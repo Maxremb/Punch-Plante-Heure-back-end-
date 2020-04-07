@@ -19,7 +19,7 @@ public interface IMeteoService {
 	
 	
 	/** 
-	 * Methode permettant de récupérer l'ensemble des meteos du departement à la date donnée en paramètre d'entrée
+	 * Methode permettant de récupérer l'ensemble des meteos des departements à la date donnée en paramètre d'entrée
 	 * @param date date à laquelle on veut connaitre la meteo
 	 * @param page page à afficher
 	 * @return un dto de type ServiceResponse contenant une page de type Meteo ou un objet null
