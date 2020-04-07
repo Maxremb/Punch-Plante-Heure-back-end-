@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto, Meteo>{
+public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto, Meteo>, IMeteoConverter{
 
 	@Autowired
 	private IConverterDepartement<Departement, DepartementDto> convertDep;

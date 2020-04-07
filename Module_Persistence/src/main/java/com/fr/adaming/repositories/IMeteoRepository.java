@@ -45,5 +45,7 @@ public interface IMeteoRepository extends JpaRepository<Meteo, Integer>{
 	 */
 	@Query(value = "select * from meteo WHERE departement_id = :numeroDep", nativeQuery = true)
 	public Page<Meteo> findMeteoByNumeroDep(Pageable pageable, Integer numeroDep);
+	
+	//public List<Meteo> findMeteoBy
 
 }

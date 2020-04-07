@@ -17,6 +17,8 @@ public class MeteoXlsDto {
 	private float tn;
 	private float tx;
 	private float fxi;
+	private int dxi;
+	private float fxy;
 	private int dxy;
 	private int inst;
 	private float etpmon;

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.fr.adaming.enums.Sol;
 
@@ -41,9 +42,9 @@ public class PlanteModel {
 	@Column(length = 30, nullable = false)
 	private String nomScientifique;
 
-	@Column
-	@OneToMany
-	private List<Periode> dates;
+//	@Column
+//	@OneToMany
+//	private List<Periode> dates;
 
 	@Column(columnDefinition = "INT DEFAULT 0")
 	private int intervalArrosage;
@@ -75,10 +76,14 @@ public class PlanteModel {
 	@Column
 	private String photo;
 
+	// TODO faire des tables de jointure avec une entité famille pour les asso positives et negatives
+	
 	@Column
+	@Transient
 	private String[] assoPositive;
 
 	@Column
+	@Transient
 	private String[] assoNegative;
 	
 	@Column
