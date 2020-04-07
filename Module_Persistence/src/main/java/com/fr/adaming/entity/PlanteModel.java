@@ -85,12 +85,12 @@ public class PlanteModel {
 	private String famille;
 	
 	@Column
-	private String vegetaion ;
+	private String vegetation ;
 	
 	@Column
 	private String feuillage ;
 	
-	@Column
+	@Column(columnDefinition = "FLOAT DEFAULT 0")
 	private float hauteur ;
 
 	public PlanteModel(int id, String nomCommun, String nomScientifique, String photo) {
