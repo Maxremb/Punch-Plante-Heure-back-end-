@@ -42,5 +42,13 @@ public interface IJardinService {
 	 *         jardin (peut être vide ou NULL)
 	 */
 	public ServiceResponse<Page<Jardin>> readByDepartement(int page, Integer numDep);
+	
+	/**
+	 * Methdoe permettant le calcul de la reserve max du jardin
+	 * Necessite de spécifier la longueur, largeur et profonder de sol
+	 * @param jardin correspond au jardin dont on veux calculer sa reserve max
+	 * @return le même jardin avec un paramètre en plus
+	 */
+	public Jardin calculReserveEauMax (Jardin jardin);
 
 }
