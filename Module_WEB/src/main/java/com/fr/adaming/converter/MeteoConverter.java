@@ -12,8 +12,10 @@ import org.springframework.stereotype.Component;
 import com.fr.adaming.dto.DepartementDto;
 import com.fr.adaming.dto.MeteoCreateDto;
 import com.fr.adaming.dto.MeteoUpdateDto;
+import com.fr.adaming.dto.MeteoXlsDto;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Meteo;
+import com.fr.adaming.repositories.IDepartementRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +25,9 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 
 	@Autowired
 	private IConverterDepartement<Departement, DepartementDto> convertDep;
+	
+	@Autowired
+	private IDepartementRepository dptDao;
 	
 	@Override
 	public Meteo convertCreateDtoToEntity(MeteoCreateDto createDto) {
@@ -209,8 +214,24 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 		}
 		
 	}
-
 	
-	
+	public Meteo convertMeteoXlsDtoToEntity(MeteoXlsDto xlsDto) {
+		if (xlsDto == null) {
+			log.info("Conversion d'un objet xlsDto null en objet meteo null");
+			return null;
+		} else {
+			log.info("Conversion d'un objet xlsDto en objet Meteo");
+			Meteo meteo = new Meteo();
+			meteo.setPluie(xlsDto.getRr());
+			meteo.setTemperatureMax(xlsDto.getTx());
+			meteo.setTemperatureMin(xlsDto.getTn());
+			meteo.setEnsoleillement(xlsDto.getInst());
+			meteo.setEvapoTranspirationPotentielle(xlsDto.getEtpmon());
+			meteo.setDate(xlsDto.getDate());
+			meteo.setDepartement(dptDao.findById(Integer.valueOf(String.valueOf(xlsDto.getStation()).substring(0, 1))).orElse(null));
+			return meteo;
+		}
+		
+	}
 	
 }
