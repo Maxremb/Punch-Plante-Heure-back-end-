@@ -38,7 +38,6 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 		PlanteModel entity = new PlanteModel();
 		entity.setNomCommun(createDto.getCommun());
 		entity.setNomScientifique(createDto.getScientifique());
-		entity.setDates(null);
 		entity.setDescription(createDto.getDesc());
 		entity.setEnsoleillementOpti(createDto.getEnsoleillement());
 		entity.setHumiditeopti(createDto.getHumidite());
