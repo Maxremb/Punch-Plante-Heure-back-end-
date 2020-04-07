@@ -67,7 +67,7 @@ public class IPlanteUtilisateurRepositoryTests {
 		meteo.setId(1);
 		meteo.setPluie(5);
 		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
+		meteo.setTemperatureMax(20);
 		
 		
 		Departement dep = new Departement();

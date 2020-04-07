@@ -52,7 +52,7 @@ public class IJardinRepositoryTests {
 		meteo.setId(1);
 		meteo.setPluie(5);
 		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
+		meteo.setTemperatureMax(20);
 		List<Meteo> listMeteo = new ArrayList<>();
 		listMeteo.add(meteo);
 		Departement dep = new Departement();
@@ -121,7 +121,7 @@ public class IJardinRepositoryTests {
 		meteo.setId(1);
 		meteo.setPluie(5);
 		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
+		meteo.setTemperatureMax(20);
 		List<Meteo> listMeteo = new ArrayList<>();
 		listMeteo.add(meteo);
 		Departement dep = new Departement();
@@ -187,7 +187,7 @@ public class IJardinRepositoryTests {
 		meteo.setId(1);
 		meteo.setPluie(5);
 		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperature(20);
+		meteo.setTemperatureMax(20);
 		List<Meteo> listMeteo = new ArrayList<>();
 		listMeteo.add(meteo);
 		Departement dep = new Departement();
