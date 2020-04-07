@@ -44,6 +44,9 @@ public class BatchConfiguration {
     
     @Autowired 
     public MeteoItemProcessor processor;
+    
+    @Autowired
+    public MeteoWriter writer;
 
 
 	@Value("classpath:/meteo.csv")
@@ -66,16 +69,11 @@ public class BatchConfiguration {
 //		return new JobCompletionNotificationListener();
 //	}
 
-//	@Bean
-//	public ItemWriter<Etudiant> writer() {
-//		return new EtudiantWriter();
-//	}
-
 	@Bean
 	public Step step1() {
 		return stepBuilderFactory.get("step1").<Meteo, Meteo>chunk(10).faultTolerant()
 				.skip(ValidationException.class).skip(FlatFileParseException.class).skip(ItemStreamException.class)
-				.skipLimit(9).reader(reader()).processor(processor).build();
+				.skipLimit(9).reader(reader()).processor(processor).writer(writer).build();
 	}
 
 	@Scheduled(cron = " 0 0 0 ? * * "  )
