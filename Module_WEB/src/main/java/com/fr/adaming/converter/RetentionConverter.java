@@ -18,7 +18,7 @@ public class RetentionConverter implements IConverter<RetentionCreateDto, Retent
 	public Retention convertCreateDtoToEntity(RetentionCreateDto createDto) {
 		if (createDto != null) {
 			Retention entite = new Retention();
-			entite.setVolumeEauMax(createDto.getRelativeReserve());
+			entite.setCoeffRemplissage(createDto.getCoeffSol());
 			entite.setSol(createDto.getGround());
 			entite.setId(0);
 			return entite;
@@ -30,7 +30,7 @@ public class RetentionConverter implements IConverter<RetentionCreateDto, Retent
 	public RetentionCreateDto convertEntityToCreateDto(Retention entity) {
 		if (entity != null) {
 			RetentionCreateDto createDto = new RetentionCreateDto();
-			createDto.setRelativeReserve(entity.getVolumeEauMax());
+			createDto.setCoeffSol(entity.getCoeffRemplissage());
 			createDto.setGround(entity.getSol());
 			return createDto;
 		}
@@ -41,7 +41,7 @@ public class RetentionConverter implements IConverter<RetentionCreateDto, Retent
 	public Retention convertUpdateDtoToEntity(RetentionUpdateDto updateDto) {
 		if (updateDto != null) {
 			Retention entite = new Retention();
-			entite.setVolumeEauMax(updateDto.getRelativeReserve());
+			entite.setCoeffRemplissage(updateDto.getCoeffSol());
 			entite.setSol(updateDto.getGround());
 			entite.setId(updateDto.getIdentifier());
 			return entite;
@@ -53,7 +53,7 @@ public class RetentionConverter implements IConverter<RetentionCreateDto, Retent
 	public RetentionUpdateDto convertEntityToUpdateDto(Retention entity) {
 		if (entity != null) {
 			RetentionUpdateDto updateDto = new RetentionUpdateDto();
-			updateDto.setRelativeReserve(entity.getVolumeEauMax());
+			updateDto.setCoeffSol(entity.getCoeffRemplissage());
 			updateDto.setGround(updateDto.getGround());
 			updateDto.setIdentifier(entity.getId());
 			return updateDto;

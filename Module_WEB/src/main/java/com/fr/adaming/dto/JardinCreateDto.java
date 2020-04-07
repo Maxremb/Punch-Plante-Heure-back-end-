@@ -34,6 +34,8 @@ public class JardinCreateDto {
 	
 	private boolean isArrosed;
 	
+	private double maxReserve;
+	
 	@NotNull
 	private DepartementDto dept;  // Ne devrais pas être nul 
 	

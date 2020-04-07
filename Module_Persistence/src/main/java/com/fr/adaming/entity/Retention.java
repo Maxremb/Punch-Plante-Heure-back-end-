@@ -26,6 +26,6 @@ public class Retention {
 	@Column (unique = true)
 	private Sol sol;
 	@Column
-	private double[] volumeEauMax = {0.1,0.14,0.22,0.21,0.16};
+	private double coeffRemplissage;
 
 }

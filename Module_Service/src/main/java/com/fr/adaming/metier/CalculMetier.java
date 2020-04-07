@@ -34,30 +34,30 @@ public class CalculMetier implements ICalculMetier{
 	 * 
 	 * @param meteo correspond à la météo à traiter
 	 */
-	public Meteo calculEtpEtRU(Meteo meteo) {
-		// recupere meteo du jour convertit
-
-		// calculer etp et ajouter l'attribut à meteo
-
-		if (meteo.getHumidite() > 50) {
-			double etp = 0.013 * (meteo.getRayonnement() + 50)
-					* ((meteo.getTemperature()) / (meteo.getTemperature() + 15));
-			meteo.setEvapoTranspirationPotentielle(etp);
-		} else {
-			double etp = 0.013 * (meteo.getRayonnement() + 50)
-					* ((meteo.getTemperature()) / (meteo.getTemperature() + 15))
-					* (1 + (50 - meteo.getHumidite() / (70)));
-			meteo.setEvapoTranspirationPotentielle(etp);
-		}
-
-		// appeller methode calculEtrJour lorsqu'implementer
-		// calculEtrJour();
-
-		return meteo;
-	}
+//	public Meteo calculEtpEtRU(Meteo meteo) {
+//		// recupere meteo du jour convertit
+//
+//		// calculer etp et ajouter l'attribut à meteo
+//
+//		if (meteo.getHumidite() > 50) {
+//			double etp = 0.013 * (meteo.getRayonnement() + 50)
+//					* ((meteo.getTemperature()) / (meteo.getTemperature() + 15));
+//			meteo.setEvapoTranspirationPotentielle(etp);
+//		} else {
+//			double etp = 0.013 * (meteo.getRayonnement() + 50)
+//					* ((meteo.getTemperature()) / (meteo.getTemperature() + 15))
+//					* (1 + (50 - meteo.getHumidite() / (70)));
+//			meteo.setEvapoTranspirationPotentielle(etp);
+//		}
+//
+//		// appeller methode calculEtrJour lorsqu'implementer
+//		// calculEtrJour();
+//
+//		return meteo;
+//	}
 
 	/**
-	 * 
+	 * Methode calculant la reserve utile du jardin à partir de la méteo du jour et de la réserve utile de la veille
 	 * @param meteo correspond à la météo à traiter
 	 * @return un set contenant la liste des jardins à arroser
 	 */

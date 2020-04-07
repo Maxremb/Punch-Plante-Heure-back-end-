@@ -31,6 +31,7 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 
 		if (createDto != null) {
 			Jardin entite = new Jardin();
+			entite.setRESERVE_MAX_EAU(createDto.getMaxReserve());
 			entite.setReserveUtile(createDto.getUsefullReserve());
 			entite.setEstArroser(createDto.isArrosed());
 			entite.setProfSol(createDto.getDepthGround());
@@ -51,6 +52,7 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 	public JardinCreateDto convertEntityToCreateDto(Jardin entity) {
 		if (entity != null) {
 			JardinCreateDto createDto = new JardinCreateDto();
+			createDto.setMaxReserve(entity.getRESERVE_MAX_EAU());
 			createDto.setUsefullReserve(entity.getReserveUtile());
 			createDto.setArrosed(entity.isEstArroser());
 			createDto.setDepthGround(entity.getProfSol());
@@ -70,6 +72,7 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 	public Jardin convertUpdateDtoToEntity(JardinUpdateDto updateDto) {
 		if (updateDto != null) {
 			Jardin entite = new Jardin();
+			entite.setRESERVE_MAX_EAU(updateDto.getMaxReserve());
 			entite.setReserveUtile(updateDto.getUsefullReserve());
 			entite.setEstArroser(updateDto.isArrosed());
 			entite.setProfSol(updateDto.getDepthGround());
@@ -89,6 +92,7 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 	public JardinUpdateDto convertEntityToUpdateDto(Jardin entity) {
 		if (entity != null) {
 			JardinUpdateDto updateDto = new JardinUpdateDto();
+			updateDto.setMaxReserve(entity.getRESERVE_MAX_EAU());
 			updateDto.setUsefullReserve(entity.getReserveUtile());
 			updateDto.setArrosed(entity.isEstArroser());
 			updateDto.setDepthGround(entity.getProfSol());

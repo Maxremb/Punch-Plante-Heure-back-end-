@@ -17,7 +17,7 @@ public class RetentionCreateDto {
 	
 	private Sol ground;
 	
-	private double[] relativeReserve;
+	private double CoeffSol;
 	
 
 }
