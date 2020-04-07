@@ -1,5 +1,7 @@
 package com.fr.adaming.repositories;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,10 +40,20 @@ public interface IJardinRepository extends JpaRepository<Jardin, Integer>{
 	/**
 	 * Permet la recherche de jardins par le numéro de département unique où il(s) se trouve(nt)
 	 * @param idDepartement correspondant au numéro unique de département
-	 * @return une liste de jardin localisé dans le département ayant ce numéro
+	 * @return une page de jardin localisé dans le département ayant ce numéro
 	 */
 	@Query(value = "select * from jardin where departement_numero_dep = :idDepartement", nativeQuery = true)
 	public Page<Jardin> trouveParDepartement(Pageable pageable, @Param(value = "idDepartement") Integer idDepartement);
+	
+	
+	
+	/**
+	 * Permet la recherche de jardins par le numéro de département unique où il(s) se trouve(nt)
+	 * @param idDepartement correspondant au numéro unique de département
+	 * @return une liste de jardin localisé dans le département ayant ce numéro
+	 */
+	@Query(value = "select * from jardin where departement_numero_dep = :idDepartement", nativeQuery = true)
+	public List<Jardin> trouveListJardinParDepartement(@Param(value = "idDepartement") Integer idDepartement);
 	
 	
 }

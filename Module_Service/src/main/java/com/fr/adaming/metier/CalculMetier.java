@@ -1,22 +1,16 @@
 package com.fr.adaming.metier;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EnumType;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Meteo;
-import com.fr.adaming.enums.Sol;
-import com.fr.adaming.repositories.IDepartementRepository;
 import com.fr.adaming.repositories.IJardinRepository;
-import com.fr.adaming.repositories.IMeteoRepository;
-import com.fr.adaming.repositories.IRetentionRepository;
 
 /**
  * Couche métier permettant le traitement des données météos et de besoin en eau
@@ -25,28 +19,22 @@ import com.fr.adaming.repositories.IRetentionRepository;
  * @author maxime
  * @since 0.0.1-SNAPSHOT
  */
+@Component
 public class CalculMetier {
-
-	@Autowired
-	private IMeteoRepository meteoRepo;
-
-	@Autowired
-	private IRetentionRepository retenRepo;
 
 	@Autowired
 	private IJardinRepository jardinRepo;
 
-	@Autowired
-	private IDepartementRepository deptRepo;
 
-	
-	
+
 	/**
-	 * Methode qui accepte un objet météo  et calcule l'evapotranspiration dépendante des conditions
-	 * Fonctionne pour une météo journalière, hebdomadaire, mensuelle, annuelle, ..
+	 * Methode qui accepte un objet météo et calcule l'evapotranspiration dépendante
+	 * des conditions Fonctionne pour une météo journalière, hebdomadaire,
+	 * mensuelle, annuelle, ..
+	 * 
 	 * @param meteo correspond à la météo à traiter
 	 */
-	public void calculEtpJour(Meteo meteo) {
+	public Meteo calculEtpEtRU(Meteo meteo) {
 		// recupere meteo du jour convertit
 
 		// calculer etp et ajouter l'attribut à meteo
@@ -65,72 +53,65 @@ public class CalculMetier {
 		// appeller methode calculEtrJour lorsqu'implementer
 		// calculEtrJour();
 
-		// appeller méthode calculRU
-		Set<Jardin> setJardinsPourUnDept = calculRU(meteo);
-
-		// appelelr méthode envoie email
-
-		// sauvegarder meteo
-		meteoRepo.save(meteo);
+		return meteo;
 	}
 
-	
-	
-	
 	/**
 	 * 
-	 * @param meteoJour correspond à la météo à traiter
-	 * @return un set contenant la liste des jardins à arroser 
+	 * @param meteo correspond à la météo à traiter
+	 * @return un set contenant la liste des jardins à arroser
 	 */
-	public Set<Jardin> calculRU(Meteo meteoJour) {
+	public Set<Jardin> calculRU(Meteo meteo) {
 		// reçoit la meteo du jour d'un dept
 
+		Departement dept = meteo.getDepartement();
+
 		// liste de tout les jardins
-		List<Jardin> listeJardins = jardinRepo.findAll();
+		List<Jardin> listeJardinsDept = jardinRepo.trouveListJardinParDepartement(dept.getNumeroDep());
 
 		// Set de jardins à arroser pour 1 dept
 		Set<Jardin> setJardinsforOneDept = new HashSet<>();
 
 		// parcour la liste des jardins de ce dept
-		for (Jardin jardin : listeJardins) {
+		for (Jardin jardin : listeJardinsDept) {
 
-			// tri les jardins par departement
-			if (meteoJour.getDepartement() == jardin.getDepartement()) {
+			// calcule la nouvelle RU du jardin
+			// ETP à remplacer par ETR lorsque celle ci sera implenté
+			jardin.setReserveUtile(jardin.getReserveUtile() - meteo.getEvapoTranspirationPotentielle());
 
-				// calcule la nouvelle RU du jardin
-				jardin.setReserveUtile(jardin.getReserveUtile() - meteoJour.getEvapoTranspirationPotentielle());
+			// determine le seuil d'arrosage définit à 20% de la réserve totale
 
-				// sauvegarde des paramètres dans jardin
-				jardinRepo.save(jardin);
+			if (jardin.getReserveUtile() < (0.2 * jardin.getRESERVE_MAX_EAU())) {
 
-				// determine le seuil d'arrosage définit à 20% de la réserve totale
-
-				if (jardin.getReserveUtile() < (0.2 * jardin.getRESERVE_MAX_EAU())) {
-
-					// creer un set des jardins à arroser
-					setJardinsforOneDept.add(jardin);
-				}
+				// creer un set des jardins à arroser
+				setJardinsforOneDept.add(jardin);
 			}
+
 		}
 
 		// renvoyer le set vers methode envoyer email
 		return setJardinsforOneDept;
 	}
+	
+	
 
 	// methode pour calculer ETR
-	public void calculEtrJour() {
-		// pour l'instant inutile
-		// correspond à ETP * coefficient (qui dépend globalement du jardin)
+	/**
+	 * Methode qui calcule l'evapotranspiration réelle
+	 */
+	// public void calculEtrJour() {
+	// pour l'instant inutile
+	// correspond à ETP * coefficient (qui dépend globalement du jardin)
 
-		/*
-		 * au moment de l'implénter : ajouter attribut coeffMoyen au jardin ajouter
-		 * attribut Etr au jardin
-		 */
+	/*
+	 * au moment de l'implénter : ajouter attribut coeffMoyen au jardin ajouter
+	 * attribut Etr au jardin
+	 */
 
-		/*
-		 * Jardin jardin = new Jardin(); jardin.setEtr =
-		 * meteo.getEvapoTranspirationPotentielle * coeffMoyen
-		 */
-	}
+	/*
+	 * Jardin jardin = new Jardin(); jardin.setEtr =
+	 * meteo.getEvapoTranspirationPotentielle * coeffMoyen
+	 */
+	// }
 
 }
