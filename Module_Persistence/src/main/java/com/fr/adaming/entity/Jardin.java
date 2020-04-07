@@ -40,7 +40,9 @@ public class Jardin {
 	@Column
 	private double reserveUtile;
 	@Column
-	private boolean estArroser ;
+	private double RESERVE_MAX_EAU;
+	@Column
+	private boolean estArroser; 
 	
 	@ManyToOne (optional = false, fetch = FetchType.EAGER)
 	private Departement departement;  // Ne devrait pas être nul 
