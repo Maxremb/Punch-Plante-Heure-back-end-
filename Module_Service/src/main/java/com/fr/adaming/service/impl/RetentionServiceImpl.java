@@ -39,7 +39,7 @@ public class RetentionServiceImpl extends AbstractService<Retention> implements 
 				}
 			}
 			log.info("Création non réalisé : sol déjà existant dans la DB");
-			return new ServiceResponse<Retention>("Id déjà connu dans la database", null);
+			return new ServiceResponse<Retention>("Sol déjà connu dans la database", null);
 		}
 		log.info("Création non réalisé : objet en entrée null");
 		return new ServiceResponse<Retention>("Objet d'entrée null", null);
