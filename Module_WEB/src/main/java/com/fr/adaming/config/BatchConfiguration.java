@@ -28,6 +28,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import com.fr.adaming.entity.Meteo;
 
+/** Config de la recuperation de meteo à partir d'une source externe
+ * @author Gregoire
+ * @since 0.0.1
+ *
+ */
 @Configuration
 @EnableBatchProcessing
 @EnableScheduling
