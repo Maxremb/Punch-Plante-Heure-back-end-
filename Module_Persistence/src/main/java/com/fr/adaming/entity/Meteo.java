@@ -30,17 +30,15 @@ public class Meteo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private double temperature; //pas dessous de -273.15
+	private double temperatureMax; 
+	
+	private double temperatureMin; 
 	
 	private double pluie;	//positive
 	
-	private double rayonnement;
+	private double ensoleillement;
 	
 	private double evapoTranspirationPotentielle;
-	
-	private double evapoTranspirationReelle;
-	
-	private int humidite;
 	
 	@Column(nullable = false)
 	private LocalDate date;

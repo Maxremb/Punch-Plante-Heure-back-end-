@@ -12,17 +12,15 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor @EqualsAndHashCode
 public class MeteoCreateDto {
 
-	private double temp; 
+	private double tempMax; 
+	
+	private double tempMin;
 	
 	private double rain;	
 	
 	private double radiation;
 	
 	private double etp;
-	
-	private double etr;
-	
-	private int humidity;
 	
 	@Column(nullable = false)
 	private LocalDate dateMeteo;
