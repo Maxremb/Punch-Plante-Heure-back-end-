@@ -92,7 +92,7 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 			try {
 				log.info("Jardin existant");
 				ServiceResponse<Page<PlanteUtilisateur>> serviceResponse = new ServiceResponse<Page<PlanteUtilisateur>>();
-				Pageable pageable = PageRequest.of(p, 6, Sort.by("planteModel"));
+				Pageable pageable = PageRequest.of(p, 6, Sort.by("plante_model"));
 				Page<PlanteUtilisateur> page = repo.findByJardin(idJardin, pageable);
 				
 				serviceResponse.setBody(page);
