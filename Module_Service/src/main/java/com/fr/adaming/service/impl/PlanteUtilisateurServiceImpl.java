@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteUtilisateur;
+import com.fr.adaming.repositories.IJardinRepository;
 import com.fr.adaming.repositories.IPlanteUtilisateurRepository;
 import com.fr.adaming.service.AbstractService;
 import com.fr.adaming.service.IPlanteUtilisateurService;
@@ -34,6 +35,9 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 	
 	@Autowired
 	private IPlanteUtilisateurRepository repo;
+	
+	@Autowired
+	private IJardinRepository jRepo;
 	
 	@Override
 	public ServiceResponse<PlanteUtilisateur> create(PlanteUtilisateur planteUtilisateur) {
@@ -81,7 +85,7 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 
 	@Override
 	public ServiceResponse<Page<PlanteUtilisateur>> readByJardin(int idJardin, int p) {
-		if (!dao.existsById(idJardin)) {
+		if (!jRepo.existsById(idJardin)) {
 			log.info("Jardin inexistant");
 			return new ServiceResponse<Page<PlanteUtilisateur>>("Jardin inexistant", null);
 		} else {
