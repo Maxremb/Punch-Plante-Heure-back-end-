@@ -42,7 +42,7 @@ public class JardinServiceTest implements IServiceTests {
 
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -56,7 +56,7 @@ public class JardinServiceTest implements IServiceTests {
 
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -70,7 +70,7 @@ public class JardinServiceTest implements IServiceTests {
 
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -91,7 +91,7 @@ public class JardinServiceTest implements IServiceTests {
 
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -105,7 +105,7 @@ public class JardinServiceTest implements IServiceTests {
 
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -121,7 +121,7 @@ public class JardinServiceTest implements IServiceTests {
 
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -135,7 +135,7 @@ public class JardinServiceTest implements IServiceTests {
 
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -154,7 +154,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -173,7 +173,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -191,7 +191,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -209,7 +209,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -226,7 +226,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -244,7 +244,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -262,7 +262,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -279,7 +279,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -297,7 +297,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -314,7 +314,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -350,7 +350,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -368,7 +368,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -403,7 +403,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -438,14 +438,14 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void testUpdateNotExistingJardin_ShouldReturnEntite() {
+	public void testUpdateNotExistingJardin_ShouldReturNull() {
 		Utilisateur user = new Utilisateur();
 		user.setId(2);
 		user.setNom("nomTestUtilisateur");
@@ -473,7 +473,7 @@ public class JardinServiceTest implements IServiceTests {
 	 */
 	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
