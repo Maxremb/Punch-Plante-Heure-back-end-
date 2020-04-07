@@ -11,6 +11,8 @@ public class MeteoItemProcessor implements ItemProcessor<Meteo, Meteo> {
 	@Override
 	public Meteo process(Meteo item) throws Exception {
 		
+		
+		
 		return null;
 	}
 

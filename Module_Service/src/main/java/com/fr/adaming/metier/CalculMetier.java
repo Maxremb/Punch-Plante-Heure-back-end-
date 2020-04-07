@@ -20,7 +20,7 @@ import com.fr.adaming.repositories.IJardinRepository;
  * @since 0.0.1-SNAPSHOT
  */
 @Component
-public class CalculMetier {
+public class CalculMetier implements ICalculMetier{
 
 	@Autowired
 	private IJardinRepository jardinRepo;
