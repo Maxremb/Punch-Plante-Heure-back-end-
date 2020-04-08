@@ -1,6 +1,7 @@
 package com.fr.adaming.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,13 +86,84 @@ public class RetentionServiceTest implements IServiceTests{
 	// TEST UPDATE
 	
 	
+	/**
+	 * Test update de l'objet retention avec un objet null en entrée
+	 * Retourne un obejt ServiceResponse avec un body = null
+	 */
+	@Test
+	public void TestUpdateWithNullEntite_shouldReturnNullBody () {
+		assertThat(iService.update(null).getBody()).isNull();
+		
+	}
 	
+	/**
+	 * Test update de l'objet retention avec un objet non existant dans la DB
+	 * Retourne un obejt ServiceResponse avec un body = null
+	 */
+	@Test
+	public void TestUpdateWithNoExistingEntite_SHouldReturnNullBody() {
+		Retention retention = new Retention();
+		retention.setId(10);
+		retention.setSol(Sol.Sableux);
+		assertThat(iService.update(retention).getBody()).isNull();
+	}
+	
+	/**
+	 * Test update de l'objet retention avec un objet existant dans la DB et non null
+	 * Retourne l'objet en question 
+	 */
+	@Test
+	@Sql (statements = "INSERT INTO retention (id,sol,coeff_remplissage) VALUES (10,4,0.5)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql (statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestUpdateWithCorrectEntite_ShouldReturnRightEntite() {
+		Retention retention = new Retention();
+		retention.setId(10);
+		retention.setSol(Sol.Argileux);
+		retention.setCoeffRemplissage(10.0);
+		ServiceResponse<Retention> resp = iService.update(retention);
+		assertThat(resp.getBody()).hasFieldOrPropertyWithValue("sol", Sol.Argileux);
+		assertThat(resp.getBody()).hasFieldOrPropertyWithValue("coeffRemplissage", retention.getCoeffRemplissage());
+		
+	}
 	
 	
 	// ********************************************************************************
 	// TEST READ BY SOL
 	
+	/**
+	 * Test de la méthode ReadBySol avec un null en entrée
+	 * Retourne un objet ServiceResponse avec un body = null
+	 */
+	@Test
+	public void TestReadBySolWithNullEntite_ShouldReturnNullBody() {
+		assertThat(retentionService.readBySol(null).getBody()).isNull();
+	}
 	
+	
+	/**
+	 * Test de la méthode ReadBySol avec un objet en entrée mais DB vide
+	 *  Retourne un objet ServiceResponse avec un body = null
+	 */
+	@Test
+	public void TestReadBySolWithNoDB_shouldReturnNullBody() {
+		
+		assertThat(retentionService.readBySol(Sol.ArgiloSableux).getBody()).isNull();
+	}
+	
+	/**
+	 * Test de la méthode ReadBySol avec un paramètre correct et existant dans la DB
+	 *  Retourne l'entite recherché
+	 */
+	@Test
+	@Sql (statements = "INSERT INTO retention (id,sol,coeff_remplissage) VALUES (10,4,0.5)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql (statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestReadBySolWithCorrectSol_ShouldReturnEntite () {
+	
+		ServiceResponse<Retention> resp = retentionService.readBySol(Sol.Argileux);
+		assertThat(resp.getBody()).hasFieldOrPropertyWithValue("id", 10);
+		assertThat(resp.getBody()).hasFieldOrPropertyWithValue("coeffRemplissage", 0.5);
+		
+	}
 	
 	
 	// ********************************************************************************
@@ -125,14 +197,20 @@ public class RetentionServiceTest implements IServiceTests{
 	// TEST READ ALL
 	
 	@Override
+	@Test
+	@Sql (statements = "INSERT INTO retention (id,sol,coeff_remplissage) VALUES (11,4,0.5)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql (statements = "INSERT INTO retention (id,sol,coeff_remplissage) VALUES (10,0,10)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql (statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testReadAllWithContent_shouldReturnPage() {
-		// TODO Auto-generated method stub
+		assertTrue(iService.readAll(0).getBody().toList().size() == 2);
+		assertThat(iService.readAll(0).getBody().toList().get(0)).isNotNull();
 		
 	}
 
 	@Override
+	@Test
 	public void testReadAllNoContent_shouldReturnEmptyPage() {
-		// TODO Auto-generated method stub
+		assertTrue(iService.readAll(0).getBody().toList().isEmpty());
 		
 	}
 	
@@ -142,20 +220,29 @@ public class RetentionServiceTest implements IServiceTests{
 	// TEST READ BY ID
 	
 
+	/**
+	 *Test du readById d'un objet retention avec des paramètres correcte
+	 *Retourne le bon objet
+	 */
 	@Sql (statements = "INSERT INTO retention (id,sol,coeff_remplissage) VALUES (11,4,0.5)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql (statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
 	@Test
 	public void testReadByIdValidId_shouldReturnEntity() {
-		ServiceResponse<Retention> resp = iService.readById(1);
-		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("sol", Sol.Argileux);
-		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("coeff_remplissage", 0.5);
+		ServiceResponse<Retention> resp = iService.readById(11);
+		assertThat(resp.getBody()).hasFieldOrPropertyWithValue("sol", Sol.Argileux);
+		assertThat(resp.getBody()).hasFieldOrPropertyWithValue("coeffRemplissage", 0.5);
 	}
 
+	/**
+	 *Test du readById d'un objet retention avec un Id incorrect
+	 *Retourne un objet Service Response avec un body = null
+	 */
 	@Override
 	@Test
 	public void testReadByIdInvalidId_shouldReturnNull() {
-		assertThat(iService.readById(100000)).isNull();
+		ServiceResponse<Retention> resp = iService.readById(100000);
+		assertThat(resp.getBody()).isNull();
 		
 	}
 	
@@ -164,14 +251,18 @@ public class RetentionServiceTest implements IServiceTests{
 	// TEST EXISTS BY ID
 
 	@Override
+	@Test
+	@Sql (statements = "INSERT INTO retention (id,sol,coeff_remplissage) VALUES (11,4,0.5)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql (statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testExistsByIdValidId_ShouldReturnTrue() {
-		// TODO Auto-generated method stub
+		assertThat(iService.existsById(11)).isTrue();
 		
 	}
 
 	@Override
+	@Test
 	public void testExistsByIdInValidId_ShouldReturnFalse() {
-		// TODO Auto-generated method stub
+		assertThat(iService.existsById(1000000)).isFalse();
 		
 	}
 

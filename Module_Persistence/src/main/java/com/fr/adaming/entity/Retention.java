@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import com.fr.adaming.enums.Sol;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Contient les attributs de retention d'eau des sols pour chaque type définit.
@@ -16,7 +19,8 @@ import lombok.Data;
  * @author maxime
  * @since 0.0.1-SNAPSHOT
  */
-@Data
+@Getter
+@Setter
 @Entity
 public class Retention {
 	

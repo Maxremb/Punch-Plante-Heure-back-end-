@@ -3,6 +3,7 @@ package com.fr.adaming.controller.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,7 @@ public class RetentionControllerimpl extends AbstractController<RetentionCreateD
 	 * @param sol correspond au type de sol voulu
 	 * @return ResponseEntity contenant ResponseDto de RetentionUpdateDto
 	 */
+	@GetMapping (path = "/sol")
 	public ResponseEntity<ResponseDto<RetentionUpdateDto>> readBySol(@RequestParam(name = "sol") Sol sol) {
 
 		ServiceResponse<Retention> resp = serviceRetention.readBySol(sol);
