@@ -13,6 +13,8 @@ import com.fr.adaming.repositories.IPlanteModelRepository;
 import com.fr.adaming.service.AbstractService;
 import com.fr.adaming.service.IPlanteModelService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Classe Service relative à l'entité Plante Model ettend AbstractService,
  * Implement IPlanteModelService
@@ -22,6 +24,7 @@ import com.fr.adaming.service.IPlanteModelService;
  */
 
 @Service
+@Slf4j
 public class PlanteModelServiceImpl extends AbstractService<PlanteModel> implements IPlanteModelService {
 
 	@Autowired
@@ -118,9 +121,11 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 
 	@Override
 	public ServiceResponse<Page<PlanteModel>> findByNom(int page, String nom) {
+		
+		log.debug("PlanteModelService: findByNom");
 
 		Pageable pageable = PageRequest.of(page, 20);
-		Page<PlanteModel> entityList = repo.findByNomCommunOrNomScientifiqueContainingIgnoreCase(pageable, nom, nom);
+		Page<PlanteModel> entityList = repo.findByNomCommunContainingOrNomScientifiqueContaining(pageable, nom, nom);
 		ServiceResponse<Page<PlanteModel>> serviceResponse = new ServiceResponse<Page<PlanteModel>>();
 		serviceResponse.setBody(entityList);
 		return serviceResponse;

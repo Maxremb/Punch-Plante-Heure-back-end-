@@ -60,7 +60,7 @@ public interface IPlanteModelRepository extends JpaRepository<PlanteModel, Integ
 	 * @return Page de PlanteModel
 	 * @author Grégoire Brebner
 	 */
-	public Page<PlanteModel> findByNomCommunOrNomScientifiqueContainingIgnoreCase(Pageable pageable, String nomCommun,
+	public Page<PlanteModel> findByNomCommunContainingOrNomScientifiqueContainingIgnoreCase(Pageable pageable, String nomCommun,
 			String nomScientifique);
 
 }
