@@ -73,7 +73,7 @@ public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, Mete
 	 * @return ResponseEntity avec ResponseDto contenant une liste de meteoUpdateDto
 	 * @author Gregoire
 	 */
-	@GetMapping(path = "/mois-departement")
+	@GetMapping(path = "/moisdepartement")
 	public ResponseEntity<ResponseDto<List<MeteoUpdateDto>>> readByMoisAndDepartement(@RequestParam(name = "annee") int annee, @RequestParam(name = "mois") int mois, @RequestParam(name = "depNum") int numDepartement){
 				
 		return makeUpdateDtoListResponse(service.readByMonthAndDepartement(annee, mois, numDepartement));

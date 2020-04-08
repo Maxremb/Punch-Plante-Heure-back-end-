@@ -126,22 +126,22 @@ public class MeteoServiceImpl extends AbstractService<Meteo> implements IMeteoSe
 
 	@Override
 	public ServiceResponse<List<Meteo>> readByMonthAndDepartement(int annee, int mois, int numDepartement) {
-		
-		ServiceResponse<List<Meteo>> serviceResponse = new ServiceResponse<List<Meteo>>();
-		
 		if(mois < 13 && mois > 0) {
 			if (repoD.existsById(numDepartement)) {
-				
-				serviceResponse.setBody(repo.findMeteoByMonthAndDepartement(annee, mois, numDepartement));
+				log.info("Récupération des météos pour le mois et le département indiqués");
+				return new ServiceResponse<List<Meteo>>("Récupération des météos pour le mois et le département indiqués", repo.findMeteoByMonthAndDepartement(annee, mois, numDepartement));
 				
 			} else {
-				serviceResponse.setMessage("Numéro de département non-reconnu");
+				log.warn("Echec lors de la récupération des meteos : le departement est inconnu");
+				return new ServiceResponse<List<Meteo>> ("Echec lors de la récupération des meteos : le departement est inconnu", null);
+				
 			}
 			
 		} else {
-			serviceResponse.setMessage("Numero de mois invalide");
+			log.warn("Echec lors de la récupération des meteos : le mois est invalide");
+			return new ServiceResponse<List<Meteo>> ("Echec lors de la récupération des meteos : le mois est invalide", null);
 		}
-		return serviceResponse;
+		
 	}
 
 }
