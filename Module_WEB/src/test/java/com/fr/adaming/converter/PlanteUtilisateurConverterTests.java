@@ -1,6 +1,7 @@
 package com.fr.adaming.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
@@ -441,50 +442,81 @@ public class PlanteUtilisateurConverterTests implements IConverterTests {
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullListEntityToCreateDto_shouldReturnEmptyList() {
-		// TODO Auto-generated method stub
+
+		List<PlanteUtilisateurCreateDto> planteUtilisateur = planteUtilisateurConverter.convertListEntityToCreateDto(null);
+		assertNotNull(planteUtilisateur);
+		assertThat(planteUtilisateur).isEmpty();
 		
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullListCreateDtoToEntity_shouldReturnEmptyList() {
-		// TODO Auto-generated method stub
+
+		List<PlanteUtilisateur> planteUtilisateur = planteUtilisateurConverter.convertListCreateDtoToEntity(null);
+		assertNotNull(planteUtilisateur);
+		assertThat(planteUtilisateur).isEmpty();
 		
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullListEntityToUpdateDto_shouldReturnEmptyList() {
-		// TODO Auto-generated method stub
 		
+		List<PlanteUtilisateurUpdateDto> planteUtilisateur = planteUtilisateurConverter.convertListEntityToUpdateDto(null);
+		assertNotNull(planteUtilisateur);
+		assertThat(planteUtilisateur).isEmpty();
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullListUpdateDtoToEntity_shouldReturnEmptyList() {
-		// TODO Auto-generated method stub
+		
+		List<PlanteUtilisateur> planteUtilisateur = planteUtilisateurConverter.convertListUpdateDtoToEntity(null);
+		assertNotNull(planteUtilisateur);
+		assertThat(planteUtilisateur).isEmpty();
 		
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullPageCreateDtoToEntity_shouldReturnEmptyPage() {
-		// TODO Auto-generated method stub
+
+		Page<PlanteUtilisateur> planteUtilisateur = planteUtilisateurConverter.convertPageCreateDtoToEntity(null);
+		assertNotNull(planteUtilisateur);
+		assertThat(planteUtilisateur.getContent()).asList().isEmpty();
 		
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullPageEntityToCreateDto_shouldReturnEmptyPage() {
-		// TODO Auto-generated method stub
+
+		Page<PlanteUtilisateurCreateDto> planteUtilisateur = planteUtilisateurConverter.convertPageEntityToCreateDto(null);
+		assertNotNull(planteUtilisateur);
+		assertThat(planteUtilisateur.getContent()).asList().isEmpty();
 		
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullPageUpdateDtoToEntity_shouldReturnEmptyPage() {
-		// TODO Auto-generated method stub
+		
+		Page<PlanteUtilisateur> planteUtilisateur = planteUtilisateurConverter.convertPageUpdateDtoToEntity(null);
+		assertNotNull(planteUtilisateur);
+		assertThat(planteUtilisateur.getContent()).asList().isEmpty();
 		
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullPageEntityToUpdateDto_shouldReturnEmptyPage() {
-		// TODO Auto-generated method stub
+		
+		Page<PlanteUtilisateurUpdateDto> planteUtilisateur = planteUtilisateurConverter.convertPageEntityToUpdateDto(null);
+		assertNotNull(planteUtilisateur);
+		assertThat(planteUtilisateur.getContent()).asList().isEmpty();
 		
 	}
 

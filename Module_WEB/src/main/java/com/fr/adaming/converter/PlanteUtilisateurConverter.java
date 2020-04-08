@@ -87,7 +87,7 @@ public class PlanteUtilisateurConverter
 	public PlanteUtilisateur convertUpdateDtoToEntity(PlanteUtilisateurUpdateDto updateDto) {
 		if (updateDto != null) {
 			PlanteUtilisateur planteUtilisateur = new PlanteUtilisateur();
-
+			planteUtilisateur.setId(updateDto.getIdentifiant());
 			planteUtilisateur.setDateSemis(updateDto.getSemiDate());
 			planteUtilisateur.setDatePlantation(updateDto.getPlantingDate());
 			planteUtilisateur.setEtatPlante(updateDto.getPlantStage());
@@ -110,7 +110,7 @@ public class PlanteUtilisateurConverter
 	public PlanteUtilisateurUpdateDto convertEntityToUpdateDto(PlanteUtilisateur entity) {
 		if (entity != null) {
 			PlanteUtilisateurUpdateDto planteUtilisateurDto = new PlanteUtilisateurUpdateDto();
-
+			planteUtilisateurDto.setIdentifiant(entity.getId());
 			planteUtilisateurDto.setSemiDate(entity.getDateSemis());
 			planteUtilisateurDto.setPlantingDate(entity.getDatePlantation());
 			planteUtilisateurDto.setPlantStage(entity.getEtatPlante());
