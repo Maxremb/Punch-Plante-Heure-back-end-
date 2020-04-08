@@ -5,10 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,9 +17,7 @@ import com.fr.adaming.controller.AbstractTestMethods;
 import com.fr.adaming.controller.IControllerTests;
 import com.fr.adaming.dto.DepartementDto;
 import com.fr.adaming.dto.JardinUpdateDto;
-import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
-import com.fr.adaming.dto.UserCreateDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.enums.Sol;
 
