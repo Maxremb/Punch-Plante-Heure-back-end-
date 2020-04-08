@@ -44,9 +44,9 @@ public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, Mete
 	 * @return ResponseEntity contenant un ResponseDto de type Page de MeteoUpdateDto
 	 */
 	@GetMapping (path= "/date")
-	public ResponseEntity<ResponseDto<Page<MeteoUpdateDto>>> readByDate(@RequestParam(name = "date") @NotBlank LocalDate date, @RequestParam(name = "page") @Positive int page) {
+	public ResponseEntity<ResponseDto<Page<MeteoUpdateDto>>> readByDate(@RequestParam(name = "date") @NotBlank String date, @RequestParam(name = "page") @Positive int page) {
 
-		ServiceResponse<Page<Meteo>> response = service.readByDate(date, page);
+		ServiceResponse<Page<Meteo>> response = service.readByDate(LocalDate.parse(date), page);
 		return makeUpdateDtoPageResponse(response);
 		
 	}
@@ -58,9 +58,9 @@ public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, Mete
 	 * @return ResponseEntity contenant ResponseDto de MeteoUpdateDto
 	 */
 	@GetMapping(path= "/datedepartement")
-	public ResponseEntity<ResponseDto<MeteoUpdateDto>> readByDateAndDepartement (@RequestParam(name="date") @NotBlank LocalDate date, @RequestParam(name= "numero") int numDepartement) {
+	public ResponseEntity<ResponseDto<MeteoUpdateDto>> readByDateAndDepartement (@RequestParam(name="date") @NotBlank String date, @RequestParam(name= "numero") int numDepartement) {
 
-		ServiceResponse<Meteo> response = service.readByDateAndDepartement(date, numDepartement);
+		ServiceResponse<Meteo> response = service.readByDateAndDepartement(LocalDate.parse(date), numDepartement);
 		return makeUpdateDtoResponse(response);
 	
 	}
