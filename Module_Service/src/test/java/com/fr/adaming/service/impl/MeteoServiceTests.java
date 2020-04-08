@@ -2,10 +2,12 @@ package com.fr.adaming.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -450,5 +452,69 @@ public class MeteoServiceTests implements IServiceTests {
 		ServiceResponse<Page<Meteo>> response = servicemeteo.readByDate(LocalDate.parse("2020-05-05"), 0);
 		
 		assertTrue(response.getBody().isEmpty());
+	}
+	
+	/**
+	 * Methode visant à tester la methode READ BY MONTH AND DEPARTEMENT pour un mois et un departement valides
+	 */
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (71, 'saone_et_loire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (1, 25, 20, 5, 120, 5, '2020-01-03', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (2, 27, 22, 10, 100, 5, '2020-01-07', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (3, 25, 20, 5, 120, 5, '2019-01-01', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (4, 27, 22, 10, 100, 5, '2020-05-05', 71)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadByMonthAndDepartement_ShouldReturnOneListOfMeteo() {
+		
+		ServiceResponse<List<Meteo>> response = servicemeteo.readByMonthAndDepartement(2020, 1, 69);
+		
+		assertNotNull(response);
+		assertThat(response.getBody().size() == 2);
+		assertThat(response.getBody().get(0)).hasFieldOrPropertyWithValue("id", 1);
+		assertThat(response.getBody().get(1)).hasFieldOrPropertyWithValue("id", 2);
+	}
+	
+	/**
+	 * Methode visant à tester la methode READ BY MONTH AND DEPARTEMENT pour un mois invalide
+	 */
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (71, 'saone_et_loire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (1, 25, 20, 5, 120, 5, '2020-01-03', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (2, 27, 22, 10, 100, 5, '2020-01-07', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (3, 25, 20, 5, 120, 5, '2019-01-01', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (4, 27, 22, 10, 100, 5, '2020-05-05', 71)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadByMonthInvalidAndDepartement_ShouldReturnABodyNull() {
+		
+		ServiceResponse<List<Meteo>> response = servicemeteo.readByMonthAndDepartement(2020, 15, 69);
+		
+		assertNotNull(response);
+		assertNull(response.getBody());
+		assertThat(response.getMessage()).isEqualTo("Echec lors de la récupération des meteos : le mois est invalide");
+	}
+	
+	/**
+	 * Methode visant à tester la methode READ BY MONTH AND DEPARTEMENT pour un departement invalide
+	 */
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (71, 'saone_et_loire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (1, 25, 20, 5, 120, 5, '2020-01-03', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (2, 27, 22, 10, 100, 5, '2020-01-07', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (3, 25, 20, 5, 120, 5, '2019-01-01', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (4, 27, 22, 10, 100, 5, '2020-05-05', 71)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadByMonthAndDepartementInvalid_ShouldReturnABodyNull() {
+		
+		ServiceResponse<List<Meteo>> response = servicemeteo.readByMonthAndDepartement(2020, 1, 75);
+		
+		assertNotNull(response);
+		assertNull(response.getBody());
+		assertThat(response.getMessage()).isEqualTo("Echec lors de la récupération des meteos : le departement est inconnu");
 	}
 }

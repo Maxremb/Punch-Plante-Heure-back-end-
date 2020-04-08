@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -304,6 +305,74 @@ public class MeteoControllerTests extends AbstractTestMethods<MeteoUpdateDto> im
 		assertTrue(response.isError());
 		assertNull(response.getBody());
 		assertThat(response.getMessage()).isEqualTo("Echec lors de la récupération  de la météo : la date est NULLE et/ou le département n'existe pas dans la base de données");
+		
+	}
+	
+	/**
+	 * Methode de test visant à tester l'affichage des meteos pour un mois et un departement donnés en paramètres
+	 * @throws Exception exception
+	 */
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (71, 'saoneetloire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (1, 25, 20, 5, 120, 5, '2020-01-01', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (2, 28, 20, 5, 100, 5, '2020-01-07', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (3, 30, 22, 5, 100, 5, '2020-05-05', 71)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadingByMonthAndDepartement_shouldReturn200() throws Exception {
+		ResponseDto<List<MeteoUpdateDto>> response = runMockMvc4Lists("get", BASE_URL+"/moisdepartement?annee=2020&depNum=69&mois=1", 200, MeteoUpdateDto.class);
+		
+		assertNotNull(response);
+		assertFalse(response.isError()); 
+		assertTrue(response.getBody().size() == 2);
+		assertThat(response.getBody().get(0)).hasFieldOrPropertyWithValue("tempMax", 25d);
+		assertThat(response.getBody().get(1)).hasFieldOrPropertyWithValue("tempMax", 28d);
+		assertThat(response.getMessage()).isEqualTo("Récupération des météos pour le mois et le département indiqués");
+		
+	}
+	
+	/**
+	 * Methode de test visant à tester l'affichage des meteos pour un mois non conforme
+	 * @throws Exception exception
+	 */
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (71, 'saoneetloire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (1, 25, 20, 5, 120, 5, '2020-01-01', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (2, 28, 20, 5, 100, 5, '2020-01-07', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (3, 30, 22, 5, 100, 5, '2020-05-05', 71)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadingByMonthInvalidAndDepartement_shouldReturn200() throws Exception {
+		ResponseDto<List<MeteoUpdateDto>> response = runMockMvc4Lists("get", BASE_URL+"/moisdepartement?annee=2020&depNum=69&mois=15", 200, MeteoUpdateDto.class);
+		
+		assertNotNull(response);
+		assertFalse(response.isError()); 
+		assertTrue(response.getBody().isEmpty());
+		assertThat(response.getMessage()).isEqualTo("Echec lors de la récupération des meteos : le mois est invalide");
+		
+	}
+	
+	/**
+	 * Methode de test visant à tester l'affichage des meteos pour un departement non conforme
+	 * @throws Exception exception
+	 */
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (71, 'saoneetloire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (1, 25, 20, 5, 120, 5, '2020-01-01', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (2, 28, 20, 5, 100, 5, '2020-01-07', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (3, 30, 22, 5, 100, 5, '2020-05-05', 71)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadingByMonthAndDepartementInvalid_shouldReturn200() throws Exception {
+		ResponseDto<List<MeteoUpdateDto>> response = runMockMvc4Lists("get", BASE_URL+"/moisdepartement?annee=2020&depNum=75&mois=1", 200, MeteoUpdateDto.class);
+		
+		assertNotNull(response);
+		assertFalse(response.isError()); 
+		assertTrue(response.getBody().isEmpty());
+		assertThat(response.getMessage()).isEqualTo("Echec lors de la récupération des meteos : le departement est inconnu");
 		
 	}
 
