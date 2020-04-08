@@ -44,6 +44,7 @@ public class PlanteUtilisateurConverter
 		if (createDto != null) {
 			PlanteUtilisateur planteUtilisateur = new PlanteUtilisateur();
 
+			planteUtilisateur.setListeCoordonnees(createDto.getCoordonnees());
 			planteUtilisateur.setDateSemis(createDto.getSemiDate());
 			planteUtilisateur.setDatePlantation(createDto.getPlantingDate());
 			planteUtilisateur.setEtatPlante(createDto.getPlantStage());
@@ -67,6 +68,7 @@ public class PlanteUtilisateurConverter
 		if (entity != null) {
 			PlanteUtilisateurCreateDto planteUtilisateurDto = new PlanteUtilisateurCreateDto();
 
+			planteUtilisateurDto.setCoordonnees(entity.getListeCoordonnees());
 			planteUtilisateurDto.setSemiDate(entity.getDateSemis());
 			planteUtilisateurDto.setPlantingDate(entity.getDatePlantation());
 			planteUtilisateurDto.setPlantStage(entity.getEtatPlante());
@@ -87,6 +89,7 @@ public class PlanteUtilisateurConverter
 	public PlanteUtilisateur convertUpdateDtoToEntity(PlanteUtilisateurUpdateDto updateDto) {
 		if (updateDto != null) {
 			PlanteUtilisateur planteUtilisateur = new PlanteUtilisateur();
+			planteUtilisateur.setListeCoordonnees(updateDto.getCoordonnees());
 			planteUtilisateur.setId(updateDto.getIdentifiant());
 			planteUtilisateur.setDateSemis(updateDto.getSemiDate());
 			planteUtilisateur.setDatePlantation(updateDto.getPlantingDate());
@@ -110,6 +113,7 @@ public class PlanteUtilisateurConverter
 	public PlanteUtilisateurUpdateDto convertEntityToUpdateDto(PlanteUtilisateur entity) {
 		if (entity != null) {
 			PlanteUtilisateurUpdateDto planteUtilisateurDto = new PlanteUtilisateurUpdateDto();
+			planteUtilisateurDto.setCoordonnees(entity.getListeCoordonnees());
 			planteUtilisateurDto.setIdentifiant(entity.getId());
 			planteUtilisateurDto.setSemiDate(entity.getDateSemis());
 			planteUtilisateurDto.setPlantingDate(entity.getDatePlantation());

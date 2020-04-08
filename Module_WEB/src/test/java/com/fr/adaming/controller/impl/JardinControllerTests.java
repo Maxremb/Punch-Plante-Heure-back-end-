@@ -12,6 +12,7 @@ import javax.validation.constraints.Positive;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
@@ -179,18 +180,22 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 	@Test
 	@Override
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep) VALUES (1,'Mon jardin'," + depNum+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep) VALUES (2,'Jardin de mamie'," + depNum+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
+			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep) VALUES (1,'Mon jardin'," + depNum
+			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep) VALUES (2,'Jardin de mamie'," + depNum
+			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testReadingAllEntity_shouldReturn200() throws Exception {
 
 		String path = BASE_URL + "/all/0";
 
-		ResponseDto<JardinUpdateDto> responseDto = runMockMvc("get", path, 200, JardinUpdateDto.class);
+		ResponseDto<Page<JardinUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, JardinUpdateDto.class);
 
 		assertThat(responseDto.isError()).isFalse();
+		assertThat(responseDto.getBody()).hasSize(2);
 
 	}
 

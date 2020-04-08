@@ -43,6 +43,6 @@ public interface IMeteoService {
 	 * 
 	 * @author Gregoire
 	 */
-	public ServiceResponse<List<Meteo>> readByMonthAndDepartement (int mois, int numDepartement);
+	public ServiceResponse<List<Meteo>> readByMonthAndDepartement (int annee, int mois, int numDepartement);
 
 }

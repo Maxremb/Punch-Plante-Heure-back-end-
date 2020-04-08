@@ -2,6 +2,7 @@ package com.fr.adaming.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,13 +20,21 @@ import com.fr.adaming.service.AbstractService;
 import com.fr.adaming.service.IPeriodeService;
 
 
+/**
+ * Couche service pour gerer les periodes
+ * @author Gregoire
+ *
+ */
 @Service
 public class PeriodeServiceImpl extends AbstractService<Periode> implements IPeriodeService {
 
 	//
 
+	@Autowired
 	private IPeriodeRepository periodeRepo;
+	@Autowired
 	private IDepartementRepository depRepo;
+	@Autowired
 	private IPlanteModelRepository planteRepo;
 
 	@Override
@@ -135,6 +144,10 @@ public class PeriodeServiceImpl extends AbstractService<Periode> implements IPer
 
 	// Méthodes Privées
 
+	/** Regroupe les if-else communs entre create et update
+	 * @param entity La periode concernée
+	 * @return un objet de type serviceResponse
+	 */
 	private ServiceResponse<Periode> verifierConditionsCommunes(Periode entity) {
 
 		// Regroupe les opérations qui sont communes à l'update et a create.

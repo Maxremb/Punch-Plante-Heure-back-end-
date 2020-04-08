@@ -1,6 +1,8 @@
 package com.fr.adaming.controller.impl;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -63,5 +65,18 @@ public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, Mete
 		ServiceResponse<Meteo> response = service.readByDateAndDepartement(LocalDate.parse(date), numDepartement);
 		return makeUpdateDtoResponse(response);
 	
+	}
+	
+	/** Done une liste de meteo par mois et departement.
+	 * @param mois Le numéro du mois
+	 * @param numDepartement Le nuléro du département
+	 * @return ResponseEntity avec ResponseDto contenant une liste de meteoUpdateDto
+	 * @author Gregoire
+	 */
+	@GetMapping(path = "/mois-departement")
+	public ResponseEntity<ResponseDto<List<MeteoUpdateDto>>> readByMoisAndDepartement(@RequestParam(name = "annee") int annee, @RequestParam(name = "mois") int mois, @RequestParam(name = "depNum") int numDepartement){
+				
+		return makeUpdateDtoListResponse(service.readByMonthAndDepartement(annee, mois, numDepartement));
+		
 	}
 }
