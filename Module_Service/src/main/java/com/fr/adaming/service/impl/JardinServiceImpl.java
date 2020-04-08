@@ -49,7 +49,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 					return new ServiceResponse<Jardin>("Exception lors de la création dans la DB", null);
 				}
 
-	}
+		}
 		log.info("Création non réalisé : objet en entrée null");
 		return new ServiceResponse<Jardin>("Objet d'entrée null", null);
 	}
@@ -82,7 +82,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 				return new ServiceResponse<Page<Jardin>>("Recherche jardin par nom", repo.findByNom(pageable, nom));
 			} else {
 				log.info("Recherche jardin par nom non réalisée : nom null");
-				return new ServiceResponse<Page<Jardin>>("Recherche non réalisé : nom null", null);
+				return new ServiceResponse<Page<Jardin>>("Recherche non réalisée : nom null", null);
 			}
 		} catch (Exception e) {
 			log.warn("Problème récupération d'un jardin après recherche via nom (couche service)" + e.getMessage());
@@ -126,7 +126,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 			}
 		}
 		log.info("Recherche jardin par departement non réalisée : numDep null");
-		return new ServiceResponse<Page<Jardin>>("Recherche non réalisé : numDep null", null);
+		return new ServiceResponse<Page<Jardin>>("Recherche non réalisée : numDep null", null);
 	}
 
 	@Override
