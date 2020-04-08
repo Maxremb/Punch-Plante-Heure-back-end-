@@ -1,5 +1,6 @@
 package com.fr.adaming.controller.impl;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -26,15 +27,6 @@ import com.fr.adaming.dto.ResponseDto;
 @SpringBootTest(classes = ModuleWebApplication.class)
 @AutoConfigureMockMvc
 public class DepartementControllerTests extends AbstractTestMethods<DepartementDto> implements IControllerTests {
-
-//	
-//	
-//	
-//	Risque de ne plus marcher quand la météo sera construite parce qu'il accepte pour l'instant une liste vide pour la méteo, ce qui ne sera peut être plus le cas ensuite
-//	
-//	
-//	
-//	
 
 	// Paramètres par défaut
 
@@ -73,17 +65,15 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 	public void testCreatingEntityWithInvalidBody_shouldReturn400() throws Exception {
 		DepartementDto wrongDto = new DepartementDto();
 
-		ResponseDto<DepartementDto> responseDto = runMockMvc(BASE_URL, 400, wrongDto, DepartementDto.class);
+		String responseString = runMockMvcLite("post", BASE_URL, 400, wrongDto);
 
-		assertNotNull(responseDto);
-		assertTrue(responseDto.isError());
-		assertEquals("Tentative de création d'un département NULL", responseDto.getMessage());
-		assertNull(responseDto.getBody());
+		assertThat(responseString).isEmpty();
 
 	}
 
 	/**
-	 * Test de la méthode create avec entité invalide (sans param requis name). Doit retourner statut 400. ResponseDto doit avoir un body null.
+	 * Test de la méthode create avec entité invalide (sans param requis name). Doit
+	 * retourner statut 400. ResponseDto doit avoir un body null.
 	 * 
 	 * @throws Exception
 	 */
@@ -95,19 +85,12 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 
 		String responseAsString = runMockMvcLite("post", BASE_URL, 400, dto);
 
-		ResponseDto<DepartementDto> responseDto = runMockMvc(BASE_URL, 400, dto, DepartementDto.class);
-
-		assertNotNull(responseDto);
-		assertTrue(responseDto.isError());
-		assertEquals("Tentative échouée de création d'un département", responseDto.getMessage());
-		assertNull(responseDto.getBody());
+		assertThat(responseAsString).isEmpty();
 	}
 
 	@Override
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testDeletingEntityWithValidId_shouldReturn200() throws Exception {
 		String path = BASE_URL + "/1";
@@ -136,8 +119,6 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 	@Override
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testUpdatingEntityWithValidId_shouldReturn200() throws Exception {
 		DepartementDto dto = makeNewDepartementDto();
@@ -154,8 +135,6 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 	@Override
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testUpdatingEntityWithInvalidId_shouldReturn400() throws Exception {
 		DepartementDto dto = makeNewDepartementDto();
@@ -172,8 +151,6 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 	@Override
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testReadingEntityWithValidId_shouldReturn200() throws Exception {
 		String path = BASE_URL + "/one/1";
@@ -188,8 +165,6 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 	@Override
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testReadingEntityWithInvalidId_shouldReturn400() throws Exception {
 		String path = BASE_URL + "/one/2";
@@ -204,104 +179,93 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 	@Override
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testReadingAllEntity_shouldReturn200() throws Exception {
 		String path = BASE_URL + "/all/0";
 
-		ResponseDto<Page<DepartementDto>> responseDto = runMockMvc4Pages("get", path, 200,
-				DepartementDto.class);
+		ResponseDto<Page<DepartementDto>> responseDto = runMockMvc4Pages("get", path, 200, DepartementDto.class);
 		assertNotNull(responseDto);
 		assertFalse(responseDto.isError());
 		assertEquals("Success", responseDto.getMessage());
 		assertNotNull(responseDto.getBody());
 	}
-	
+
 	// Méthodes propres au controller département
-	
+
 	/**
-	 * Test de la méthode readByName avec nom valide. Doit retourner statut 200. ResponseDto doit avoir un DepartementDto dans son body.
+	 * Test de la méthode readByName avec nom valide. Doit retourner statut 200.
+	 * ResponseDto doit avoir un DepartementDto dans son body.
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testReadingByName_shouldReturn200() throws Exception {
 		String path = BASE_URL + "/nom4Test";
 
-		ResponseDto<DepartementDto> responseDto = runMockMvc("get", path, 200,
-				DepartementDto.class);
+		ResponseDto<DepartementDto> responseDto = runMockMvc("get", path, 200, DepartementDto.class);
 		assertNotNull(responseDto);
 		assertFalse(responseDto.isError());
 		assertEquals("Récupération d'un département après recherche par nom", responseDto.getMessage());
 		assertNotNull(responseDto.getBody());
 	}
-	
+
 	/**
-	 * Test de la méthode readByName avec nom invalide (inexistant en BD). Doit retourner statut 400. ResponseDto doit avoir un body null.
+	 * Test de la méthode readByName avec nom invalide (inexistant en BD). Doit
+	 * retourner statut 400. ResponseDto doit avoir un body null.
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testReadingByNameInvalid_shouldReturn400() throws Exception {
 		String path = BASE_URL + "/nom4TestInvalid";
 
-		ResponseDto<DepartementDto> responseDto = runMockMvc("get", path, 400,
-				DepartementDto.class);
+		ResponseDto<DepartementDto> responseDto = runMockMvc("get", path, 400, DepartementDto.class);
 		assertNotNull(responseDto);
 		assertTrue(responseDto.isError());
 		assertEquals("Récupération d'un département après recherche par nom", responseDto.getMessage());
 		assertNull(responseDto.getBody());
 	}
-	
+
 	/**
-	 * Test de la méthode readMeteoByNumDep avec numDep valide. Doit retourner statut 200. ResponseDto doit avoir un MeteoUpdateDto dans son body.
+	 * Test de la méthode readMeteoByNumDep avec numDep valide. Doit retourner
+	 * statut 200. ResponseDto doit avoir un MeteoUpdateDto dans son body.
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testReadingMeteoByDepNum_shouldReturn200() throws Exception {
-		String path = BASE_URL + "/meteo/1";
+		String path = BASE_URL + "/meteo?elemsPerPage=20&id=1&page=0&sortName=date";
 
-		ResponseDto<DepartementDto> responseDto = runMockMvc("get", path, 200,
-				DepartementDto.class);
+		ResponseDto<DepartementDto> responseDto = runMockMvc("get", path, 200, DepartementDto.class);
 		assertNotNull(responseDto);
 		assertFalse(responseDto.isError());
 		assertEquals("Récupération d'une liste de conditions météo par département", responseDto.getMessage());
-		assertNull(responseDto.getBody());
-		// assertNotNull(responseDto.getBody()); A changer quand météo sera construit (enlever ligne précédente) (pour l'instant le converter de météo retourne des null)
+		assertNotNull(responseDto.getBody());
 	}
-	
+
 	/**
-	 * Test de la méthode readByName avec numDep invalide (inexistant). Doit retourner statut 400. ResponseDto doit avoir un body null.
+	 * Test de la méthode readByName avec numDep invalide (inexistant). Doit
+	 * retourner statut 400. ResponseDto doit avoir un body null.
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testReadingMeteoByDepNumInvalid_shouldReturn400() throws Exception {
-		String path = BASE_URL + "/meteo/2";
+		String path = BASE_URL + "/meteo?elemsPerPage=20&id=212&page=0&sortName=date";
 
-		ResponseDto<DepartementDto> responseDto = runMockMvc("get", path, 400,
-				DepartementDto.class);
+		ResponseDto<DepartementDto> responseDto = runMockMvc("get", path, 400, DepartementDto.class);
 		assertNotNull(responseDto);
 		assertTrue(responseDto.isError());
-		assertEquals("Tentative récupération d'une liste de conditions météo par département inexistant", responseDto.getMessage());
+		assertEquals("Tentative récupération d'une liste de conditions météo par département inexistant",
+				responseDto.getMessage());
 		assertNull(responseDto.getBody());
 	}
 

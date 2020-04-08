@@ -1,8 +1,7 @@
 package com.fr.adaming.dto;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-
-import com.sun.istack.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
