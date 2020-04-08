@@ -23,7 +23,8 @@ public interface IPlanteUtilisateurRepository extends JpaRepository<PlanteUtilis
 	
 	/**
 	 * Methode d'affichage d'une liste de Plante Utilisateur à partir de l'id du Jardin
-	 * @param idJardin
+	 * @param idJardin identifiant de jardin
+	 * @param pageable informations de pagination
 	 * @return List<PlanteUtilisateur> : retourne la liste associé à l'id du Jardin.
 	 */
 	//@Query(value = "from PlanteUtilisateur where jardin_id= :idJardin")

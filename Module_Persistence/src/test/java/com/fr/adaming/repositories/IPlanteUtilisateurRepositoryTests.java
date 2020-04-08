@@ -42,89 +42,48 @@ public class IPlanteUtilisateurRepositoryTests {
 	public IPlanteUtilisateurRepository repo;
 
 	/**
-	 * Méthode de test pour afficher la liste des Plante Utilisateur par Jardin.
+	 * Méthode de test pour afficher la liste des Plantes Utilisateur par Jardin pour un id de jardin valide
 	 */
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into plante_utilisateur values(1,'2020-04-01', '2020-04-01', 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values (69,'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep) values (1,'nomjardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values (1,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, jardin_id, plante_model_id) values (1, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void testfetchingPlanteUtiliateurByIdJardin_shouldreturnListPlanteUtiliateur() {
-		// Préparer les inputs
-		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setId(1);
-		utilisateur.setNom("Martinez");
-
-		Meteo meteo = new Meteo();
-		meteo.setId(1);
-		meteo.setPluie(5);
-		meteo.setDate(LocalDate.parse("2020-02-20"));
-		meteo.setTemperatureMax(20);
-		
-		
-		Departement dep = new Departement();
-		dep.setNumeroDep(69);
-		dep.setNom("Rhone");
-		List<Meteo> listMeteo = new ArrayList<Meteo>();
-		listMeteo.add(meteo);
-
-		Jardin jardin = new Jardin();
-		jardin.setId(1);
-		jardin.setNom("Jardin1");
-		jardin.setDepartement(dep);
-		jardin.setUtilisateur(utilisateur);
-		
-		PlanteModel planteModel = new PlanteModel();
-		planteModel.setId(2);
-		planteModel.setNomScientifique("Hibiscus");
-
-		PlanteUtilisateur planteUtilisateur = new PlanteUtilisateur();
-		planteUtilisateur.setId(1);
-		String date = "2020-04-01";
-		LocalDate localDate = LocalDate.parse(date);
-		planteUtilisateur.setDatePlantation(localDate);
-		planteUtilisateur.setDateSemis(localDate);
-		planteUtilisateur.setEtatPlante(EtatPlante.semis);
-		planteUtilisateur.setEtatSante(EtatSante.bonneSante);
-		planteUtilisateur.setJardin(jardin);
-
-		// Invoquer l'appli
+	public void testFetchingPlanteUtilisateurByIdJardin_shouldReturnListPlanteUtilisateur() {
 		Pageable pageable = PageRequest.of(0, 6);
-		Page<PlanteUtilisateur> result = repo.findByJardin(1, pageable); //problème
+		Page<PlanteUtilisateur> result = repo.findByJardin(1, pageable); 
 
-		// assertion
 		assertThat(result).isNotNull();
 		assertThat(result.getSize()).isEqualTo(6);
 		assertThat(result.getNumber()).isEqualTo(0);
+		assertThat(result.getContent().get(0)).hasFieldOrPropertyWithValue("id", 1);
 
 	}
 
 	/**
-	 * Methode de test pour afficher une liste vide si le Jardin n'existe pas.
+	 * Méthode de test pour afficher la liste des Plantes Utilisateur par Jardin pour un id de jardin invalide
 	 */
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into plante_utilisateur values(1,'2020-04-01', '2020-04-01', 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values (69,'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep) values (1,'nomjardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values (1,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, jardin_id, plante_model_id) values (1, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void testfetchingPlanteUtiliateurByNotExistingIdJardin_shouldreturnNull() {
-		Page<PlanteUtilisateur> result = repo.findByJardin(3, null);
-		assertThat(result).isEmpty();
+	public void testFetchingPlanteUtilisateurByIdJardinInvalid_shouldReturnListPlanteUtilisateurEmpty() {
+		Pageable pageable = PageRequest.of(0, 6);
+		Page<PlanteUtilisateur> result = repo.findByJardin(2, pageable); 
+
+		assertThat(result).isNotNull();
+		assertThat(result.getContent()).isEmpty();
 
 	}
+
 
 }
