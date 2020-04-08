@@ -155,7 +155,7 @@ public class IMeteoRepositoryTest {
 	}
 	
 	/**
-	 * Methode visant à tester la recherche de météo pour un mois donné en parametre et un departement donné en paramètre
+	 * Methode visant à tester la recherche de météo pour un mois et une année donné en parametre et un departement donné en paramètre
 	 */
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (71, 'saoneetloire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -167,12 +167,12 @@ public class IMeteoRepositoryTest {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testFetchingMeteoByMonthAndDepartement_shouldReturnOneList() {
-		List<Meteo> retour = repo.findMeteoByMonthAndDepartement(1, 69);
+		List<Meteo> retour = repo.findMeteoByMonthAndDepartement(2020, 1, 69);
 		
 		assertThat(retour).isNotNull();
 		assertThat(retour.size()).isEqualTo(2);
-		assertThat(retour.get(0)).hasFieldOrPropertyWithValue("temperatureMax", 25);
-		assertThat(retour.get(1)).hasFieldOrPropertyWithValue("temperatureMax", 24);
+		assertThat(retour.get(0)).hasFieldOrPropertyWithValue("temperatureMax", 25d);
+		assertThat(retour.get(1)).hasFieldOrPropertyWithValue("temperatureMax", 24d);
 		
 	}
 	
@@ -189,7 +189,7 @@ public class IMeteoRepositoryTest {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testFetchingMeteoByMonthAndDepartementInvalid_shouldReturnOneListEmpty() {
-		List<Meteo> retour = repo.findMeteoByMonthAndDepartement(1, 75);
+		List<Meteo> retour = repo.findMeteoByMonthAndDepartement(2020, 1, 75);
 		
 		assertThat(retour).isNotNull();
 		assertThat(retour).isEmpty();
