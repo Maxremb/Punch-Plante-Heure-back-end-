@@ -143,52 +143,59 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 
 			// recuperation de toutes les entites possibles de rétention de la DB
 			List<Retention> listeRetentions = retentionRepo.findAll();
-			Retention solArgileux = null;
-			Retention solArgiloLimoneux = null;
-			Retention solArgiloSableux = null;
-			Retention solLimonoArgileux = null;
-			Retention solSableux = null;
-			// recuperation de chaque entite de la DB sous forme d'objet
-			for (Retention r : listeRetentions) {
-				if (r.getSol() == Sol.Argileux) {
-					solArgileux = r;
+			
+			if (!listeRetentions.isEmpty()) {
+				
+				Retention solArgileux = null;
+				Retention solArgiloLimoneux = null;
+				Retention solArgiloSableux = null;
+				Retention solLimonoArgileux = null;
+				Retention solSableux = null;
+				
+				
+				// recuperation de chaque entite de la DB sous forme d'objet
+				for (Retention r : listeRetentions) {
+					if (r.getSol() == Sol.Argileux) {
+						solArgileux = r;
+					}
+					if (r.getSol() == Sol.ArgiloLimoneux) {
+						solArgiloLimoneux = r;
+					}
+					if (r.getSol() == Sol.ArgiloSableux) {
+						solArgiloSableux = r;
+					}
+					if (r.getSol() == Sol.LimonoArgileux) {
+						solLimonoArgileux = r;
+					}
+					if (r.getSol() == Sol.Sableux) {
+						solSableux = r;
+					}
 				}
-				if (r.getSol() == Sol.ArgiloLimoneux) {
-					solArgiloLimoneux = r;
+
+				switch (jardin.getSol()) {
+				case Argileux:
+					jardin.setRESERVE_MAX_EAU(volume * solArgileux.getCoeffRemplissage());
+					break;
+				case ArgiloLimoneux:
+					jardin.setRESERVE_MAX_EAU(volume * solArgiloLimoneux.getCoeffRemplissage());
+					break;
+				case ArgiloSableux:
+					jardin.setRESERVE_MAX_EAU(volume * solArgiloSableux.getCoeffRemplissage());
+					break;
+				case LimonoArgileux:
+					jardin.setRESERVE_MAX_EAU(volume * solLimonoArgileux.getCoeffRemplissage());
+					break;
+				case Sableux:
+					jardin.setRESERVE_MAX_EAU(volume * solSableux.getCoeffRemplissage());
+					break;
+				default:
+					break;
 				}
-				if (r.getSol() == Sol.ArgiloSableux) {
-					solArgiloSableux = r;
-				}
-				if (r.getSol() == Sol.LimonoArgileux) {
-					solLimonoArgileux = r;
-				}
-				if (r.getSol() == Sol.Sableux) {
-					solSableux = r;
-				}
+				
 			}
 
-			// calculer sa reserve max en eau selon le type de sol
-			if (jardin.getSol() == Sol.Argileux) {
-				jardin.setRESERVE_MAX_EAU(volume * solArgileux.getCoeffRemplissage());
-			}
-			if (jardin.getSol() == Sol.ArgiloLimoneux) {
-				jardin.setRESERVE_MAX_EAU(volume * solArgiloLimoneux.getCoeffRemplissage());
-			}
-			if (jardin.getSol() == Sol.ArgiloSableux) {
-				jardin.setRESERVE_MAX_EAU(volume * solArgiloSableux.getCoeffRemplissage());
-			}
-			if (jardin.getSol() == Sol.LimonoArgileux) {
-				jardin.setRESERVE_MAX_EAU(volume * solLimonoArgileux.getCoeffRemplissage());
-			}
-			if (jardin.getSol() == Sol.Sableux) {
-				jardin.setRESERVE_MAX_EAU(volume * solSableux.getCoeffRemplissage());
-			}
-
-			return jardin;
-		} else {
-			return jardin;
 		}
-
+		return jardin;
 	}
 
 }
