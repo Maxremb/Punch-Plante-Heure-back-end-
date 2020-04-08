@@ -249,7 +249,7 @@ public class PlanteModelServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testCreateNullEntity_shouldReturnResponseNullBodyFailureMessage() {
-		assertThat(service.create(null)).hasFieldOrPropertyWithValue("message","Création non réalisé : objet d'entrée null");
+		assertThat(service.create(null)).hasFieldOrPropertyWithValue("message","Création non réalisée : objet d'entrée nul");
 		assertThat(service.create(null).getBody()).isNull();
 		
 	}
@@ -262,7 +262,7 @@ public class PlanteModelServiceTest implements IServiceTests {
 	public void testCreateNullNomScien_shouldReturnResponseNullBodyFailureMessage() {
 		PlanteModel plante= new PlanteModel();
 		plante.setNomScientifique(null);
-		assertThat(service.create(plante)).hasFieldOrPropertyWithValue("message","Création non réalisé : Le nom Scientifique ne doit pas etre null");
+		assertThat(service.create(plante)).hasFieldOrPropertyWithValue("message","Création non réalisée : Le nom Scientifique ne doit pas etre nul");
 		assertThat(service.create(plante).getBody()).isNull();
 		
 	}
@@ -277,7 +277,7 @@ public class PlanteModelServiceTest implements IServiceTests {
 		PlanteModel plante= new PlanteModel();
 		plante.setId(1);
 		plante.setNomScientifique("nom");
-		assertThat(service.create(plante)).hasFieldOrPropertyWithValue("message","Création non réalisé : vous avez renseigné un id déjà présent dans la base de donnée");
+		assertThat(service.create(plante)).hasFieldOrPropertyWithValue("message","Création non réalisée : cet id est déjà présent dans la base de donnée");
 		assertThat(service.create(plante).getBody()).isNull();
 		
 	}
@@ -292,7 +292,7 @@ public class PlanteModelServiceTest implements IServiceTests {
 		PlanteModel plante= new PlanteModel();
 		plante.setNomScientifique("Alicium Vulgaris");
 		plante.setNomScientifique("Alicium Vulgaris");
-		assertThat(service.create(plante)).hasFieldOrPropertyWithValue("message","Création non réalisé : vous avez renseigné un nom scientifique déjà présent dans la base de donnée");
+		assertThat(service.create(plante)).hasFieldOrPropertyWithValue("message","Création non réalisée : ce nom scientifique est déjà présent dans la base de donnée");
 		assertThat(service.create(plante).getBody()).isNull();
 		
 	}
@@ -307,7 +307,7 @@ public class PlanteModelServiceTest implements IServiceTests {
 		PlanteModel plante= new PlanteModel();
 		plante.setId(2);
 		plante.setNomScientifique("nom");
-		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Update non réalisé : vous avez renseigné un id inexistant dans la base de donnée");
+		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Mise à jour non réalisée : cet id n'existe pas dans la base de donnée");
 		assertThat(service.update(plante).getBody()).isNull();
 		
 	}
@@ -319,7 +319,7 @@ public class PlanteModelServiceTest implements IServiceTests {
 	@Test
 	public void testUpdateNullEntity_shouldReturnResponseNullBodyFailureMessage() {
 
-		assertThat(service.update(null)).hasFieldOrPropertyWithValue("message","Update non réalisé : objet d'entrée null");
+		assertThat(service.update(null)).hasFieldOrPropertyWithValue("message","Mise à jour non réalisée : objet d'entrée null");
 		assertThat(service.update(null).getBody()).isNull();
 		
 	}
@@ -336,7 +336,7 @@ public class PlanteModelServiceTest implements IServiceTests {
 		plante.setId(1);
 		plante.setNomCommun("Alice");
 		plante.setNomScientifique(null);
-		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Update non réalisé : Le nom Scientifique ne doit pas etre null");
+		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Mise à jour non réalisée : Le nom Scientifique ne doit pas etre null");
 		assertThat(service.update(plante).getBody()).isNull();
 		
 	}
@@ -353,7 +353,7 @@ public class PlanteModelServiceTest implements IServiceTests {
 		plante.setId(1);
 		plante.setNomCommun("Alice");
 		plante.setNomScientifique("Bobium Vulgaris");
-		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Update non réalisé : vous avez renseigné un nom scientifique déjà présent dans la base de donnée");
+		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Mise à jour non réalisée : le nom scientifique est déjà présent dans la base de donnée");
 		assertThat(service.update(plante).getBody()).isNull();
 		
 	}
@@ -369,7 +369,7 @@ public class PlanteModelServiceTest implements IServiceTests {
 		plante.setId(1);
 		plante.setNomCommun("Alice");
 		plante.setNomScientifique("nouveauNom");
-		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Succes de la mise à jour");
+		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Mise à jour de la plante modele réussie");
 		//assertThat(service.update(plante).getBody()).isNotNull().hasFieldOrPropertyWithValue("nomScientifique", "nouveauNom" );
 		
 	}
