@@ -62,24 +62,24 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 	
 	
 	@Test
-//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES ("+identifier+", "+nomSql+" )", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES ("+depNum+", "+depNameSql+")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES ("+identifier+", "+nomSql+" )", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES ("+depNum+", "+depNameSql+")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
 	public void testCreatingEntityWithValidBody_shouldReturn200() throws Exception {
 		
-//		JardinUpdateDto jardinDto = makeNewUpdateDto();
-//		
-//		String path = BASE_URL;
-//		
-//		ResponseDto<JardinUpdateDto> responseDto = runMockMvc("post", path, 200, jardinDto, JardinUpdateDto.class);
-//		
-//		assertNotNull(responseDto);
-//		assertFalse(responseDto.isError());
-//		assertEquals("Success", responseDto.getMessage());
-//		assertNotNull(responseDto.getBody());
+		JardinUpdateDto jardinDto = makeNewUpdateDto();
+		
+		String path = BASE_URL;
+		
+		ResponseDto<JardinUpdateDto> responseDto = runMockMvc("post", path, 200, jardinDto, JardinUpdateDto.class);
+		
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Success", responseDto.getMessage());
+		assertNotNull(responseDto.getBody());
 		
 	}
 
@@ -163,7 +163,8 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 		dto.setName(name);
 		dto.setWidth(width);
 		
-		dto.setUser(userDto);
+//		A Rajouter lorsque utilisateur converter creer
+//		dto.setUser(userDto);
 		dto.setDept(depDto);
 		
 		

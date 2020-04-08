@@ -39,7 +39,7 @@ public class Jardin {
 	private Float ProfSol;
 	@Column
 	private double reserveUtile;
-	@Column
+	@Column (columnDefinition = "DOUBLE DEFAULT 0")
 	private double RESERVE_MAX_EAU;
 	@Column
 	private boolean estArroser; 
