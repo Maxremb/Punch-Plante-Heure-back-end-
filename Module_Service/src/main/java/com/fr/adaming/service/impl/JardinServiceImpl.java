@@ -38,7 +38,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 	@Override
 	public ServiceResponse<Jardin> create(Jardin entity) {
 		if (entity != null) {
-			if (!dao.existsById(entity.getId())) {
+			
 				try {
 					entity = calculReserveEauMax(entity);
 					dao.save(entity);
@@ -49,11 +49,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 					return new ServiceResponse<Jardin>("Exception lors de la création dans la DB", null);
 				}
 
-			}
-			log.info("Création non réalisé : id déjà existant dans la DB");
-			return new ServiceResponse<Jardin>("Id déjà connu dans la database", null);
-
-		}
+	}
 		log.info("Création non réalisé : objet en entrée null");
 		return new ServiceResponse<Jardin>("Objet d'entrée null", null);
 	}

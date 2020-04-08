@@ -41,7 +41,6 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 			entite.setNom(createDto.getName());
 			entite.setSol(createDto.getGround());
 			entite.setUtilisateur(convertUtil.convertUpdateDtoToEntity(createDto.getUser()));
-			entite.setId(0);
 			return entite;
 		}
 

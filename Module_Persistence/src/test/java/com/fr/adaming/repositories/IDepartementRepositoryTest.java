@@ -30,25 +30,17 @@ public class IDepartementRepositoryTest {
 	private IDepartementRepository depRepo;
 	
 	/**
-	 * Cette méthode teste la recherche d'un département dans la BD par son nom  via couche repository
+	 * Cette méthode teste la recherche d'un département dans la BD par son nom  
+	 * 
 	 */
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nom4Test')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (2, '2020-02-21', 0, 15, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testFetchingDepartementByNom_shouldReturnOneDepartement() {
-		//préparer les inputs
-		Integer numeroInput = 1 ;
-		String nomInput = "nom4Test";
+		Departement result = depRepo.findDepartementByNom("rhone");
 		
-		//invoquer l'appli
-		Departement result = depRepo.findDepartementByNom(nomInput);
-		
-		//assertion
-		assertThat(result).isNotNull().hasFieldOrPropertyWithValue("nom", nomInput);
-		assertThat(result).isNotNull().hasFieldOrPropertyWithValue("numeroDep", 1);
+		assertThat(result).isNotNull().hasFieldOrPropertyWithValue("nom", "rhone");
+		assertThat(result).isNotNull().hasFieldOrPropertyWithValue("numeroDep", 69);
 	}
 	
 //	/**
