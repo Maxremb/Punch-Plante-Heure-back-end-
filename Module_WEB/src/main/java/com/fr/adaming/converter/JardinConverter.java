@@ -152,11 +152,11 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 	public List<Jardin> convertListCreateDtoToEntity(List<JardinCreateDto> listeCreateDto) {
 
 		List<Jardin> listeRetour = new ArrayList<Jardin>();
-//		if (listeCreateDto != null) {
-		for (JardinCreateDto j : listeCreateDto) {
-			listeRetour.add(convertCreateDtoToEntity(j));
+		if (listeCreateDto != null) {
+			for (JardinCreateDto j : listeCreateDto) {
+				listeRetour.add(convertCreateDtoToEntity(j));
+			}
 		}
-		// }
 		return listeRetour;
 
 	}
@@ -164,8 +164,10 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 	@Override
 	public List<JardinCreateDto> convertListEntityToCreateDto(List<Jardin> listeEntity) {
 		List<JardinCreateDto> listeRetour = new ArrayList<JardinCreateDto>();
-		for (Jardin j : listeEntity) {
-			listeRetour.add(convertEntityToCreateDto(j));
+		if (listeEntity != null) {
+			for (Jardin j : listeEntity) {
+				listeRetour.add(convertEntityToCreateDto(j));
+			}
 		}
 		return listeRetour;
 	}
@@ -173,18 +175,20 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 	@Override
 	public List<Jardin> convertListUpdateDtoToEntity(List<JardinUpdateDto> listeUpdateDto) {
 		List<Jardin> listeRetour = new ArrayList<Jardin>();
+		if (listeUpdateDto != null) {
 		for (JardinUpdateDto j : listeUpdateDto) {
 			listeRetour.add(convertUpdateDtoToEntity(j));
-		}
+		}}
 		return listeRetour;
 	}
 
 	@Override
 	public List<JardinUpdateDto> convertListEntityToUpdateDto(List<Jardin> listeEntity) {
 		List<JardinUpdateDto> listeRetour = new ArrayList<JardinUpdateDto>();
+		if(listeEntity != null) {
 		for (Jardin j : listeEntity) {
 			listeRetour.add(convertEntityToUpdateDto(j));
-		}
+		}}
 		return listeRetour;
 	}
 

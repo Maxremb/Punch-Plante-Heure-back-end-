@@ -1,7 +1,5 @@
 package com.fr.adaming.dto;
 
-import java.time.LocalDate;
-
 import lombok.Data;
 
 @Data

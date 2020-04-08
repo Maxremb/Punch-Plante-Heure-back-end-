@@ -1,6 +1,7 @@
 package com.fr.adaming.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
@@ -16,11 +17,9 @@ import com.fr.adaming.ModuleWebApplication;
 import com.fr.adaming.dto.DepartementDto;
 import com.fr.adaming.dto.JardinCreateDto;
 import com.fr.adaming.dto.JardinUpdateDto;
-import com.fr.adaming.dto.MeteoUpdateDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
-import com.fr.adaming.entity.Meteo;
 import com.fr.adaming.entity.Utilisateur;
 import com.fr.adaming.enums.Sol;
 
@@ -659,51 +658,81 @@ public class JardinConverterTest implements IConverterTests {
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullListEntityToCreateDto_shouldReturnEmptyList() {
-		// TODO Auto-generated method stub
+		
+		List<JardinCreateDto> jardin = jardinConverter.convertListEntityToCreateDto(null);
+		assertNotNull(jardin);
+		assertThat(jardin).isEmpty();
 		
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullListCreateDtoToEntity_shouldReturnEmptyList() {
-		// TODO Auto-generated method stub
+		
+		List<Jardin> jardin = jardinConverter.convertListCreateDtoToEntity(null);
+		assertNotNull(jardin);
+		assertThat(jardin).isEmpty();
 		
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullListEntityToUpdateDto_shouldReturnEmptyList() {
-		// TODO Auto-generated method stub
+		
+		List<JardinUpdateDto> jardin = jardinConverter.convertListEntityToUpdateDto(null);
+		assertNotNull(jardin);
+		assertThat(jardin).isEmpty();
 		
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullListUpdateDtoToEntity_shouldReturnEmptyList() {
-		// TODO Auto-generated method stub
+		
+		List<Jardin> jardin = jardinConverter.convertListUpdateDtoToEntity(null);
+		assertNotNull(jardin);
+		assertThat(jardin).isEmpty();
 		
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullPageCreateDtoToEntity_shouldReturnEmptyPage() {
-		// TODO Auto-generated method stub
 		
+		Page<Jardin> jardin = jardinConverter.convertPageCreateDtoToEntity(null);
+		assertNotNull(jardin);
+		assertThat(jardin.getContent()).asList().isEmpty();
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullPageEntityToCreateDto_shouldReturnEmptyPage() {
-		// TODO Auto-generated method stub
+		
+		Page<JardinCreateDto> jardin = jardinConverter.convertPageEntityToCreateDto(null);
+		assertNotNull(jardin);
+		assertThat(jardin.getContent()).asList().isEmpty();
 		
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullPageUpdateDtoToEntity_shouldReturnEmptyPage() {
-		// TODO Auto-generated method stub
+		
+		Page<Jardin> jardin = jardinConverter.convertPageUpdateDtoToEntity(null);
+		assertNotNull(jardin);
+		assertThat(jardin.getContent()).asList().isEmpty();
 		
 	}
 
 	@Override
+	@Test
 	public void testConvertingNullPageEntityToUpdateDto_shouldReturnEmptyPage() {
-		// TODO Auto-generated method stub
 		
+		Page<JardinUpdateDto> jardin = jardinConverter.convertPageEntityToUpdateDto(null);
+		assertNotNull(jardin);
+		assertThat(jardin.getContent()).asList().isEmpty();
 	}
 
 }

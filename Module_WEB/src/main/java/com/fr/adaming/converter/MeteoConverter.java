@@ -1,5 +1,7 @@
 package com.fr.adaming.converter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -227,7 +229,7 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 			meteo.setTemperatureMin(xlsDto.getTn());
 			meteo.setEnsoleillement(xlsDto.getInst());
 			meteo.setEvapoTranspirationPotentielle(xlsDto.getEtpmon());
-			meteo.setDate(xlsDto.getDate());
+			meteo.setDate(LocalDate.parse((xlsDto.getDate()).replace("/","-"), DateTimeFormatter.ofPattern("yyyy-mm-dd")));
 			meteo.setDepartement(dptDao.findById(Integer.valueOf(String.valueOf(xlsDto.getStation()).substring(0, 1))).orElse(null));
 			return meteo;
 		}
