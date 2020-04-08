@@ -1,6 +1,7 @@
 package com.fr.adaming.localdate;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 public class LocalDateSerializer extends JsonSerializer<LocalDate> {
     @Override
     public void serialize(LocalDate localDate, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
-        jsonGenerator.writeString(localDate.format(DateTimeFormatter.ISO_DATE));
+    	System.out.println("/n Serializer: " + DateTimeFormatter.ISO_LOCAL_DATE);
+        jsonGenerator.writeString(localDate.format(DateTimeFormatter.ISO_LOCAL_DATE));
     }
 }

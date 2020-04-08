@@ -20,5 +20,33 @@ public class MeteoXlsDto {
 	private int dxy;
 	private int inst;
 	private float etpmon;
+	
+	
+	public void setLongitude(String longitude) {
+		this.longitude = Integer.valueOf(longitude.replace(",", ""));
+	}
+	public void setLatitude(String latitude) {
+		this.latitude = Integer.valueOf(latitude.replace(",", ""));
+	}
+	public void setRr(String rr) {
+		this.rr = Float.valueOf(rr.replace(",", "."));
+	}
+	public void setTn(String tn) {
+		this.tn = Float.valueOf(tn.replace(",", "."));
+	}
+	public void setTx(String tx) {
+		this.tx = Float.valueOf(tx.replace(",", "."));
+	}
+	public void setFxi(String fxi) {
+		this.fxi = Float.valueOf(fxi.replace(",", "."));
+	}
+	public void setFxy(String fxy) {
+		this.fxy = Float.valueOf(fxy.replace(",", "."));
+	}
+	public void setEtpmon(String etpmon) {
+		this.etpmon = Float.valueOf(etpmon.replace(",", "."));
+	}
+	
+	
 
 }
