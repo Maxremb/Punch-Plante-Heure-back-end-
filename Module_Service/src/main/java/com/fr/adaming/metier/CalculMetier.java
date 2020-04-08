@@ -20,44 +20,15 @@ import com.fr.adaming.repositories.IJardinRepository;
  * @since 0.0.1-SNAPSHOT
  */
 @Component
-public class CalculMetier implements ICalculMetier{
+public class CalculMetier implements ICalculMetier {
 
 	@Autowired
 	private IJardinRepository jardinRepo;
 
-
-
 	/**
-	 * Methode qui accepte un objet météo et calcule l'evapotranspiration dépendante
-	 * des conditions Fonctionne pour une météo journalière, hebdomadaire,
-	 * mensuelle, annuelle, ..
+	 * Methode calculant la reserve utile du jardin à partir de la méteo du jour et
+	 * de la réserve utile de la veille
 	 * 
-	 * @param meteo correspond à la météo à traiter
-	 */
-//	public Meteo calculEtpEtRU(Meteo meteo) {
-//		// recupere meteo du jour convertit
-//
-//		// calculer etp et ajouter l'attribut à meteo
-//
-//		if (meteo.getHumidite() > 50) {
-//			double etp = 0.013 * (meteo.getRayonnement() + 50)
-//					* ((meteo.getTemperature()) / (meteo.getTemperature() + 15));
-//			meteo.setEvapoTranspirationPotentielle(etp);
-//		} else {
-//			double etp = 0.013 * (meteo.getRayonnement() + 50)
-//					* ((meteo.getTemperature()) / (meteo.getTemperature() + 15))
-//					* (1 + (50 - meteo.getHumidite() / (70)));
-//			meteo.setEvapoTranspirationPotentielle(etp);
-//		}
-//
-//		// appeller methode calculEtrJour lorsqu'implementer
-//		// calculEtrJour();
-//
-//		return meteo;
-//	}
-
-	/**
-	 * Methode calculant la reserve utile du jardin à partir de la méteo du jour et de la réserve utile de la veille
 	 * @param meteo correspond à la météo à traiter
 	 * @return un set contenant la liste des jardins à arroser
 	 */
@@ -66,52 +37,39 @@ public class CalculMetier implements ICalculMetier{
 
 		Departement dept = meteo.getDepartement();
 
-		// liste de tout les jardins
-		List<Jardin> listeJardinsDept = jardinRepo.trouveListJardinParDepartement(dept.getNumeroDep());
+		if (dept != null) {
 
-		// Set de jardins à arroser pour 1 dept
-		Set<Jardin> setJardinsforOneDept = new HashSet<>();
+			// liste de tout les jardins
+			List<Jardin> listeJardinsDept = jardinRepo.trouveListJardinParDepartement(dept.getNumeroDep());
 
-		// parcour la liste des jardins de ce dept
-		for (Jardin jardin : listeJardinsDept) {
+			// Set de jardins à arroser pour 1 dept
+			Set<Jardin> setJardinsforOneDept = new HashSet<>();
 
-			// calcule la nouvelle RU du jardin
-			// ETP à remplacer par ETR lorsque celle ci sera implenté
-			jardin.setReserveUtile(jardin.getReserveUtile() - meteo.getEvapoTranspirationPotentielle());
+			// parcour la liste des jardins de ce dept
+			for (Jardin jardin : listeJardinsDept) {
 
-			// determine le seuil d'arrosage définit à 20% de la réserve totale
+				// calcule la nouvelle RU du jardin
+				// ETP à remplacer par ETR lorsque celle ci sera implenté
+				jardin.setReserveUtile(jardin.getReserveUtile() - meteo.getEvapoTranspirationPotentielle());
 
-			if (jardin.getReserveUtile() < (0.2 * jardin.getRESERVE_MAX_EAU())) {
+				// determine le seuil d'arrosage définit à 20% de la réserve totale
 
-				// creer un set des jardins à arroser
-				setJardinsforOneDept.add(jardin);
+				if (jardin.getReserveUtile() < (0.2 * jardin.getRESERVE_MAX_EAU())) {
+
+					// creer un set des jardins à arroser
+					setJardinsforOneDept.add(jardin);
+				}
+
 			}
 
+			// renvoyer le set vers methode envoyer email
+			return setJardinsforOneDept;
 		}
-
-		// renvoyer le set vers methode envoyer email
-		return setJardinsforOneDept;
+		
+		//si meteo.dept = null on retourne un set vide
+		else { 	return new HashSet<Jardin>();}
 	}
+
 	
-	
-
-	// methode pour calculer ETR
-	/**
-	 * Methode qui calcule l'evapotranspiration réelle
-	 */
-	// public void calculEtrJour() {
-	// pour l'instant inutile
-	// correspond à ETP * coefficient (qui dépend globalement du jardin)
-
-	/*
-	 * au moment de l'implénter : ajouter attribut coeffMoyen au jardin ajouter
-	 * attribut Etr au jardin
-	 */
-
-	/*
-	 * Jardin jardin = new Jardin(); jardin.setEtr =
-	 * meteo.getEvapoTranspirationPotentielle * coeffMoyen
-	 */
-	// }
 
 }

@@ -118,12 +118,14 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 	@Test
 	@Override
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep) VALUES (1,'Bob'," + depNum+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
+			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep) VALUES (1,'Bob'," + depNum
+			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testUpdatingEntityWithValidId_shouldReturn200() throws Exception {
-		JardinUpdateDto dto =   makeNewUpdateDto();
+		JardinUpdateDto dto = makeNewUpdateDto();
 
 		dto.setName("4TEST");
 
@@ -136,7 +138,7 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 	@Test
 	@Override
 	public void testUpdatingEntityWithInvalidId_shouldReturn400() throws Exception {
-		JardinUpdateDto dto =   makeNewUpdateDto();
+		JardinUpdateDto dto = makeNewUpdateDto();
 
 		ResponseDto<JardinUpdateDto> responseDto = runMockMvc("put", BASE_URL, 400, dto, JardinUpdateDto.class);
 
@@ -146,22 +148,49 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 	@Test
 	@Override
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
+			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep) VALUES (1,'Bob'," + depNum
+			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testReadingEntityWithValidId_shouldReturn200() throws Exception {
-		// TODO Auto-generated method stub
+
+		String path = BASE_URL + "/1";
+
+		ResponseDto<JardinUpdateDto> responseDto = runMockMvc("get", path, 200, JardinUpdateDto.class);
+
+		assertThat(responseDto.isError()).isFalse();
+		assertThat(responseDto.getBody()).hasFieldOrPropertyWithValue("name", name);
 
 	}
 
 	@Test
 	@Override
 	public void testReadingEntityWithInvalidId_shouldReturn400() throws Exception {
-		// TODO Auto-generated method stub
+
+		String path = BASE_URL + "/1";
+
+		ResponseDto<JardinUpdateDto> responseDto = runMockMvc("get", path, 400, JardinUpdateDto.class);
+
+		assertThat(responseDto.isError()).isTrue();
 
 	}
 
 	@Test
 	@Override
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep) VALUES (1,'Mon jardin'," + depNum+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep) VALUES (2,'Jardin de mamie'," + depNum+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testReadingAllEntity_shouldReturn200() throws Exception {
-		// TODO Auto-generated method stub
+
+		String path = BASE_URL + "/all/0";
+
+		ResponseDto<JardinUpdateDto> responseDto = runMockMvc("get", path, 200, JardinUpdateDto.class);
+
+		assertThat(responseDto.isError()).isFalse();
 
 	}
 

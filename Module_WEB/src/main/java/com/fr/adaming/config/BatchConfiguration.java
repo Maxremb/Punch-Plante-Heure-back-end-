@@ -92,8 +92,8 @@ public class BatchConfiguration {
 				.skipLimit(9).reader(reader()).processor(processor).writer(writer).build();
 	}
 
-	@Scheduled(cron = " 0 0 0 ? * * ")
-//	@Scheduled(fixedDelay = 30 * 1000)
+//	@Scheduled(cron = " 0 0 0 ? * * ")
+	@Scheduled(initialDelay = 30*1000, fixedDelay = 24 * 60 * 60 * 1000)
 	public void scheduleFixedDelayTask() throws Exception {
 
 		System.out.println("job lancé" + new Date());
