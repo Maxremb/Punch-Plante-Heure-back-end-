@@ -1,6 +1,7 @@
 package com.fr.adaming.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.validation.constraints.NotNull;
 
@@ -41,5 +42,7 @@ public class PlanteUtilisateurCreateDto {
 
 	@NotNull
 	private PlanteModelUpdateDto modelPlant;
+	
+	private ArrayList<Integer> coordonnees ;
 
 }
