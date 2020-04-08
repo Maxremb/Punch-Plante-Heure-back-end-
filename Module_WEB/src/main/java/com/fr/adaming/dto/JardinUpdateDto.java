@@ -20,5 +20,8 @@ public class JardinUpdateDto extends JardinCreateDto{
 	@Min(value = 1)
 	private Integer identifier;
 
+	private double maxReserve;
+	
+	private double UsefullReserve;
 	
 }

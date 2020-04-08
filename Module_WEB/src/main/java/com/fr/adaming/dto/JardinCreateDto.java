@@ -30,11 +30,8 @@ public class JardinCreateDto {
 	
 	private Float depthGround ;
 	
-	private double UsefullReserve;
-	
 	private boolean isArrosed;
 	
-	private double maxReserve;
 	
 	@NotNull
 	private DepartementDto dept;  // Ne devrais pas être nul 
