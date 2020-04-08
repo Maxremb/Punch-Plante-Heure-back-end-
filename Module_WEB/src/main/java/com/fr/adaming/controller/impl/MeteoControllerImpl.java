@@ -74,9 +74,9 @@ public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, Mete
 	 * @author Gregoire
 	 */
 	@GetMapping(path = "/mois-departement")
-	public ResponseEntity<ResponseDto<List<MeteoUpdateDto>>> readByMoisAndDepartement(@RequestParam(name = "mois") int mois, @RequestParam(name = "depNum") int numDepartement){
+	public ResponseEntity<ResponseDto<List<MeteoUpdateDto>>> readByMoisAndDepartement(@RequestParam(name = "annee") int annee, @RequestParam(name = "mois") int mois, @RequestParam(name = "depNum") int numDepartement){
 				
-		return makeUpdateDtoListResponse(service.readByMonthAndDepartement(mois, numDepartement));
+		return makeUpdateDtoListResponse(service.readByMonthAndDepartement(annee, mois, numDepartement));
 		
 	}
 }
