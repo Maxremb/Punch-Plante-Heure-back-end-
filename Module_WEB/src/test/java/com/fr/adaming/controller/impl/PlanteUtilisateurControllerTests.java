@@ -34,8 +34,6 @@ import com.fr.adaming.enums.EtatSante;
 @AutoConfigureMockMvc
 public class PlanteUtilisateurControllerTests extends AbstractTestMethods<PlanteUtilisateurUpdateDto>
 		implements IControllerTests {
-
-	//TODO Tout ce qui implique un utilisateur ne vas pas marcher pour l'instant. A completer et retester quand On auras fait util.
 	
 	// Parametres par defaut
 
@@ -47,10 +45,10 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 		dto.setHealthStage(EtatSante.bonneSante);
 		dto.setIdentifiant(1);
 		dto.setPlantStage(EtatPlante.fleuri);
-//		String date = "2020-04-04";
-//		LocalDate localDate = LocalDate.parse(date);
-//		dto.setPlantingDate(localDate);
-//		dto.setSemiDate(localDate);
+		String date = "2020-04-04";
+		LocalDate localDate = LocalDate.parse(date);
+		dto.setPlantingDate(localDate);
+		dto.setSemiDate(localDate);
 
 		UtilisateurUpdateDto utilisateurDto = new UtilisateurUpdateDto();
 		utilisateurDto.setNom("Stark");
@@ -77,27 +75,33 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 
 	}
 
-//	@Test
-//	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Stark')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
-	public void testCreatingEntityWithValidBody_shouldReturn200()  {
-		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison
-//		try {
-//			
-//		
-//		PlanteUtilisateurUpdateDto dto = makeNewUpdateDto();
-//
-//		ResponseDto<PlanteUtilisateurUpdateDto> responseDto = runMockMvc(BASE_URL, 200, dto, PlanteUtilisateurUpdateDto.class);
-//
-//		// Verifier la responseDto
-//		assertNotNull(responseDto);
-//		assertFalse(responseDto.isError());
-//		assertEquals("Succes de la création", responseDto.getMessage());
-//		assertNotNull(responseDto.getBody());
-//		
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+	public void testCreatingEntityWithValidBody_shouldReturn200() throws Exception  {
+		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison			
+		
+		PlanteUtilisateurUpdateDto dto = makeNewUpdateDto();
+
+		ResponseDto<PlanteUtilisateurUpdateDto> responseDto = runMockMvc(BASE_URL, 200, dto, PlanteUtilisateurUpdateDto.class);
+
+		// Verifier la responseDto
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Succes", responseDto.getMessage());
+		assertNotNull(responseDto.getBody());
+		
+
 
 	}
 
@@ -114,36 +118,6 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 		planteUtilisateur.setEtatSante(EtatSante.bonneSante);
 		planteUtilisateur.setId(0);
 
-//		Utilisateur utilisateur = new Utilisateur();
-//		utilisateur.setId(1);
-//		utilisateur.setNom("Martinez");
-//
-//		Meteo meteo = new Meteo();
-//		meteo.setId(1);
-//		meteo.setPluie(5);
-//		meteo.setDate(LocalDate.parse("2020-02-20"));
-//		meteo.setTemperature(20);
-//
-//		Departement dep = new Departement();
-//		dep.setNumeroDep(69);
-//		dep.setNom("Rhone");
-//		List<Meteo> listMeteo = new ArrayList<Meteo>();
-//		listMeteo.add(meteo);
-//		dep.setMeteoDep(listMeteo);
-//
-//		Jardin jardin = new Jardin();
-//		jardin.setId(1);
-//		jardin.setNom("Jardin1");
-//		jardin.setDepartement(dep);
-//		jardin.setUtilisateur(utilisateur);
-//
-//		PlanteModel planteModel = new PlanteModel();
-//		planteModel.setId(2);
-//		planteModel.setNomScientifique("Hibiscus");
-//
-//		planteUtilisateur.setJardin(jardin);
-//		planteUtilisateur.setPlanteModel(planteModel);
-
 		String responseAsString = runMockMvcLite("post", BASE_URL, 400, planteUtilisateur);
 
 		assertThat(responseAsString).isEmpty();
@@ -155,7 +129,7 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into plante_utilisateur values(1,'2020-04-04', '2020-04-04', 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -190,38 +164,32 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 		assertNotNull(responseDto.getMessage());
 	}
 
-//	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Stark')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature, departement_id) VALUES (1, '2020-02-20', 5, 20, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "insert into plante_utilisateur values(1,'2020-04-04', '2020-04-04', 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Test
+	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Stark')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, date_plantation, date_semis, etat_plante, etat_sante, jardin_id, plante_model_id) values(1,'2020-04-04', '2020-04-04', 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
 	@Override
-	public void testUpdatingEntityWithValidId_shouldReturn200() {
-//		try {
-//			
-//		
-//		
-//		PlanteUtilisateurUpdateDto dto = makeNewUpdateDto();
-//		dto.setHealthStage(EtatSante.morte);
-//
-//		ResponseDto<PlanteUtilisateurUpdateDto> responseDto = runMockMvc("put", BASE_URL, 200, dto, PlanteUtilisateurUpdateDto.class);
-//
-//		assertNotNull(responseDto);
-//		assertFalse(responseDto.isError());
-//		assertEquals("Succes de la mise à jour", responseDto.getMessage());
-//		assertNotNull(responseDto.getBody());
-//		
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+	public void testUpdatingEntityWithValidId_shouldReturn200() throws Exception {	
+		
+		PlanteUtilisateurUpdateDto dto = makeNewUpdateDto();
+		dto.setHealthStage(EtatSante.morte);
+
+		ResponseDto<PlanteUtilisateurUpdateDto> responseDto = runMockMvc("put", BASE_URL, 200, dto, PlanteUtilisateurUpdateDto.class);
+
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Succes", responseDto.getMessage());
+		assertNotNull(responseDto.getBody());
+
 	}
 
 	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Stark')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -290,7 +258,7 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "insert into plante_utilisateur values(1,'2020-04-04', '2020-04-04', 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
