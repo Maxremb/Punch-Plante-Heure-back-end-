@@ -53,7 +53,7 @@ public interface IMeteoRepository extends JpaRepository<Meteo, Integer>{
 	 * 
 	 * @author Gregoire
 	 */
-	@Query(value = "select * from meteo where month(date) = :month and departement_id = :departementId")
+	@Query(value = "select * from meteo where month(date) = :month and departement_id = :departementId", nativeQuery = true)
 	public List<Meteo> findMeteoByMonthAndDepartement(int month, int departementId);
 
 }
