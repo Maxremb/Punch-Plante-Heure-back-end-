@@ -232,8 +232,10 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 	@Override
 	public List<PlanteModel> convertListCreateDtoToEntity(List<PlanteModelCreateDto> listeCreateDto) {
 		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
-		for (PlanteModelCreateDto p : listeCreateDto) {
-			listeRetour.add(convertCreateDtoToEntity(p));
+		if (listeCreateDto != null) {
+			for (PlanteModelCreateDto p : listeCreateDto) {
+				listeRetour.add(convertCreateDtoToEntity(p));
+			}
 		}
 		return listeRetour;
 	}
@@ -241,8 +243,10 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 	@Override
 	public List<PlanteModelCreateDto> convertListEntityToCreateDto(List<PlanteModel> listeEntity) {
 		List<PlanteModelCreateDto> listeRetour = new ArrayList<PlanteModelCreateDto>();
-		for (PlanteModel p : listeEntity) {
-			listeRetour.add(convertEntityToCreateDto(p));
+		if (listeEntity != null) {
+			for (PlanteModel p : listeEntity) {
+				listeRetour.add(convertEntityToCreateDto(p));
+			}
 		}
 		return listeRetour;
 	}
@@ -250,8 +254,10 @@ public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, Pl
 	@Override
 	public List<PlanteModel> convertListUpdateDtoToEntity(List<PlanteModelUpdateDto> listeUpdateDto) {
 		List<PlanteModel> listeRetour = new ArrayList<PlanteModel>();
-		for (PlanteModelUpdateDto p : listeUpdateDto) {
-			listeRetour.add(convertUpdateDtoToEntity(p));
+		if (listeUpdateDto != null) {
+			for (PlanteModelUpdateDto p : listeUpdateDto) {
+				listeRetour.add(convertUpdateDtoToEntity(p));
+			}
 		}
 		return listeRetour;
 	}

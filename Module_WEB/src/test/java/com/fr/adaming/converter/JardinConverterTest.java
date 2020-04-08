@@ -219,13 +219,13 @@ public class JardinConverterTest implements IConverterTests {
 
 		Jardin jardin2 = new Jardin();
 
-		jardin.setId(2);
-		jardin.setSol(Sol.Argileux);
-		jardin.setNom("nom4Test2");
-		jardin.setLongueur((float) 10);
-		jardin.setLargeur((float) 10);
-		jardin.setDepartement(dep);
-		jardin.setUtilisateur(util);
+		jardin2.setId(2);
+		jardin2.setSol(Sol.Argileux);
+		jardin2.setNom("nom4Test2");
+		jardin2.setLongueur((float) 10);
+		jardin2.setLargeur((float) 10);
+		jardin2.setDepartement(dep);
+		jardin2.setUtilisateur(util);
 
 		List<Jardin> liste = new ArrayList<>();
 		liste.add(jardin);
@@ -327,13 +327,13 @@ public class JardinConverterTest implements IConverterTests {
 
 		Jardin jardin2 = new Jardin();
 
-		jardin.setId(2);
-		jardin.setSol(Sol.Argileux);
-		jardin.setNom("nom4Test2");
-		jardin.setLongueur((float) 10);
-		jardin.setLargeur((float) 10);
-		jardin.setDepartement(dep);
-		jardin.setUtilisateur(util);
+		jardin2.setId(2);
+		jardin2.setSol(Sol.Argileux);
+		jardin2.setNom("nom4Test2");
+		jardin2.setLongueur((float) 10);
+		jardin2.setLargeur((float) 10);
+		jardin2.setDepartement(dep);
+		jardin2.setUtilisateur(util);
 
 		List<Jardin> liste = new ArrayList<>();
 		liste.add(jardin);
@@ -498,13 +498,13 @@ public class JardinConverterTest implements IConverterTests {
 
 		Jardin jardin2 = new Jardin();
 
-		jardin.setId(2);
-		jardin.setSol(Sol.Argileux);
-		jardin.setNom("nom4Test2");
-		jardin.setLongueur((float) 10);
-		jardin.setLargeur((float) 10);
-		jardin.setDepartement(dep);
-		jardin.setUtilisateur(util);
+		jardin2.setId(2);
+		jardin2.setSol(Sol.Argileux);
+		jardin2.setNom("nom4Test2");
+		jardin2.setLongueur((float) 10);
+		jardin2.setLargeur((float) 10);
+		jardin2.setDepartement(dep);
+		jardin2.setUtilisateur(util);
 
 		List<Jardin> liste = new ArrayList<>();
 		liste.add(jardin);
@@ -619,13 +619,13 @@ public class JardinConverterTest implements IConverterTests {
 
 		Jardin jardin2 = new Jardin();
 
-		jardin.setId(2);
-		jardin.setSol(Sol.Argileux);
-		jardin.setNom("nom4Test2");
-		jardin.setLongueur((float) 10);
-		jardin.setLargeur((float) 10);
-		jardin.setDepartement(dep);
-		jardin.setUtilisateur(util);
+		jardin2.setId(2);
+		jardin2.setSol(Sol.Argileux);
+		jardin2.setNom("nom4Test2");
+		jardin2.setLongueur((float) 10);
+		jardin2.setLargeur((float) 10);
+		jardin2.setDepartement(dep);
+		jardin2.setUtilisateur(util);
 
 		List<Jardin> liste = new ArrayList<>();
 		liste.add(jardin);
