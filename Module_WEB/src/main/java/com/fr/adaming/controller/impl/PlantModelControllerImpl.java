@@ -34,6 +34,12 @@ public class PlantModelControllerImpl extends AbstractController<PlanteModelCrea
 		
 	}
 	
+	/** Controller pour recuperer des planteModel qui comportent le string "nom" dans leurs noms commun ou scientifique
+	 * @param page La page demandée
+	 * @param nom Le nom recherché
+	 * @return ResponseEntity avec ResponseDto contenant une page de PlanteModelUpdateDto
+	 * @author Gregoire
+	 */
 	@GetMapping(path = "/nom")
 	public ResponseEntity<ResponseDto<Page<PlanteModelUpdateDto>>> readByNom(@RequestParam(name = "page") int page,@RequestParam(name = "nom") String nom){
 		

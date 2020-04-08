@@ -235,7 +235,7 @@ public class AbstractTestMethods<U> {
 		case "post":
 			dtoAsJson = mapper.writeValueAsString(dto);
 			responseAsString = mockMvc
-					.perform(post(path).contentType(MediaType.APPLICATION_JSON_VALUE).content(dtoAsJson))
+					.perform(post(path).contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON).content(dtoAsJson))
 					.andExpect(status().is(expectedStatus)).andReturn().getResponse()
 					.getContentAsString(StandardCharsets.UTF_8);
 			break;

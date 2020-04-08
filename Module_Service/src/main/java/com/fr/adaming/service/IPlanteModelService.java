@@ -20,6 +20,8 @@ public interface IPlanteModelService extends IService<PlanteModel> {
 	 * @param page Numéro de la page consultée
 	 * @param nom  string representant les caracteres recherchés
 	 * @return Service response contenant une page de planteModel
+	 * 
+	 * @author Gregoire
 	 */
 	public ServiceResponse<Page<PlanteModel>> findByNom(int page, String nom);
 	

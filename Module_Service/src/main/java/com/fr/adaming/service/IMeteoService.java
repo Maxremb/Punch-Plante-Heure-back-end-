@@ -1,6 +1,7 @@
 package com.fr.adaming.service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,5 +34,15 @@ public interface IMeteoService {
 	 * @return un dto de type ServiceResponse contenant un objet de type Meteo ou un objet null
 	 */
 	public ServiceResponse<Meteo> readByDateAndDepartement (LocalDate date, int numDepartement);
+	
+	/** 
+	 * Recupere toutes les entités meteo pour les dates contenus dans un mois
+	 * @param mois le numero du mois recherché
+	 * @param numDepartement le numéro du département
+	 * @return Une liste de meteos
+	 * 
+	 * @author Gregoire
+	 */
+	public ServiceResponse<List<Meteo>> readByMonthAndDepartement (int mois, int numDepartement);
 
 }

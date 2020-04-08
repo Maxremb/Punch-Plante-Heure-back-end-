@@ -139,6 +139,7 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 		PlanteModelUpdateDto dto = makeNewUpdateDto();
 		dto.setCommun("bob");
 		
+		//TODO écrire le reste du test
 		 
 
 	}

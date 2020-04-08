@@ -1,6 +1,7 @@
 package com.fr.adaming.service.impl;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -121,6 +122,26 @@ public class MeteoServiceImpl extends AbstractService<Meteo> implements IMeteoSe
 			log.info("Echec lors de la récupération de la météo : la date est NULLE");
 			return new ServiceResponse<Page<Meteo>> ("Echec lors de la récupération de la météo : la date est NULLE", null);
 		}
+	}
+
+	@Override
+	public ServiceResponse<List<Meteo>> readByMonthAndDepartement(int mois, int numDepartement) {
+		
+		ServiceResponse<List<Meteo>> serviceResponse = new ServiceResponse<List<Meteo>>();
+		
+		if(mois < 13 && mois > 0) {
+			if (repoD.existsById(numDepartement)) {
+				
+				serviceResponse.setBody(repo.findMeteoByMonthAndDepartement(mois, numDepartement));
+				
+			} else {
+				serviceResponse.setMessage("Numéro de département non-reconnu");
+			}
+			
+		} else {
+			serviceResponse.setMessage("Numero de mois invalide");
+		}
+		return serviceResponse;
 	}
 
 }

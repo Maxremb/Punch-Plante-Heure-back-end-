@@ -36,10 +36,10 @@ public class PlanteModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(length = 30)
+	@Column(length = 255)
 	private String nomCommun;
 
-	@Column(length = 30, nullable = false)
+	@Column(length = 255, nullable = false)
 	private String nomScientifique;
 
 //	@Column
