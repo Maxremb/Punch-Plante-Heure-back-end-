@@ -29,7 +29,7 @@ public class Retention {
 	private Integer id;
 	@Column (unique = true)
 	private Sol sol;
-	@Column
+	@Column (columnDefinition = "DOUBLE DEFAULT 0")
 	private double coeffRemplissage;
 
 }
