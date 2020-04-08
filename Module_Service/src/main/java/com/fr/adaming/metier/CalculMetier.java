@@ -67,7 +67,9 @@ public class CalculMetier implements ICalculMetier {
 		}
 		
 		//si meteo.dept = null on retourne un set vide
-		else { 	return new HashSet<Jardin>();}
+		else { 
+			Set<Jardin> emptySetJArdin = new HashSet<>();
+			return emptySetJArdin ;}
 	}
 
 	
