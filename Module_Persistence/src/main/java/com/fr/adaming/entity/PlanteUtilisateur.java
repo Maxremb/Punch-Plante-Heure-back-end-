@@ -3,6 +3,7 @@ package com.fr.adaming.entity;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,5 +55,8 @@ public class PlanteUtilisateur {
 	
 	@ManyToOne (optional = false)
 	private PlanteModel planteModel;
+	
+	@Column
+	private ArrayList<Integer> listeCoordonnees;
 	
 }
