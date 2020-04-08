@@ -22,6 +22,10 @@ import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.enums.Sol;
 
+/** Testes du controller pour plante model
+ * @author Gregoire
+ *
+ */
 @SpringBootTest(classes = ModuleWebApplication.class)
 @AutoConfigureMockMvc
 public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelUpdateDto> implements IControllerTests {
@@ -62,15 +66,8 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 		// Verifier la responseDto
 		assertNotNull(responseDto);
 		assertFalse(responseDto.isError());
-		assertEquals("Succes de la création", responseDto.getMessage());
+		assertEquals("Création de la plante modele réussie", responseDto.getMessage());
 		assertNotNull(responseDto.getBody());
-		
-		
-		
-//		assertEquals(dto, responseDto.getBody()); //ne marche pas sans toString :(
-
-//		updateDtoCompare(dto, responseDto.getBody()); //teste quelque chose qui est normallement
-		// déjà testé dans les testes converter et service.
 	}
 
 	@Test
@@ -86,6 +83,9 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 
 	}
 	
+	/** Teste de la creation avec un nom scientifique null
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void testCreatingPlanteModelWithNullScientifique_shouldReturn400() throws Exception {
@@ -139,10 +139,15 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 		PlanteModelUpdateDto dto = makeNewUpdateDto();
 		dto.setCommun("bob");
 		
-		//TODO écrire le reste du test
-		 
+		ResponseDto<PlanteModelUpdateDto> responseDto = runMockMvc("put", BASE_URL, 200, dto, PlanteModelUpdateDto.class);		
+		
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertNotNull(responseDto.getBody());
+		assertNotNull(responseDto.getMessage());
 
 	}
+
 
 	@Test
 	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -158,7 +163,7 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 		
 		assertNotNull(responseDto);
 		assertTrue(responseDto.isError());
-		assertEquals("Update non réalisé : vous avez renseigné un id inexistant dans la base de donnée", responseDto.getMessage());
+		assertEquals("Mise à jour non réalisée : cet id n'existe pas dans la base de donnée", responseDto.getMessage());
 		assertNull(responseDto.getBody());
 
 	}
@@ -195,6 +200,7 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 
 	}
 
+
 	@Test
 	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (2, 'Alice', 'Alicium')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -212,6 +218,9 @@ String path=BASE_URL + "/all/0";
 
 	}
 	
+	/** Teste de readByNom avec un nom qui existe dans la base de données
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (2, 'Alice', 'Alicium')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -233,6 +242,9 @@ String path=BASE_URL + "/all/0";
 	
 	// *** Méthodes privés ***
 	
+	/** Créé une nouvelle dto avec les valeurs des attributs par défaut
+	 * @return Une PlanteModelUpdateDto
+	 */
 	private PlanteModelUpdateDto makeNewUpdateDto() {
 		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison
 		PlanteModelUpdateDto dto = new PlanteModelUpdateDto();
@@ -256,57 +268,5 @@ String path=BASE_URL + "/all/0";
 		return dto;
 		
 	}
-
-//	/**
-//	 * Pour une raison que je ne comprend pas bien, assertEquals utilise le toString
-//	 * de expected dto dans la comparaison. Cette méthode existe pour resoudre ce
-//	 * probleme, et pour limiter la quantité de code
-//	 * 
-//	 * @param expectedDto Dto qu'on attend
-//	 * @param returnedDto Dto qu'on recoit
-//	 */
-//	private void updateDtoCompare(PlanteModelUpdateDto expectedDto, PlanteModelUpdateDto returnedDto) {
-//
-//		assertEquals(expectedDto.getIdentifiant(), returnedDto.getIdentifiant());
-//		assertEquals(expectedDto.getArrosage(), returnedDto.getArrosage());
-//		assertEquals(expectedDto.getCommun(), returnedDto.getCommun());
-//		assertEquals(expectedDto.getDesc(), returnedDto.getDesc());
-//		assertEquals(expectedDto.getEnsoleillement(), returnedDto.getEnsoleillement());
-//		assertEquals(expectedDto.getHumidite(), returnedDto.getHumidite());
-//		assertEquals(expectedDto.getMin(), returnedDto.getMin());
-//		assertEquals(expectedDto.getMax(), returnedDto.getMax());
-//		assertEquals(expectedDto.getMifa(), returnedDto.getMifa());
-//		assertEquals(expectedDto.getPicture(), returnedDto.getPicture());
-//		assertEquals(expectedDto.getRepiquage(), returnedDto.getRepiquage());
-//		assertEquals(expectedDto.getScientifique(), returnedDto.getScientifique());
-//		assertEquals(expectedDto.getSol(), returnedDto.getSol());
-//		assertEquals(expectedDto.isToxi(), returnedDto.isToxi());
-//
-//		assertEquals(expectedDto.getNegative().length, returnedDto.getNegative().length);
-//		assertEquals(expectedDto.getPositive().length, returnedDto.getPositive().length);
-//
-//		compareStringArrays(expectedDto.getNegative(), returnedDto.getNegative());
-//		compareStringArrays(expectedDto.getPositive(), returnedDto.getPositive());
-//
-//	}
-//
-//	/**
-//	 * Pour les comparaisons des deux tableaux de string dans updateDtoCompare
-//	 * 
-//	 * @param expected Tableau de strings attendu
-//	 * @param returned Tableau de strings recu
-//	 */
-//	private void compareStringArrays(String[] expected, String[] returned) {
-//
-//		assertEquals(expected.length, returned.length);
-//
-//		// pas besoin de if else si on fait un assert avant
-//		int i = 0;
-//		for (String n : expected) {
-//			assertEquals(n, returned[i]);
-//			i++;
-//		}
-//
-//	}
 
 }
