@@ -22,7 +22,7 @@ public class PlanteModelCreateDto {
 	private String commun;
 	@NotNull (message = "Le nom scientifique de la plante ne peut pas être null")
 	private String scientifique;
-	private List<PeriodeUpdateDto> periodes;
+//	private List<PeriodeUpdateDto> periodes;
 	private int arrosage;
 	private String ensoleillement;
 	private int humidite;

@@ -55,7 +55,7 @@ public class PlanteModelControllerTests extends AbstractTestMethods<PlanteModelU
 	public void testCreatingEntityWithValidBody_shouldReturn200() throws Exception {
 
 		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison
-		PlanteModelUpdateDto dto = makeNewUpdateDto();
+		PlanteModelUpdateDto dto = makeNewUpdateDto(); 
 		
 		ResponseDto<PlanteModelUpdateDto> responseDto = runMockMvc(BASE_URL, 200, dto, PlanteModelUpdateDto.class);
 

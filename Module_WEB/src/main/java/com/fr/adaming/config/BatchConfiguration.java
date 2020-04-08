@@ -64,13 +64,14 @@ public class BatchConfiguration {
 
 	@Bean
 	public FlatFileItemReader<MeteoXlsDto> reader() {
-		
-		   DefaultFieldSetFactory fieldSetFactory = new DefaultFieldSetFactory();
-		   fieldSetFactory.setNumberFormat(NumberFormat.getInstance(Locale.FRANCE));
-		
-		return new FlatFileItemReaderBuilder<MeteoXlsDto>().name("meteoItemReader").linesToSkip(1).resource(inputResource)
-				.delimited().delimiter(";").names(new String[] { "station", "nom", "longitude", "latitude", "altitude", "date", "rr",
-						"tn", "tx", "fxi", "dxi","fxy", "dxy", "inst", "eptmon" })
+
+		DefaultFieldSetFactory fieldSetFactory = new DefaultFieldSetFactory();
+		fieldSetFactory.setNumberFormat(NumberFormat.getInstance(Locale.FRANCE));
+
+		return new FlatFileItemReaderBuilder<MeteoXlsDto>().name("meteoItemReader").linesToSkip(1)
+				.resource(inputResource).delimited().delimiter(";").fieldSetFactory(fieldSetFactory)
+				.names(new String[] { "station", "nom", "longitude", "latitude", "altitude", "date", "rr", "tn", "tx",
+						"fxi", "dxi", "fxy", "dxy", "inst", "eptmon" })
 				.fieldSetMapper(new BeanWrapperFieldSetMapper<MeteoXlsDto>() {
 					{
 						setTargetType(MeteoXlsDto.class);
@@ -86,13 +87,13 @@ public class BatchConfiguration {
 
 	@Bean
 	public Step step1() {
-		return stepBuilderFactory.get("step1").<MeteoXlsDto, Meteo>chunk(10).faultTolerant().skip(ValidationException.class)
-				.skip(FlatFileParseException.class).skip(ItemStreamException.class).skipLimit(9).reader(reader())
-				.processor(processor).writer(writer).build();
+		return stepBuilderFactory.get("step1").<MeteoXlsDto, Meteo>chunk(10).faultTolerant()
+				.skip(ValidationException.class).skip(FlatFileParseException.class).skip(ItemStreamException.class)
+				.skipLimit(9).reader(reader()).processor(processor).writer(writer).build();
 	}
 
-	@Scheduled(cron = " 0 0 0 ? * * ")
-//	@Scheduled(fixedDelay = 30*1000)
+//	@Scheduled(cron = " 0 0 0 ? * * ")
+	@Scheduled(fixedDelay = 30 * 1000)
 	public void scheduleFixedDelayTask() throws Exception {
 
 		System.out.println("job lancé" + new Date());
