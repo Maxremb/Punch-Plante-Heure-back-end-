@@ -47,6 +47,9 @@ public class MeteoControllerTests extends AbstractTestMethods<MeteoUpdateDto> im
 		dto.setDateMeteo(LocalDate.parse("2020-01-01"));
 		dto.setDepartement(dtoD);
 		
+		//String json = "{\"tempMax\":25.0,\"tempMin\":20.0,\"rain\":0.0,\"radiation\":0.0,\"etp\":0.0,\"dateMeteo\":\"2011-12-03\",\"departement\":{\"depNum\":71,\"name\":\"saoneetloire\"}}";
+		
+		
 		ResponseDto<MeteoUpdateDto> response = runMockMvc("post", BASE_URL, 200, dto, MeteoUpdateDto.class);
 		
 		assertNotNull(response);
@@ -124,40 +127,89 @@ public class MeteoControllerTests extends AbstractTestMethods<MeteoUpdateDto> im
 		DepartementDto dtoD = new DepartementDto();
 		dtoD.setDepNum(69);
 		dtoD.setName("rhone");
-		MeteoCreateDto dto = new MeteoCreateDto();
-		dto.setTempMax(25d);
-		dto.setTempMin(20d);
+		MeteoUpdateDto dto = new MeteoUpdateDto();
+		dto.setIdentifier(1);
+		dto.setTempMax(30d);
+		dto.setTempMin(22d);
 		dto.setRain(5d);
 		dto.setRadiation(120d);
 		dto.setEtp(5d);
 		dto.setDateMeteo(LocalDate.parse("2020-01-01"));
 		dto.setDepartement(dtoD);
 		
-		ResponseDto<MeteoUpdateDto> response = 
+		ResponseDto<MeteoUpdateDto> response = runMockMvc("put", BASE_URL, 200, dto, MeteoUpdateDto.class);
 		
+		assertNotNull(response);
+		assertFalse(response.isError());
+		assertThat(response.getBody()).hasFieldOrPropertyWithValue("tempMax", 30d);
+		assertThat(response.getBody()).hasFieldOrPropertyWithValue("tempMin", 22d);
+		assertThat(response.getMessage()).isEqualTo("Mise à jour de la météo dans la base de données");
 	}
 
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (1, 25, 20, 5, 120, 5, '2020-01-01', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@Override
 	public void testUpdatingEntityWithInvalidId_shouldReturn400() throws Exception {
-		// TODO Auto-generated method stub
+		DepartementDto dtoD = new DepartementDto();
+		dtoD.setDepNum(69);
+		dtoD.setName("rhone");
+		MeteoUpdateDto dto = new MeteoUpdateDto();
+		dto.setIdentifier(2);
+		dto.setTempMax(30d);
+		dto.setTempMin(22d);
+		dto.setRain(5d);
+		dto.setRadiation(120d);
+		dto.setEtp(5d);
+		dto.setDateMeteo(LocalDate.parse("2020-01-01"));
+		dto.setDepartement(dtoD);
 		
+		ResponseDto<MeteoUpdateDto> response = runMockMvc("put", BASE_URL, 400, dto, MeteoUpdateDto.class);
+		
+		assertNotNull(response);
+		assertTrue(response.isError());
+		assertThat(response.getMessage()).isEqualTo("Echec lors de la mise à jour d'une météo : l'ID est inexistant");
 	}
 
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (1, 25, 20, 5, 120, 5, '2020-01-01', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@Override
 	public void testReadingEntityWithValidId_shouldReturn200() throws Exception {
-		// TODO Auto-generated method stub
+		ResponseDto<MeteoUpdateDto> response = runMockMvc("get", BASE_URL+"/1", 200, MeteoUpdateDto.class);
+		
+		assertNotNull(response);
+		assertFalse(response.isError());
+		assertThat(response.getBody()).hasFieldOrPropertyWithValue("tempMax", 25d);
+		assertThat(response.getBody()).hasFieldOrPropertyWithValue("identifier", 1);
 		
 	}
 
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (1, 25, 20, 5, 120, 5, '2020-01-01', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@Override
 	public void testReadingEntityWithInvalidId_shouldReturn400() throws Exception {
-		// TODO Auto-generated method stub
+		ResponseDto<MeteoUpdateDto> response = runMockMvc("get", BASE_URL+"/2", 400, MeteoUpdateDto.class);
+		
+		assertNotNull(response);
+		assertTrue(response.isError());
+		assertNull(response.getBody());
+		assertThat(response.getMessage()).isEqualTo("Une entité avec cet ID n'existe pas dans la base de données");
 		
 	}
 
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (1, 25, 20, 5, 120, 5, '2020-01-01', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (1, 25, 20, 5, 120, 5, '2020-01-01', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	@Override
 	public void testReadingAllEntity_shouldReturn200() throws Exception {
