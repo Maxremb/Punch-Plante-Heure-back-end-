@@ -31,17 +31,17 @@ public class Jardin {
 	private Sol sol;
 	@Column (nullable = false)
 	private String nom;
-	@Column
+	@Column 
 	private Float longueur;
-	@Column
+	@Column  
 	private Float largeur;
-	@Column
+	@Column 
 	private Float ProfSol;
-	@Column
+	@Column (columnDefinition = "DOUBLE DEFAULT 0")
 	private double reserveUtile;
 	@Column (columnDefinition = "DOUBLE DEFAULT 0")
 	private double RESERVE_MAX_EAU;
-	@Column
+	@Column (columnDefinition = "BOOLEAN DEFAULT 0")
 	private boolean estArroser; 
 	
 	@ManyToOne (optional = false, fetch = FetchType.EAGER)
