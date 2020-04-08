@@ -37,7 +37,8 @@ public class AbstractTestMethods<U> {
 	
 	@Autowired
 	private MockMvc mockMvc;
-	private ObjectMapper mapper = new ObjectMapper();
+	@Autowired
+	private ObjectMapper mapper;
 	
 	/**
 	 * Lance la partie du code test qui utilise mockMvc et objectMapper. Version sans entrée de dto.
