@@ -125,7 +125,7 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 		log.debug("PlanteModelService: findByNom");
 
 		Pageable pageable = PageRequest.of(page, 20);
-		Page<PlanteModel> entityList = repo.findByNomCommunContainingOrNomScientifiqueContaining(pageable, nom, nom);
+		Page<PlanteModel> entityList = repo.findByNomCommunContainingOrNomScientifiqueContainingIgnoreCase(pageable, nom, nom);
 		ServiceResponse<Page<PlanteModel>> serviceResponse = new ServiceResponse<Page<PlanteModel>>();
 		serviceResponse.setBody(entityList);
 		return serviceResponse;
