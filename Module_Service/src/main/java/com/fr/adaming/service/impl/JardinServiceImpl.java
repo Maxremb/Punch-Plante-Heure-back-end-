@@ -31,7 +31,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 
 	@Autowired
 	private IJardinRepository repo;
-	
+
 	@Autowired
 	private IRetentionRepository retentionRepo;
 
@@ -40,7 +40,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 		if (entity != null) {
 			if (!dao.existsById(entity.getId())) {
 				try {
-					calculReserveEauMax(entity);
+					entity = calculReserveEauMax(entity);
 					dao.save(entity);
 					log.info("Jardin sauvegardé dans la DB");
 					return new ServiceResponse<Jardin>("Success", entity);
@@ -62,7 +62,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 	public ServiceResponse<Jardin> update(Jardin entite) {
 		if (entite != null && dao.existsById(entite.getId())) {
 			try {
-				calculReserveEauMax(entite);
+				entite = calculReserveEauMax(entite);
 				dao.save(entite);
 				log.info("Jardin modifié dans la DB");
 				return new ServiceResponse<Jardin>("Success", entite);
@@ -143,27 +143,27 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 
 			// recuperation de toutes les entites possibles de rétention de la DB
 			List<Retention> listeRetentions = retentionRepo.findAll();
-			Retention solArgileux = null ;
+			Retention solArgileux = null;
 			Retention solArgiloLimoneux = null;
 			Retention solArgiloSableux = null;
 			Retention solLimonoArgileux = null;
 			Retention solSableux = null;
-			//recuperation de chaque entite de la DB sous forme d'objet
+			// recuperation de chaque entite de la DB sous forme d'objet
 			for (Retention r : listeRetentions) {
 				if (r.getSol() == Sol.Argileux) {
 					solArgileux = r;
 				}
 				if (r.getSol() == Sol.ArgiloLimoneux) {
-					 solArgiloLimoneux = r;
+					solArgiloLimoneux = r;
 				}
 				if (r.getSol() == Sol.ArgiloSableux) {
-					 solArgiloSableux= r;
+					solArgiloSableux = r;
 				}
 				if (r.getSol() == Sol.LimonoArgileux) {
-					 solLimonoArgileux= r;
+					solLimonoArgileux = r;
 				}
 				if (r.getSol() == Sol.Sableux) {
-					 solSableux= r;
+					solSableux = r;
 				}
 			}
 
@@ -184,8 +184,10 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 				jardin.setRESERVE_MAX_EAU(volume * solSableux.getCoeffRemplissage());
 			}
 
+			return jardin;
+		} else {
+			return jardin;
 		}
-		return jardin;
 
 	}
 
