@@ -30,19 +30,19 @@ public class Meteo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(columnDefinition = "INT DEFAULT 0")
+	@Column(columnDefinition = "DOUBLE DEFAULT 0")
 	private double temperatureMax; 
 	
-	@Column(columnDefinition = "INT DEFAULT 0")
+	@Column(columnDefinition = "DOUBLE DEFAULT 0")
 	private double temperatureMin; 
 	
-	@Column(columnDefinition = "INT DEFAULT 0")
+	@Column(columnDefinition = "DOUBLE DEFAULT 0")
 	private double pluie;	//positive
 	
-	@Column(columnDefinition = "INT DEFAULT 0")
+	@Column(columnDefinition = "DOUBLE DEFAULT 0")
 	private double ensoleillement;
 	
-	@Column(columnDefinition = "INT DEFAULT 0")
+	@Column(columnDefinition = "DOUBLE DEFAULT 0")
 	private double evapoTranspirationPotentielle;
 	
 	@Column(nullable = false)
