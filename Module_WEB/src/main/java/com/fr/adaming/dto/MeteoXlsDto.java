@@ -12,7 +12,7 @@ public class MeteoXlsDto {
 	private int longitude;
 	private int latitude;
 	private int altitude;
-	private LocalDate date;
+	private String date;
 	private float rr;
 	private float tn;
 	private float tx;
