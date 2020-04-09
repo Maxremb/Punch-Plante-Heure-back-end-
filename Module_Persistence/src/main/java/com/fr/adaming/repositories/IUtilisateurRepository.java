@@ -24,12 +24,5 @@ public interface IUtilisateurRepository extends JpaRepositoryImplementation<Util
 	 */
 	public Utilisateur findByNomAndPrenom(String nom, String prenom);
 
-	/**
-	 * Méthode vérifier l'activité d'un utilisateur
-	 * @param pseudonyme de l'utilisateur recherché
-	 * @return un booléen true si l'utilisateur est actif, false sinon
-	 */
-	public boolean actif(String pseudonyme);
-	
 
 }

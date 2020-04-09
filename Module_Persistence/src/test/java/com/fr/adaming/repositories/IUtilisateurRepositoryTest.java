@@ -16,38 +16,47 @@ import com.fr.adaming.entity.Utilisateur;
  * @since 0.0.1-SNAPSHOT
  *
  */
-@SpringBootTest (classes = ModulePersistenceApplication.class)
+@SpringBootTest(classes = ModulePersistenceApplication.class)
 public class IUtilisateurRepositoryTest {
-	
+
 	@Autowired
 	private IUtilisateurRepository repo;
-	
-	//paramètres utilisateur
+
+	// paramètres utilisateur
 	private static final String nom = "jornet";
 	private static final String prenom = "kilian";
-	private static final String pseudo ="extra terrestre";
-	// ID EMAIL MDP PSEUDO NOM PRENOM  NON NULLABLE
-	
-	
-	//***************************************************************
+	private static final String pseudo = "extra terrestre";
+	// ID EMAIL MDP PSEUDO NOM PRENOM NON NULLABLE
+
+	// ***************************************************************
 	// FIND BY NOM AND PRENOM
 	@Test
-	@Sql (statements = "INSERT INTO utilisateur (nom,prenom,email,mdp,pseudo) VALUES ('jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO utilisateur (nom,prenom,email,mdp,pseudo) VALUES ('jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void TestReadByNomAndPrenomWithValidParam_ShouldreturnEntite() {
 		Utilisateur user = repo.findByNomAndPrenom(nom, prenom);
-		
+
 		assertThat(user);
 	}
-	
-	public void TestReadByEmailAndMdpWithNullParam_ShouldReturnNull () {
-		
+
+	@Test
+	@Sql(statements = "INSERT INTO utilisateur (nom,prenom,email,mdp,pseudo) VALUES ('jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	public void TestReadByEmailAndMdpWithNullParam_ShouldReturnNull() {
+		assertThat((repo.findByNomAndPrenom(null, null)));
 	}
-	
+
+	@Test
+	@Sql(statements = "INSERT INTO utilisateur (nom,prenom,email,mdp,pseudo) VALUES ('jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	public void TestReadByEmailAndMdpWithOneNullParam_ShouldReturnNull() {
-		
+		Utilisateur user = repo.findByNomAndPrenom(nom, null);
+
+		assertThat(user);
 	}
-	
-	//***************************************************************
-	//  ACTIF
+
+	@Test
+	public void TestReadByEmailAndMdpNoDB_shouldReturnNull() {
+		Utilisateur user = repo.findByNomAndPrenom(nom, prenom);
+
+		assertThat(user);
+	}
 
 }

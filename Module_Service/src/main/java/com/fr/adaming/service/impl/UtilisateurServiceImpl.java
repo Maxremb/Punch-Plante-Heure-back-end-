@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
+import com.fr.adaming.entity.Admin;
 import com.fr.adaming.entity.Utilisateur;
 import com.fr.adaming.repositories.IAdminRepository;
 import com.fr.adaming.repositories.IUtilisateurRepository;
@@ -94,18 +95,21 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 		if (pseudonyme != null) {
 			try {
 				log.info("Vérification de l'activation d'un utilisateur OK");
-
-				return userRepo.actif(pseudonyme);
-
+				Utilisateur user = (Utilisateur) adminRepo.findByPseudonyme(pseudonyme);
+				if (user.getActif()) {
+					log.info("Utilisateur actif");
+					return true;
+				}
+				log.info("Utilisateur désactivé");
+				return false;
 			} catch (Exception e) {
 				log.warn("Problème lors de la vérification de l'activation d'un utilisateur (couche service)"
 						+ e.getMessage());
-				return false;
+				return null;
 			}
 		}
 		log.info("Vérificaation de l'activation d'un utilisateur non réalisée : pseudonme null");
-
-		return false;
+		return null;
 
 	}
 
@@ -115,14 +119,8 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 			Optional<Utilisateur> user = dao.findById(id);
 			if (user.orElse(null).getActif()) {
 				try {
-					log.info("******************************************");
-					log.info("DEBUG BEFORE DESACTIVATE :" + user);
-					log.info("******************************************");
 					user.orElse(null).setActif(false);
 					dao.save(user.orElse(null));
-					log.info("******************************************");
-					log.info("DEBUG AFTER DESACTIVATE :" + user);
-					log.info("******************************************");
 					log.info("Désactivation de l'utilisateur OK");
 					return true;
 				} catch (Exception e) {
@@ -140,7 +138,7 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 
 	@Override
 	public Boolean activateUser(Integer id) {
-		if( id != null && dao.existsById(id)) {
+		if (id != null && dao.existsById(id)) {
 			Optional<Utilisateur> user = dao.findById(id);
 			if (!user.orElse(null).getActif()) {
 				try {

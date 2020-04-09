@@ -48,10 +48,17 @@ public class UtilisateurControllerImpl
 
 		if (result) {
 			responseDto.setError(false);
-			responseDto.setMessage("Un utilisateur existe avec ce pseudonyme");
-			responseDto.setBody(null);
+			responseDto.setMessage("Utilisateur actif");
+			responseDto.setBody(true);
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-		} else {
+		} 
+		if (!result) {
+			responseDto.setError(false);
+			responseDto.setMessage("Utilisateur non actif");
+			responseDto.setBody(false);
+			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		}
+		else {
 			responseDto.setError(true);
 			responseDto.setMessage("Aucun utilisateur n'existe avec pseudo : " + pseudonyme);
 			responseDto.setBody(null);
@@ -74,7 +81,7 @@ public class UtilisateurControllerImpl
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
 			responseDto.setError(true);
-			responseDto.setMessage("Aucun utilisateur n'existe avec id : " + id);
+			responseDto.setMessage("Utilisateur déjà désactivé / erreur lors de la requête / id null ou non existant dans la DB (id : " + id +" )");
 			responseDto.setBody(null);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		}
@@ -94,7 +101,7 @@ public class UtilisateurControllerImpl
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
 			responseDto.setError(true);
-			responseDto.setMessage("Aucun utilisateur n'existe avec id : " + id);
+			responseDto.setMessage("Utilisateur déjà activé / erreur lors de la requête / id null ou non existant dans la DB (id : " + id +" )");
 			responseDto.setBody(null);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		}
