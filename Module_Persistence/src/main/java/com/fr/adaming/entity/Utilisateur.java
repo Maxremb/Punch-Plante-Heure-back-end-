@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Classe représentative de l'entité persistante Utilisateur héritant de la classe Admin
@@ -12,7 +14,8 @@ import lombok.EqualsAndHashCode;
  * @since 0.0.1-SNAPSHOT
  *
  */
-@Data
+@Getter
+@Setter
 @Entity
 @EqualsAndHashCode (callSuper = false)
 public class Utilisateur extends Admin {

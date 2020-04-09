@@ -1,6 +1,7 @@
 package com.fr.adaming.repositories;
 
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
+import org.springframework.stereotype.Repository;
 
 import com.fr.adaming.entity.Utilisateur;
 
@@ -11,12 +12,8 @@ import com.fr.adaming.entity.Utilisateur;
  * @since 0.0.1-SNPASHOT
  *
  */
+@Repository
 public interface IUtilisateurRepository extends JpaRepositoryImplementation<Utilisateur, Integer> {
-
-	
-	
-	
-
 	
 	/**
 	 * Permet la recherche d'un utilisateur par nom et prenom

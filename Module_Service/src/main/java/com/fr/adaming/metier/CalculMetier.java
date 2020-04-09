@@ -72,6 +72,12 @@ public class CalculMetier implements ICalculMetier {
 			return emptySetJArdin ;}
 	}
 
+	@Override
+	public void reinitArrosJardin(Jardin jardin) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

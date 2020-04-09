@@ -29,6 +29,13 @@ public interface IUtilisateurService {
 	 * @param pseudonyme de l'utilisateur en question
 	 * @return un booléen true si l'utilisateur est actif, false sinon
 	 */
-	public ServiceResponse<Utilisateur> isActif(String pseudonyme);
+	public ServiceResponse<Boolean> isActif(String pseudonyme);
+	
+	/**
+	 * Méthdoe permettant de désactiver un utilisateur
+	 * @param id de l'utilisateur en question
+	 * @return un booléen true sur l'utilisateur à bien été desactivé, false sinon
+	 */
+	public ServiceResponse<Boolean> desactivateUser(Integer id);
 
 }

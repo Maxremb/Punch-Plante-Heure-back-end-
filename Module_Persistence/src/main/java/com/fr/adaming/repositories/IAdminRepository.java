@@ -1,6 +1,7 @@
 package com.fr.adaming.repositories;
 
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
+import org.springframework.stereotype.Repository;
 
 import com.fr.adaming.entity.Admin;
 import com.fr.adaming.entity.Utilisateur;
@@ -11,6 +12,7 @@ import com.fr.adaming.entity.Utilisateur;
  * @since 0.01-SNAPSHOT
  *
  */
+@Repository
 public interface IAdminRepository extends JpaRepositoryImplementation<Admin, Integer>{
 	
 
@@ -36,6 +38,20 @@ public interface IAdminRepository extends JpaRepositoryImplementation<Admin, Int
 	 * @return un utilisateur
 	 */
 	public Admin findByEmailAndMdp (String email, String mdp);
+	
+	/**
+	 * Permet de vérifier si un utilisateur existe deja dans la DB avec ce pseudo
+	 * @param pseudonyme de l'utilisateur voulu
+	 * @return booléen true si le pseudo est déjà existant, false sinon
+	 */
+	public Boolean existsByPseudonyme (String pseudonyme);
+	
+	/**
+	 * Permet de vérifier si un utilisateur existe deja dans la DB avec cet email
+	 * @param email de l'utilisateur voulu
+	 * @return booléen true si le pseudo est déjà existant, false sinon
+	 */
+	public Boolean existsByEmail (String email);
 	
 
 }
