@@ -77,35 +77,34 @@ public class AdminServiceImpl implements IAdminService {
 	}
 
 	@Override
-	public ServiceResponse<Boolean> existsByEmail(String email) {
+	public Boolean existsByEmail(String email) {
 		if (email != null) {
 			try {
 				log.info("Recherche d'un admin par mail OK");
-				return new ServiceResponse<Boolean>("Recherche Admin par mail", adminRepo.existsByEmail(email));
+				return adminRepo.existsByEmail(email);
 			} catch (Exception e) {
 				log.warn("Problème recherche d'un Admin via email (couche service)" + e.getMessage());
-				return new ServiceResponse<Boolean>("Recherche par email non réalisée", false);
+				return false;
 			}
 
 		}
 		log.info("Recherche admin via email non réalisée : email null");
-		return new ServiceResponse<Boolean>("Recherche admn via email non réalisée : email null", false);
+		return false;
 	}
 
 	@Override
-	public ServiceResponse<Boolean> existsByPseudonyme(String pseudonyme) {
+	public Boolean existsByPseudonyme(String pseudonyme) {
 		if (pseudonyme != null) {
 			try {
 				log.info("Recherche d'un admin par pseudonyme OK");
-				return new ServiceResponse<Boolean>("Recherche Admin par pseudonyme",
-						adminRepo.existsByPseudonyme(pseudonyme));
+				return adminRepo.existsByPseudonyme(pseudonyme);
 			} catch (Exception e) {
 				log.warn("Problème recherche d'un Admin via pseudonyme (couche service)" + e.getMessage());
-				return new ServiceResponse<Boolean>("Recherche par pseudonyme non réalisée", false);
+				return false;
 			}
 		}
 		log.info("Recherche admin via pseudonyme non réalisée : pseudonyme null");
-		return new ServiceResponse<Boolean>("Recherche admn via email non réalisée : pseudonyme null", false);
+		return false;
 	}
 
 }

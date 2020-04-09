@@ -90,40 +90,38 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 	}
 
 	@Override
-	public ServiceResponse<Boolean> isActif(String pseudonyme) {
+	public Boolean isActif(String pseudonyme) {
 		if (pseudonyme != null) {
 			try {
 				log.info("Vérification de l'activation d'un utilisateur OK");
-				return new ServiceResponse<Boolean>("Vérification de l'activation d'un utilisateur",
-						userRepo.isActif(pseudonyme));
+				return userRepo.isActif(pseudonyme);
 			} catch (Exception e) {
 				log.warn("Problème lors de la vérification de l'activation d'un utilisateur (couche service)"
 						+ e.getMessage());
-				return new ServiceResponse<Boolean>("Vérification utilisateur actif non réalisée", null);
+				return  false;
 			}
 		}
 		log.info("Vérificaation de l'activation d'un utilisateur non réalisée : pseudonme null");
-		return new ServiceResponse<Boolean>("vérificaation de l'activation d'un utilisateur non réalisée",
-				userRepo.isActif(pseudonyme));
+		return false;
 
 	}
 
 	@Override
-	public ServiceResponse<Boolean> desactivateUser(Integer id) {
+	public Boolean desactivateUser(Integer id) {
 		if(id != null && dao.existsById(id)) {
 			try {
 				Optional<Utilisateur> user = dao.findById(id);
 				user.orElse(null).setActif(false);
 				log.info("Désactivation de l'utilisateur OK");
-				return new ServiceResponse<Boolean>("Desactivation de l'utilisateur",true);
+				return true;
 			} catch (Exception e) {
 				log.warn("Problème lors de la désactivation d'un utilisateur (couche service)"
 						+ e.getMessage());
-				return new ServiceResponse<Boolean>("Désactivation utilisateur non réalisée", false);
+				return false;
 			}
 		} 
 		log.info("Desactivation non réalisée");
-		return new ServiceResponse<Boolean>("Desactivation de l'utilisateur non réalisée",false);
+		return false;
 	}
 
 }

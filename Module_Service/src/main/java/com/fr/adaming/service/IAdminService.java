@@ -39,13 +39,13 @@ public interface IAdminService {
 	 * @param email de l'admin/utilisateur recherché
 	 * @return un admin/utilisateur correspondant à l'admin/utilisateur recherché
 	 */
-	public ServiceResponse<Boolean> existsByEmail ( String email);
+	public Boolean existsByEmail ( String email);
 	
 	/**
 	 * Méthode permettant de vérifier l'existence d'un admin/utilisateur par email
 	 * @param pseudonyme de l'admin/utilisateur recherché
 	 * @return un admin/utilisateur correspondant à l'admin/utilisateur recherché
 	 */
-	public ServiceResponse<Boolean> existsByPseudonyme ( String pseudonyme);
+	public Boolean existsByPseudonyme ( String pseudonyme);
 	
 }

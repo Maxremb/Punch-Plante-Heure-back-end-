@@ -50,7 +50,7 @@ public class CalculMetier implements ICalculMetier {
 
 				// calcule la nouvelle RU du jardin
 				// ETP à remplacer par ETR lorsque celle ci sera implenté
-				jardin.setReserveUtile(jardin.getReserveUtile() - meteo.getEvapoTranspirationPotentielle());
+				jardin.setReserveUtile(jardin.getReserveUtile() - meteo.getEvapoTranspirationPotentielle() + meteo.getPluie());
 
 				// determine le seuil d'arrosage définit à 20% de la réserve totale
 
