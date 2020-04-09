@@ -23,7 +23,7 @@ import lombok.Setter;
 @EqualsAndHashCode (callSuper = false)
 public class Utilisateur extends Admin {
 	
-	@Column (nullable = false)
+	@Column (nullable = false, columnDefinition = "")
 	private String nom;
 	@Column (nullable = false)
 	private String prenom;

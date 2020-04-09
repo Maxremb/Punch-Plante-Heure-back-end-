@@ -22,11 +22,11 @@ import lombok.Setter;
 @Setter
 @Entity
 @EqualsAndHashCode
-@Inheritance (strategy = InheritanceType.SINGLE_TABLE)
+@Inheritance (strategy = InheritanceType.TABLE_PER_CLASS)
 public class Admin {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@Column (nullable = false)
 	private String mdp;

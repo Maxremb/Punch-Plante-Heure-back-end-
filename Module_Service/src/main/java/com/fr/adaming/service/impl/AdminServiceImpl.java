@@ -117,6 +117,7 @@ public class AdminServiceImpl extends AbstractService<Admin> implements IAdminSe
 					log.info("Admin sauvegardé dans la DB");
 					return new ServiceResponse<Admin>("Success", entity);
 				} catch (Exception e) {
+					e.printStackTrace();
 					log.warn(e.getMessage());
 					return new ServiceResponse<Admin>("Exception lors de la création dans la DB", null);
 				}
