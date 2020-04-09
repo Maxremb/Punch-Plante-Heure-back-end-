@@ -110,14 +110,40 @@ public class AdminServiceImpl extends AbstractService<Admin> implements IAdminSe
 
 	@Override
 	public ServiceResponse<Admin> create(Admin entity) {
-		// TODO Auto-generated method stub
-		return null;
+		if (entity != null) {
+			if (!adminRepo.existsByEmail(entity.getEmail()) && !adminRepo.existsByPseudonyme(entity.getPseudonyme())) {
+				try {
+					dao.save(entity);
+					log.info("Admin sauvegardé dans la DB");
+					return new ServiceResponse<Admin>("Success", entity);
+				} catch (Exception e) {
+					log.warn(e.getMessage());
+					return new ServiceResponse<Admin>("Exception lors de la création dans la DB", null);
+				}
+			}
+			log.info(" Création non réalisé : Un admin possède déjà cet email ou ce pseudo");
+			return new ServiceResponse<Admin>("Email ou pseudo deja utilisé", null);
+		}
+		log.info("Création non réalisé : objet en entrée null");
+		return new ServiceResponse<Admin>("Objet d'entrée null", null);
 	}
 
 	@Override
 	public ServiceResponse<Admin> update(Admin entite) {
-		// TODO Auto-generated method stub
-		return null;
+		if (entite != null && dao.existsById(entite.getId())) {
+			try {
+				dao.save(entite);
+				log.info("Admin modifié dans la DB");
+				return new ServiceResponse<Admin>("Success", entite);
+			} catch (Exception e) {
+				log.warn(e.getMessage());
+				return new ServiceResponse<Admin>("Exception lors de la modification dans la DB", null);
+			}
+
+		}
+		log.info("Modification non réalisée : id inconnu dans la database ou entité nulle");
+		return new ServiceResponse<Admin>(
+				"Modification non réalisée : id inconnu dans la database ou entité nulle", null);
 	}
 
 }
