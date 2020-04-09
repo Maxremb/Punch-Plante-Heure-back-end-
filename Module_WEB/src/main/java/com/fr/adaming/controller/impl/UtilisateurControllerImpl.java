@@ -60,7 +60,7 @@ public class UtilisateurControllerImpl
 
 	}
 
-	@RequestMapping(path = "/desactivate")
+	@GetMapping(path = "/desactivate")
 	public ResponseEntity<ResponseDto<Boolean>> desactivateUtilisateur(@RequestParam(name = "id") Integer id) {
 		log.info("Controller: méthode isActif appelée");
 
