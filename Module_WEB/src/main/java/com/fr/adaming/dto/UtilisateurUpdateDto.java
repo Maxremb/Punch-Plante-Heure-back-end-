@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Classe représentative de l'objet à communiquer au front pour la création d'un Utilisateur
+ * Classe représentative de l'objet à communiquer au front pour la modification d'un Utilisateur
  * 
  * @author Isaline MILLET
  * @since 0.0.1
