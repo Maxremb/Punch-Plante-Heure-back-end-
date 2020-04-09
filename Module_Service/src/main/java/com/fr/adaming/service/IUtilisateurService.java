@@ -37,5 +37,13 @@ public interface IUtilisateurService {
 	 * @return un booléen true sur l'utilisateur à bien été desactivé, false sinon
 	 */
 	public Boolean desactivateUser(Integer id);
+	
+	/**
+	 * Méthode permettant d'activer un utilisateur
+	 * @param id de l'utilisateur en question
+	 * @return un booléen true sur l'utilisateur à bien été activé, false sinon
+	 */
+	public Boolean activateUser(Integer id);
+	
 
 }

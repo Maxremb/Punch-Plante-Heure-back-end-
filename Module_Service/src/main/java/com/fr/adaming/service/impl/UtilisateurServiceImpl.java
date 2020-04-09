@@ -112,17 +112,49 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 	@Override
 	public Boolean desactivateUser(Integer id) {
 		if (id != null && dao.existsById(id)) {
-			try {
-				Optional<Utilisateur> user = dao.findById(id);
-				user.orElse(null).setActif(false);
-				log.info("Désactivation de l'utilisateur OK");
-				return true;
-			} catch (Exception e) {
-				log.warn("Problème lors de la désactivation d'un utilisateur (couche service)" + e.getMessage());
-				return false;
+			Optional<Utilisateur> user = dao.findById(id);
+			if (user.orElse(null).getActif()) {
+				try {
+
+					log.info("******************************************");
+					log.info("DEBUG BEFORE DESACTIVATE :" + user);
+					log.info("******************************************");
+					user.orElse(null).setActif(false);
+					log.info("******************************************");
+					log.info("DEBUG AFTER DESACTIVATE :" + user);
+					log.info("******************************************");
+					log.info("Désactivation de l'utilisateur OK");
+					return true;
+				} catch (Exception e) {
+					log.warn("Problème lors de la désactivation d'un utilisateur (couche service)" + e.getMessage());
+					return false;
+				}
 			}
+			log.info("Utilisateur déjà desactivé");
+			return false;
+
 		}
-		log.info("Desactivation non réalisée");
+		log.info("Desactivation non réalisée ; ID null ou n'existe pas dans la DB");
+		return false;
+	}
+
+	@Override
+	public Boolean activateUser(Integer id) {
+		if( id != null && dao.existsById(id)) {
+			Optional<Utilisateur> user = dao.findById(id);
+			if (!user.orElse(null).getActif()) {
+				try {
+					user.orElse(null).setActif(true);
+					return true;
+				} catch (Exception e) {
+					log.warn("Problème lors de l'activation d'un utilisateur (couche service)" + e.getMessage());
+					return false;
+				}
+			}
+			log.info("Utilisateur déjà activé");
+			return false;
+		}
+		log.info("Activation non réalisée : id null ou n'existe pas dans la DB");
 		return false;
 	}
 

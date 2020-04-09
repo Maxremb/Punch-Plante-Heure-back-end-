@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
+import com.fr.adaming.ModulePersistenceApplication;
 import com.fr.adaming.entity.Retention;
 import com.fr.adaming.enums.Sol;
 
@@ -16,7 +17,7 @@ import com.fr.adaming.enums.Sol;
  * @author maxime
  * @since 0.0.1-SNAPSHOT
  */
-@SpringBootTest
+@SpringBootTest (classes = ModulePersistenceApplication.class)
 public class IRetentionRepoTest {
 	
 	@Autowired

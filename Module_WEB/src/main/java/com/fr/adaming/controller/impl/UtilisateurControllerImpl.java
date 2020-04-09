@@ -62,7 +62,7 @@ public class UtilisateurControllerImpl
 
 	@GetMapping(path = "/desactivate")
 	public ResponseEntity<ResponseDto<Boolean>> desactivateUtilisateur(@RequestParam(name = "id") Integer id) {
-		log.info("Controller: méthode isActif appelée");
+		log.info("Controller: méthode desactivateUser appelée");
 
 		boolean result = userService.desactivateUser(id);
 		ResponseDto<Boolean> responseDto = new ResponseDto<>();
@@ -70,6 +70,26 @@ public class UtilisateurControllerImpl
 		if (result) {
 			responseDto.setError(false);
 			responseDto.setMessage("L'utilisateur à bien été désactivé");
+			responseDto.setBody(null);
+			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		} else {
+			responseDto.setError(true);
+			responseDto.setMessage("Aucun utilisateur n'existe avec id : " + id);
+			responseDto.setBody(null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		}
+	}
+	
+	@GetMapping(path = "/activate")
+	public ResponseEntity<ResponseDto<Boolean>> activateUtilisateur(@RequestParam(name = "id") Integer id){
+		log.info("Controller: méthode activateUser appelée");
+
+		boolean result = userService.activateUser(id);
+		ResponseDto<Boolean> responseDto = new ResponseDto<>();
+
+		if (result) {
+			responseDto.setError(false);
+			responseDto.setMessage("L'utilisateur à bien été activé");
 			responseDto.setBody(null);
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
