@@ -1,5 +1,7 @@
 package com.fr.adaming.controller.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +50,14 @@ public class PlanteUtilisateurControllerImpl
 		ServiceResponse<Page<PlanteUtilisateur>> serviceResponse1 = planteUtilisateurService.readByJardin(idJardin, page);
 
 		return makeUpdateDtoPageResponse(serviceResponse1);
+	}
+	
+	@GetMapping(path = "/jardin/liste/{idJardin}")
+	public ResponseEntity<ResponseDto<List<PlanteUtilisateurUpdateDto>>> findByJardin(@PathVariable int idJardin) {
+
+		ServiceResponse<List<PlanteUtilisateur>> serviceResponse1 = planteUtilisateurService.readByJardin(idJardin);
+
+		return makeUpdateDtoListResponse(serviceResponse1);
 	}
 
 }
