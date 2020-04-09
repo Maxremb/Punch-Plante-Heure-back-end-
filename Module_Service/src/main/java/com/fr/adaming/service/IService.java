@@ -1,15 +1,18 @@
 package com.fr.adaming.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+
+import com.fr.adaming.dto.ServiceResponse;
 
 //TODO adapter les methodes au demandes du projet
 
 /**
- * <p>IService représente les méthodes des classes Services</p>
+ * <p>IService représente les méthodes CRUD générales des classes Services</p>
  * 
  * @author Grégoire Brebner
  *
  * @param E l'entité
+ * @since 0.0.1
  */
 public interface IService<E> {
 
@@ -17,24 +20,24 @@ public interface IService<E> {
 	 * <p>Cette methode create permet la création d'une entite</p>
 	 * 
 	 * @param entity L'entité à créer
-	 * @return Une entite
+	 * @return Un objet serviceResponse contenant une entité ou null
 	 */
-	public E create(E entity);
+	public ServiceResponse<E> create(E entity);
 
 	/**
-	 * <p>Methode permettant l'affichage de la liste de toute les entites</p>
-	 * 
-	 * @return Une liste d'entité
+	 * <p>Methode permettant l'affichage de la liste de toutes les entites</p>
+	 * @param p numéro de la page à afficher
+	 * @return serviceResponse contenant une page d'entités avec 20 élements maximum
 	 */
-	public List<E> readAll();
+	public ServiceResponse<Page<E>> readAll(int p);
 
 	/**
 	 * <p>Methode permettant l'affichage d'une entite par son ID</p>
 	 * 
 	 * @param id Id de l'entite
-	 * @return Une entite
+	 * @return Servuce response contenant une entite ou null
 	 */
-	public E readById(Integer id);
+	public ServiceResponse<E> readById(Integer id);
 
 	/**
 	 * <p>Methode permettant la connaissance de l'existence d'une entite par son
@@ -57,8 +60,8 @@ public interface IService<E> {
 	 * <p>Methode permettant la modification d'une entite </p>
 	 * 
 	 * @param entite Entite à modifier
-	 * @return VRAI(modification effectue) ou FAUX (modification non efffectue)
+	 * @return ServiceResponse contenant L'entité ou null (en cas d'erreur)
 	 */
-	public boolean update(E entite); //TODO decider si on veut update en boolean
+	public ServiceResponse<E> update(E entite); //TODO decider si on veut update en boolean
 
 }
