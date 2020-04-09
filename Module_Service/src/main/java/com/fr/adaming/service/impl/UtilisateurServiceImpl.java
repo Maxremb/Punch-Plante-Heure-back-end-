@@ -115,11 +115,11 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 			Optional<Utilisateur> user = dao.findById(id);
 			if (user.orElse(null).getActif()) {
 				try {
-
 					log.info("******************************************");
 					log.info("DEBUG BEFORE DESACTIVATE :" + user);
 					log.info("******************************************");
 					user.orElse(null).setActif(false);
+					dao.save(user.orElse(null));
 					log.info("******************************************");
 					log.info("DEBUG AFTER DESACTIVATE :" + user);
 					log.info("******************************************");
@@ -145,6 +145,7 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 			if (!user.orElse(null).getActif()) {
 				try {
 					user.orElse(null).setActif(true);
+					dao.save(user.orElse(null));
 					return true;
 				} catch (Exception e) {
 					log.warn("Problème lors de l'activation d'un utilisateur (couche service)" + e.getMessage());
