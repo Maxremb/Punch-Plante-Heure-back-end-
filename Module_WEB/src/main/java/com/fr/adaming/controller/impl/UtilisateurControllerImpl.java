@@ -15,7 +15,6 @@ import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.dto.UtilisateurCreateDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.entity.Utilisateur;
-import com.fr.adaming.service.IAdminService;
 import com.fr.adaming.service.IUtilisateurService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,6 @@ public class UtilisateurControllerImpl
 
 	@Autowired
 	private IUtilisateurService userService;
-
 
 
 	@GetMapping(path = "/nomEtPrenom")

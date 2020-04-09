@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Admin;
 import com.fr.adaming.repositories.IAdminRepository;
+import com.fr.adaming.service.AbstractService;
 import com.fr.adaming.service.IAdminService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
-public class AdminServiceImpl implements IAdminService {
+public class AdminServiceImpl extends AbstractService<Admin> implements IAdminService {
 
 	@Autowired
 	private IAdminRepository adminRepo;
@@ -105,6 +106,18 @@ public class AdminServiceImpl implements IAdminService {
 		}
 		log.info("Recherche admin via pseudonyme non réalisée : pseudonyme null");
 		return false;
+	}
+
+	@Override
+	public ServiceResponse<Admin> create(Admin entity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ServiceResponse<Admin> update(Admin entite) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
