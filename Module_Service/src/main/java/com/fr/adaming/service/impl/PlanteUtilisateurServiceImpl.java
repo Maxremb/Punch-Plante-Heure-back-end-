@@ -1,5 +1,7 @@
 package com.fr.adaming.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -101,6 +103,30 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 			} catch (Exception e) {
 				log.warn(e.getMessage());
 				return new ServiceResponse<Page<PlanteUtilisateur>>("Erreur lors de l'affichage de la liste", null);
+			}
+
+		}
+	}
+	
+	
+	@Override
+	public ServiceResponse<List<PlanteUtilisateur>> readByJardin(int idJardin) {
+		if (!jRepo.existsById(idJardin)) {
+			log.info("Jardin inexistant");
+			return new ServiceResponse<List<PlanteUtilisateur>>("Jardin inexistant", null);
+		} else {
+			try {
+				log.info("Jardin existant");
+				ServiceResponse<List<PlanteUtilisateur>> serviceResponse = new ServiceResponse<List<PlanteUtilisateur>>();
+				
+				List<PlanteUtilisateur> liste = repo.findByJardin(idJardin);
+				
+				serviceResponse.setBody(liste);
+				serviceResponse.setMessage("Succes");
+				return serviceResponse;
+			} catch (Exception e) {
+				log.warn(e.getMessage());
+				return new ServiceResponse<List<PlanteUtilisateur>>("Erreur lors de l'affichage de la liste", null);
 			}
 
 		}
