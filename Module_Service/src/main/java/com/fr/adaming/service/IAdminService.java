@@ -48,4 +48,12 @@ public interface IAdminService {
 	 */
 	public Boolean existsByPseudonyme ( String pseudonyme);
 	
+	/**
+	 * Méthode permettant de vérifier l'existence d'un utilisateur avec email et pwd donner
+	 * @param email de l'utilisateur recherché
+	 * @param mdp de l'utilisateur recherché
+	 * @return boolean : TRUE si utiliseur existe / FALSE sinon
+	 */
+	public ServiceResponse<Admin> existsByEmailAndMdp (String email, String mdp);
+	
 }

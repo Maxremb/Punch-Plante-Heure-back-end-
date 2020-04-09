@@ -147,4 +147,23 @@ public class AdminServiceImpl extends AbstractService<Admin> implements IAdminSe
 				"Modification non réalisée : id inconnu dans la database ou entité nulle", null);
 	}
 
+	@Override
+	public ServiceResponse<Admin> existsByEmailAndMdp(String email, String mdp) {
+
+		if ( email != null && mdp != null ) {
+			try {
+				log.info("Vérification existence mail et mdp dans DB OK");
+				if ( adminRepo.existsByEmailandByMdp(email, mdp)) {
+					Admin entite = adminRepo.findByEmailAndMdp(email, mdp);
+					return new ServiceResponse<Admin>("Success", entite);
+				}
+			} catch (Exception e) {
+				log.warn("Problème recherche d'un Admin via mail et mdp (couche service)" + e.getMessage());
+				return new ServiceResponse<Admin>("Exception lors de la recherche par email and mdp", null);
+			}
+		}
+		log.info("Recherche non réalisée : email ou mdp null");
+		return new ServiceResponse<Admin>("Recherche non réalisée : email ou mdp null", null);
+	}
+
 }
