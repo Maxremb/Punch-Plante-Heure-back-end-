@@ -1,7 +1,5 @@
 package com.fr.adaming.dto;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import com.sun.istack.NotNull;
 
 import lombok.EqualsAndHashCode;
