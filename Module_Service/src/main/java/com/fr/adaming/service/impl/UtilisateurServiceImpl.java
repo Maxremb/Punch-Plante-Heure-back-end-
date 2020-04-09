@@ -95,7 +95,7 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 			try {
 				log.info("Vérification de l'activation d'un utilisateur OK");
 				return new ServiceResponse<Boolean>("Vérification de l'activation d'un utilisateur",
-						userRepo.isActif(pseudonyme));
+						userRepo.actif(pseudonyme));
 			} catch (Exception e) {
 				log.warn("Problème lors de la vérification de l'activation d'un utilisateur (couche service)"
 						+ e.getMessage());
@@ -104,7 +104,7 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 		}
 		log.info("Vérificaation de l'activation d'un utilisateur non réalisée : pseudonme null");
 		return new ServiceResponse<Boolean>("vérificaation de l'activation d'un utilisateur non réalisée",
-				userRepo.isActif(pseudonyme));
+				userRepo.actif(pseudonyme));
 
 	}
 
