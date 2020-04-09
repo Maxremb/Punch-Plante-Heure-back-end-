@@ -29,7 +29,9 @@ public interface IUtilisateurRepository extends JpaRepositoryImplementation<Util
 	 * @param pseudonyme de l'utilisateur recherché
 	 * @return un booléen true si l'utilisateur est actif, false sinon
 	 */
-	public boolean isActif(String pseudonyme);
+	public boolean actif(String pseudonyme);
+	
+	
 	
 	
 
