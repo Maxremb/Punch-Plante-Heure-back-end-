@@ -15,6 +15,12 @@ public interface ICalculMetierTest {
 	public void TestCalculRuWithValidMeteo_ShouldReturnFullSetJardin() ;
 	
 	/**
+	 * Test de la méthode calcul de réserve utile avec un seul jardin en état critique
+	 * retourne un set de un jardin
+	 */
+	public void TestCalculRuWithOneGardenToArose_shouldReturnSetOneGarden();
+	
+	/**
 	 * Test de la méthode calcul de réserve utile avec une meteo sans departement
 	 * retourne un set de jardin vide
 	 */
@@ -24,13 +30,13 @@ public interface ICalculMetierTest {
 	 * Test de la méthode calcul de réserve utile avec une meteo sans evapotranspiration
 	 * retourne un set de jardin vide
 	 */
-	public void TestCalculRuWithNullEvpMeteo_ShouldReturnEmptySet() ;
+	public void TestCalculRuWith0EvpMeteo_ShouldReturnEmptySet() ;
 
 	/**
 	 * Test de la méthode calcul de réserve utile avec 0 jardins dans le departement de la méteo
 	 * retourne un set de jardin vide
 	 */
-	public void TestCalculRyWithNoJardinInDept_ShouldReturnEmptySet();
+	public void TestCalculRuWithNoJardinInDept_ShouldReturnEmptySet();
 	
 	/**
 	 * Test de la méthode calcul de réserve utile avec une meteo avec departement = 0 (jardin d'interieur)

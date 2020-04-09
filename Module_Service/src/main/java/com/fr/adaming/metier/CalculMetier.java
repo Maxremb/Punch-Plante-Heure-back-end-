@@ -37,7 +37,7 @@ public class CalculMetier implements ICalculMetier {
 
 		Departement dept = meteo.getDepartement();
 
-		if (dept != null) {
+		if (dept != null && dept.getNumeroDep() != 0) {
 
 			// liste de tout les jardins
 			List<Jardin> listeJardinsDept = jardinRepo.trouveListJardinParDepartement(dept.getNumeroDep());
