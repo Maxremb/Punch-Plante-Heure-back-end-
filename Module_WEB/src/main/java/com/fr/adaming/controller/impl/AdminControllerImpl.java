@@ -14,6 +14,7 @@ import com.fr.adaming.controller.AbstractController;
 import com.fr.adaming.dto.AdminCreateDto;
 import com.fr.adaming.dto.AdminUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Admin;
 import com.fr.adaming.service.IAdminService;
 
@@ -30,22 +31,24 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 	
 	@GetMapping (path = "/pseudo")
 	public ResponseEntity<ResponseDto<AdminUpdateDto>> readByPseudonyme(@RequestParam (name = "pseudo") String pseudo) {
-		return null;
+		ServiceResponse<Admin> resp = adminService.readByPseudonyme(pseudo);
+		return makeUpdateDtoResponse(resp);
 		
 	}
 	
 	@GetMapping (path = "/mail")
 	public ResponseEntity<ResponseDto<AdminUpdateDto>> readByEmail (@RequestParam (name = "mail") String mail) {
-		return null;
+		ServiceResponse<Admin> resp = adminService.readByEmail(mail);
+		return makeUpdateDtoResponse(resp);
 		
 	}
 	
 	
-	@GetMapping (path = "/mailAndPwd")
-	public ResponseEntity<ResponseDto<AdminUpdateDto>> readByEmailAndPwd (@RequestParam (name = "mail") String mail, @RequestParam (name = "pwd") String pwd){
-		return null;
-		
-	}
+//	@GetMapping (path = "/mailAndPwd")
+//	public ResponseEntity<ResponseDto<AdminUpdateDto>> readByEmailAndPwd (@RequestParam (name = "mail") String mail, @RequestParam (name = "pwd") String pwd){
+//		ServiceResponse<Admin> resp = adminService.readByEmailAndMdp(mail, pwd);
+//		return makeUpdateDtoResponse(resp);
+//	}
 	
 	
 	@GetMapping (path = "/exists/mail")
@@ -88,5 +91,11 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 		}
 	}
 	
+	@GetMapping (path = "/mailAndPwd")
+	public  ResponseEntity<ResponseDto<AdminUpdateDto>> existsByMailandPwd(@RequestParam (name = "mail") String mail, @RequestParam (name = "pwd") String pwd) {
+		ServiceResponse<Admin> resp = adminService.existsByEmailAndMdp(mail, pwd);
+		return makeUpdateDtoResponse(resp);
+		
+	}
 
 }
