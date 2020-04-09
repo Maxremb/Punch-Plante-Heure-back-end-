@@ -9,15 +9,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Classe représentative de l'objet à communiquer au front pour la création d'un Utilisateur
+ * Classe représentative de l'objet à communiquer au front pour la modification d'un Admin
  * 
  * @author Isaline MILLET
  * @since 0.0.1
  */
 @Getter @Setter @EqualsAndHashCode(callSuper = true)
-public class UtilisateurUpdateDto extends UtilisateurCreateDto {
+public class AdminUpdateDto extends AdminCreateDto {
 
 	@NotNull @Positive
-	private Integer identifier; 
+	private Integer identifier;
 	
 }
