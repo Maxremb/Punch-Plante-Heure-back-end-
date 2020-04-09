@@ -2,22 +2,35 @@ package com.fr.adaming.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Classe représentative de l'entité persistante Utilisateur héritant de la classe Admin
+ * @author Maxime Rembert
+ * @since 0.0.1-SNAPSHOT
+ *
+ */
 @Data
 @Entity
-@EqualsAndHashCode
-public class Utilisateur {
+@EqualsAndHashCode (callSuper = false)
+public class Utilisateur extends Admin {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	@Column
+	@Column (nullable = false)
 	private String nom;
-	
+	@Column (nullable = false)
+	private String prenom;
+	@Column
+	private String description;
+	@Column 
+	private Integer telephone;
+	@Column
+	private String reputation;
+	@Column (columnDefinition = "BOOLEAN DEFAULT FALSE")
+	private Boolean newsletter ;
+	@Column (columnDefinition = "BOOLEAN DEFAULT TRUE")
+	private Boolean actif;
+	@Column
+	private String photo;
 }
