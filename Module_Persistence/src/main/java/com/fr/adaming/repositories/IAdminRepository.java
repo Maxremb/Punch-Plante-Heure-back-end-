@@ -53,15 +53,6 @@ public interface IAdminRepository extends JpaRepositoryImplementation<Admin, Int
 	 * @return booléen true si le pseudo est déjà existant, false sinon
 	 */
 	public Boolean existsByEmail (String email);
-	
-	/**
-	 * Méthode permettant de vérifier l'existence d'un utilisateur avec email et pwd donner
-	 * @param email de l'utilisateur recherché
-	 * @param mdp de l'utilisateur recherché
-	 * @return boolean : TRUE si utiliseur existe / FALSE sinon
-	 */
-//	@Query(value = "select * from admin WHERE admin.email = :email AND admin.mdp = :mdp", nativeQuery = true)
-//	public Boolean existsByEmailandByMdp (String email, String mdp);
-	
+		
 
 }
