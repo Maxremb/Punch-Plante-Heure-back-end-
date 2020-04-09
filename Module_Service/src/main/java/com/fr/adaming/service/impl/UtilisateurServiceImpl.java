@@ -111,10 +111,19 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 	@Override
 	public ServiceResponse<Boolean> desactivateUser(Integer id) {
 		if(id != null && dao.existsById(id)) {
-			Optional<Utilisateur> user = dao.findById(id);
-			user.orElse(null).setActif(false);
-		}
-		return null;
+			try {
+				Optional<Utilisateur> user = dao.findById(id);
+				user.orElse(null).setActif(false);
+				log.info("Désactivation de l'utilisateur OK");
+				return new ServiceResponse<Boolean>("Desactivation de l'utilisateur",true);
+			} catch (Exception e) {
+				log.warn("Problème lors de la désactivation d'un utilisateur (couche service)"
+						+ e.getMessage());
+				return new ServiceResponse<Boolean>("Désactivation utilisateur non réalisée", false);
+			}
+		} 
+		log.info("Desactivation non réalisée");
+		return new ServiceResponse<Boolean>("Desactivation de l'utilisateur non réalisée",false);
 	}
 
 }

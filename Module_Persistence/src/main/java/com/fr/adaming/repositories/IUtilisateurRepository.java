@@ -3,6 +3,7 @@ package com.fr.adaming.repositories;
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.stereotype.Repository;
 
+import com.fr.adaming.entity.Admin;
 import com.fr.adaming.entity.Utilisateur;
 
 /**
