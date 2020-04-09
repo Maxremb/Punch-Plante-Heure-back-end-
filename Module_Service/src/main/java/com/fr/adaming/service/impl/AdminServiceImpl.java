@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Admin;
-import com.fr.adaming.entity.Utilisateur;
 import com.fr.adaming.repositories.IAdminRepository;
 import com.fr.adaming.service.IAdminService;
 
@@ -48,15 +47,13 @@ public class AdminServiceImpl implements IAdminService {
 		try {
 			if (email != null) {
 				log.info("Recherche Admin par email dans la DB OK");
-				return new ServiceResponse<Admin>("Recherche Admin par email",
-						adminRepo.findByEmail(email));
+				return new ServiceResponse<Admin>("Recherche Admin par email", adminRepo.findByEmail(email));
 			} else {
 				log.info("Recherche Admin par email non réalisée : email null");
 				return new ServiceResponse<Admin>("Recherche non réalisée : email null", null);
 			}
 		} catch (Exception e) {
-			log.warn("Problème récupération d'un Admin après recherche via email (couche service)"
-					+ e.getMessage());
+			log.warn("Problème récupération d'un Admin après recherche via email (couche service)" + e.getMessage());
 			return new ServiceResponse<Admin>("Recherche par email non réalisée", null);
 		}
 	}
@@ -81,14 +78,34 @@ public class AdminServiceImpl implements IAdminService {
 
 	@Override
 	public ServiceResponse<Boolean> existsByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		if (email != null) {
+			try {
+				log.info("Recherche d'un admin par mail OK");
+				return new ServiceResponse<Boolean>("Recherche Admin par mail", adminRepo.existsByEmail(email));
+			} catch (Exception e) {
+				log.warn("Problème recherche d'un Admin via email (couche service)" + e.getMessage());
+				return new ServiceResponse<Boolean>("Recherche par email non réalisée", false);
+			}
+
+		}
+		log.info("Recherche admin via email non réalisée : email null");
+		return new ServiceResponse<Boolean>("Recherche admn via email non réalisée : email null", false);
 	}
 
 	@Override
 	public ServiceResponse<Boolean> existsByPseudonyme(String pseudonyme) {
-		// TODO Auto-generated method stub
-		return null;
+		if (pseudonyme != null) {
+			try {
+				log.info("Recherche d'un admin par pseudonyme OK");
+				return new ServiceResponse<Boolean>("Recherche Admin par pseudonyme",
+						adminRepo.existsByPseudonyme(pseudonyme));
+			} catch (Exception e) {
+				log.warn("Problème recherche d'un Admin via pseudonyme (couche service)" + e.getMessage());
+				return new ServiceResponse<Boolean>("Recherche par pseudonyme non réalisée", false);
+			}
+		}
+		log.info("Recherche admin via pseudonyme non réalisée : pseudonyme null");
+		return new ServiceResponse<Boolean>("Recherche admn via email non réalisée : pseudonyme null", false);
 	}
 
 }
