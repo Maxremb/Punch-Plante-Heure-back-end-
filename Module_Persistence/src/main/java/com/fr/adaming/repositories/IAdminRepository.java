@@ -60,8 +60,8 @@ public interface IAdminRepository extends JpaRepositoryImplementation<Admin, Int
 	 * @param mdp de l'utilisateur recherché
 	 * @return boolean : TRUE si utiliseur existe / FALSE sinon
 	 */
-	@Query(value = "select * from admin WHERE email = :email AND mdp = :mdp", nativeQuery = true)
-	public Boolean existsByEmailandByMdp (String email, String mdp);
+//	@Query(value = "select * from admin WHERE admin.email = :email AND admin.mdp = :mdp", nativeQuery = true)
+//	public Boolean existsByEmailandByMdp (String email, String mdp);
 	
 
 }
