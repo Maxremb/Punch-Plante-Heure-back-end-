@@ -23,9 +23,9 @@ public class UtilisateurCreateDto extends AdminCreateDto {
 	
 	private String reput;
 	
-	private Boolean news ;
+	private Boolean news;
 
-	private Boolean active;
+	private Boolean active = true;
 	
 	private String picture;
 }

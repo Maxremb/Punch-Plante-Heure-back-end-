@@ -95,7 +95,7 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 			try {
 				log.info("Vérification de l'activation d'un utilisateur OK");
 				Utilisateur user = (Utilisateur) adminRepo.findByPseudonyme(pseudonyme);
-				if (user.getActif()) {
+				if (user != null || user.getActif() == true) {
 					log.info("Utilisateur actif");
 					return true;
 				}
@@ -115,11 +115,11 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 	@Override
 	public Boolean desactivateUser(Integer id) {
 		if (id != null && dao.existsById(id)) {
-			Optional<Utilisateur> user = dao.findById(id);
-			if (user.orElse(null).getActif()) {
+			Utilisateur user = dao.findById(id).orElse(null);
+			if (user != null || user.getActif()) {
 				try {
-					user.orElse(null).setActif(false);
-					dao.save(user.orElse(null));
+					user.setActif(false);
+					dao.save(user);
 					log.info("Désactivation de l'utilisateur OK");
 					return true;
 				} catch (Exception e) {
@@ -138,11 +138,11 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 	@Override
 	public Boolean activateUser(Integer id) {
 		if (id != null && dao.existsById(id)) {
-			Optional<Utilisateur> user = dao.findById(id);
-			if (!user.orElse(null).getActif()) {
+			Utilisateur user = dao.findById(id).orElse(null);
+			if (!user.getActif()) {
 				try {
-					user.orElse(null).setActif(true);
-					dao.save(user.orElse(null));
+					user.setActif(true);
+					dao.save(user);
 					return true;
 				} catch (Exception e) {
 					log.warn("Problème lors de l'activation d'un utilisateur (couche service)" + e.getMessage());
@@ -158,8 +158,8 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 
 	@Override
 	public ServiceResponse<Utilisateur> existsByEmailAndMdp(String email, String mdp) {
-		
-		if ( email != null && mdp != null ) {
+
+		if (email != null && mdp != null) {
 			try {
 				log.info("Vérification existence mail et mdp dans DB");
 				if (userRepo.findByEmailAndMdp(email, mdp) != null) {
