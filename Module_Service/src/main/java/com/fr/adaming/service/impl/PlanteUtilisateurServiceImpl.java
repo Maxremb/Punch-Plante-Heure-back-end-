@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
@@ -94,7 +95,7 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 			try {
 				log.info("Jardin existant");
 				ServiceResponse<Page<PlanteUtilisateur>> serviceResponse = new ServiceResponse<Page<PlanteUtilisateur>>();
-				Pageable pageable = PageRequest.of(p, 20, Sort.by("plante_model_id"));
+				Pageable pageable = PageRequest.of(p, 20, Sort.by(Direction.DESC, "id"));
 				Page<PlanteUtilisateur> page = repo.findByJardin(idJardin, pageable);
 				
 				serviceResponse.setBody(page);
