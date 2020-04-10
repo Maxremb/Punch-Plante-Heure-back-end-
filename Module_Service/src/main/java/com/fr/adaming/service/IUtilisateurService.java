@@ -1,6 +1,7 @@
 package com.fr.adaming.service;
 
 import com.fr.adaming.dto.ServiceResponse;
+import com.fr.adaming.entity.Admin;
 import com.fr.adaming.entity.Utilisateur;
 
 /**
@@ -44,6 +45,14 @@ public interface IUtilisateurService {
 	 * @return un booléen true sur l'utilisateur à bien été activé, false sinon
 	 */
 	public Boolean activateUser(Integer id);
+	
+	/**
+	 * Méthode permettant de vérifier l'existence d'un utilisateur avec email et pwd donner
+	 * @param email de l'utilisateur recherché
+	 * @param mdp de l'utilisateur recherché
+	 * @return boolean : TRUE si utiliseur existe / FALSE sinon
+	 */
+	public ServiceResponse<Utilisateur> existsByEmailAndMdp (String email, String mdp);
 	
 
 }

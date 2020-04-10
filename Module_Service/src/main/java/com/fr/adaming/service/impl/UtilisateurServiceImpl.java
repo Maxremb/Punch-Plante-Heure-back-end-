@@ -157,4 +157,24 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 		return false;
 	}
 
+	@Override
+	public ServiceResponse<Utilisateur> existsByEmailAndMdp(String email, String mdp) {
+		
+		if ( email != null && mdp != null ) {
+			try {
+				log.info("Vérification existence mail et mdp dans DB");
+				if (userRepo.findByEmailAndMdp(email, mdp) != null) {
+					Utilisateur entite = userRepo.findByEmailAndMdp(email, mdp);
+					return new ServiceResponse<Utilisateur>("Success", entite);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.warn("Problème recherche d'un Admin via mail et mdp (couche service)" + e.getMessage());
+				return new ServiceResponse<Utilisateur>("Exception lors de la recherche par email and mdp", null);
+			}
+		}
+		log.info("Recherche non réalisée : email ou mdp null");
+		return new ServiceResponse<Utilisateur>("Recherche non réalisée : email ou mdp null", null);
+	}
+
 }
