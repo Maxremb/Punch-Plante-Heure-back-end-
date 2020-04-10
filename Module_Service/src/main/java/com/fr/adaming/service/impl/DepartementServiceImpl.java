@@ -1,5 +1,6 @@
 package com.fr.adaming.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,6 +120,16 @@ public class DepartementServiceImpl extends AbstractService<Departement>
 //			return new ServiceResponse<Page<Meteo>>("Problème readMeteoByNumDep", depRepo.findMeteoByNumeroDep(pageable, numDep));
 //		}
 
+	}
+
+	@Override
+	public ServiceResponse<List<Departement>> readAllList() {
+		log.info("Récupération de la liste des départements");
+		List<Departement> liste = dao.findAll();
+		ServiceResponse<List<Departement>> serviceResponse = new ServiceResponse<List<Departement>>();
+		serviceResponse.setBody(liste);
+		serviceResponse.setMessage("Succes");
+		return serviceResponse;
 	}
 
 }

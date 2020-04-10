@@ -8,11 +8,15 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Meteo;
 import com.fr.adaming.repositories.IJardinRepository;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Couche métier permettant le traitement des données météos et de besoin en eau
@@ -22,11 +26,13 @@ import com.fr.adaming.repositories.IJardinRepository;
  * @since 0.0.1-SNAPSHOT
  */
 @Component
+@Service
+@Slf4j
 public class CalculMetier implements ICalculMetier {
 
 	@Autowired
 	private IJardinRepository jardinRepo;
-	
+
 	@Autowired
 	protected JpaRepository<Jardin, Integer> dao;
 
@@ -84,21 +90,29 @@ public class CalculMetier implements ICalculMetier {
 	}
 
 	/**
-	 * Méthode permettant de réinitialiser la réserve utile du jardin après arrossage de l'utilisateur
+	 * Méthode permettant de réinitialiser la réserve utile du jardin après
+	 * arrossage de l'utilisateur
+	 * 
 	 * @param id du jardin en question
-	 * @return un optionnal jardin
+	 * @return un servjardin
 	 */
 	@Override
-	public Optional<Jardin> reinitArrosJardin(Integer id) {
+	public ServiceResponse<Jardin> reinitArrosJardin(Integer id) {
 
-		Optional<Jardin> jardin = jardinRepo.findById(id);
+		Jardin jardin = jardinRepo.findById(id).orElse(null);
 		// remplissage reserve utile par arrosage
-		if (jardin.orElse(null).getLongueur() != null && jardin.orElse(null).getLargeur() != null
-				&& jardin.orElse(null).getProfSol() != null) {
-			jardin.orElse(null).setReserveUtile(jardin.orElse(null).getRESERVE_MAX_EAU());
-			dao.save(jardin.orElse(null));
+		if (jardin != null) {
+			if (jardin.getLongueur() != null && jardin.getLargeur() != null && jardin.getProfSol() != null) {
+				jardin.setReserveUtile(jardin.getRESERVE_MAX_EAU());
+				dao.save(jardin);
+				log.info("Jardin reserve utile modifiée dans la DB");
+				return new ServiceResponse<Jardin>("Success", jardin);
+			} else {
+				return new ServiceResponse<Jardin>("Pas de longueur et/ou largeur et/ou profondeur", null);
+			}
 		}
-		return jardin;
+		
+		return new ServiceResponse<Jardin>("Jardin null", null);
 
 	}
 

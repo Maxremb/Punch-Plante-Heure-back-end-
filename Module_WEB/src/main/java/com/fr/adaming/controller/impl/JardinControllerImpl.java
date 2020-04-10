@@ -62,10 +62,10 @@ public class JardinControllerImpl extends AbstractController<JardinCreateDto, Ja
 		return makeUpdateDtoPageResponse(resp);
 	}
 	
-//	public ResponseEntity<ResponseDto<JardinUpdateDto>> reinitArrossJardin (@RequestParam (name = "id") Integer id){
-//		ServiceResponse<Optional<Jardin>> resp = calculMetier.reinitArrosJardin(id);
-//		return makeUpdateDtoResponse(resp);
-//		
-//	}
+	public ResponseEntity<ResponseDto<JardinUpdateDto>> reinitArrossJardin (@RequestParam (name = "id") Integer id){
+		ServiceResponse<Jardin> resp = calculMetier.reinitArrosJardin(id);
+		
+		return makeUpdateDtoResponse(resp);
+	}
 
 }
