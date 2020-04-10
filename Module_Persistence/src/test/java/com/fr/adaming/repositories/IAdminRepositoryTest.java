@@ -80,16 +80,74 @@ public class IAdminRepositoryTest {
 	
 	@Test
 	public void TestFindByEmailWithNoDb_ShouldReturnNull() {
-		assertThat(repo.findByEmail(email));
+		assertThat(repo.findByEmail(email)).isNull();
 	}
 	
 	// ************************************************************
 	// FIND BY PSEUDONYME
 	
+	@Test
+	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (1,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestFindByPseudoNymeWithValidEmail_ShouldReturnEntite() {
+		assertThat(repo.findByPseudonyme(pseudo)).hasFieldOrPropertyWithValue("email", "kiki@trail.fr");
+	}
+	
+	@Test
+	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (1,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestFindByPseudoNymeWithNullParam_ShouldReturnNull() {
+		assertThat(repo.findByPseudonyme(null)).isNull();
+	}
+	
+	@Test
+	public void TestFindByPseudoNymeWithNoDb_ShouldReturnNull() {
+		assertThat(repo.findByPseudonyme(pseudo)).isNull();
+	}
+	
 	// ************************************************************
 	// EXISTS BY EMAIL
+	
+	@Test
+	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (1,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestExistsByEmailWithValidParam_ShouldReturnTrue() {
+		assertThat(repo.existsByEmail(email)).isTrue();
+	}
+	
+	@Test
+	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (1,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestExistsByEmailWithNullParam_ShouldReturnFalse() {
+		assertThat(repo.existsByEmail(email)).isFalse();
+	}
+	
+	@Test
+	public void TestExistsByEmailWithNoDB_ShouldReturnFalse() {
+		assertThat(repo.existsByEmail(email)).isFalse();
+	}
+	
 	
 	// ************************************************************
 	// EXISTS BY PSEUDONYME
 
+	@Test
+	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (1,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestExistsByPseudonymeWithValidParam_ShouldReturnTrue() {
+		assertThat(repo.existsByPseudonyme(pseudo)).isTrue();
+	}
+	
+	@Test
+	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (1,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestExistsByPseudonymeWithNullParam_ShouldReturnFalse() {
+		assertThat(repo.existsByPseudonyme(null)).isFalse();
+	}
+	
+	@Test
+	public void TestExistsByPseudonymeWithNoDB_ShouldReturnFalse() {
+		assertThat(repo.existsByPseudonyme(pseudo)).isFalse();
+	}
+	
 }
