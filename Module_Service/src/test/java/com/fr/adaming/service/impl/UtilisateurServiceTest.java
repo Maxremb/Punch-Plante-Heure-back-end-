@@ -186,7 +186,7 @@ public class UtilisateurServiceTest implements IServiceTests {
 
 	@Test
 	public void TestIsActifWithNoDB_ShouldReturnNull() {
-		assertThat(userService.isActif(pseudo)).isNull();
+		assertThat(userService.isActif(pseudo)).isFalse();
 	}
 
 	// ****************************************************************

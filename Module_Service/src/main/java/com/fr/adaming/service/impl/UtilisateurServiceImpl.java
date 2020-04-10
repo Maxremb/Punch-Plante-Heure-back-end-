@@ -95,7 +95,7 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 			try {
 				log.info("Vérification de l'activation d'un utilisateur OK");
 				Utilisateur user = (Utilisateur) adminRepo.findByPseudonyme(pseudonyme);
-				if (user != null || user.getActif() == true) {
+				if (user != null && user.getActif() == true) {
 					log.info("Utilisateur actif");
 					return true;
 				}
@@ -116,7 +116,7 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 	public Boolean desactivateUser(Integer id) {
 		if (id != null && dao.existsById(id)) {
 			Utilisateur user = dao.findById(id).orElse(null);
-			if (user != null || user.getActif()) {
+			if (user != null && user.getActif()) {
 				try {
 					user.setActif(false);
 					dao.save(user);
