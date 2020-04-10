@@ -31,4 +31,10 @@ public interface IDepartementService<E, ME> {
 	 */
 	public ServiceResponse<Page<ME>> readMeteoByNumeroDep(Pageable pageable, Integer numDep);
 	
+	/**
+	 * Méthode permettant de récupérer la liste des départements
+	 * @return Dto Service Response avec message selon succes/fail + liste d'objets départements en body 
+	 */
+	public ServiceResponse<List<E>> readAllList();
+	
 }
