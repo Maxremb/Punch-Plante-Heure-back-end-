@@ -66,7 +66,7 @@ public class PlanteUtilisateurControllerImpl
 	}
 	
 	
-	@DeleteMapping(path = "/jardin/liste/{idJardin}")
+	@DeleteMapping(path = "/jardin/{idJardin}")
 	public ResponseEntity<ResponseDto<PlanteUtilisateurUpdateDto>> deleteAllByJardin(@PathVariable int idJardin) {
 		log.info("Controller: méthode DELETE ALL BY JARDIN appelée");
 		
