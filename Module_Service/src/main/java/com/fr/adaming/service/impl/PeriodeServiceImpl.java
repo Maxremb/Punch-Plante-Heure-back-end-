@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Departement;
+import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Periode;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.enums.TypePeriod;
@@ -178,6 +179,17 @@ public class PeriodeServiceImpl extends AbstractService<Periode> implements IPer
 
 		return serviceResponse;
 
+	}
+	
+	@Override
+	public ServiceResponse<List<Periode>> readByJardin(int idDep,
+			int idJardin){
+		ServiceResponse<List<Periode>> serviceResponse = new ServiceResponse<List<Periode>>();
+		
+		serviceResponse.setBody(periodeRepo.findByJardin(idJardin, idDep));
+		serviceResponse.setMessage("Succes");
+		
+		return serviceResponse;
 	}
 
 }

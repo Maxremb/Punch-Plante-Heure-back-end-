@@ -104,4 +104,23 @@ public class PeriodeControllerImpl extends AbstractController<PeriodeCreateDto, 
 
 	}
 
+
+	/**
+	 * Retourne une liste de periodes associées à un jardin
+	 * Exemple d'URL: /periode/jardin?depId=69&jardinId=12
+	 * 
+	 * @param idDep   L'id du département
+	 * @param idPlant L'id du jardin
+	 * @return 
+	 */
+	@GetMapping(path = "/jardin")
+	public ResponseEntity<ResponseDto<List<PeriodeUpdateDto>>> readByJardin(
+			 @RequestParam(name = "jardinId") int idJardin, @RequestParam(name = "depId") int idDep) {
+
+		ServiceResponse<List<Periode>> serviceResponse = periodeService.readByJardin(idJardin,
+				idDep);
+
+		return makeUpdateDtoListResponse(serviceResponse);
+
+	}
 }
