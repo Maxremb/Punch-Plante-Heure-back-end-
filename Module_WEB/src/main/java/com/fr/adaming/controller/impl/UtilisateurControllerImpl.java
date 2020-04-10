@@ -42,7 +42,7 @@ public class UtilisateurControllerImpl
 	@GetMapping(path = "/actif")
 	public ResponseEntity<ResponseDto<Boolean>> isActif(@RequestParam(name = "pseudonyme") String pseudonyme) {
 		log.info("Controller: méthode isActif appelée");
-
+		
 		boolean result = userService.isActif(pseudonyme);
 		ResponseDto<Boolean> responseDto = new ResponseDto<>();
 

@@ -119,7 +119,7 @@ public class IAdminRepositoryTest {
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (1,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestExistsByEmailWithNullParam_ShouldReturnFalse() {
-		assertThat(repo.existsByEmail(email)).isFalse();
+		assertThat(repo.existsByEmail(null)).isFalse();
 	}
 	
 	@Test
