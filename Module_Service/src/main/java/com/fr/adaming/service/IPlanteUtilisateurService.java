@@ -19,4 +19,6 @@ public interface IPlanteUtilisateurService {
 	public ServiceResponse<Page<PlanteUtilisateur>> readByJardin(int idJardin, int p);
 	
 	public ServiceResponse<List<PlanteUtilisateur>> readByJardin(int idJardin);
+	
+	public boolean deleteByJardin(int idJardin);
 }

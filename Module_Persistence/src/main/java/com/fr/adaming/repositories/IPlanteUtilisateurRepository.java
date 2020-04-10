@@ -4,12 +4,15 @@ package com.fr.adaming.repositories;
 
 import java.util.List;
 
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fr.adaming.entity.PlanteUtilisateur;
 
@@ -35,5 +38,14 @@ public interface IPlanteUtilisateurRepository extends JpaRepository<PlanteUtilis
 	
 	@Query(value = "select * from plante_utilisateur where jardin_id= :idJardin", nativeQuery = true)
 	public List<PlanteUtilisateur> findByJardin (@Param(value = "idJardin") Integer idJardin);
+	
+	/**
+	 * Permet la suppression des plantes d'un jardin par le numéro du jardin
+	 * @param idJardin correspondant au numéro unique du jardin
+	 * @return boolean true/false
+	 */
+	@Modifying @Transactional
+	@Query(value = "DELETE FROM plante_utilisateur WHERE jardin_id = :idJardin", nativeQuery = true)
+	public void deleteAllByJardin(@Param(value = "idJardin") Integer idJardin);
 	
 }

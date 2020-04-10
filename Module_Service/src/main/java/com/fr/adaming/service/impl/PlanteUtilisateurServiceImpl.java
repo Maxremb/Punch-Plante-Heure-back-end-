@@ -35,13 +35,12 @@ import lombok.extern.slf4j.Slf4j;
 public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisateur>
 		implements IPlanteUtilisateurService {
 
-	
 	@Autowired
 	private IPlanteUtilisateurRepository repo;
-	
+
 	@Autowired
 	private IJardinRepository jRepo;
-	
+
 	@Override
 	public ServiceResponse<PlanteUtilisateur> create(PlanteUtilisateur planteUtilisateur) {
 
@@ -85,7 +84,6 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 		}
 	}
 
-
 	@Override
 	public ServiceResponse<Page<PlanteUtilisateur>> readByJardin(int idJardin, int p) {
 		if (!jRepo.existsById(idJardin)) {
@@ -97,7 +95,7 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 				ServiceResponse<Page<PlanteUtilisateur>> serviceResponse = new ServiceResponse<Page<PlanteUtilisateur>>();
 				Pageable pageable = PageRequest.of(p, 20, Sort.by(Direction.DESC, "id"));
 				Page<PlanteUtilisateur> page = repo.findByJardin(idJardin, pageable);
-				
+
 				serviceResponse.setBody(page);
 				serviceResponse.setMessage("Succes");
 				return serviceResponse;
@@ -108,8 +106,7 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 
 		}
 	}
-	
-	
+
 	@Override
 	public ServiceResponse<List<PlanteUtilisateur>> readByJardin(int idJardin) {
 		if (!jRepo.existsById(idJardin)) {
@@ -119,9 +116,9 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 			try {
 				log.info("Jardin existant");
 				ServiceResponse<List<PlanteUtilisateur>> serviceResponse = new ServiceResponse<List<PlanteUtilisateur>>();
-				
+
 				List<PlanteUtilisateur> liste = repo.findByJardin(idJardin);
-				
+
 				serviceResponse.setBody(liste);
 				serviceResponse.setMessage("Succes");
 				return serviceResponse;
@@ -131,6 +128,28 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 			}
 
 		}
+	}
+
+	@Override
+	public boolean deleteByJardin(int idJardin) {
+		log.debug("Service: deleteByJardin de l'entité jardin id : " + idJardin);
+		
+		boolean delete = true; 
+		try {
+			if (jRepo.existsById(idJardin)) {
+				repo.deleteAllByJardin(idJardin);
+			} else {
+				log.info("Jardin inexistant");
+				delete = false;
+			}
+				
+		} catch(Exception e) {
+			e.printStackTrace();
+			log.warn(e.getMessage());
+			delete = false;
+		}
+		return delete;
+
 	}
 
 }
