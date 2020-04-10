@@ -1,6 +1,7 @@
 package com.fr.adaming.converter;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
@@ -37,10 +38,10 @@ public interface IConverter<C, U, E> {
 	
 	/**
 	 * Methode permettant de convertir un objet Entite en l'objet UpdateDto considere
-	 * @param entity objet Entite a convertir
+	 * @param e objet Entite a convertir
 	 * @return resultat de la conversion (objet UpdateDto ou objet null)
 	 */
-	public U convertEntityToUpdateDto(E entity);
+	public U convertEntityToUpdateDto(E e);
 	
 	/**
 	 * Methode permettant de convertir une liste d'objets CreateDto en une liste d'objets Entite consideres
@@ -97,5 +98,6 @@ public interface IConverter<C, U, E> {
 	 * @return resultat de la conversion (liste d'objets UpdateDto, pouvant etre vide)
 	 */
 	public Page<U> convertPageEntityToUpdateDto(Page<E> listeEntity);
+
 
 }

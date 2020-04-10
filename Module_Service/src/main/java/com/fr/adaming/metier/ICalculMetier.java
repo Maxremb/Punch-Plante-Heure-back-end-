@@ -1,5 +1,6 @@
 package com.fr.adaming.metier;
 
+import java.util.Optional;
 import java.util.Set;
 
 import com.fr.adaming.entity.Jardin;
@@ -10,6 +11,6 @@ public interface ICalculMetier {
 
 	public Set<Jardin> calculRU(Meteo meteo); 
 	
-	public void reinitArrosJardin(Jardin jardin);
+	public Optional<Jardin> reinitArrosJardin(Integer id);
 
 }
