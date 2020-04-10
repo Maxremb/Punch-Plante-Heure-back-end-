@@ -116,32 +116,43 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 	@PostMapping(path = "/mailAndPwd")
 	public ResponseEntity<ConnexionDto> existsByMailandPwd(@RequestBody String[] tableau) {
 		ConnexionDto connexionDto = new ConnexionDto();
-		String mail = tableau[0];
-		String pwd = tableau[1];
-		if (userService.existsByEmailAndMdp(mail, pwd).getBody() != null) {
-			ServiceResponse<Utilisateur> serviceResponse = userService.existsByEmailAndMdp(mail, pwd);
+		try {
 
-			UtilisateurUpdateDto returnedUtil = utilConv.convertEntityToUpdateDto(serviceResponse.getBody());
+			String mail = tableau[0];
+			String pwd = tableau[1];
+			if (userService.existsByEmailAndMdp(mail, pwd).getBody() != null) {
+				ServiceResponse<Utilisateur> serviceResponse = userService.existsByEmailAndMdp(mail, pwd);
 
-			connexionDto.setUser(true);
-			connexionDto.setBodyAdmin(null);
-			connexionDto.setBodyUtil(returnedUtil);
+				UtilisateurUpdateDto returnedUtil = utilConv.convertEntityToUpdateDto(serviceResponse.getBody());
 
-			return ResponseEntity.status(HttpStatus.OK).body(connexionDto);
+				connexionDto.setUser(true);
+				connexionDto.setBodyAdmin(null);
+				connexionDto.setBodyUtil(returnedUtil);
 
-		} else if (adminService.existsByEmailAndMdp(mail, pwd).getBody() != null
-				&& userService.existsByEmailAndMdp(mail, pwd).getBody() == null) {
-			ServiceResponse<Admin> serviceResponse = adminService.existsByEmailAndMdp(mail, pwd);
+				return ResponseEntity.status(HttpStatus.OK).body(connexionDto);
 
-			AdminUpdateDto returnedAdmin = adminConv.convertEntityToUpdateDto(serviceResponse.getBody());
+			} else if (adminService.existsByEmailAndMdp(mail, pwd).getBody() != null
+					&& userService.existsByEmailAndMdp(mail, pwd).getBody() == null) {
+				ServiceResponse<Admin> serviceResponse = adminService.existsByEmailAndMdp(mail, pwd);
 
-			connexionDto.setUser(false);
-			connexionDto.setBodyAdmin(returnedAdmin);
-			connexionDto.setBodyUtil(null);
+				AdminUpdateDto returnedAdmin = adminConv.convertEntityToUpdateDto(serviceResponse.getBody());
 
-			return ResponseEntity.status(HttpStatus.OK).body(connexionDto);
-		} else {
+				connexionDto.setUser(false);
+				connexionDto.setBodyAdmin(returnedAdmin);
+				connexionDto.setBodyUtil(null);
 
+				return ResponseEntity.status(HttpStatus.OK).body(connexionDto);
+			} else {
+
+				connexionDto.setUser(false);
+				connexionDto.setBodyAdmin(null);
+				connexionDto.setBodyUtil(null);
+
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(connexionDto);
+			}
+
+		} catch (NullPointerException e) {
+			log.info("Null Pointer Exception" + e.getMessage());
 			connexionDto.setUser(false);
 			connexionDto.setBodyAdmin(null);
 			connexionDto.setBodyUtil(null);
