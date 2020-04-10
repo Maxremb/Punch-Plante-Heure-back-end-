@@ -62,6 +62,7 @@ public class JardinControllerImpl extends AbstractController<JardinCreateDto, Ja
 		return makeUpdateDtoPageResponse(resp);
 	}
 	
+	@GetMapping(path = "/arrosage")
 	public ResponseEntity<ResponseDto<JardinUpdateDto>> reinitArrossJardin (@RequestParam (name = "id") Integer id){
 		ServiceResponse<Jardin> resp = calculMetier.reinitArrosJardin(id);
 		
