@@ -40,7 +40,7 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	@Autowired
 	private PlanteUtilisateurServiceImpl planteUtilisateurService;
 
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -58,7 +58,7 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 
 	
 	@Test
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -76,7 +76,7 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 
 	
 	@Test
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -88,11 +88,13 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Override
 	public void testReadAllWithContent_shouldReturnPage() {
-		
-		
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setId(1);
-		utilisateur.setNom("Martinez");
+		utilisateur.setNom("Stark");
+		utilisateur.setEmail("stark@stark.fr");
+		utilisateur.setMdp("4TEST");
+		utilisateur.setPrenom("tony");
+		utilisateur.setPseudonyme("IronMan");
 
 		Departement dep = new Departement();
 		dep.setNumeroDep(69);
@@ -126,7 +128,7 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	}
 
 	@Test
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -164,7 +166,7 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	}
 
 	@Test
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -181,7 +183,7 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	}
 
 	@Test
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -201,7 +203,7 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	/**
 	 * <p>Cette méthode teste la création d'une Plante Utilisateur avec des conditions valides.</p>
 	 */
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -214,7 +216,11 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	public void testCreatingValidEntity_ShouldReturnEntity() {
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setId(1);
-		utilisateur.setNom("Martinez");
+		utilisateur.setNom("Stark");
+		utilisateur.setEmail("stark@stark.fr");
+		utilisateur.setMdp("4TEST");
+		utilisateur.setPrenom("tony");
+		utilisateur.setPseudonyme("IronMan");
 
 		Departement dep = new Departement();
 		dep.setNumeroDep(69);
@@ -262,7 +268,7 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	/**
 	 * <p>Cette méthode test la création d'une Plante Utiisateur avec un Id déjà existant.</p>
 	 */
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -278,7 +284,11 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 		
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setId(1);
-		utilisateur.setNom("Martinez");
+		utilisateur.setNom("Stark");
+		utilisateur.setEmail("stark@stark.fr");
+		utilisateur.setMdp("4TEST");
+		utilisateur.setPrenom("tony");
+		utilisateur.setPseudonyme("IronMan");
 
 		
 		Departement dep = new Departement();
@@ -316,7 +326,7 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	/**
 	 * <p>Cette méthode test la modification d'une Plante Utiisateur avec les conditions optimales.</p>
 	 */
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -332,7 +342,11 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 		
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setId(1);
-		utilisateur.setNom("Martinez");
+		utilisateur.setNom("Stark");
+		utilisateur.setEmail("stark@stark.fr");
+		utilisateur.setMdp("4TEST");
+		utilisateur.setPrenom("tony");
+		utilisateur.setPseudonyme("IronMan");
 		
 		Departement dep = new Departement();
 		dep.setNumeroDep(69);
@@ -371,7 +385,7 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	/**
 	 * <p>Cette méthode test la modification d'une Plante Utiisateur en modifiant l'id avec un id avec un déjà existant.</p>
 	 */
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Martinez')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -386,7 +400,11 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 		
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setId(1);
-		utilisateur.setNom("Martinez");
+		utilisateur.setNom("Stark");
+		utilisateur.setEmail("stark@stark.fr");
+		utilisateur.setMdp("4TEST");
+		utilisateur.setPrenom("tony");
+		utilisateur.setPseudonyme("IronMan");
 
 
 		Departement dep = new Departement();

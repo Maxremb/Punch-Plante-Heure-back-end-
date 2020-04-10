@@ -52,7 +52,7 @@ public class UtilisateurControllerImpl
 			responseDto.setBody(true);
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} 
-		if (!result) {
+		else if (!result) {
 			responseDto.setError(false);
 			responseDto.setMessage("Utilisateur non actif");
 			responseDto.setBody(false);
