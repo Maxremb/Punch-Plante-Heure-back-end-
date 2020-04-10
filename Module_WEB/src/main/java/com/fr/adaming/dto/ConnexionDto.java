@@ -1,8 +1,8 @@
 package com.fr.adaming.dto;
 
-public class ConnexionDto {
+public class ConnexionDto<T> {
 	
 	boolean isUser ;
-	AdminUpdateDto body;
+	T body;
 
 }
