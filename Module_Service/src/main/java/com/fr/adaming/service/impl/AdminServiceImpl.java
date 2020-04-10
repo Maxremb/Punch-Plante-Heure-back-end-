@@ -60,24 +60,6 @@ public class AdminServiceImpl extends AbstractService<Admin> implements IAdminSe
 	}
 
 	@Override
-	public ServiceResponse<Admin> readByEmailAndMdp(String email, String mdp) {
-		try {
-			if (email != null && mdp != null) {
-				log.info("Recherche Admin par email et mdp dans la DB OK");
-				return new ServiceResponse<Admin>("Recherche Utilisateur par email et mdp",
-						adminRepo.findByEmailAndMdp(email, mdp));
-			} else {
-				log.info("Recherche Utilisateur par email et mdp non réalisée : email et/ou mdp null");
-				return new ServiceResponse<Admin>("Recherche non réalisée : email et/ou mdp null", null);
-			}
-		} catch (Exception e) {
-			log.warn("Problème récupération d'un Admin après recherche via email et mdp (couche service)"
-					+ e.getMessage());
-			return new ServiceResponse<Admin>("Recherche par email et mdp non réalisée", null);
-		}
-	}
-
-	@Override
 	public Boolean existsByEmail(String email) {
 		if (email != null) {
 			try {
@@ -117,7 +99,6 @@ public class AdminServiceImpl extends AbstractService<Admin> implements IAdminSe
 					log.info("Admin sauvegardé dans la DB");
 					return new ServiceResponse<Admin>("Success", entity);
 				} catch (Exception e) {
-					e.printStackTrace();
 					log.warn(e.getMessage());
 					return new ServiceResponse<Admin>("Exception lors de la création dans la DB", null);
 				}
@@ -158,7 +139,6 @@ public class AdminServiceImpl extends AbstractService<Admin> implements IAdminSe
 					return new ServiceResponse<Admin>("Success", entite);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
 				log.warn("Problème recherche d'un Admin via mail et mdp (couche service)" + e.getMessage());
 				return new ServiceResponse<Admin>("Exception lors de la recherche par email and mdp", null);
 			}

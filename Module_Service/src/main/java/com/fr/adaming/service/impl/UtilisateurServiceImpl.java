@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
-import com.fr.adaming.entity.Admin;
 import com.fr.adaming.entity.Utilisateur;
 import com.fr.adaming.repositories.IAdminRepository;
 import com.fr.adaming.repositories.IUtilisateurRepository;
@@ -168,7 +167,6 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 					return new ServiceResponse<Utilisateur>("Success", entite);
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
 				log.warn("Problème recherche d'un Admin via mail et mdp (couche service)" + e.getMessage());
 				return new ServiceResponse<Utilisateur>("Exception lors de la recherche par email and mdp", null);
 			}

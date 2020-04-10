@@ -27,7 +27,7 @@ public class CalculMetierTest implements ICalculMetierTest {
 	private static final int identifier = 1;
 	private static final double tempMin = 10.5;
 	private static final double tempMax = 20.2;
-	private static final double pluie = 10.3;
+	private static final double pluie = 0.5;
 	private static final double ensoleillement = 666.66;
 	private static final double evp = 2.3;
 	private static final LocalDate date = (LocalDate.parse("2020-02-01"));
@@ -51,20 +51,20 @@ public class CalculMetierTest implements ICalculMetierTest {
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
 			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 
-	@Sql(statements = "INSERT INTO jardin (id,prof_sol,reserve_max_eau,largeur,longueur,nom,reserve_utile,sol,departement_numero_dep) VALUES (1,0.5,10,3.1,5.2,'Jardin de mamy',1.5,4,"
+	@Sql(statements = "INSERT INTO jardin (id,prof_sol,reserve_max_eau,largeur,longueur,nom,reserve_utile,sol,departement_numero_dep) VALUES (1,0.5,10,3.1,5.2,'Jardin de mamy',0.5,4,"
 			+ depNum + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO jardin (id,prof_sol,reserve_max_eau,largeur,longueur,nom,reserve_utile,sol,departement_numero_dep) VALUES (2,0.5,10,3.1,5.2,'Jardin de mamy',2.1,4,"
+	@Sql(statements = "INSERT INTO jardin (id,prof_sol,reserve_max_eau,largeur,longueur,nom,reserve_utile,sol,departement_numero_dep) VALUES (2,0.5,10,3.1,5.2,'Jardin de mamy',1.6,4,"
 			+ depNum + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestCalculRuWithValidMeteo_ShouldReturnFullSetJardin() {
-//		Meteo meteo = makeNewUpdateDto();
-//		meteo.setEvapoTranspirationPotentielle(0.5);
-//
-//		Set<Jardin> setJardins = calcul.calculRU(meteo);
-//
-//		assertThat(setJardins).isNotNull().hasSize(2);
+		Meteo meteo = makeNewUpdateDto();
+		meteo.setEvapoTranspirationPotentielle(0.5);
+
+		Set<Jardin> setJardins = calcul.calculRU(meteo);
+
+		assertThat(setJardins).isNotNull().hasSize(2);
 
 	}
 
@@ -81,13 +81,13 @@ public class CalculMetierTest implements ICalculMetierTest {
 	@Sql(statements = "DELETE FROM jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestCalculRuWithOneGardenToArose_shouldReturnSetOneGarden() {
-//		Meteo meteo = makeNewUpdateDto();
-//
-//		meteo.setEvapoTranspirationPotentielle(2.0);
-//		
-//		Set<Jardin> setJardins = calcul.calculRU(meteo);
-//
-//		assertThat(setJardins).isNotNull().hasSize(1);
+		Meteo meteo = makeNewUpdateDto();
+
+		meteo.setEvapoTranspirationPotentielle(2.0);
+		
+		Set<Jardin> setJardins = calcul.calculRU(meteo);
+
+		assertThat(setJardins).isNotNull().hasSize(1);
 		
 	}
 

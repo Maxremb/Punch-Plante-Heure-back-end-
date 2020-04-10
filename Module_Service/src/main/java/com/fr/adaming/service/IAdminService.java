@@ -26,13 +26,6 @@ public interface IAdminService {
 	 */
 	public ServiceResponse<Admin> readByEmail (String email);
 	
-	/**
-	 * Methode permettant la recherche d'un admin par admin/utilisateur et par mot de passe
-	 * @param email de l'admin/utilisateur recherché
-	 * @param mdp de l'admin/utilisateur recherché
-	 * @return un admin/utilisateur correspondant à l'admin/utilisateur recherché
-	 */
-	public ServiceResponse<Admin> readByEmailAndMdp (String email,String mdp);
 	
 	/**
 	 * Méthode permettant de vérifier l'existence d'un admin/utilisateur par email
