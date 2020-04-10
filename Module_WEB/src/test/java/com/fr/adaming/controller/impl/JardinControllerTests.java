@@ -205,7 +205,7 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 		UtilisateurUpdateDto userDto = new UtilisateurUpdateDto();
 
-		userDto.setNom(nom);
+		userDto.setLastName(nom);
 		userDto.setIdentifier(identifier);
 
 		JardinUpdateDto dto = new JardinUpdateDto();

@@ -1,5 +1,7 @@
 package com.fr.adaming.controller.impl;
 
+import java.util.Optional;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
@@ -17,6 +19,7 @@ import com.fr.adaming.dto.JardinUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Jardin;
+import com.fr.adaming.metier.ICalculMetier;
 import com.fr.adaming.service.IJardinService;
 
 
@@ -28,6 +31,9 @@ public class JardinControllerImpl extends AbstractController<JardinCreateDto, Ja
 
 	@Autowired
 	private IJardinService serviceJardin;
+	
+	@Autowired
+	private ICalculMetier calculMetier;
 	
 
 	@GetMapping(path = "/name")
@@ -54,6 +60,12 @@ public class JardinControllerImpl extends AbstractController<JardinCreateDto, Ja
 		ServiceResponse<Page<Jardin>> resp = serviceJardin.readByDepartement(page, numDep);
 		
 		return makeUpdateDtoPageResponse(resp);
+	}
+	
+	public ResponseEntity<ResponseDto<JardinUpdateDto>> reinitArrossJardin (@RequestParam (name = "id") Integer id){
+		ServiceResponse<Jardin> resp = calculMetier.reinitArrosJardin(id);
+		
+		return makeUpdateDtoResponse(resp);
 	}
 
 }

@@ -12,6 +12,7 @@ import com.fr.adaming.ModulePersistenceApplication;
 import com.fr.adaming.entity.Utilisateur;
 
 /**
+ * Methode de test pour l'interface Utilisateur Repo
  * @author Maxime Rembert
  * @since 0.0.1-SNAPSHOT
  *
@@ -26,8 +27,12 @@ public class IUtilisateurRepositoryTest {
 	private static final String nom = "jornet";
 	private static final String prenom = "kilian";
 	private static final String pseudo = "extra terrestre";
+	private static final String email = "kiki@trail.fr";
+	private static final String mdp = "4TEST";
 	// ID EMAIL MDP PSEUDO NOM PRENOM NON NULLABLE
 
+	//************************************************************
+	//FIND BY NOM AND PRENOM
 
 	/**
 	 * Test de READ BY NOM AND PRENOM avec valeurs correcte
@@ -76,5 +81,35 @@ public class IUtilisateurRepositoryTest {
 
 		assertThat(user).isNull();
 	}
+	
+	//************************************************************
+		//FIND BY EMAIL AND MDP
+	
+	@Test
+	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql (statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestFindByEmailAndMdpWithValidParam_ShouldReturnEntite() {
+		assertThat(repo.findByEmailAndMdp(email, mdp)).hasFieldOrPropertyWithValue("nom", "jornet");
+	}
+	
+	@Test
+	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql (statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestFindByEmailAndMdpWithOneParamNull_ShouldReturnNull() {
+		assertThat(repo.findByEmailAndMdp(email, null)).isNull();
+	}
+	
+	@Test
+	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql (statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestFindByEmailAndMdpWithNullParam_shouldReturnNull() {
+		assertThat(repo.findByEmailAndMdp(null, null)).isNull();
+	}
+	
+	@Test
+	public void TestFindByEmailAndMdpWithNoDB_shouldReturnNull() {
+		assertThat(repo.findByEmailAndMdp(nom, prenom)).isNull();
+	}
+	
 
 }
