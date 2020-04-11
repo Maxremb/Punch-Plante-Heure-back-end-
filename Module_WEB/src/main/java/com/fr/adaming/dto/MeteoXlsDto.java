@@ -23,10 +23,10 @@ public class MeteoXlsDto {
 	
 	
 	public void setLongitude(String longitude) {
-		this.longitude = Integer.valueOf(longitude.replace(",", ""));
+		this.longitude = Integer.valueOf(longitude.replace(",", "").replace(".", ""));
 	}
 	public void setLatitude(String latitude) {
-		this.latitude = Integer.valueOf(latitude.replace(",", ""));
+		this.latitude = Integer.valueOf(latitude.replace(",", "").replace(".", ""));
 	}
 	public void setRr(String rr) {
 		this.rr = Float.valueOf(rr.replace(",", "."));
