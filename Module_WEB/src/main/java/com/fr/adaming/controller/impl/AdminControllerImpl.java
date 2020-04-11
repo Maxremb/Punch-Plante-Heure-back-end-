@@ -22,6 +22,7 @@ import com.fr.adaming.dto.UtilisateurCreateDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.entity.Admin;
 import com.fr.adaming.entity.Utilisateur;
+import com.fr.adaming.security.TokenManagement;
 import com.fr.adaming.service.IAdminService;
 import com.fr.adaming.service.IUtilisateurService;
 
@@ -44,6 +45,9 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 
 	@Autowired
 	private IConverter<AdminCreateDto, AdminUpdateDto, Admin> adminConv;
+	
+	@Autowired
+	private TokenManagement tokenManagement;
 
 	@GetMapping(path = "/pseudo")
 	public ResponseEntity<ResponseDto<AdminUpdateDto>> readByPseudonyme(@RequestParam(name = "pseudo") String pseudo) {
@@ -124,10 +128,12 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 				ServiceResponse<Utilisateur> serviceResponse = userService.existsByEmailAndMdp(mail, pwd);
 
 				UtilisateurUpdateDto returnedUtil = utilConv.convertEntityToUpdateDto(serviceResponse.getBody());
+				String token = tokenManagement.makeNewSession(returnedUtil); // Generation de tokens pour la sécurité du front
 
 				connexionDto.setUser(true);
 				connexionDto.setBodyAdmin(null);
 				connexionDto.setBodyUtil(returnedUtil);
+				connexionDto.setToken(token);
 
 				return ResponseEntity.status(HttpStatus.OK).body(connexionDto);
 
@@ -136,10 +142,12 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 				ServiceResponse<Admin> serviceResponse = adminService.existsByEmailAndMdp(mail, pwd);
 
 				AdminUpdateDto returnedAdmin = adminConv.convertEntityToUpdateDto(serviceResponse.getBody());
+				String token = tokenManagement.makeNewSession(returnedAdmin);
 
 				connexionDto.setUser(false);
 				connexionDto.setBodyAdmin(returnedAdmin);
 				connexionDto.setBodyUtil(null);
+				connexionDto.setToken(token);
 
 				return ResponseEntity.status(HttpStatus.OK).body(connexionDto);
 			} else {
@@ -147,6 +155,7 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 				connexionDto.setUser(false);
 				connexionDto.setBodyAdmin(null);
 				connexionDto.setBodyUtil(null);
+				connexionDto.setToken(null);
 
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(connexionDto);
 			}
@@ -156,6 +165,7 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 			connexionDto.setUser(false);
 			connexionDto.setBodyAdmin(null);
 			connexionDto.setBodyUtil(null);
+			connexionDto.setToken(null);
 
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(connexionDto);
 		}

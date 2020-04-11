@@ -3,12 +3,18 @@ package com.fr.adaming.session;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-import com.fr.adaming.dto.AdminUpdateDto;
-import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.enums.Role;
 
+import lombok.Setter;
+
+/**
+ * Stoque les données pour une session d'un utilisateur
+ * @author Gregoire
+ *
+ */
 @SessionScope
 @Component
+@Setter
 public class ConnectedUser {
 	
 	private int identifier;
@@ -17,43 +23,25 @@ public class ConnectedUser {
 	
 	
 	private String token;
-	private Role role;
+	private Role role = Role.None;
 	
-	public ConnectedUser(UtilisateurUpdateDto util, String token) {
-		
-		this.identifier = util.getIdentifier();
-		this.mail = util.getMail();
-		this.pseudo = util.getPseudo();
-		this.role = Role.Utilisateur;
-		this.token = token;
-		
-	}
-	
-	public ConnectedUser(AdminUpdateDto admin, String token) {
-		
-		this.identifier = admin.getIdentifier();
-		this.mail = admin.getMail();
-		this.pseudo = admin.getPseudo();
-		this.role = Role.Admin;
-		this.token = token;
-		
-	}
+
 
 	public int getIdentifier(String token) {
 		
-		return this.token == token ? identifier : 0;
+		return this.token.equals(token) ? identifier : 0;
 	}
 
 	public String getMail(String token) {
-		return this.token == token ? mail : null;
+		return this.token.equals(token) ? mail : null;
 	}
 
 	public String getPseudo(String token) {
-		return this.token == token ? pseudo : null;
+		return this.token.equals(token) ? pseudo : null;
 	}
 
 	public Role getRole(String token) {
-		return role;
+		return this.token.equals(token) ? role : Role.None;
 	}
 	
 	
