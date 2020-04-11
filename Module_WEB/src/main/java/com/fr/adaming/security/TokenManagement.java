@@ -60,16 +60,16 @@ public class TokenManagement {
 		
 	}
 	
-	/**
-	 * Méthode provisoire pour la déconnexion
-	 */
-	public void disconnectSession() {
-		user.setIdentifier(0);
-		user.setPseudo(null);
-		user.setMail(null);
-		user.setRole(Role.None);
-		user.setToken(null);
-	}
+//	/**
+//	 * Méthode provisoire pour la déconnexion
+//	 */
+//	public void disconnectSession() {
+//		user.setIdentifier(0);
+//		user.setPseudo(null);
+//		user.setMail(null);
+//		user.setRole(Role.None);
+//		user.setToken(null);
+//	}
 	
 	/**
 	 * Génere un token de 20 caractères 
@@ -79,8 +79,8 @@ public class TokenManagement {
 		
 		Random random = new SecureRandom();
 		
-		String alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-!£&~#'@<>,.?!";
-		int tokenSize = 20;
+		String alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-!£€&~#'@<>,.?!$%^*() {}[]=|`¬¦_";
+		int tokenSize = 50;
 		StringBuilder token = new StringBuilder(tokenSize);
 		
 		
