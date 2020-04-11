@@ -16,6 +16,7 @@ import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.service.IPlanteModelService;
+import com.fr.adaming.service.impl.PlanteModelServiceImpl;
 
 @RestController
 @CrossOrigin
