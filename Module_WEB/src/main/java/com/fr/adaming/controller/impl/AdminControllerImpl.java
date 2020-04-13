@@ -59,11 +59,6 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 
 	}
 
-//	@GetMapping (path = "/mailAndPwd")
-//	public ResponseEntity<ResponseDto<AdminUpdateDto>> readByEmailAndPwd (@RequestParam (name = "mail") String mail, @RequestParam (name = "pwd") String pwd){
-//		ServiceResponse<Admin> resp = adminService.readByEmailAndMdp(mail, pwd);
-//		return makeUpdateDtoResponse(resp);
-//	}
 
 	@GetMapping(path = "/exists/mail")
 	public ResponseEntity<ResponseDto<Boolean>> existsByMail(@RequestParam(name = "mail") String mail) {
@@ -104,14 +99,6 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 		}
 	}
-
-//	@GetMapping(path = "/mailAndPwd")
-//	public ResponseEntity<ResponseDto<AdminUpdateDto>> existsByMailandPwd(@RequestParam(name = "mail") String mail,
-//			@RequestParam(name = "pwd") String pwd) {
-//		ServiceResponse<Admin> resp = adminService.existsByEmailAndMdp(mail, pwd);
-//		return makeUpdateDtoResponse(resp);
-//
-//	}
 
 	@PostMapping(path = "/mailAndPwd")
 	public ResponseEntity<ConnexionDto> existsByMailandPwd(@RequestBody String[] tableau) {

@@ -1,6 +1,5 @@
 package com.fr.adaming.controller.impl;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -17,36 +16,54 @@ import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.service.IPlanteModelService;
 
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * 
+ * Classe de la couche Controller pour l'entité Plante Model Elle étend la classe
+ * abstraite AbstractController
+ * 
+ * @author Gregoire
+ * @since 0.0.1-SNAPSHOT
+ *
+ */
 @RestController
 @CrossOrigin
-@RequestMapping(path="/plantemodel")
-public class PlantModelControllerImpl extends AbstractController<PlanteModelCreateDto, PlanteModelUpdateDto	, PlanteModel>{
+@RequestMapping(path = "/plantemodel")
+@Slf4j
+public class PlantModelControllerImpl
+		extends AbstractController<PlanteModelCreateDto, PlanteModelUpdateDto, PlanteModel> {
 
 	@Autowired
 	private IPlanteModelService servicePM;
-	
+
 	@Override
 	public ResponseEntity<ResponseDto<Page<PlanteModelUpdateDto>>> readAll(int p) {
-		
+		log.info("Controller Plante Modele : méthode read all appelée");
 		ServiceResponse<Page<PlanteModel>> serviceResponse = servicePM.readAllReduced(p);
-		
+
 		return makeUpdateDtoPageResponse(serviceResponse);
-		
+
 	}
-	
-	/** Controller pour recuperer des planteModel qui comportent le string "nom" dans leurs noms commun ou scientifique
+
+	/**
+	 * Controller pour recuperer des planteModel qui comportent le string "nom" dans
+	 * leurs noms commun ou scientifique
+	 * 
 	 * @param page La page demandée
-	 * @param nom Le nom recherché
-	 * @return ResponseEntity avec ResponseDto contenant une page de PlanteModelUpdateDto
+	 * @param nom  Le nom recherché
+	 * @return ResponseEntity avec ResponseDto contenant une page de
+	 *         PlanteModelUpdateDto
 	 * @author Gregoire
 	 */
 	@GetMapping(path = "/nom")
-	public ResponseEntity<ResponseDto<Page<PlanteModelUpdateDto>>> readByNom(@RequestParam(name = "page") int page,@RequestParam(name = "nom") String nom){
-		
+	public ResponseEntity<ResponseDto<Page<PlanteModelUpdateDto>>> readByNom(@RequestParam(name = "page") int page,
+			@RequestParam(name = "nom") String nom) {
+		log.info("Controller Plante Modele : méthode read by nom appelée");
 		ServiceResponse<Page<PlanteModel>> serviceResponse = servicePM.findByNom(page, nom);
-		
+
 		return makeUpdateDtoPageResponse(serviceResponse);
-		
+
 	}
 
 }

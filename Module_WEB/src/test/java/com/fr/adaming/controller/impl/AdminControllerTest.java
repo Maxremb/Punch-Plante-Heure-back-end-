@@ -2,7 +2,6 @@ package com.fr.adaming.controller.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.UnsupportedEncodingException;
@@ -23,7 +22,6 @@ import com.fr.adaming.ModuleWebApplication;
 import com.fr.adaming.controller.AbstractTestMethods;
 import com.fr.adaming.controller.IControllerTests;
 import com.fr.adaming.dto.AdminUpdateDto;
-import com.fr.adaming.dto.ConnexionDto;
 import com.fr.adaming.dto.ResponseDto;
 
 @SpringBootTest(classes = ModuleWebApplication.class)
@@ -203,7 +201,7 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReadByEmailValidParam_ShouldReturn200() throws Exception {
 
-		String path = BASE_URL + "/pseudo?pseudo=" + pseudo;
+		String path = BASE_URL + "/mail?mail=" + mail;
 
 		ResponseDto<AdminUpdateDto> responseDto = runMockMvc("get", path, 200, AdminUpdateDto.class);
 
@@ -214,7 +212,7 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReadByEmailWithInvalidParam_ShouldReturn400() throws Exception {
-		String path = BASE_URL + "/pseudo?pseudo=abc";
+		String path = BASE_URL + "/mail?mail=abc";
 
 		ResponseDto<AdminUpdateDto> responseDto = runMockMvc("get", path, 400, AdminUpdateDto.class);
 
@@ -225,7 +223,7 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReadByEmailWithNullParam_ShouldReturn400() throws Exception {
-		String path = BASE_URL + "/pseudo?pseudo=" + null;
+		String path = BASE_URL + "/mail?mail=" + null;
 
 		ResponseDto<AdminUpdateDto> responseDto = runMockMvc("get", path, 400, AdminUpdateDto.class);
 

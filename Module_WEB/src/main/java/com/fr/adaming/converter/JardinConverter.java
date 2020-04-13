@@ -17,7 +17,10 @@ import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Utilisateur;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
+@Slf4j
 public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdateDto, Jardin> {
 
 	@Autowired
