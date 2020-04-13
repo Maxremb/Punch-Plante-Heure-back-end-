@@ -249,7 +249,7 @@ public class PeriodeServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void testReadByPlanteModelIdValid_shouldReturnList() {
+	public void testReadByPlanteModelIdValid_shouldReturnPage() {
 		assertThat(servicePeriode.readByPlanteModelId(0, 1).getMessage()).isEqualTo("Success");
 		assertTrue(servicePeriode.readByPlanteModelId(0, 1).getBody().toList().size() == 1);
 		assertThat(servicePeriode.readByPlanteModelId(0, 1).getBody().toList().get(0)).hasFieldOrPropertyWithValue("id", 1);
@@ -270,9 +270,9 @@ public class PeriodeServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void testReadByPlanteModelInvalidId_shouldReturnEmptyList() {
+	public void testReadByPlanteModelInvalidId_shouldReturnEmptyPage() {
 		assertThat(servicePeriode.readByPlanteModelId(0, 2).getMessage()).isEqualTo("Success");
-		assertTrue(servicePeriode.readByPlanteModelId(0, 2).getBody().isEmpty());
+		assertTrue(servicePeriode.readByPlanteModelId(0, 2).getBody().toList().isEmpty());
 	}
 	
 	//Méthodes spécifiques : findByDepAndPlanteModel findByDepAndPlanteModelAndType 
