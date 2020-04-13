@@ -80,11 +80,6 @@ public class BatchConfiguration {
 				}).build();
 	}
 
-//	@Bean
-//	public JobExecutionListener listener() {
-//		return new JobCompletionNotificationListener();
-//	}
-
 	@Bean
 	public Step step1() {
 		return stepBuilderFactory.get("step1").<MeteoXlsDto, Meteo>chunk(10).faultTolerant()
@@ -105,7 +100,6 @@ public class BatchConfiguration {
 
 		JobExecution execution = jobLauncher.run(job, param);
 		System.out.println("Job finish with status :" + execution.getStatus());
-
 	}
 
 }

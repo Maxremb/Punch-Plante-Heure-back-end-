@@ -208,9 +208,7 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 		
 		log.info("Controller: méthode READMETEOBYNUMDEP appelée");
 		
-		Pageable pageable = PageRequest.of(page, elementsPerPage, Sort.by(sortName));
-		
-		ServiceResponse<Page<ME>> serviceResponse = serviceDep.readMeteoByNumeroDep(pageable, id);
+		ServiceResponse<Page<ME>> serviceResponse = serviceDep.readMeteoByNumeroDep(page, id);
 		
 		ResponseDto<Page<MU>> responseDto = new ResponseDto<Page<MU>>();
 		

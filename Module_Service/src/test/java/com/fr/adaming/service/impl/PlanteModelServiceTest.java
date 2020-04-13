@@ -27,15 +27,13 @@ import com.fr.adaming.service.IServiceTests;
  * Cette classe teste la couche service de l'entité PlanteModel
  * Elle implémente une interface pour le test des méthodes CRUD (read All, read by Id, exist by Id, delete by Id) et définit ses propres méthodes de test pour les autres. 
  * 
- * @author Léa Coston
+ * @author Léa Coston / Isaline Millet
  * @since 0.0.1
  *
  */
 @SpringBootTest(classes = ModuleServiceApplication.class)
 public class PlanteModelServiceTest implements IServiceTests {
 
-	
-	
 	@Autowired
 	private IPlanteModelService service;
 
@@ -217,32 +215,28 @@ public class PlanteModelServiceTest implements IServiceTests {
 		// La casse est ignorée quand on utilise swagger/rest mais pas dans le teste pour une raison inconnue.
 		// Lien possible avec le fait qu'on utlise h2 au lieu de mysql
 		
-//		assertFalse(serviceResponse.getBody().isEmpty());
 //		assertTrue(serviceResponse.getBody().toList().size() == 1);
 //		assertThat(serviceResponse.getBody().getContent()).asList()
 //				.allSatisfy(plant -> assertThat(plant).isInstanceOf(PlanteModel.class));
 
 	}
 	
-	//TODO resoudre le mystere des testes qui ne reflectent pas la realite
-	
 	/**
 	 * Test de create argument valid, devrait retourner un ServiceResponse avec le message Succes et l'objet créé en body.
 	 */
-//	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Test
+	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
 	public void testCreateValidArgs_shouldReturnServiceResponseSucces() {
-//		PlanteModel plante= new PlanteModel();
-//		plante.setNomCommun("nomCommun");
-//		plante.setNomScientifique("nomScientifique");
-//		assertThat(service.create(plante)).hasFieldOrPropertyWithValue("message","Succes de la création");
-//		System.out.println(service.create(plante).getBody());
-//		assertThat(service.create(plante).getBody()).isNotNull().hasFieldOrPropertyWithValue("nomScientifique", "nomScientifique");
-//		assertThat(service.create(plante).getBody().getId()).isGreaterThan(0);
+		PlanteModel plante= new PlanteModel();
+		plante.setNomCommun("nomCommun");
+		plante.setNomScientifique("nomScientifique");
+		ServiceResponse<PlanteModel> resp = service.create(plante);
+		assertThat(resp.getMessage()).isEqualTo("Création de la plante modele réussie");
+		assertThat(resp.getBody()).hasFieldOrPropertyWithValue("nomCommun", "nomCommun");
+		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("nomScientifique", "nomScientifique");
+		assertThat(resp.getBody().getId()).isGreaterThan(0);
 	}
 	
-	
-
 	/**
 	 * Test de create argument null, devrait retourner un ServiceResponse avec un body null et un message d'erreur.
 	 */
@@ -353,9 +347,8 @@ public class PlanteModelServiceTest implements IServiceTests {
 		plante.setId(1);
 		plante.setNomCommun("Alice");
 		plante.setNomScientifique("Bobium Vulgaris");
-		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","Mise à jour non réalisée : le nom scientifique est déjà présent dans la base de donnée");
+		assertThat(service.update(plante)).hasFieldOrPropertyWithValue("message","erreur modification");
 		assertThat(service.update(plante).getBody()).isNull();
-		
 	}
 	
 	/**
@@ -373,7 +366,6 @@ public class PlanteModelServiceTest implements IServiceTests {
 		//assertThat(service.update(plante).getBody()).isNotNull().hasFieldOrPropertyWithValue("nomScientifique", "nouveauNom" );
 		
 	}
-	
 	
 	/**
 	 * Test de ReadAllReduced, devrait retourner un ServiceResponse avec un message succes et un body contenant une page de PlanteModel dont seulement 4 attributs peuvent etre non null.

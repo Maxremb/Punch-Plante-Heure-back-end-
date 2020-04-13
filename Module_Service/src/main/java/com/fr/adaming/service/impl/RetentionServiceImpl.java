@@ -1,10 +1,10 @@
 package com.fr.adaming.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
-import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Retention;
 import com.fr.adaming.enums.Sol;
 import com.fr.adaming.repositories.IRetentionRepository;
@@ -15,13 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * CLasse service relative à l'entité Retention
+ * 
  * @author maxime
  * @since 0.0.1-SNAPSHOT
  */
 @Service
 @Slf4j
-public class RetentionServiceImpl extends AbstractService<Retention> implements IRetentionService{
-	
+public class RetentionServiceImpl extends AbstractService<Retention> implements IRetentionService {
+
 	@Autowired
 	private IRetentionRepository repo;
 
@@ -33,7 +34,7 @@ public class RetentionServiceImpl extends AbstractService<Retention> implements 
 					dao.save(entity);
 					log.info("Retention sauvegardé dans la BD");
 					return new ServiceResponse<Retention>("Success", entity);
-				} catch (Exception e) {
+				} catch (DataIntegrityViolationException e) {
 					log.warn(e.getMessage());
 					return new ServiceResponse<Retention>("Exception lors de la création dans la DB", null);
 				}
@@ -48,15 +49,9 @@ public class RetentionServiceImpl extends AbstractService<Retention> implements 
 	@Override
 	public ServiceResponse<Retention> update(Retention entite) {
 		if (entite != null && repo.existsBySol(entite.getSol())) {
-			try {
-				dao.save(entite);
-				log.info("Retention modifié dans la DB");
-				return new ServiceResponse<Retention>("Success", entite);
-			} catch (Exception e) {
-				log.warn(e.getMessage());
-				return new ServiceResponse<Retention>("Exception lors de la modification dans la DB", null);
-			}
-
+			dao.save(entite);
+			log.info("Retention modifié dans la DB");
+			return new ServiceResponse<Retention>("Success", entite);
 		}
 		log.info("Modification non réalisé : sol inconnu dans la database");
 		return new ServiceResponse<Retention>("Modification non réalisé : sol inconnu dans la database", null);
@@ -64,20 +59,13 @@ public class RetentionServiceImpl extends AbstractService<Retention> implements 
 
 	@Override
 	public ServiceResponse<Retention> readBySol(Sol sol) {
-		try {
-			if( sol != null) {
-				log.info("Recherche retention par type de sol dans la DB OK");
-				return new ServiceResponse<Retention>("Success",repo.findBySol(sol));
-			}
-			else { 
-				log.info("Recherche retention par type de sol non réalisée : sol null");
-				return new ServiceResponse<Retention>("Recherche non réalisée : sol null", null);
-			}
-		} catch (Exception e) {
-			log.warn("Problème récupération d'une retention après recherche via type de sol (couche service)" + e.getMessage());
-			return new ServiceResponse<Retention>("Recherche par type de sol non réalisée", null);
+		if (sol != null) {
+			log.info("Recherche retention par type de sol dans la DB OK");
+			return new ServiceResponse<Retention>("Success", repo.findBySol(sol));
+		} else {
+			log.info("Recherche retention par type de sol non réalisée : sol null");
+			return new ServiceResponse<Retention>("Recherche non réalisée : sol null", null);
 		}
 	}
-	
 
 }

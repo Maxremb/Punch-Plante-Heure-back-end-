@@ -182,11 +182,11 @@ public class PeriodeServiceImpl extends AbstractService<Periode> implements IPer
 	}
 	
 	@Override
-	public ServiceResponse<List<Periode>> readByJardin(int idDep,
+	public ServiceResponse<List<Periode>> readByJardinAndDep(int idDep,
 			int idJardin){
 		ServiceResponse<List<Periode>> serviceResponse = new ServiceResponse<List<Periode>>();
 		
-		serviceResponse.setBody(periodeRepo.findByJardin(idJardin, idDep));
+		serviceResponse.setBody(periodeRepo.findByJardinAndDep(idJardin, idDep));
 		serviceResponse.setMessage("Succes");
 		
 		return serviceResponse;

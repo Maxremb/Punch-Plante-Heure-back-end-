@@ -1,6 +1,7 @@
 package com.fr.adaming.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -47,7 +48,6 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 			retour.setMessage(
 					"Création non réalisée : ce nom scientifique est déjà présent dans la base de donnée");
 		} else {
-	
 			retour.setBody(dao.save(entity));
 			retour.setMessage("Création de la plante modele réussie");
 		}
@@ -57,7 +57,8 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 	@Override
 	public ServiceResponse<PlanteModel> update(PlanteModel entity) {
 		ServiceResponse<PlanteModel> retour = new ServiceResponse<PlanteModel>();
-		if (entity == null) {
+		try {
+			if (entity == null) {
 			retour.setBody(null);
 			retour.setMessage("Mise à jour non réalisée : objet d'entrée null");
 		} else if (entity.getNomScientifique() == null) {
@@ -66,14 +67,14 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 		} else if (!dao.existsById(entity.getId())) {
 			retour.setBody(null);
 			retour.setMessage("Mise à jour non réalisée : cet id n'existe pas dans la base de donnée");
-		} else if (repo.existsByNomScientifique(entity.getNomScientifique())
-				&& entity.getId() != repo.findByNomScientifique(entity.getNomScientifique()).getId()) {
-			retour.setBody(null);
-			retour.setMessage(
-					"Mise à jour non réalisée : le nom scientifique est déjà présent dans la base de donnée");
 		} else {
 			retour.setBody(dao.save(entity));
 			retour.setMessage("Mise à jour de la plante modele réussie");
+		}
+		} catch (DataIntegrityViolationException e) {
+			log.warn("Tentative échouée de modification d'une plante modele avec un nom déjà utilisé" + e.getMessage());
+			retour.setBody(null);
+			retour.setMessage("erreur modification");
 		}
 		return retour;
 	}
@@ -96,28 +97,27 @@ public class PlanteModelServiceImpl extends AbstractService<PlanteModel> impleme
 		return retour;
 	}
 
-	/**
-	 * Methode permettant la recherche de plante par nom scientifique
-	 * 
-	 * @param nomScientique le nom recherché
-	 * @return un ServiceReponse constitué d'un string "succes" et d'une entité
-	 *         PlanteModel
-	 * @author Léa Coston
-	 */
-	@Deprecated
-	@Override
-	public ServiceResponse<PlanteModel> readByNomScientifique(String nomScientique) {
-		ServiceResponse<PlanteModel> retour = new ServiceResponse<PlanteModel>();
-		if (nomScientique == null) {
-			retour.setBody(null);
-			retour.setMessage("Objet non trouvé, entrée null");
-
-		} else {
-			retour.setBody(repo.findByNomScientifique(nomScientique));
-			retour.setMessage("Succes");
-		}
-		return retour;
-	}
+//	/**
+//	 * Methode permettant la recherche de plante par nom scientifique
+//	 * 
+//	 * @param nomScientique le nom recherché
+//	 * @return un ServiceReponse constitué d'un string "succes" et d'une entité
+//	 *         PlanteModel
+//	 * @author Léa Coston
+//	 */
+//	@Deprecated
+//	public ServiceResponse<PlanteModel> readByNomScientifique(String nomScientique) {
+//		ServiceResponse<PlanteModel> retour = new ServiceResponse<PlanteModel>();
+//		if (nomScientique == null) {
+//			retour.setBody(null);
+//			retour.setMessage("Objet non trouvé, entrée null");
+//
+//		} else {
+//			retour.setBody(repo.findByNomScientifique(nomScientique));
+//			retour.setMessage("Succes");
+//		}
+//		return retour;
+//	}
 
 	@Override
 	public ServiceResponse<Page<PlanteModel>> findByNom(int page, String nom) {

@@ -9,10 +9,15 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.ModuleServiceApplication;
+import com.fr.adaming.dto.ServiceResponse;
+import com.fr.adaming.entity.Admin;
+import com.fr.adaming.entity.Utilisateur;
 import com.fr.adaming.entity.Utilisateur;
 import com.fr.adaming.service.IService;
 import com.fr.adaming.service.IServiceTests;
 import com.fr.adaming.service.IUtilisateurService;
+
+import ch.qos.logback.classic.pattern.Util;
 
 /**
  * 
@@ -20,7 +25,7 @@ import com.fr.adaming.service.IUtilisateurService;
  * méthodes CRUD (read All, read by Id, exist by Id, delete by Id) et définit
  * ses propres méthodes de test pour les autres.
  * 
- * @author Maxime Rembert
+ * @author Maxime Rembert / Isaline Millet
  * @since 0.0.1-SNAPSHOT
  *
  */
@@ -290,5 +295,212 @@ public class UtilisateurServiceTest implements IServiceTests {
 	public void testByEmailAndMdpWithNoDb_ShouldReturnNullBody() {
 		assertThat(userService.existsByEmailAndMdp(email, mdp).getBody()).isNull();
 	}
+	
+	// ****************************************************************
+	// Test CREATE
+	
+	/**
+	 * Cette méthode teste la création d'un utilisateur - conditions valides
+	 */
+	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCreateValid_ShouldReturnEntity() {
 
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setEmail("email4Test");
+		utilisateur.setMdp("mdp4Test");
+		utilisateur.setPseudonyme("pseudo4Test");
+		utilisateur.setNom("nom4Test");
+		utilisateur.setPrenom("prenom4Test");
+		utilisateur.setActif(true);
+		utilisateur.setNewsletter(false);
+		
+		ServiceResponse<Utilisateur> resp = service.create(utilisateur);
+
+		assertThat(resp.getBody()).isNotNull();
+		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("email", "email4Test");
+		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("mdp", "mdp4Test");
+		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("pseudonyme", "pseudo4Test");
+		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("nom", "nom4Test");
+		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("actif", true);
+		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("newsletter", false);
+		assertThat(resp.getMessage()).isEqualTo("Success");
+	}
+
+	/**
+	 * Cette méthode teste la création d'un utilisateur - conditions invalides (utilisateur
+	 * NULL)
+	 */
+	@Test
+	public void testCreateNULL_ShouldReturnNull() {
+		ServiceResponse<Utilisateur> resp = service.create(null);
+
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("Objet d'entrée null");
+	}
+
+	/**
+	 * Cette méthode teste la création d'un utilisateur - conditions invalides (email
+	 * existant)
+	 */
+	@Sql(statements = "INSERT INTO utilisateur (id,email,mdp,pseudonyme,nom,prenom,actif,newsletter) VALUES (1,'email4Test','mdp4Test','pseudo4Test','nom4Test','prenom4Test',true,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCreateExistingEmail_ShouldReturnNull() {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setEmail("email4Test");
+		utilisateur.setMdp("mdp");
+		utilisateur.setPseudonyme("pseudo");
+		utilisateur.setNom("nom4Test");
+		utilisateur.setPrenom("prenom4Test");
+		utilisateur.setActif(true);
+		utilisateur.setNewsletter(false);
+
+		ServiceResponse<Utilisateur> resp = service.create(utilisateur);
+
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("Email ou pseudo deja utilisé");
+	}
+
+	/**
+	 * Cette méthode teste la création d'un utilisateur - conditions invalides (pseudo
+	 * existant)
+	 */
+	@Sql(statements = "INSERT INTO utilisateur (id,email,mdp,pseudonyme,nom,prenom,actif,newsletter) VALUES (1,'email4Test','mdp4Test','pseudo4Test','nom4Test','prenom4Test',true,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCreateExistingPseudo_ShouldReturnNull() {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setEmail("email");
+		utilisateur.setMdp("mdp");
+		utilisateur.setPseudonyme("pseudo4Test");
+		utilisateur.setNom("nom4Test");
+		utilisateur.setPrenom("prenom4Test");
+		utilisateur.setActif(true);
+		utilisateur.setNewsletter(false);
+
+		ServiceResponse<Utilisateur> resp = service.create(utilisateur);
+
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("Email ou pseudo deja utilisé");
+	}
+
+	// ****************************************************************
+	// Test UPDATE
+	
+	/**
+	 * Cette méthode teste la modification d'un utilisateur - conditions valides
+	 */
+	@Sql(statements = "INSERT INTO utilisateur (id,email,mdp,pseudonyme,nom,prenom,actif,newsletter) VALUES (1,'email4Test','mdp4Test','pseudo4Test','nom4Test','prenom4Test',true,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testUpdateExistingAdmin_ShouldReturnEntite() {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setId(1);
+		utilisateur.setEmail("email");
+		utilisateur.setMdp("mdp");
+		utilisateur.setPseudonyme("pseudo");
+		utilisateur.setNom("nom");
+		utilisateur.setPrenom("prenom");
+		utilisateur.setActif(true);
+		utilisateur.setNewsletter(false);
+
+
+		ServiceResponse<Utilisateur> resp = service.update(utilisateur);
+
+		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("email", "email");
+		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("mdp", "mdp");
+		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("pseudonyme", "pseudo");
+		assertThat(resp.getMessage()).isEqualTo("Success");
+	}
+
+	/**
+	 * Cette méthode teste la modification d'un utilisateur - conditions invalides (utilisateur
+	 * non existant)
+	 */
+	@Sql(statements = "INSERT INTO utilisateur (id,email,mdp,pseudonyme,nom,prenom,actif,newsletter) VALUES (1,'email4Test','mdp4Test','pseudo4Test','nom4Test','prenom4Test',true,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testUpdateExistingNotExistingAdmin_ShouldReturnNull() {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setId(2);
+		utilisateur.setEmail("email");
+		utilisateur.setMdp("mdp");
+		utilisateur.setPseudonyme("pseudo");
+		utilisateur.setNom("nom");
+		utilisateur.setPrenom("prenom");
+		utilisateur.setActif(true);
+		utilisateur.setNewsletter(false);
+		
+		ServiceResponse<Utilisateur> resp = service.update(utilisateur);
+
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage())
+				.isEqualTo("Modification non réalisée : id inconnu dans la database ou entité nulle");
+	}
+
+	/**
+	 * Cette méthode teste la modification d'un utilisateur - conditions invalides (modif
+	 * par email existant)
+	 */
+	@Sql(statements = "INSERT INTO utilisateur (id,email,mdp,pseudonyme,nom,prenom,actif,newsletter) VALUES (1,'email4Test','mdp4Test','pseudo4Test','nom4Test','prenom4Test',true,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO utilisateur (id,email,mdp,pseudonyme,nom,prenom,actif,newsletter) VALUES (2,'email2','mdp2','pseudo2','nom2','prenom2',true,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testUpdateExistingEmail_ShouldReturnNull() {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setId(1);
+		utilisateur.setEmail("email2");
+		utilisateur.setMdp("mdp");
+		utilisateur.setPseudonyme("pseudo");
+		utilisateur.setNom("nom");
+		utilisateur.setPrenom("prenom");
+		utilisateur.setActif(true);
+		utilisateur.setNewsletter(false);
+		
+		ServiceResponse<Utilisateur> resp = service.update(utilisateur);
+
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("Exception lors de la modification dans la DB");
+	}
+
+	/**
+	 * Cette méthode teste la modification d'un utilisateur - conditions invalides (modif
+	 * par pseudo existant)
+	 */
+	@Sql(statements = "INSERT INTO utilisateur (id,email,mdp,pseudonyme,nom,prenom,actif,newsletter) VALUES (1,'email4Test','mdp4Test','pseudo4Test','nom4Test','prenom4Test',true,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO utilisateur (id,email,mdp,pseudonyme,nom,prenom,actif,newsletter) VALUES (2,'email2','mdp2','pseudo2','nom2','prenom2',true,false)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testUpdateExistingPseudo_ShouldReturnNull() {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setId(1);
+		utilisateur.setEmail("email");
+		utilisateur.setMdp("mdp");
+		utilisateur.setPseudonyme("pseudo2");
+		utilisateur.setNom("nom");
+		utilisateur.setPrenom("prenom");
+		utilisateur.setActif(true);
+		utilisateur.setNewsletter(false);
+
+		ServiceResponse<Utilisateur> resp = service.update(utilisateur);
+
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("Exception lors de la modification dans la DB");
+	}
+
+	/**
+	 * Cette méthode teste la modification d'un utilisateur - conditions invalides (null)
+	 */
+	@Test
+	public void testUpdateNull_ShouldReturnNull() {
+
+		ServiceResponse<Utilisateur> resp = service.update(null);
+
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage())
+				.isEqualTo("Modification non réalisée : id inconnu dans la database ou entité nulle");
+	}
+	
+	
 }

@@ -1,5 +1,6 @@
 package com.fr.adaming.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,14 +52,9 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 		}
 
 		else {
-			try {
 				dao.save(planteUtilisateur);
 				log.info("Plante Utilisateur enregistré dans la BD");
 				return new ServiceResponse<PlanteUtilisateur>("Succes", planteUtilisateur);
-			} catch (Exception e) {
-				log.warn(e.getMessage());
-				return new ServiceResponse<PlanteUtilisateur>("Erreur lors de la création de l'objet", null);
-			}
 		}
 	}
 
@@ -74,13 +70,8 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 		}
 
 		else {
-			try {
 				log.info("Plante Utilisateur enregistré dans la BD");
 				return new ServiceResponse<PlanteUtilisateur>("Succes", dao.save(planteUtilisateur));
-			} catch (Exception e) {
-				log.warn(e.getMessage());
-				return new ServiceResponse<PlanteUtilisateur>("Erreur lors de la sauvegarde des modifications", null);
-			}
 		}
 	}
 
@@ -90,20 +81,14 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 			log.info("Jardin inexistant");
 			return new ServiceResponse<Page<PlanteUtilisateur>>("Jardin inexistant", null);
 		} else {
-			try {
-				log.info("Jardin existant");
-				ServiceResponse<Page<PlanteUtilisateur>> serviceResponse = new ServiceResponse<Page<PlanteUtilisateur>>();
-				Pageable pageable = PageRequest.of(p, 20, Sort.by(Direction.DESC, "id"));
-				Page<PlanteUtilisateur> page = repo.findByJardin(idJardin, pageable);
+			log.info("Jardin existant");
+			ServiceResponse<Page<PlanteUtilisateur>> serviceResponse = new ServiceResponse<Page<PlanteUtilisateur>>();
+			Pageable pageable = PageRequest.of(p, 20, Sort.by(Direction.DESC, "id"));
+			Page<PlanteUtilisateur> page = repo.findByJardin(idJardin, pageable);
 
-				serviceResponse.setBody(page);
-				serviceResponse.setMessage("Succes");
-				return serviceResponse;
-			} catch (Exception e) {
-				log.warn(e.getMessage());
-				return new ServiceResponse<Page<PlanteUtilisateur>>("Erreur lors de l'affichage de la liste", null);
-			}
-
+			serviceResponse.setBody(page);
+			serviceResponse.setMessage("Succes");
+			return serviceResponse;
 		}
 	}
 
@@ -111,41 +96,29 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 	public ServiceResponse<List<PlanteUtilisateur>> readByJardin(int idJardin) {
 		if (!jRepo.existsById(idJardin)) {
 			log.info("Jardin inexistant");
-			return new ServiceResponse<List<PlanteUtilisateur>>("Jardin inexistant", null);
+			List<PlanteUtilisateur> listeNulle = new ArrayList<>();
+			return new ServiceResponse<List<PlanteUtilisateur>>("Jardin inexistant", listeNulle);
 		} else {
-			try {
-				log.info("Jardin existant");
-				ServiceResponse<List<PlanteUtilisateur>> serviceResponse = new ServiceResponse<List<PlanteUtilisateur>>();
+			log.info("Jardin existant");
+			ServiceResponse<List<PlanteUtilisateur>> serviceResponse = new ServiceResponse<List<PlanteUtilisateur>>();
 
-				List<PlanteUtilisateur> liste = repo.findByJardin(idJardin);
+			List<PlanteUtilisateur> liste = repo.findByJardin(idJardin);
 
-				serviceResponse.setBody(liste);
-				serviceResponse.setMessage("Succes");
-				return serviceResponse;
-			} catch (Exception e) {
-				log.warn(e.getMessage());
-				return new ServiceResponse<List<PlanteUtilisateur>>("Erreur lors de l'affichage de la liste", null);
-			}
-
+			serviceResponse.setBody(liste);
+			serviceResponse.setMessage("Succes");
+			return serviceResponse;
 		}
 	}
 
 	@Override
 	public boolean deleteByJardin(int idJardin) {
 		log.debug("Service: deleteByJardin de l'entité jardin id : " + idJardin);
-		
-		boolean delete = true; 
-		try {
-			if (jRepo.existsById(idJardin)) {
-				repo.deleteAllByJardin(idJardin);
-			} else {
-				log.info("Jardin inexistant");
-				delete = false;
-			}
-				
-		} catch(Exception e) {
-			e.printStackTrace();
-			log.warn(e.getMessage());
+
+		boolean delete = true;
+		if (jRepo.existsById(idJardin)) {
+			repo.deleteAllByJardin(idJardin);
+		} else {
+			log.info("Jardin inexistant");
 			delete = false;
 		}
 		return delete;
