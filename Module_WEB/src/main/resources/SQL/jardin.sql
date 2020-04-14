@@ -1,1 +1,0 @@
-﻿INSERT INTO jardin VALUES (1, 10, 10, true, 10, 10, 'Jardin1', 10, 2, 1, 1), (2, 10, 10, false, 10, 10, 'Jardin2', 10, 0, 1, 1), (3, 10, 10, true, 10, 10, 'Jardin3', 10, 3, 5, 1);

@@ -252,7 +252,7 @@ public class PeriodeControllerTest extends AbstractTestMethods<PeriodeUpdateDto>
 		ResponseDto<Page<PeriodeUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, PeriodeUpdateDto.class);
 
 		assertThat(responseDto.isError()).isFalse();
-		assertThat(responseDto.getBody().toList().isEmpty());
+		assertTrue(responseDto.getBody().toList().isEmpty());
 	}
 
 	@Test
@@ -307,7 +307,7 @@ public class PeriodeControllerTest extends AbstractTestMethods<PeriodeUpdateDto>
 		ResponseDto<Page<PeriodeUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, PeriodeUpdateDto.class);
 
 		assertThat(responseDto.isError()).isFalse();
-		assertThat(responseDto.getBody().toList().isEmpty());
+		assertTrue(responseDto.getBody().toList().isEmpty());
 	}
 
 	@Test
