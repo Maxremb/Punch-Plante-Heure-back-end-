@@ -20,7 +20,6 @@ import com.fr.adaming.entity.Meteo;
 @SpringBootTest(classes = ModuleServiceApplication.class)
 public class CalculMetierTest implements ICalculMetierTest {
 
-
 	@Autowired
 	private ICalculMetier calcul;
 
@@ -60,7 +59,6 @@ public class CalculMetierTest implements ICalculMetierTest {
 
 	}
 
-	
 	@Override
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
@@ -76,14 +74,13 @@ public class CalculMetierTest implements ICalculMetierTest {
 		Meteo meteo = makeNewUpdateDto();
 
 		meteo.setEvapoTranspirationPotentielle(2.0);
-		
+
 		Set<Jardin> setJardins = calcul.calculRU(meteo);
 
 		assertThat(setJardins).isNotNull().hasSize(1);
-		
+
 	}
 
-	
 	@Override
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
@@ -200,7 +197,7 @@ public class CalculMetierTest implements ICalculMetierTest {
 		Meteo meteo = makeNewUpdateDto();
 
 		meteo.setEvapoTranspirationPotentielle(2.0);
-		
+
 		Set<Jardin> setJardins = calcul.calculRU(meteo);
 
 		assertThat(setJardins).isEmpty();
@@ -229,65 +226,83 @@ public class CalculMetierTest implements ICalculMetierTest {
 		return meteo;
 	}
 
-
 	@Override
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, largeur, prof_sol, reserve_utile, reserve_max_eau) VALUES (1, 'nomJardin', 69, 10, 10, 10, 5, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)	
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReinitValid_ShouldReturnEntity() {
 		ServiceResponse<Jardin> resp = calcul.reinitArrosJardin(1);
-		
+
 		assertThat(resp.getMessage()).isEqualTo("Success");
 		assertThat(resp.getBody()).isNotNull();
-		assertThat(resp.getBody()).hasFieldOrPropertyWithValue("reserveUtile", (double)10);
+		assertThat(resp.getBody()).hasFieldOrPropertyWithValue("reserveUtile", (double) 10);
 	}
-
 
 	@Override
 	@Test
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, largeur, prof_sol, reserve_utile, reserve_max_eau) VALUES (1, 'nomJardin', 69, 10, 10, 10, 5, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)	
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReinitInvalidJardinNull_ShouldReturnNull() {
-//		ServiceResponse<Jardin> resp = calcul.reinitArrosJardin(null);
-//		
-//		assertThat(resp.getMessage()).isEqualTo("Success");
-//		assertThat(resp.getBody()).isNull();
+		ServiceResponse<Jardin> resp = calcul.reinitArrosJardin(null);
+
+		assertThat(resp.getMessage()).isEqualTo("Tentative de réinitialisation jardin null ou absence profondeur");
+		assertThat(resp.getBody()).isNull();
 	}
 
-
 	@Override
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, largeur, prof_sol, reserve_utile, reserve_max_eau) VALUES (1, 'nomJardin', 69, 10, 10, 10, 5, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReinitInvalidJardinInexistant_ShouldReturnNull() {
-		// TODO Auto-generated method stub
-		
+		ServiceResponse<Jardin> resp = calcul.reinitArrosJardin(2);
+
+		assertThat(resp.getMessage()).isEqualTo("Jardin null");
+		assertThat(resp.getBody()).isNull();
 	}
 
-
 	@Override
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, largeur, prof_sol, reserve_utile, reserve_max_eau) VALUES (1, 'nomJardin', 69, 10, 10, 5, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReinitInvalidJardinNoLongueur_ShouldReturnNull() {
-		// TODO Auto-generated method stub
-		
+		ServiceResponse<Jardin> resp = calcul.reinitArrosJardin(1);
+
+		assertThat(resp.getMessage()).isEqualTo("Pas de longueur et/ou largeur et/ou profondeur");
+		assertThat(resp.getBody()).isNull();
 	}
 
-
 	@Override
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, prof_sol, reserve_utile, reserve_max_eau) VALUES (1, 'nomJardin', 69, 10, 10, 5, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReinitInvalidJardinNoLargeur_ShouldReturnNull() {
-		// TODO Auto-generated method stub
-		
-	}
+		ServiceResponse<Jardin> resp = calcul.reinitArrosJardin(1);
 
+		assertThat(resp.getMessage()).isEqualTo("Pas de longueur et/ou largeur et/ou profondeur");
+		assertThat(resp.getBody()).isNull();
+	}
 
 	@Override
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, largeur, longueur, reserve_utile, reserve_max_eau) VALUES (1, 'nomJardin', 69, 10, 10, 5, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReinitInvalidJardinNoProfondeur_ShouldReturnNull() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-	
+		ServiceResponse<Jardin> resp = calcul.reinitArrosJardin(null);
 
+		assertThat(resp.getMessage()).isEqualTo("Tentative de réinitialisation jardin null ou absence profondeur");
+		assertThat(resp.getBody()).isNull();
+	}
 
 }
