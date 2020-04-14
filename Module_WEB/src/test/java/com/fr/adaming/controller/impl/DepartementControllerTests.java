@@ -87,6 +87,23 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 
 		assertThat(responseAsString).isEmpty();
 	}
+	
+	/**
+	 * Test de la méthode create avec entité nulle. Doit
+	 * retourner statut 400. ResponseDto doit avoir un body null.
+	 * 
+	 * @throws Exception
+	 */
+	@Test
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testCreatingEntityNull_shouldReturn400() throws Exception {
+		DepartementDto dto = makeNewDepartementDto();
+		dto.setName(null);
+
+		String responseAsString = runMockMvcLite("post", BASE_URL, 400, null);
+
+		assertThat(responseAsString).isEmpty();
+	}
 
 	@Override
 	@Test

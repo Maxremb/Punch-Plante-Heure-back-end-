@@ -2,36 +2,24 @@ package com.fr.adaming.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.ModulePersistenceApplication;
-import com.fr.adaming.entity.Departement;
-import com.fr.adaming.entity.Jardin;
-import com.fr.adaming.entity.Meteo;
-import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.entity.PlanteUtilisateur;
-import com.fr.adaming.entity.Utilisateur;
-import com.fr.adaming.enums.EtatPlante;
-import com.fr.adaming.enums.EtatSante;
 
 /**
  * <p>
  * Classe de Tests pour la Repository de l'entite Plante Utilisateur
  * </p>
  * 
- * @author Lucie
+ * @author Lucie Martinez
  * @since 0.0.1
  *
  */

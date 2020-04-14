@@ -192,10 +192,7 @@ public class IMeteoRepositoryTest {
 		List<Meteo> retour = repo.findMeteoByMonthAndDepartement(2020, 1, 75);
 		
 		assertThat(retour).isNotNull();
-		assertThat(retour).isEmpty();
-		
-		
+		assertThat(retour).isEmpty();	
 	}
-	
 	
 }

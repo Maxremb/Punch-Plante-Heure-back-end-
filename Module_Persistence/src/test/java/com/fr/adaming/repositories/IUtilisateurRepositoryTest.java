@@ -26,10 +26,8 @@ public class IUtilisateurRepositoryTest {
 	// paramètres utilisateur
 	private static final String nom = "jornet";
 	private static final String prenom = "kilian";
-	private static final String pseudo = "extra terrestre";
 	private static final String email = "kiki@trail.fr";
 	private static final String mdp = "4TEST";
-	// ID EMAIL MDP PSEUDO NOM PRENOM NON NULLABLE
 
 	//************************************************************
 	//FIND BY NOM AND PRENOM
@@ -85,6 +83,11 @@ public class IUtilisateurRepositoryTest {
 	//************************************************************
 		//FIND BY EMAIL AND MDP
 	
+	
+	/**
+	 * Test FIND BY EMAIL ET MDP
+	 * retourne entité 
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql (statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -92,6 +95,10 @@ public class IUtilisateurRepositoryTest {
 		assertThat(repo.findByEmailAndMdp(email, mdp)).hasFieldOrPropertyWithValue("nom", "jornet");
 	}
 	
+	/**
+	 * Test FIND BY EMAIL ET MDP - sans mdp
+	 * retourne null 
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql (statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -99,6 +106,10 @@ public class IUtilisateurRepositoryTest {
 		assertThat(repo.findByEmailAndMdp(email, null)).isNull();
 	}
 	
+	/**
+	 * Test FIND BY EMAIL ET MDP - sans mdp ni email
+	 * retourne null 
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql (statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -106,6 +117,10 @@ public class IUtilisateurRepositoryTest {
 		assertThat(repo.findByEmailAndMdp(null, null)).isNull();
 	}
 	
+	/**
+	 * Test FIND BY EMAIL ET MDP - mdp et email incorrects
+	 * retourne null 
+	 */
 	@Test
 	public void TestFindByEmailAndMdpWithNoDB_shouldReturnNull() {
 		assertThat(repo.findByEmailAndMdp(nom, prenom)).isNull();

@@ -18,7 +18,7 @@ import com.fr.adaming.entity.Meteo;
  *
  */
 @RestController
-@CrossOrigin
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
 public class DepartementControllerImpl extends AbstractControllerDepartement<DepartementDto, MeteoUpdateDto, Meteo, MeteoCreateDto, Departement> {
 	
 }

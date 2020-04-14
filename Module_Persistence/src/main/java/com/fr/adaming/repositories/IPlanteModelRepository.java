@@ -12,7 +12,7 @@ import com.fr.adaming.entity.PlanteModel;
  * Interface repository responsable de la communication avec la base de données
  * pour l'entité PlanteModel
  * 
- * @author Léa Coston
+ * @author Léa Coston / Grégoire Brebner
  * @since 0.0.1
  */
 
@@ -26,7 +26,6 @@ public interface IPlanteModelRepository extends JpaRepository<PlanteModel, Integ
 	 * @param pageable les attributs des pages : nombre d'articles par page et
 	 *                 optionnel sortBy
 	 * @return une page de PlantModel
-	 * @author Léa Coston
 	 */
 	@Query(value = "select new PlanteModel(x.id, x.nomCommun, x.nomScientifique, x.photo) from PlanteModel x")
 	public Page<PlanteModel> findAllReduced(Pageable pageable);
@@ -36,7 +35,6 @@ public interface IPlanteModelRepository extends JpaRepository<PlanteModel, Integ
 	 * 
 	 * @param nomScientifique le nom recherché
 	 * @return boolean true si l'objet existe, false sinon
-	 * @author Léa Coston
 	 */
 	public boolean existsByNomScientifique(String nomScientifique);
 
@@ -45,7 +43,6 @@ public interface IPlanteModelRepository extends JpaRepository<PlanteModel, Integ
 	 * 
 	 * @param nomScientifique le nom recherché
 	 * @return PlanteModel
-	 * @author Léa Coston
 	 */
 	public PlanteModel findByNomScientifique(String nomScientifique);
 
@@ -58,7 +55,6 @@ public interface IPlanteModelRepository extends JpaRepository<PlanteModel, Integ
 	 * @param nomCommun nom commun à rechercher
 	 * @param nomScientifique nom scientifique à rechercher
 	 * @return Page de PlanteModel
-	 * @author Grégoire Brebner
 	 */
 	public Page<PlanteModel> findByNomCommunContainingOrNomScientifiqueContainingIgnoreCase(Pageable pageable, String nomCommun,
 			String nomScientifique);

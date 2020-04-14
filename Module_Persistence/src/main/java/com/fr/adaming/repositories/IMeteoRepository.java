@@ -12,11 +12,10 @@ import org.springframework.stereotype.Repository;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Meteo;
 
-
 /**
- * Interface Repository responsable de la communication entre la BD et la couche Service
+ * Interface Repository responsable de la communication entre la BD et la couche Service de l'entité météo
  * Etend l'interface JpaRepository
- * @author Jeanne-Marie Mathevet
+ * @author Jeanne-Marie Mathevet / Grégoire Brebner
  * @since 0.0.1-SNAPSHOT
  */
 @Repository
@@ -41,17 +40,18 @@ public interface IMeteoRepository extends JpaRepository<Meteo, Integer>{
 	/**
 	 * Cette méthode retourne une liste de 'météos' pour un département
 	 * @param numeroDep - le numéro du département dont on veut récupérer la météo
-	 * @return liste d'objets de type météo
+	 * @param pageable caractéristiques de la pagination
+	 * @return page d'objets de type météo
 	 */
 	@Query(value = "select * from meteo WHERE departement_id = :numeroDep", nativeQuery = true)
 	public Page<Meteo> findMeteoByNumeroDep(Pageable pageable, Integer numeroDep);
 	
-	/** Prend les meteos dans la bd qui correspondent à un mois et à un departement
+	/** Prend les meteos dans la bd qui correspondent à un mois, une année et à un departement
 	 * @param month Le numéro du mois
+	 * @param year Le numéro de l'année
 	 * @param departementId Le numéro du département
 	 * @return Une liste d'entités meteo
 	 * 
-	 * @author Gregoire
 	 */
 	@Query(value = "select * from meteo where year(date) = :year and month(date) = :month and departement_id = :departementId", nativeQuery = true)
 	public List<Meteo> findMeteoByMonthAndDepartement(int year, int month, int departementId);

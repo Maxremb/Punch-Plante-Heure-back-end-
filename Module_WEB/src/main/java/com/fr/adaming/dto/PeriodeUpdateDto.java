@@ -15,7 +15,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode (callSuper = true)
 public class PeriodeUpdateDto extends PeriodeCreateDto {
 
 	@Positive(message = "l'identifiant de l'uttilisateur doit être positif")

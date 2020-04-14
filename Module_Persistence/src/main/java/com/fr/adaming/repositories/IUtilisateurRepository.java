@@ -18,7 +18,7 @@ public interface IUtilisateurRepository extends JpaRepositoryImplementation<Util
 	/**
 	 * Permet la recherche d'un utilisateur par nom et prenom
 	 * 
-	 * @param nom    de l'utlisateur recherché
+	 * @param nom de l'utilisateur recherché
 	 * @param prenom de l'utilisateur recherché
 	 * @return l'utilisateur en question
 	 */
@@ -26,8 +26,8 @@ public interface IUtilisateurRepository extends JpaRepositoryImplementation<Util
 	
 	/**
 	 * Permet la recherche d'un utilisateur par email et mot de passe
-	 * @param email de l'utlisateur recherché
-	 * @param mdp de l'utlisateur recherché
+	 * @param email de l'utilisateur recherché
+	 * @param mdp de l'utilisateur recherché
 	 * @return un utilisateur
 	 */
 	public Utilisateur findByEmailAndMdp (String email, String mdp);

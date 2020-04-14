@@ -53,7 +53,7 @@ public class AbstractTestMethods<U> {
 	 */
 	protected ResponseDto<U> runMockMvc(String requestType, String path, int expectedStatus,
 			Class<U> responseBodyClass) throws Exception {
-
+		log.info("Abstract Test Methods : Mock Mvc appelée (request type, url path, status, class");
 		return runMockMvc(requestType, path, expectedStatus, null, responseBodyClass);
 
 	}
@@ -72,6 +72,7 @@ public class AbstractTestMethods<U> {
 	protected ResponseDto<U> runMockMvc(String path, int expectedStatus, Object dto, Class<U> responseBodyClass)
 			throws Exception {
 
+		log.info("Abstract Test Methods : Mock Mvc appelée (url path, status, objet, class)");
 		return runMockMvc("post", path, expectedStatus, dto, responseBodyClass);
 
 	}
@@ -91,6 +92,7 @@ public class AbstractTestMethods<U> {
 	protected ResponseDto<U> runMockMvc(String requestType, String path, int expectedStatus, Object dto,
 			Class<U> responseBodyClass) throws Exception {
 
+		log.info("Abstract Test Methods : Mock Mvc appelée (request type, url path, status, objet, class)");
 		// Execution de MockMvc et recuperation de las responseDto en format string
 		String responseAsString = runMockMvcLite(requestType, path, expectedStatus, dto);
 		// Recuperation du type
@@ -118,6 +120,7 @@ public class AbstractTestMethods<U> {
 	protected ResponseDto<List<U>> runMockMvc4Lists(String requestType, String path, int expectedStatus,
 			Class<U> responseBodyClass) throws Exception {
 
+		log.info("Abstract Test Methods : Mock Mvc appelée (request type, url path, status, class)");
 		return runMockMvc4Lists(requestType, path, expectedStatus, null, responseBodyClass);
 
 	}
@@ -137,6 +140,7 @@ public class AbstractTestMethods<U> {
 	protected ResponseDto<List<U>> runMockMvc4Lists(String requestType, String path, int expectedStatus, Object dto,
 			Class<U> responseBodyClass) throws Exception {
 
+		log.info("Abstract Test Methods : Mock Mvc appelée (request type,url pth, status, objet, class)");
 		// Execution de MockMvc et recuperation de las responseDto en format string
 		String responseAsString = runMockMvcLite(requestType, path, expectedStatus, dto);
 		// Recuperation du type
@@ -165,6 +169,7 @@ public class AbstractTestMethods<U> {
 	protected ResponseDto<Page<U>> runMockMvc4Pages(String requestType, String path, int expectedStatus,
 			Class<U> responseBodyClass) throws Exception {
 
+		log.info("Abstract Test Methods : Mock Mvc appelée (request type, url path, status, class)");
 		return runMockMvc4Pages(requestType, path, expectedStatus, null, responseBodyClass);
 
 	}
@@ -184,6 +189,7 @@ public class AbstractTestMethods<U> {
 	protected ResponseDto<Page<U>> runMockMvc4Pages(String requestType, String path, int expectedStatus, Object dto,
 			Class<U> responseBodyClass) throws Exception {
 
+		log.info("Abstract Test Methods : Mock Mvc appelée (request type, url path, status, objet, class)");
 		// Execution de MockMvc et recuperation de las responseDto en format string
 		String responseAsString = runMockMvcLite(requestType, path, expectedStatus, dto);
 		// Recuperation du type
@@ -210,6 +216,7 @@ public class AbstractTestMethods<U> {
 	 */
 	protected String runMockMvcLite(String requestType, String path, int expectedStatus) throws Exception {
 
+		log.info("Abstract Test Methods : Mock Mvc appelée (request type, url path, status)");
 		return runMockMvcLite(requestType, path, expectedStatus, null);
 
 	}
@@ -226,6 +233,8 @@ public class AbstractTestMethods<U> {
 	 * @throws Exception
 	 */
 	protected String runMockMvcLite(String requestType, String path, int expectedStatus, Object dto) throws Exception {
+
+		log.info("Abstract Test Methods : Mock Mvc appelée (request type, url path, status, objet)");
 		String dtoAsJson;
 		String responseAsString = null;
 
@@ -234,6 +243,8 @@ public class AbstractTestMethods<U> {
 		switch (requestType) {
 
 		case "post":
+
+			log.info("méthode post");
 			dtoAsJson = mapper.writeValueAsString(dto);
 			responseAsString = mockMvc
 					.perform(post(path).contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON).content(dtoAsJson))
@@ -242,17 +253,21 @@ public class AbstractTestMethods<U> {
 			break;
 
 		case "delete":
+
+			log.info("méthode delete");
 			responseAsString = mockMvc.perform(delete(path)).andExpect(status().is(expectedStatus)).andReturn()
 					.getResponse().getContentAsString(StandardCharsets.UTF_8);
 			break;
 
 		case "get":
+			log.info("méthode get");
 			responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
 					.andExpect(status().is(expectedStatus)).andReturn().getResponse()
 					.getContentAsString(StandardCharsets.UTF_8);
 			break;
 
 		case "put":
+			log.info("méthode put");
 			dtoAsJson = mapper.writeValueAsString(dto);
 			responseAsString = mockMvc
 					.perform(put(path).contentType(MediaType.APPLICATION_JSON_VALUE).content(dtoAsJson))

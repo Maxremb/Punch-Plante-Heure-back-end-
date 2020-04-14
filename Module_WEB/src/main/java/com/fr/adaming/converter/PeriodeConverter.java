@@ -36,83 +36,98 @@ public class PeriodeConverter implements IConverter<PeriodeCreateDto, PeriodeUpd
 	@Override
 	public Periode convertCreateDtoToEntity(PeriodeCreateDto createDto) {
 		log.info("Converter péridoe : méthode create dto vers période");
+		if (createDto != null) {
+			DepartementDto depDto = createDto.getCounty();
+			Departement departement = null;
+			if (depDto != null) {
+				log.info("Département de la période non null");
+				departement = depConverter.convertDtoToEntity(depDto);
+			}
 
-		DepartementDto depDto = createDto.getCounty();
-		Departement departement = null;
-		if (depDto != null) {
-			log.info("Département de la période non null");
-			departement = depConverter.convertDtoToEntity(depDto);
+			PlanteModelUpdateDto pmDto = createDto.getPlantSpecies();
+			PlanteModel planteModel = null;
+			if (pmDto != null) {
+				log.info("Plante modèle de la période non null");
+				planteModel = pMConverter.convertUpdateDtoToEntity(pmDto);
+			}
+			log.info("Conversion OK");
+			Periode periode = new Periode();
+			periode.setDateDebut(createDto.getStartDate());
+			periode.setDateFin(createDto.getEndDate());
+			periode.setType(createDto.getPeriodType());
+			periode.setDepartement(departement);
+			periode.setPlanteModel(planteModel);
+
+			return periode;
 		}
-
-		PlanteModelUpdateDto pmDto = createDto.getPlantSpecies();
-		PlanteModel planteModel = null;
-		if (pmDto != null) {
-			log.info("Plante modèle du dto non null");
-			planteModel = pMConverter.convertUpdateDtoToEntity(pmDto);
-		}
-		log.info("Conversion OK");
-		Periode periode = new Periode();
-		periode.setDateDebut(createDto.getStartDate());
-		periode.setDateFin(createDto.getEndDate());
-		periode.setType(createDto.getPeriodType());
-		periode.setDepartement(departement);
-		periode.setPlanteModel(planteModel);
-
-		return periode;
+		log.info("Conversion non réalisée : create dto null");
+		return null;
 	}
 
 	@Override
 	public PeriodeCreateDto convertEntityToCreateDto(Periode entity) {
 		log.info("Converter période : méthode conversion periode vers create dto");
-		entity.setId(-1);
-		log.info("Conversion OK");
-		return (PeriodeCreateDto) convertEntityToUpdateDto(entity);
+		if (entity != null) {
+			entity.setId(-1);
+			log.info("Conversion OK");
+			return (PeriodeCreateDto) convertEntityToUpdateDto(entity);
+		}
+		log.info("Conversion non réalisée : periode null");
+		return null;
 
 	}
 
 	@Override
 	public Periode convertUpdateDtoToEntity(PeriodeUpdateDto updateDto) {
 		log.info("Converter période : méthode conversion update dto vers période");
-		Periode entity = convertCreateDtoToEntity(updateDto);
-		entity.setId(updateDto.getIdentity());
-		log.info("Conversion OK");
-		return entity;
+		if (updateDto != null) {
+			Periode entity = convertCreateDtoToEntity(updateDto);
+			entity.setId(updateDto.getIdentity());
+			log.info("Conversion OK");
+			return entity;
+		}
+		log.info("Conversion non réalisée : update dto null");
+		return null;
 	}
 
 	@Override
 	public PeriodeUpdateDto convertEntityToUpdateDto(Periode entity) {
 		log.info("Converter période : méthode conversion période vers update dto");
-		Departement departement = entity.getDepartement();
-		DepartementDto depDto = null;
-		if (departement != null) {
-			log.info("Département de la période non null");
-			depDto = depConverter.convertEntityToDto(departement);
-		}
+		if (entity != null) {
+			Departement departement = entity.getDepartement();
+			DepartementDto depDto = null;
+			if (departement != null) {
+				log.info("Département de la période non null");
+				depDto = depConverter.convertEntityToDto(departement);
+			}
 
-		PlanteModel planteModel = entity.getPlanteModel();
-		PlanteModelUpdateDto pmDto = null;
-		if (planteModel != null) {
-			log.info("Plante modèle de la période non null");
-			pmDto = pMConverter.convertEntityToUpdateDto(planteModel);
-		}
+			PlanteModel planteModel = entity.getPlanteModel();
+			PlanteModelUpdateDto pmDto = null;
+			if (planteModel != null) {
+				log.info("Plante modèle de la période non null");
+				pmDto = pMConverter.convertEntityToUpdateDto(planteModel);
+			}
 
-		PeriodeUpdateDto updateDto = new PeriodeUpdateDto();
-		if (entity.getId() != -1) {
-			log.info("Id péridoe = Id update");
-			updateDto.setIdentity(entity.getId());
+			PeriodeUpdateDto updateDto = new PeriodeUpdateDto();
+			if (entity.getId() != -1) {
+				log.info("Id péridoe = Id update");
+				updateDto.setIdentity(entity.getId());
+			}
+			updateDto.setCounty(depDto);
+			updateDto.setStartDate(entity.getDateDebut());
+			updateDto.setEndDate(entity.getDateFin());
+			updateDto.setPeriodType(entity.getType());
+			updateDto.setPlantSpecies(pmDto);
+			log.info("Conversion OK");
+			return updateDto;
 		}
-		updateDto.setCounty(depDto);
-		updateDto.setStartDate(entity.getDateDebut());
-		updateDto.setEndDate(entity.getDateFin());
-		updateDto.setPeriodType(entity.getType());
-		updateDto.setPlantSpecies(pmDto);
-		log.info("Conversion OK");
-		return updateDto;
+		log.info("Conversion non réalisée : periode null");
+		return null;
 	}
 
 	@Override
 	public List<Periode> convertListCreateDtoToEntity(List<PeriodeCreateDto> listeCreateDto) {
-log.info("Converter période : méthode conversion liste create dto vers liste période");
+		log.info("Converter période : méthode conversion liste create dto vers liste période");
 		return listeCreateDto == null ? new ArrayList<Periode>()
 				: listeCreateDto.stream().map(this::convertCreateDtoToEntity).collect(Collectors.toList());
 

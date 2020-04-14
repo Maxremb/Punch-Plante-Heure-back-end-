@@ -29,9 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PlanteModelConverter implements IConverter<PlanteModelCreateDto, PlanteModelUpdateDto, PlanteModel> {
 
-	@Autowired
-	private PeriodeConverter periodeConverter;
-
 	@Override
 	public PlanteModel convertCreateDtoToEntity(PlanteModelCreateDto createDto) {
 		log.info("Converter plante model : méthode conversion create dto vers plante model");

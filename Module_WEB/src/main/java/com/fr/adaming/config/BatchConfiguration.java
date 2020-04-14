@@ -32,6 +32,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import com.fr.adaming.dto.MeteoXlsDto;
 import com.fr.adaming.entity.Meteo;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Config de la recuperation de meteo à partir d'une source externe
  * 
@@ -42,6 +44,7 @@ import com.fr.adaming.entity.Meteo;
 @Configuration
 @EnableBatchProcessing
 @EnableScheduling
+@Slf4j
 public class BatchConfiguration {
 
 	@Autowired
@@ -62,16 +65,21 @@ public class BatchConfiguration {
 	@Value("classpath:/Meteo.csv")
 	private Resource inputResource;
 
+	/**
+	 * Méthode reader du batch permettant de récupérer les données d'un fichier
+	 * 
+	 * @return Un meteo XLS dto à convertir en données java
+	 */
 	@Bean
 	public FlatFileItemReader<MeteoXlsDto> reader() {
-
+		log.info("Batch config : méthode reader appelée");
 		DefaultFieldSetFactory fieldSetFactory = new DefaultFieldSetFactory();
 		fieldSetFactory.setNumberFormat(NumberFormat.getInstance(Locale.FRANCE));
 
-		return new FlatFileItemReaderBuilder<MeteoXlsDto>().name("meteoItemReader").linesToSkip(1)
-				.resource(inputResource).delimited().delimiter(";").fieldSetFactory(fieldSetFactory)
-				.names(new String[] { "station", "nom", "longitude", "latitude", "altitude", "date", "rr", "tn", "tx",
-						"fxi", "dxi", "fxy", "dxy", "inst", "eptmon" })
+		return new FlatFileItemReaderBuilder<MeteoXlsDto>()
+				.name("meteoItemReader").linesToSkip(1).resource(inputResource).delimited().delimiter(";")
+				.fieldSetFactory(fieldSetFactory).names("station", "nom", "longitude", "latitude", "altitude", "date",
+						"rr", "tn", "tx", "fxi", "dxi", "fxy", "dxy", "inst", "eptmon")
 				.fieldSetMapper(new BeanWrapperFieldSetMapper<MeteoXlsDto>() {
 					{
 						setTargetType(MeteoXlsDto.class);
@@ -80,17 +88,29 @@ public class BatchConfiguration {
 				}).build();
 	}
 
+	/**
+	 * Méthode step 1 du batch effectuant le job de récupération de données météos
+	 * 
+	 * @return
+	 */
 	@Bean
 	public Step step1() {
+		log.info("Batch config : méthode step 1 appelée");
 		return stepBuilderFactory.get("step1").<MeteoXlsDto, Meteo>chunk(10).faultTolerant()
 				.skip(ValidationException.class).skip(FlatFileParseException.class).skip(ItemStreamException.class)
 				.skipLimit(9).reader(reader()).processor(processor).writer(writer).build();
 	}
 
 //	@Scheduled(cron = " 0 0 0 ? * * ")
-	@Scheduled(initialDelay = 30*1000, fixedDelay = 24 * 60 * 60 * 1000)
+	/**
+	 * Méthode planifié dans le temps permettant l'envoi d'email aux utilisateurs
+	 * concernés par l'arrossage de leur jardin
+	 * 
+	 * @throws Exception
+	 */
+	@Scheduled(initialDelay = 30 * 1000, fixedDelay = 24 * 60 * 60 * 1000)
 	public void scheduleFixedDelayTask() throws Exception {
-
+		log.info("Batch config : méthode planifié de récupération météo appelée");
 		System.out.println("job lancé" + new Date());
 		JobParameters param = new JobParametersBuilder().addString("JobId", String.valueOf(System.currentTimeMillis()))
 				.toJobParameters();

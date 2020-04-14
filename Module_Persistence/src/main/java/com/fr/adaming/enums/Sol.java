@@ -11,6 +11,4 @@ public enum Sol {
 	ArgiloSableux,
 	ArgiloLimoneux,
 	Argileux,
-	
-
 }

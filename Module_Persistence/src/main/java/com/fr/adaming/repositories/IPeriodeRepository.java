@@ -6,24 +6,23 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.fr.adaming.entity.Departement;
-import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Periode;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.enums.TypePeriod;
 
 
 /** Repositoire pour periode
- * @author Gregoire
+ * @author Gregoire Brebner
+ * @since 0.0.1
  *
  */
 @Repository
 public interface IPeriodeRepository extends JpaRepository<Periode, Integer>{
 	
-	/** Cherche les periodes de touts les utilisateurs par departement
+	/** Cherche les periodes de tous les utilisateurs par departement
 	 * @param pageable Objet pageable pour configure la page
 	 * @param departement Departement concerné
 	 * @return Page de periodes
@@ -31,7 +30,7 @@ public interface IPeriodeRepository extends JpaRepository<Periode, Integer>{
 	public Page<Periode> findByDepartement(Pageable pageable, Departement departement);
 	
 	/** Cherche les periodes par type de plante
-	 * @param pageable Objet pageable pour configure la page
+	 * @param pageable Objet pageable pour configurer la page
 	 * @param planteModel type de plante
 	 * @return page de periodes
 	 */

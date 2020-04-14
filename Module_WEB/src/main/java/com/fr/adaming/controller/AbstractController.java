@@ -40,136 +40,178 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 	public ResponseEntity<ResponseDto<U>> create(C dto) {
 
 		log.info("Controller: méthode CREATE appelée");
-		
-		ServiceResponse<E> serviceResponse = service.create(converter.convertCreateDtoToEntity(dto));
 
-		return makeUpdateDtoResponse(serviceResponse);
+		try {
+			ServiceResponse<E> serviceResponse = service.create(converter.convertCreateDtoToEntity(dto));
+
+			return makeUpdateDtoResponse(serviceResponse);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Abstract Controller create" + e.getMessage());
+			return null;
+		}
 	}
 
 	@Override
 	public ResponseEntity<ResponseDto<U>> deleteById(int id) {
-		
-		log.info("Controller: méthode DELETE appelée");
-		
-		boolean result = service.deleteById(id);
-		ResponseDto<U> responseDto = new ResponseDto<U>();
 
-		if (result) {
-			responseDto.setError(false);
-			responseDto.setMessage("Suppression réussie");
-			responseDto.setBody(null);
-			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-		} else {
-			responseDto.setError(true);
-			responseDto.setMessage("Erreur pendant la suppression de l'entité: " + id);
-			responseDto.setBody(null);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		log.info("Controller: méthode DELETE appelée");
+
+		try {
+			boolean result = service.deleteById(id);
+			ResponseDto<U> responseDto = new ResponseDto<U>();
+
+			if (result) {
+				responseDto.setError(false);
+				responseDto.setMessage("Suppression réussie");
+				responseDto.setBody(null);
+				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+			} else {
+				responseDto.setError(true);
+				responseDto.setMessage("Erreur pendant la suppression de l'entité: " + id);
+				responseDto.setBody(null);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+			}
+		} catch (Exception e) {
+			log.warn("Erreur méthode Abstract Controller deleteById" + e.getMessage());
+			return null;
 		}
 	}
 
 	@Override
 	public ResponseEntity<ResponseDto<U>> update(U dto) {
-		
+
 		log.info("Controller: méthode UPDATE appelée");
 
-		ServiceResponse<E> serviceResponse = service.update(converter.convertUpdateDtoToEntity(dto));
-
-		return makeUpdateDtoResponse(serviceResponse);
+		try {
+			ServiceResponse<E> serviceResponse = service.update(converter.convertUpdateDtoToEntity(dto));
+			return makeUpdateDtoResponse(serviceResponse);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Abstract Controller update" + e.getMessage());
+			return null;
+		}
 	}
 
 	@Override
 	public ResponseEntity<ResponseDto<U>> readById(int id) {
-		
+
 		log.info("Controller: méthode READBYID appelée");
 
-		ServiceResponse<E> serviceResponse = service.readById(id);
-		
-		return makeUpdateDtoResponse(serviceResponse);
-
+		try {
+			ServiceResponse<E> serviceResponse = service.readById(id);
+			return makeUpdateDtoResponse(serviceResponse);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Abstract Controller readById" + e.getMessage());
+			return null;
+		}
 
 	}
 
 	@Override
 	public ResponseEntity<ResponseDto<Page<U>>> readAll(int p) {
-		
+
 		log.info("Controller: méthode READALL appelée");
-		
-		ServiceResponse<Page<E>> serviceResponse = service.readAll(p);
-		
-		return makeUpdateDtoPageResponse(serviceResponse);
-		
+
+		try {
+			ServiceResponse<Page<E>> serviceResponse = service.readAll(p);
+			return makeUpdateDtoPageResponse(serviceResponse);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Abstract Controller readAll" + e.getMessage());
+			return null;
+		}
+
 	}
-	
-	/** Regroupe les elements communs des méthodes qui retournent des updateDto
-	 * @param serviceResponse Reponse d'une méthode de la couche service de la méthode
+
+	/**
+	 * Regroupe les elements communs des méthodes qui retournent des updateDto
+	 * 
+	 * @param serviceResponse Reponse d'une méthode de la couche service de la
+	 *                        méthode
 	 * @return Response Entity contenant la ResponseDto. Body: UpdateDto
 	 */
-	protected ResponseEntity<ResponseDto<U>> makeUpdateDtoResponse (ServiceResponse<E> serviceResponse){
-		
-		log.debug("Controller: makeUpdateDtoResponse");
-		
-		ResponseDto<U> responseDto = new ResponseDto<U>();
-		responseDto.setMessage(serviceResponse.getMessage());
-		
+	protected ResponseEntity<ResponseDto<U>> makeUpdateDtoResponse(ServiceResponse<E> serviceResponse) {
 
-		if (serviceResponse.getBody() != null) {
-			
-			log.debug("Controller/makeUpdateDtoResponse: retour de la couche service NON-NULL");
-			
-			U returnedDto = converter.convertEntityToUpdateDto(serviceResponse.getBody());	
-			responseDto.setBody(returnedDto);			
-			responseDto.setError(false);
-			
-			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-			
-		} else {
-			
-			log.debug("Controller/makeUpdateDtoResponse: Statut 400. Cause: " + serviceResponse.getMessage());
-			
-			responseDto.setError(true);
-			responseDto.setBody(null);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
-			
+		log.debug("Controller: makeUpdateDtoResponse");
+
+		try {
+			ResponseDto<U> responseDto = new ResponseDto<U>();
+			responseDto.setMessage(serviceResponse.getMessage());
+
+			if (serviceResponse.getBody() != null) {
+
+				log.debug("Controller/makeUpdateDtoResponse: retour de la couche service NON-NULL");
+
+				U returnedDto = converter.convertEntityToUpdateDto(serviceResponse.getBody());
+				responseDto.setBody(returnedDto);
+				responseDto.setError(false);
+
+				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+
+			} else {
+
+				log.debug("Controller/makeUpdateDtoResponse: Statut 400. Cause: " + serviceResponse.getMessage());
+
+				responseDto.setError(true);
+				responseDto.setBody(null);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+
+			}
+		} catch (Exception e) {
+			log.warn("Erreur méthode Abstract Controller makeUpdateDtoResponse" + e.getMessage());
+			return null;
 		}
-		
+
 	}
-	
-	/**Regroupe les elements communs des méthodes qui retournent des listes d'updateDto
+
+	/**
+	 * Regroupe les elements communs des méthodes qui retournent des listes
+	 * d'updateDto
+	 * 
 	 * @param serviceResponse Reponse de la couche service de la méthode
 	 * @return Response Entity contenant la ResponseDto. Body: une liste d'updateDto
 	 */
-	protected ResponseEntity<ResponseDto<List<U>>> makeUpdateDtoListResponse(
-			ServiceResponse<List<E>> serviceResponse) {
-		
+	protected ResponseEntity<ResponseDto<List<U>>> makeUpdateDtoListResponse(ServiceResponse<List<E>> serviceResponse) {
+
 		log.debug("Controller: makeUpdateDtoListResponse");
 
-		ResponseDto<List<U>> responseDto = new ResponseDto<List<U>>();
-		List<U> periodeList = converter.convertListEntityToUpdateDto(serviceResponse.getBody());
+		try {
+			ResponseDto<List<U>> responseDto = new ResponseDto<List<U>>();
+			List<U> periodeList = converter.convertListEntityToUpdateDto(serviceResponse.getBody());
 
-		responseDto.setMessage(serviceResponse.getMessage());
-		responseDto.setBody(periodeList);
-		responseDto.setError(false);
-		return ResponseEntity.ok(responseDto);
+			responseDto.setMessage(serviceResponse.getMessage());
+			responseDto.setBody(periodeList);
+			responseDto.setError(false);
+			return ResponseEntity.ok(responseDto);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Abstract Controller makeUpdateDtoListResponse" + e.getMessage());
+			return null;
+		}
 
 	}
-	
-	/**Regroupe les elements communs des méthodes qui retournent des listes d'updateDto
+
+	/**
+	 * Regroupe les elements communs des méthodes qui retournent des listes
+	 * d'updateDto
+	 * 
 	 * @param serviceResponse Reponse de la couche service de la méthode
 	 * @return Response Entity contenant la ResponseDto. Body: Une page d'updateDto
 	 */
-	protected ResponseEntity<ResponseDto<Page<U>>> makeUpdateDtoPageResponse(
-			ServiceResponse<Page<E>> serviceResponse) {
+	protected ResponseEntity<ResponseDto<Page<U>>> makeUpdateDtoPageResponse(ServiceResponse<Page<E>> serviceResponse) {
 
 		log.debug("Controller: makeUpdateDtoPageResponse");
-		
-		ResponseDto<Page<U>> responseDto = new ResponseDto<Page<U>>();
-		Page<U> periodeList = converter.convertPageEntityToUpdateDto(serviceResponse.getBody());
 
-		responseDto.setMessage(serviceResponse.getMessage());
-		responseDto.setBody(periodeList);
-		responseDto.setError(false);
-		
-		return ResponseEntity.ok(responseDto);
+		try {
+			ResponseDto<Page<U>> responseDto = new ResponseDto<Page<U>>();
+			Page<U> periodeList = converter.convertPageEntityToUpdateDto(serviceResponse.getBody());
+
+			responseDto.setMessage(serviceResponse.getMessage());
+			responseDto.setBody(periodeList);
+			responseDto.setError(false);
+
+			return ResponseEntity.ok(responseDto);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Abstract Controller makeUpdateDtoPageResponse" + e.getMessage());
+			return null;
+		}
 
 	}
 

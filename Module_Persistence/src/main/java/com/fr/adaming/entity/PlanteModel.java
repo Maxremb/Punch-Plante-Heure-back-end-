@@ -1,14 +1,11 @@
 
 package com.fr.adaming.entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.fr.adaming.enums.Sol;
@@ -20,7 +17,8 @@ import lombok.Setter;
 
 /**
  * @author Léa
- *
+ * @since 0.0.1
+ * 
  *         Le dictionnaire des données botanique du site. AutoJointure sur les
  *         associations positives et négatives
  */

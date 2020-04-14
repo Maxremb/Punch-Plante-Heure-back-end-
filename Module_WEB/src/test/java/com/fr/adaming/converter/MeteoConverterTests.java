@@ -19,7 +19,6 @@ import com.fr.adaming.dto.DepartementDto;
 import com.fr.adaming.dto.MeteoCreateDto;
 import com.fr.adaming.dto.MeteoUpdateDto;
 import com.fr.adaming.entity.Departement;
-import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Meteo;
 
 /**
