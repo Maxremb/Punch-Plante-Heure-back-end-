@@ -80,17 +80,12 @@ public class UtilisateurControllerImpl
 					responseDto.setMessage("Utilisateur actif");
 					responseDto.setBody(true);
 					return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-				} else if (!result) {
-					responseDto.setError(false);
-					responseDto.setMessage("Utilisateur non actif");
-					responseDto.setBody(false);
-					return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-				} else {
-					responseDto.setError(true);
-					responseDto.setMessage("Aucun utilisateur n'existe avec pseudo : " + pseudonyme);
-					responseDto.setBody(null);
-					return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 				}
+
+				responseDto.setError(false);
+				responseDto.setMessage("Utilisateur non actif");
+				responseDto.setBody(false);
+				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 
 			}
 			responseDto.setError(true);
