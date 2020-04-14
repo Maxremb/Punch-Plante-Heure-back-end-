@@ -14,7 +14,7 @@ import com.fr.adaming.enums.Sol;
 
 /**
  * Classe de test de l'interface Retention repository
- * @author maxime
+ * @author Maxime Rembert
  * @since 0.0.1-SNAPSHOT
  */
 @SpringBootTest (classes = ModulePersistenceApplication.class)
@@ -22,7 +22,6 @@ public class IRetentionRepoTest {
 	
 	@Autowired
 	private IRetentionRepository repo;
-	
 	
 	/**
 	 * Test de la méthode existsBySol avec sol existant dans la DB et requête correcte
@@ -35,7 +34,6 @@ public class IRetentionRepoTest {
 		boolean resp = repo.existsBySol(Sol.Sableux);
 		assertThat(resp).isTrue();
 	}
-	
 	
 	/**
 	 * Test de la méthode existsBySol avec sol existant dans la DB et requête incorrecte

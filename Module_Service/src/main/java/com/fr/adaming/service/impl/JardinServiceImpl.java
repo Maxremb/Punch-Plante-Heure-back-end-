@@ -108,7 +108,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 	@Override
 	public Jardin calculReserveEauMax(Jardin jardin) {
 		// calculer le volume du jardin si les données existent
-		if (jardin.getLongueur() != null && jardin.getLargeur() != null && jardin.getProfSol() != null) {
+		if (jardin.getLongueur() != null && jardin.getLargeur() != null && jardin.getProfSol() != null && jardin.getSol() != null) {
 
 			// calculer son volume
 			double volume = jardin.getLargeur() * jardin.getLongueur() * jardin.getProfSol();
@@ -118,11 +118,11 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 			
 			if (!listeRetentions.isEmpty()) {
 				
-				Retention solArgileux = null;
-				Retention solArgiloLimoneux = null;
-				Retention solArgiloSableux = null;
-				Retention solLimonoArgileux = null;
-				Retention solSableux = null;
+				Retention solArgileux = new Retention();
+				Retention solArgiloLimoneux = new Retention();
+				Retention solArgiloSableux = new Retention();
+				Retention solLimonoArgileux = new Retention();
+				Retention solSableux = new Retention();
 				
 				
 				// recuperation de chaque entite de la DB sous forme d'objet
@@ -159,8 +159,6 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 					break;
 				case Sableux:
 					jardin.setRESERVE_MAX_EAU(volume * solSableux.getCoeffRemplissage());
-					break;
-				default:
 					break;
 				}
 				

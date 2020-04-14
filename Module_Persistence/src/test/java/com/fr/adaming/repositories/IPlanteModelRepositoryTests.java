@@ -12,12 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.ModulePersistenceApplication;
 import com.fr.adaming.entity.PlanteModel;
+
 /**
  * Cette classe teste la couche repository de l'entité PlanteModel
  * @author Léa Coston
@@ -29,8 +29,6 @@ public class IPlanteModelRepositoryTests {
 	@Autowired
 	private IPlanteModelRepository repo;
 
-
-	
 	/**
 	 * Teste la méthode readAllReduced permettant la recherche de seulement 4 attribut de planteModel
 	 */
@@ -101,6 +99,5 @@ public class IPlanteModelRepositoryTests {
 		assertNull(repo.findByNomScientifique("nom"));
 		
 	}
-	
 	
 }

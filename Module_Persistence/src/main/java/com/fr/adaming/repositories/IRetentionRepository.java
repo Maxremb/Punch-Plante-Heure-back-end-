@@ -8,7 +8,7 @@ import com.fr.adaming.enums.Sol;
 
 /**
  * Interface repository responsable de la communication avec la base de données pour l'entité Retention
- * @author maxime
+ * @author Maxime Rembert
  * @since 0.0.1-SNAPSHOT
  *
  */
@@ -16,14 +16,14 @@ import com.fr.adaming.enums.Sol;
 public interface IRetentionRepository extends JpaRepository<Retention, Integer>{
 	
 	/**
-	 * Permet la recheche par type de sol
-	 * @param sol du jardin à rechercher
+	 * Permet la recherche d'une rétention par type de sol
+	 * @param sol à rechercher
 	 * @return un objet de type Retention correspondant au type de sol correspondant
 	 */
 	public Retention findBySol (Sol sol);
 
 	/**
-	 * Vérifie l'existence d'un sol dans la base de donnée
+	 * Vérifie l'existence d'un sol dans la base de données
 	 * @param sol du jardin à vérifier
 	 * @return true si l'objet existe, false sinon
 	 */

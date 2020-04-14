@@ -6,11 +6,9 @@ package com.fr.adaming.enums;
  * @since 0.0.1
  */
 public enum TypePeriod {
-	
 	REMPOTAGE,
 	FLORAISON,
 	FRUCTIFICATION,
 	TAILLE,
 	SEMIS
-
 }

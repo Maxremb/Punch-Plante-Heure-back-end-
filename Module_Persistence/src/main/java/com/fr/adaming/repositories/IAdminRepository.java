@@ -13,27 +13,25 @@ import com.fr.adaming.entity.Admin;
  */
 @Repository
 public interface IAdminRepository extends JpaRepositoryImplementation<Admin, Integer>{
-	
-
-	
+		
 	/**
 	 * Permet la recherche d'un utilisateur par pseudonyme
-	 * @param pseudonyme de l'utlisateur recherché
+	 * @param pseudonyme de l'utliisateur recherché
 	 * @return l'utilisateur en question
 	 */
 	public Admin findByPseudonyme(String pseudonyme);
 	
 	/**
 	 * Permet la recherche d'un utilisateur par email
-	 * @param email de l'utlisateur recherché
+	 * @param email de l'utilisateur recherché
 	 * @return l'utilisateur en question
 	 */
-	public Admin	 findByEmail(String email);
+	public Admin findByEmail(String email);
 	
 	/**
 	 * Permet la recherche d'un utilisateur par email et mot de passe
-	 * @param email de l'utlisateur recherché
-	 * @param mdp de l'utlisateur recherché
+	 * @param email de l'utilisateur recherché
+	 * @param mdp de l'utilisateur recherché
 	 * @return un utilisateur
 	 */
 	public Admin findByEmailAndMdp (String email, String mdp);
@@ -48,7 +46,7 @@ public interface IAdminRepository extends JpaRepositoryImplementation<Admin, Int
 	/**
 	 * Permet de vérifier si un utilisateur existe deja dans la DB avec cet email
 	 * @param email de l'utilisateur voulu
-	 * @return booléen true si le pseudo est déjà existant, false sinon
+	 * @return booléen true si le mail est déjà existant, false sinon
 	 */
 	public Boolean existsByEmail (String email);
 		

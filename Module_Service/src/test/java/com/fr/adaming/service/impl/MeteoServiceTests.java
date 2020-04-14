@@ -471,7 +471,7 @@ public class MeteoServiceTests implements IServiceTests {
 		ServiceResponse<List<Meteo>> response = servicemeteo.readByMonthAndDepartement(2020, 1, 69);
 		
 		assertNotNull(response);
-		assertThat(response.getBody().size() == 2);
+		assertTrue(response.getBody().size() == 2);
 		assertThat(response.getBody().get(0)).hasFieldOrPropertyWithValue("id", 1);
 		assertThat(response.getBody().get(1)).hasFieldOrPropertyWithValue("id", 2);
 	}

@@ -1,7 +1,5 @@
 package com.fr.adaming.entity;
 
-
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -21,10 +19,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 /**
  * Classe représentative de l'entité Plante Utilisateur stockée de manière persistante
- * @author lucie
+ * @author Lucie Martinez
  * @since 0.0.1
  */
 @Getter

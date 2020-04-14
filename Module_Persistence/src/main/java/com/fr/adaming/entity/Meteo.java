@@ -14,11 +14,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-
-
 /**
  * @author Jeanne-Marie MATHEVET
- *
+ * @since 0.0.1
  *	Classe meteo 
  */
 @Entity

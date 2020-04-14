@@ -214,8 +214,15 @@ public class UtilisateurServiceTest implements IServiceTests {
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme,actif) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre',true) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void TestDesactivateWithInvalidId_ShouldReturnFalse() {
+	public void TestDesactivateWithNull_ShouldReturnFalse() {
 		assertThat(userService.desactivateUser(null)).isFalse();
+	}
+	
+	@Test
+	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme,actif) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre',true) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestDesactivateWithInvalidId_ShouldReturnFalse() {
+		assertThat(userService.desactivateUser(2)).isFalse();
 	}
 
 	@Test

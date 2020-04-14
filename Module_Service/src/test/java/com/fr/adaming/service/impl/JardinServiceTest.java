@@ -392,25 +392,268 @@ public class JardinServiceTest implements IServiceTests {
 		assertNull(service.update(null).getBody());
 		assertThat(service.update(null).getMessage()).isEqualTo("Modification non réalisée : id inconnu dans la database ou entité nulle");
 	}
-
-//	// TODO : ERREUR SQL DANS LA REQUETE
+	
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO retention (coeff_remplissage,sol) VALUES ( 0.1,0),(0.14,1), (0.22,2), (0.21,3), (0.16,4)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, largeur, prof_sol, reserve_utile, reserve_max_eau) VALUES (1, 'nomJardin', 69, 10, 10, 10, 5, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCalculReserveEauMaxForArgileux_shouldWork() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		jardin.setLongueur((float)10);
+		jardin.setLargeur((float)10);
+		jardin.setProfSol((float)10);
+		jardin.setSol(Sol.Argileux);
+		
+		Jardin retour = serviceJardin.calculReserveEauMax(jardin);
+		
+		assertNotNull(retour.getRESERVE_MAX_EAU());
+		assertThat(retour.getRESERVE_MAX_EAU()).isEqualTo((double)(10*10*10*0.16));
+	}
+	
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO retention (coeff_remplissage,sol) VALUES ( 0.1,0),(0.14,1), (0.22,2), (0.21,3), (0.16,4)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, largeur, prof_sol, reserve_utile, reserve_max_eau) VALUES (1, 'nomJardin', 69, 10, 10, 10, 5, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCalculReserveEauMaxForSableux_shouldWork() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		jardin.setLongueur((float)10);
+		jardin.setLargeur((float)10);
+		jardin.setProfSol((float)10);
+		jardin.setSol(Sol.Sableux);
+		
+		Jardin retour = serviceJardin.calculReserveEauMax(jardin);
+		
+		assertNotNull(retour.getRESERVE_MAX_EAU());
+		assertThat(retour.getRESERVE_MAX_EAU()).isEqualTo((double)(10*10*10*0.1));
+	}
+	
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO retention (coeff_remplissage,sol) VALUES ( 0.1,0),(0.14,1), (0.22,2), (0.21,3), (0.16,4)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, largeur, prof_sol, reserve_utile, reserve_max_eau) VALUES (1, 'nomJardin', 69, 10, 10, 10, 5, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCalculReserveEauMaxForLimonoArgileux_shouldWork() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		jardin.setLongueur((float)10);
+		jardin.setLargeur((float)10);
+		jardin.setProfSol((float)10);
+		jardin.setSol(Sol.LimonoArgileux);
+		
+		Jardin retour = serviceJardin.calculReserveEauMax(jardin);
+		
+		assertNotNull(retour.getRESERVE_MAX_EAU());
+		assertThat(retour.getRESERVE_MAX_EAU()).isEqualTo((double)(10*10*10*0.14));
+	}
+	
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO retention (coeff_remplissage,sol) VALUES ( 0.1,0),(0.14,1), (0.22,2), (0.21,3), (0.16,4)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, largeur, prof_sol, reserve_utile, reserve_max_eau) VALUES (1, 'nomJardin', 69, 10, 10, 10, 5, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCalculReserveEauMaxForArgiloSableux_shouldWork() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		jardin.setLongueur((float)10);
+		jardin.setLargeur((float)10);
+		jardin.setProfSol((float)10);
+		jardin.setSol(Sol.ArgiloSableux);
+		
+		Jardin retour = serviceJardin.calculReserveEauMax(jardin);
+		
+		assertNotNull(retour.getRESERVE_MAX_EAU());
+		assertThat(retour.getRESERVE_MAX_EAU()).isEqualTo((double)(10*10*10*0.22));
+	}
+	
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO retention (coeff_remplissage,sol) VALUES ( 0.1,0),(0.14,1), (0.22,2), (0.21,3), (0.16,4)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, largeur, prof_sol, reserve_utile, reserve_max_eau) VALUES (1, 'nomJardin', 69, 10, 10, 10, 5, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCalculReserveEauMaxForArgiloLimoneux_shouldWork() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		jardin.setLongueur((float)10);
+		jardin.setLargeur((float)10);
+		jardin.setProfSol((float)10);
+		jardin.setSol(Sol.ArgiloLimoneux);
+		
+		Jardin retour = serviceJardin.calculReserveEauMax(jardin);
+		
+		assertNotNull(retour.getRESERVE_MAX_EAU());
+		assertThat(retour.getRESERVE_MAX_EAU()).isEqualTo((double)(10*10*10*0.21));
+	}
+	
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO retention (coeff_remplissage,sol) VALUES ( 0.1,0),(0.14,1), (0.22,2), (0.21,3), (0.16,4)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, largeur, prof_sol) VALUES (1, 'nomJardin', 69, 10, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCalculReserveEauMaxSansLongueur_shouldWork() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		jardin.setLongueur(null);
+		jardin.setLargeur((float)10);
+		jardin.setProfSol((float)10);
+		jardin.setSol(Sol.ArgiloLimoneux);
+		
+		Jardin retour = serviceJardin.calculReserveEauMax(jardin);
+		
+		assertThat(retour.getRESERVE_MAX_EAU()).isEqualTo(0);
+	}
+	
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO retention (coeff_remplissage,sol) VALUES ( 0.1,0),(0.14,1), (0.22,2), (0.21,3), (0.16,4)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, prof_sol) VALUES (1, 'nomJardin', 69, 10, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCalculReserveEauMaxSansLargeur_shouldWork() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		jardin.setLongueur((float)10);
+		jardin.setLargeur(null);
+		jardin.setProfSol((float)10);
+		jardin.setSol(Sol.ArgiloLimoneux);
+		
+		Jardin retour = serviceJardin.calculReserveEauMax(jardin);
+		
+		assertThat(retour.getRESERVE_MAX_EAU()).isEqualTo(0);
+	}
+	
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO retention (coeff_remplissage,sol) VALUES ( 0.1,0),(0.14,1), (0.22,2), (0.21,3), (0.16,4)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, largeur) VALUES (1, 'nomJardin', 69, 10, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCalculReserveEauMaxSansProfondeur_shouldWork() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		jardin.setLongueur((float)10);
+		jardin.setLargeur((float)10);
+		jardin.setProfSol(null);
+		jardin.setSol(Sol.ArgiloLimoneux);
+		
+		Jardin retour = serviceJardin.calculReserveEauMax(jardin);
+		
+		assertThat(retour.getRESERVE_MAX_EAU()).isEqualTo(0);
+	}
+	
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, largeur) VALUES (1, 'nomJardin', 69, 10, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCalculReserveEauMaxSansRetention_shouldWork() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		jardin.setLongueur((float)10);
+		jardin.setLargeur((float)10);
+		jardin.setProfSol((float)10);
+		jardin.setSol(Sol.ArgiloLimoneux);
+		
+		Jardin retour = serviceJardin.calculReserveEauMax(jardin);
+		
+		assertThat(retour.getRESERVE_MAX_EAU()).isEqualTo(0);
+	}
+	
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO retention (coeff_remplissage,sol) VALUES ( 0.1,0),(0.14,1), (0.22,2), (0.21,3), (0.16,4)",executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, longueur, largeur) VALUES (1, 'nomJardin', 69, 10, 10)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM retention", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testCalculReserveEauMaxSansSol_shouldWork() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		jardin.setLongueur((float)10);
+		jardin.setLargeur((float)10);
+		jardin.setProfSol((float)10);
+		
+		Jardin retour = serviceJardin.calculReserveEauMax(jardin);
+		
+		assertThat(retour.getRESERVE_MAX_EAU()).isEqualTo(0);
+	}
 	
 	
-//	@Sql(statements = "﻿INSERT INTO retention (id, coeff_remplissage, sol) VALUES (1, 0.1, 0)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Test
-//	public void testCalculReserveEauMaxForSableux_shouldWork() {
-//		Jardin jardin = new Jardin();
-//		jardin.setId(1);
-//		jardin.setNom("nomJardin");
-//		jardin.setLongueur(2f);
-//		jardin.setLargeur(2f);
-//		jardin.setProfSol(2f);
-//		jardin.setSol(Sol.Sableux);
-//		
-//		
-//		Jardin retour = serviceJardin.calculReserveEauMax(jardin);
-//		
-//		assertNotNull(retour.getRESERVE_MAX_EAU());
-//		assertThat(retour.getRESERVE_MAX_EAU()).isEqualTo(2f*2f*2f*0.1);
-//	}
 }

@@ -19,7 +19,7 @@ import lombok.Setter;
 
 /**
  * @author Gregoire
- *
+ * @since 0.0.1
  *	Relie departement et planteModel. Donne une periode entre dateDebut et dateFin approprié pour l'action specifié dans type
  *
  */
