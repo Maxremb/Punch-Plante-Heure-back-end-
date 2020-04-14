@@ -30,6 +30,7 @@ packaging:
   stage: packaging
   script:
     - ./mvnw package -DskipTests=true
+    - cat Module_WEB/target/site/jacoco/index.html
   artifacts:
     paths:
       - Module_WEB/target/Module_WEB-0.0.1-SNAPSHOT.jar
