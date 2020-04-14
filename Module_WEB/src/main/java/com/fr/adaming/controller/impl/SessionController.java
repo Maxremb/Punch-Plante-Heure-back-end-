@@ -1,9 +1,13 @@
 package com.fr.adaming.controller.impl;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RestController
-@CrossOrigin(exposedHeaders = "Set-Cookie", allowCredentials = "true")
+@CrossOrigin(exposedHeaders = "Set-Cookie", allowCredentials = "true", origins = "http://localhost:4200")
 @RequestMapping(path = "/session")
 @Slf4j
 public class SessionController {
@@ -61,6 +65,17 @@ public class SessionController {
 	
 	@Autowired
 	private ConnectedUser user;
+	
+	@GetMapping(path = "/hello")
+	public ResponseEntity<String> getHello(HttpServletResponse response){
+		Cookie cookie = new Cookie("Bob", "123");
+		
+		response.addCookie(cookie);
+		log.debug("getHello appelé");
+		
+		return ResponseEntity.status(200).body("hello");
+		
+	}
 	
 	/** Utilisée par l'auth guard du front, permet de récupérer le role de l'utilisateur (admin/utilisateur/none) 
 	 * @param token Le token associé à la session
@@ -144,10 +159,14 @@ public class SessionController {
 	// TODO Copié de adminController pour debug
 	
 	@PostMapping(path = "/mailAndPwd")
-	public ResponseEntity<ConnexionDto> existsByMailandPwd(@RequestBody String[] tableau) {
+	public ResponseEntity<ConnexionDto> existsByMailandPwd(@RequestBody String[] tableau, HttpServletResponse response) {
 		ConnexionDto connexionDto = new ConnexionDto();
 		try {
 
+			System.out.println(response.getHeader("Set-Cookie"));
+			Cookie cookie = new Cookie("Bobby", "1234");
+			response.addCookie(cookie);
+			
 			String mail = tableau[0];
 			String pwd = tableau[1];
 			if (userService.existsByEmailAndMdp(mail, pwd).getBody() != null) {

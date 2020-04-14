@@ -34,7 +34,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @RequestMapping(path = "/planteUtilisateur")
-@CrossOrigin
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class PlanteUtilisateurControllerImpl
 		extends AbstractController<PlanteUtilisateurCreateDto, PlanteUtilisateurUpdateDto, PlanteUtilisateur> {

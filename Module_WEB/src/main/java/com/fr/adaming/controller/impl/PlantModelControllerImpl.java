@@ -19,7 +19,7 @@ import com.fr.adaming.service.IPlanteModelService;
 import com.fr.adaming.service.impl.PlanteModelServiceImpl;
 
 @RestController
-@CrossOrigin
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
 @RequestMapping(path="/plantemodel")
 public class PlantModelControllerImpl extends AbstractController<PlanteModelCreateDto, PlanteModelUpdateDto	, PlanteModel>{
 

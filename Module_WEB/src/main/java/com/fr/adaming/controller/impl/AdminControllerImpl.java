@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping(path = "/admin")
 @RestController
-@CrossOrigin
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class AdminControllerImpl extends AbstractController<AdminCreateDto, AdminUpdateDto, Admin> {
 

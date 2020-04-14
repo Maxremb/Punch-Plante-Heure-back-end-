@@ -26,7 +26,7 @@ import com.fr.adaming.service.IRetentionService;
  */
 @RequestMapping(path = "/retention")
 @RestController
-@CrossOrigin
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
 public class RetentionControllerimpl extends AbstractController<RetentionCreateDto, RetentionUpdateDto, Retention> {
 
 	@Autowired

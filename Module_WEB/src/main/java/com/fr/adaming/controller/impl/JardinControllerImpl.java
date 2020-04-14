@@ -26,7 +26,7 @@ import com.fr.adaming.service.IJardinService;
 
 @RequestMapping(path = "/jardin")
 @RestController
-@CrossOrigin
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
 public class JardinControllerImpl extends AbstractController<JardinCreateDto, JardinUpdateDto, Jardin> {
 
 	@Autowired

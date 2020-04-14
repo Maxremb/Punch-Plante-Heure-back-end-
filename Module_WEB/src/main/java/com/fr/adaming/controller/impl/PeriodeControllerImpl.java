@@ -30,7 +30,7 @@ import com.fr.adaming.service.IPeriodeService;
  */
 @RestController
 @RequestMapping(path = "/periode")
-@CrossOrigin
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
 public class PeriodeControllerImpl extends AbstractController<PeriodeCreateDto, PeriodeUpdateDto, Periode> {
 
 	@Autowired

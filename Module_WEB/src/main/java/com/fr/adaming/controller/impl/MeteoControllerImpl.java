@@ -31,7 +31,7 @@ import com.fr.adaming.service.IMeteoService;
  * @since 0.0.1-SNAPSHOT
  */
 @RestController
-@CrossOrigin
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
 @RequestMapping (path= "/meteo")
 public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, MeteoUpdateDto, Meteo>{
 	
