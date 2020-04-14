@@ -5,10 +5,30 @@ before_script:
   - echo GitLab-CI BeforeScript Success1
   - chmod +x mvnw
 
+stages:
+  - compile
+  - test
+  - packaging
+
 compile:
+  stage: compile
   script:
     - echo Gitlab-CI Job1 ===> Compile
-    - ./mvnw install
+    - ./mvnw compile
+  # artifacts:
+  #   paths:
+  #     - Module_WEB/target/Module_WEB-0.0.1-SNAPSHOT.jar
+
+test : 
+  stage: test
+  script:
+    - ./mvnw test
+
+packaging:
+  only: master
+  stage: packaging
+  script:
+    - ./mvnw package -DskipTests=true
   artifacts:
     paths:
       - Module_WEB/target/Module_WEB-0.0.1-SNAPSHOT.jar
