@@ -1,5 +1,7 @@
 package com.fr.adaming.dto;
 
+import javax.validation.constraints.NotBlank;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +15,10 @@ import lombok.Setter;
 @Getter @Setter @EqualsAndHashCode(callSuper = true)
 public class UtilisateurCreateDto extends AdminCreateDto {
 
+	@NotBlank
 	private String lastName;
 	
+	@NotBlank
 	private String firstName;
 	
 	private String desc;
