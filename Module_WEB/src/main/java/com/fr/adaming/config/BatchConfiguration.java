@@ -76,10 +76,10 @@ public class BatchConfiguration {
 		DefaultFieldSetFactory fieldSetFactory = new DefaultFieldSetFactory();
 		fieldSetFactory.setNumberFormat(NumberFormat.getInstance(Locale.FRANCE));
 
-		return new FlatFileItemReaderBuilder<MeteoXlsDto>().name("meteoItemReader").linesToSkip(1)
-				.resource(inputResource).delimited().delimiter(";").fieldSetFactory(fieldSetFactory)
-				.names(new String[] { "station", "nom", "longitude", "latitude", "altitude", "date", "rr", "tn", "tx",
-						"fxi", "dxi", "fxy", "dxy", "inst", "eptmon" })
+		return new FlatFileItemReaderBuilder<MeteoXlsDto>()
+				.name("meteoItemReader").linesToSkip(1).resource(inputResource).delimited().delimiter(";")
+				.fieldSetFactory(fieldSetFactory).names("station", "nom", "longitude", "latitude", "altitude", "date",
+						"rr", "tn", "tx", "fxi", "dxi", "fxy", "dxy", "inst", "eptmon")
 				.fieldSetMapper(new BeanWrapperFieldSetMapper<MeteoXlsDto>() {
 					{
 						setTargetType(MeteoXlsDto.class);
