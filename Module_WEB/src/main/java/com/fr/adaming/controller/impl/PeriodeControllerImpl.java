@@ -128,7 +128,7 @@ public class PeriodeControllerImpl extends AbstractController<PeriodeCreateDto, 
 	public ResponseEntity<ResponseDto<List<PeriodeUpdateDto>>> readByJardin(
 			@RequestParam(name = "jardinId") int idJardin, @RequestParam(name = "depId") int idDep) {
 		log.info("Controller Département : méthode read by jardin appelée");
-		ServiceResponse<List<Periode>> serviceResponse = periodeService.readByJardin(idJardin, idDep);
+		ServiceResponse<List<Periode>> serviceResponse = periodeService.readByJardinAndDep(idJardin, idDep);
 
 		return makeUpdateDtoListResponse(serviceResponse);
 
