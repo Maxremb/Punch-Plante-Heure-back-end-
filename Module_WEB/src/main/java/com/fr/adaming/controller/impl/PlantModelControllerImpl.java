@@ -15,6 +15,7 @@ import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.service.IPlanteModelService;
+import com.fr.adaming.service.impl.PlanteModelServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,11 +29,10 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RestController
-@CrossOrigin
-@RequestMapping(path = "/plantemodel")
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
+@RequestMapping(path="/plantemodel")
 @Slf4j
-public class PlantModelControllerImpl
-		extends AbstractController<PlanteModelCreateDto, PlanteModelUpdateDto, PlanteModel> {
+public class PlantModelControllerImpl extends AbstractController<PlanteModelCreateDto, PlanteModelUpdateDto	, PlanteModel>{
 
 	@Autowired
 	private IPlanteModelService servicePM;

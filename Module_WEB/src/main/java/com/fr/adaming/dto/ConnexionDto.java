@@ -15,6 +15,8 @@ public class ConnexionDto {
 	
 	boolean isUser ;
 	
+	String token;
+	
 	AdminUpdateDto bodyAdmin;
 	
 	UtilisateurUpdateDto bodyUtil;

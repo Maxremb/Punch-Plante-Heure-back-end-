@@ -38,7 +38,7 @@ import com.fr.adaming.dto.ResponseDto;
  * @param <MU> MeteoUpdateDto
  * 
  */
-@CrossOrigin
+@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 @RequestMapping(path = "/departement")
 public interface IControllerDepartement<D, MU> {
 

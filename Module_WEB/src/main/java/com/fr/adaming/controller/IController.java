@@ -32,7 +32,7 @@ import com.fr.adaming.dto.ResponseDto;
  * @param <U> UpdateDto
  * 
  */
-@CrossOrigin
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
 @RequestMapping
 public interface IController<C, U> {
 

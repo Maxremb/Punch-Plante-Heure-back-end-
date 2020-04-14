@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @RequestMapping(path = "/periode")
-@CrossOrigin
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class PeriodeControllerImpl extends AbstractController<PeriodeCreateDto, PeriodeUpdateDto, Periode> {
 

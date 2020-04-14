@@ -33,11 +33,10 @@ import lombok.extern.slf4j.Slf4j;
  * @since 0.0.1-SNAPSHOT
  */
 @RestController
-@CrossOrigin
-@RequestMapping(path = "/meteo")
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
+@RequestMapping (path= "/meteo")
 @Slf4j
-public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, MeteoUpdateDto, Meteo> {
-
+public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, MeteoUpdateDto, Meteo>{
 	@Autowired
 	private IMeteoService meteoService;
 

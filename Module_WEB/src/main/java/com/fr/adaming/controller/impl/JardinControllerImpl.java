@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RequestMapping(path = "/jardin")
 @RestController
-@CrossOrigin
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class JardinControllerImpl extends AbstractController<JardinCreateDto, JardinUpdateDto, Jardin> {
 

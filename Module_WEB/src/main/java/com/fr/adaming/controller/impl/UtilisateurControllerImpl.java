@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RequestMapping(path = "/utilisateur")
 @RestController
-@CrossOrigin
+@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class UtilisateurControllerImpl
 		extends AbstractController<UtilisateurCreateDto, UtilisateurUpdateDto, Utilisateur> {
