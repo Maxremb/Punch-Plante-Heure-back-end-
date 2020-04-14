@@ -215,7 +215,7 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
-		assertThat(responseDto.getBody().equals(true));
+		assertThat(responseDto.getBody()).isEqualTo(true);
 	}
 
 	@Test
@@ -229,21 +229,21 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
-		assertThat(responseDto.getBody().equals(false));
+		assertThat(responseDto.getBody()).isEqualTo(false);
 	}
 
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme,actif) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre',true) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestIsActifWithInvalidParam_ShouldReturn400() throws Exception {
-		String path = BASE_URL + "/actif?pseudonyme=" + pseudo;
+		String path = BASE_URL + "/actif?pseudonyme=abc";
 
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
-		assertThat(responseDto.getBody().equals(null));
+		assertThat(responseDto.getBody()).isEqualTo(false);
 	}
 
 	// ***************************

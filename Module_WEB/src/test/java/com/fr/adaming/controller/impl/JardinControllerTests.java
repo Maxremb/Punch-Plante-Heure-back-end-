@@ -22,6 +22,13 @@ import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.enums.Sol;
 
+/**
+ * Classe test de la couche controller JARDIN. Elle étend la classe Abstract Test
+ * Method et implémente IControlelrTest
+ * 
+ * @author Maxime Rembert
+ *
+ */
 @SpringBootTest(classes = ModuleWebApplication.class)
 @AutoConfigureMockMvc
 public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> implements IControllerTests {
@@ -194,6 +201,11 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 	}
 
+	/**
+	 * Méthode test read by nom avec param OK
+	 * Retourne 200 avec jardin dans le body
+	 * @throws Exception
+	 */
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
 			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep) VALUES (1,'Bob'," + depNum
@@ -214,6 +226,11 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 	}
 
+	/**
+	 * Méthode test read by nom avec param invalide
+	 * Retourne 200 avec body vide
+	 * @throws Exception
+	 */
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
 			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep) VALUES (1,'Bob'," + depNum
@@ -233,6 +250,12 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 	}
 
+	/**
+	 * Méthode test read by user id avec param OK
+	 * Retourne 200 avec body = jardin
+	 * 
+	 * @throws Exception
+	 */
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
 			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO utilisateur (id, email, mdp, pseudonyme, nom, prenom) values (5, 'natasha@avengers.com', 'NatLoveHulk1', 'Nat', 'Romanof', 'Natasha')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -250,11 +273,16 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 		assertNotNull(responseDto);
 		assertFalse(responseDto.isError());
-		assertThat(responseDto.getBody().getContent().size() == 1);
+		assertThat(responseDto.getBody().getContent().size()).isEqualTo(1);
 		assertThat(responseDto.getBody().getContent().get(0)).hasFieldOrPropertyWithValue("name", name);
 
 	}
 
+	/**
+	 * Méthode test read by user avec invalid param
+	 * Retourne 200 avec body vide
+	 * @throws Exception
+	 */
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
 			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO utilisateur (id, email, mdp, pseudonyme, nom, prenom) values (5, 'natasha@avengers.com', 'NatLoveHulk1', 'Nat', 'Romanof', 'Natasha')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -272,10 +300,16 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 		assertNotNull(responseDto);
 		assertFalse(responseDto.isError());
-		assertThat(responseDto.getBody().getContent().isEmpty());
+		assertThat(responseDto.getBody().getContent()).isEmpty();
 
 	}
 
+	/**
+	 * Méthode test read by dept avec param OK
+	 * Retourne 200 avec body = jardin
+	 * 
+	 * @throws Exception
+	 */
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
 			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -297,12 +331,17 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 		assertNotNull(responseDto);
 		assertFalse(responseDto.isError());
-		assertThat(responseDto.getBody().getContent().size() == 2);
+		assertThat(responseDto.getBody().getContent().size()).isEqualTo(2);
 		assertThat(responseDto.getBody().getContent().get(0)).hasFieldOrPropertyWithValue("name", name);
 		assertThat(responseDto.getBody().getContent().get(1)).hasFieldOrPropertyWithValue("name", "Bobby");
 
 	}
 
+	/**
+	 * Méthode test read by dept avec param invalide
+	 * Retourne 200 avec body vide
+	 * @throws Exception
+	 */
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
 			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -324,12 +363,16 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 		assertNotNull(responseDto);
 		assertFalse(responseDto.isError());
-		assertThat(responseDto.getBody().getContent().isEmpty());
+		assertThat(responseDto.getBody().getContent()).isEmpty();
 
 	}
 	
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	/**
+	 * Méthode test reinitArrossage avec invalid param
+	 * Retourne 400
+	 * @throws Exception
+	 */
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO utilisateur (id, email, mdp, pseudonyme, nom, prenom) values (5, 'natasha@avengers.com', 'NatLoveHulk1', 'Nat', 'Romanof', 'Natasha')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep, utilisateur_id) VALUES (1,'Bob'," + depNum
@@ -353,9 +396,34 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 	}
 	
 	
+	
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO utilisateur (id, email, mdp, pseudonyme, nom, prenom) values (5, 'natasha@avengers.com', 'NatLoveHulk1', 'Nat', 'Romanof', 'Natasha')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep, utilisateur_id,largeur,longueur,prof_sol) VALUES (1,'Bob'," + depNum
+			+ ",5,5,10,0.4)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql (statements = "INSERT INTO retention (coeff_remplissage,sol) VALUES ( 0.1,0),(0.14,1), (0.22,2), (0.21,3), (0.16,4)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReinitArrosJardinWithValidParam_ShouldReturn200() throws Exception {
+		String path = BASE_URL + "/arrosage?id=1";
+		
+		ResponseDto<JardinUpdateDto> responseDto = runMockMvc("get", path, 200, JardinUpdateDto.class);
+		
+		assertNotNull(responseDto);
+		assertThat(responseDto.isError()).isFalse();
+		
+	}
+	
+	
 
 	// *** Méthodes privés ***
 
+	/**
+	 * Méthode permettant de générer un objet de type JardinUpdate dto
+	 * @return L'objet crée
+	 */
 	private JardinUpdateDto makeNewUpdateDto() {
 		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison
 

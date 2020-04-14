@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, MeteoUpdateDto, Meteo> {
 
 	@Autowired
-	private IMeteoService service;
+	private IMeteoService meteoService;
 
 	/**
 	 * Méthode visant à récupérer la meteo de tous les departements à une date
@@ -55,7 +55,7 @@ public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, Mete
 			@RequestParam(name = "date") @NotBlank String date, @RequestParam(name = "page") @Positive int page) {
 		log.info("Controlelr Météo : méthode read by date appelée");
 		try {
-			ServiceResponse<Page<Meteo>> response = service.readByDate(LocalDate.parse(date), page);
+			ServiceResponse<Page<Meteo>> response = meteoService.readByDate(LocalDate.parse(date), page);
 			return makeUpdateDtoPageResponse(response);
 		} catch (Exception e) {
 			log.warn("Erreur méthode Meteo Controller readByDate" + e.getMessage());
@@ -76,7 +76,7 @@ public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, Mete
 			@RequestParam(name = "date") @NotBlank String date, @RequestParam(name = "numero") int numDepartement) {
 		log.info("Controlelr Météo : méthode read by date and département appelée");
 		try {
-			ServiceResponse<Meteo> response = service.readByDateAndDepartement(LocalDate.parse(date), numDepartement);
+			ServiceResponse<Meteo> response = meteoService.readByDateAndDepartement(LocalDate.parse(date), numDepartement);
 
 			return makeUpdateDtoResponse(response);
 		} catch (Exception e) {
@@ -100,7 +100,7 @@ public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, Mete
 			@RequestParam(name = "depNum") int numDepartement) {
 		log.info("Controlelr Météo : méthode read by mois and département appelée");
 		try {
-			return makeUpdateDtoListResponse(service.readByMonthAndDepartement(annee, mois, numDepartement));
+			return makeUpdateDtoListResponse(meteoService.readByMonthAndDepartement(annee, mois, numDepartement));
 		} catch (Exception e) {
 			log.warn("Erreur méthode Meteo Controller readByMoisAndDepartement" + e.getMessage());
 			return null;

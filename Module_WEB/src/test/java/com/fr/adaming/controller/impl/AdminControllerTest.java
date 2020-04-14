@@ -24,12 +24,19 @@ import com.fr.adaming.controller.IControllerTests;
 import com.fr.adaming.dto.AdminUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
 
+/**
+ * Classe test de la couche controller ADMIN. Elle étend la classe Abstract Test
+ * Method et implémente IControlelrTest
+ * 
+ * @author Maxime Rembert
+ * @since 0.0.1-SNAPSHOT
+ */
 @SpringBootTest(classes = ModuleWebApplication.class)
 @AutoConfigureMockMvc
 public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> implements IControllerTests {
 
 	// TODO : Test Exists By Email and Pwd (bas de page)
-	
+
 	@Autowired
 	private MockMvc mockMvc;
 
@@ -159,6 +166,11 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 	// ********************************************************
 	// Test READ BY PSEUDO
 
+	/**
+	 * Méthode test read by pseudo avec param OK Retourne 200
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -171,6 +183,11 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 		assertThat(responseDto.isError()).isFalse();
 	}
 
+	/**
+	 * Méthode test read by pseudo avec param invalid retourne 400
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -182,6 +199,11 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 		assertThat(responseDto.isError()).isTrue();
 	}
 
+	/**
+	 * Méthode test read by pseudo avec param null retourne 400
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -196,6 +218,11 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 	// ********************************************************
 	// Test READ BY EMAIL
 
+	/**
+	 * Méthode test read by email avec param OK retourne 200
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -208,6 +235,11 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 		assertThat(responseDto.isError()).isFalse();
 	}
 
+	/**
+	 * Méthode test read by email avec param invalid Retourne 400
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -219,6 +251,11 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 		assertThat(responseDto.isError()).isTrue();
 	}
 
+	/**
+	 * Méthode test read by email avec param null Retourne 400
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -233,6 +270,13 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 	// ********************************************************
 	// Test EXISTS BY EMAIL
 
+	/**
+	 * Méthode test exists by email avec param OK. 
+	 * Retourne 200
+	 * 
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -247,6 +291,12 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 		assertThat(responseDto.isError()).isFalse();
 	}
 
+	/**
+	 * Méthode test exists by email avec param invalid
+	 * Retourne 400
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -262,6 +312,12 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 		assertThat(responseDto.isError()).isTrue();
 	}
 
+	/**
+	 * Méthode test exists by email avec null param
+	 * Retourne 400
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -280,6 +336,13 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 	// ********************************************************
 	// Test EXISTS BY PSEUDO
 
+	/**
+	 * Méthode test exists by pseudo avec param OK
+	 * Retourne 200
+	 * 
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -294,6 +357,12 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 		assertThat(responseDto.isError()).isFalse();
 	}
 
+	/**
+	 * Méthode test exists by pseudo avec param invalid
+	 * Retourne 400
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -309,6 +378,12 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 		assertThat(responseDto.isError()).isTrue();
 	}
 
+	/**
+	 * Méthode test exists by pseudo avec null param
+	 * Retourne 400
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO admin (id,email,mdp,pseudonyme) VALUES (10,'kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM admin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -401,6 +476,10 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 
 	// *** Méthodes privés ***
 
+	/**
+	 * Méthode permettant de définir un objet adminUpdateDto
+	 * @return L'objet AdminUpdateDto vers la méthode appelée
+	 */
 	private AdminUpdateDto makeNewUpdateDto() {
 		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison
 
