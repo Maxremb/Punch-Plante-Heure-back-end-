@@ -60,6 +60,6 @@ public interface IPeriodeRepository extends JpaRepository<Periode, Integer>{
 	 * @return Une liste de Periode
 	 */
 	@Query(value = " select * from ((periode p inner join plante_model pm on p.plante_model_id=pm.id)  inner join plante_utilisateur pu on pu.plante_model_id=pm.id) where p.departement_numero_dep = :depNum and pu.jardin_id= :idJardin", nativeQuery = true)
-	public List<Periode> findByJardin(Integer idJardin, Integer depNum);
+	public List<Periode> findByJardinAndDep(Integer idJardin, Integer depNum);
 
 }

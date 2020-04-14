@@ -6,10 +6,19 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter @EqualsAndHashCode
+/**
+ * Classe représentative de l'objet période à communiquer au front lors de la
+ * modification
+ * 
+ * @since 0.0.1-SNAPSHOT
+ *
+ */
+@Getter
+@Setter
+@EqualsAndHashCode (callSuper = true)
 public class PeriodeUpdateDto extends PeriodeCreateDto {
 
 	@Positive(message = "l'identifiant de l'uttilisateur doit être positif")
 	private int identity;
-	
+
 }

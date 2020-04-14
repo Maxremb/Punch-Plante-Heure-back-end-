@@ -51,41 +51,50 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 
 	@GetMapping(path = "/pseudo")
 	public ResponseEntity<ResponseDto<AdminUpdateDto>> readByPseudonyme(@RequestParam(name = "pseudo") String pseudo) {
-		ServiceResponse<Admin> resp = adminService.readByPseudonyme(pseudo);
-		return makeUpdateDtoResponse(resp);
-
+		try {
+			ServiceResponse<Admin> resp = adminService.readByPseudonyme(pseudo);
+			return makeUpdateDtoResponse(resp);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Admin Controller readBypseudonyme" + e.getMessage());
+			return null;
+		}
 	}
 
 	@GetMapping(path = "/mail")
 	public ResponseEntity<ResponseDto<AdminUpdateDto>> readByEmail(@RequestParam(name = "mail") String mail) {
-		ServiceResponse<Admin> resp = adminService.readByEmail(mail);
-		return makeUpdateDtoResponse(resp);
-
+		try {
+			ServiceResponse<Admin> resp = adminService.readByEmail(mail);
+			return makeUpdateDtoResponse(resp);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Admin Controller readByEmail" + e.getMessage());
+			return null;
+		}
 	}
-
-//	@GetMapping (path = "/mailAndPwd")
-//	public ResponseEntity<ResponseDto<AdminUpdateDto>> readByEmailAndPwd (@RequestParam (name = "mail") String mail, @RequestParam (name = "pwd") String pwd){
-//		ServiceResponse<Admin> resp = adminService.readByEmailAndMdp(mail, pwd);
-//		return makeUpdateDtoResponse(resp);
-//	}
 
 	@GetMapping(path = "/exists/mail")
 	public ResponseEntity<ResponseDto<Boolean>> existsByMail(@RequestParam(name = "mail") String mail) {
 		log.info("Controller: méthode existsByMail appelée");
 
-		boolean result = adminService.existsByEmail(mail);
-		ResponseDto<Boolean> responseDto = new ResponseDto<>();
+		try {
+			boolean result = adminService.existsByEmail(mail);
+			ResponseDto<Boolean> responseDto = new ResponseDto<>();
 
-		if (result) {
-			responseDto.setError(false);
-			responseDto.setMessage("L'admin existe dans la DB");
-			responseDto.setBody(null);
-			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-		} else {
-			responseDto.setError(true);
-			responseDto.setMessage("Aucun admin n'existe avec mail : " + mail);
-			responseDto.setBody(null);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+			if (result) {
+				log.info("Admin existant dans DB");
+				responseDto.setError(false);
+				responseDto.setMessage("L'admin existe dans la DB");
+				responseDto.setBody(null);
+				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+			} else {
+				log.info("Aucun admin avec cet email");
+				responseDto.setError(true);
+				responseDto.setMessage("Aucun admin n'existe avec mail : " + mail);
+				responseDto.setBody(null);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+			}
+		} catch (Exception e) {
+			log.warn("Erreur méthode Admin Controller existsByEMail" + e.getMessage());
+			return null;
 		}
 	}
 
@@ -93,29 +102,28 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 	public ResponseEntity<ResponseDto<Boolean>> existsByPseudo(@RequestParam(name = "pseudo") String pseudo) {
 		log.info("Controller: méthode existsByPseudo appelée");
 
-		boolean result = adminService.existsByPseudonyme(pseudo);
-		ResponseDto<Boolean> responseDto = new ResponseDto<>();
+		try {
+			boolean result = adminService.existsByPseudonyme(pseudo);
+			ResponseDto<Boolean> responseDto = new ResponseDto<>();
 
-		if (result) {
-			responseDto.setError(false);
-			responseDto.setMessage("L'admin existe dans la DB");
-			responseDto.setBody(null);
-			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-		} else {
-			responseDto.setError(true);
-			responseDto.setMessage("Aucun admin n'existe avec pseudo : " + pseudo);
-			responseDto.setBody(null);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+			if (result) {
+				log.info("Admin existant dans DB");
+				responseDto.setError(false);
+				responseDto.setMessage("L'admin existe dans la DB");
+				responseDto.setBody(null);
+				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+			} else {
+				log.info("Aucun admin n'existe avec ce pseudo");
+				responseDto.setError(true);
+				responseDto.setMessage("Aucun admin n'existe avec pseudo : " + pseudo);
+				responseDto.setBody(null);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+			}
+		} catch (Exception e) {
+			log.warn("Erreur méthode Admin Controller existsByPseudo" + e.getMessage());
+			return null;
 		}
 	}
-
-//	@GetMapping(path = "/mailAndPwd")
-//	public ResponseEntity<ResponseDto<AdminUpdateDto>> existsByMailandPwd(@RequestParam(name = "mail") String mail,
-//			@RequestParam(name = "pwd") String pwd) {
-//		ServiceResponse<Admin> resp = adminService.existsByEmailAndMdp(mail, pwd);
-//		return makeUpdateDtoResponse(resp);
-//
-//	}
 
 	@PostMapping(path = "/mailAndPwd")
 	public ResponseEntity<ConnexionDto> existsByMailandPwd(@RequestBody String[] tableau) {
@@ -125,6 +133,7 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 			String mail = tableau[0];
 			String pwd = tableau[1];
 			if (userService.existsByEmailAndMdp(mail, pwd).getBody() != null) {
+				log.info("Admin existant dans la DB");
 				ServiceResponse<Utilisateur> serviceResponse = userService.existsByEmailAndMdp(mail, pwd);
 
 				UtilisateurUpdateDto returnedUtil = utilConv.convertEntityToUpdateDto(serviceResponse.getBody());
@@ -139,6 +148,7 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 
 			} else if (adminService.existsByEmailAndMdp(mail, pwd).getBody() != null
 					&& userService.existsByEmailAndMdp(mail, pwd).getBody() == null) {
+				log.info("Utilisateur existant dans la DB");
 				ServiceResponse<Admin> serviceResponse = adminService.existsByEmailAndMdp(mail, pwd);
 
 				AdminUpdateDto returnedAdmin = adminConv.convertEntityToUpdateDto(serviceResponse.getBody());
@@ -151,7 +161,7 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 
 				return ResponseEntity.status(HttpStatus.OK).body(connexionDto);
 			} else {
-
+				log.info("Aucune entité ne correspond à ces entrées");
 				connexionDto.setUser(false);
 				connexionDto.setBodyAdmin(null);
 				connexionDto.setBodyUtil(null);

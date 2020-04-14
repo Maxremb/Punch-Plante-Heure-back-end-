@@ -17,6 +17,8 @@ import com.fr.adaming.entity.Retention;
 import com.fr.adaming.enums.Sol;
 import com.fr.adaming.service.IRetentionService;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Classe de la couche Controller pour l'entité Retention Elle implémente la
  * classe abstraite AbstractController
@@ -27,6 +29,7 @@ import com.fr.adaming.service.IRetentionService;
 @RequestMapping(path = "/retention")
 @RestController
 @CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
+@Slf4j
 public class RetentionControllerimpl extends AbstractController<RetentionCreateDto, RetentionUpdateDto, Retention> {
 
 	@Autowired
@@ -39,12 +42,17 @@ public class RetentionControllerimpl extends AbstractController<RetentionCreateD
 	 * @param sol correspond au type de sol voulu
 	 * @return ResponseEntity contenant ResponseDto de RetentionUpdateDto
 	 */
-	@GetMapping (path = "/sol")
+	@GetMapping(path = "/sol")
 	public ResponseEntity<ResponseDto<RetentionUpdateDto>> readBySol(@RequestParam(name = "sol") Sol sol) {
+		log.info("Controller rétention : méthode read by sol appelée");
+		try {
+			ServiceResponse<Retention> resp = serviceRetention.readBySol(sol);
 
-		ServiceResponse<Retention> resp = serviceRetention.readBySol(sol);
-
-		return makeUpdateDtoResponse(resp);
+			return makeUpdateDtoResponse(resp);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Rentention Controller readBySol" + e.getMessage());
+			return null;
+		}
 	}
 
 }

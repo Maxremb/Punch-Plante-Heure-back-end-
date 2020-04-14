@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  * Etend la classe AbstractController
  * </p>
  * 
- * @author lucie
+ * @author Lucie
  * @since 0.0.1
  *
  */
@@ -43,34 +43,62 @@ public class PlanteUtilisateurControllerImpl
 	private IPlanteUtilisateurService planteUtilisateurService;
 
 	/**
-	 * <p>
-	 * Methode d'affichage de la Liste des Plante Utilisateur d'un Jardin
 	 * 
-	 * @param idJardin
-	 * @return List<PlanteUtilisateur>
+	 * Methode d'affichage des plantes utilisateur d'un jardin par page
+	 * 
+	 * @param idJardin Id du Jardin en question
+	 * @return ResponseEntity contenant un ResponseDto de type Liste de
+	 *         PlanteUtilisateurUpdateDto
 	 */
 	@GetMapping(path = "/jardin/{idJardin}")
-	public ResponseEntity<ResponseDto<Page<PlanteUtilisateurUpdateDto>>> findByJardin(@PathVariable int idJardin, int page) {
+	public ResponseEntity<ResponseDto<Page<PlanteUtilisateurUpdateDto>>> findByJardin(@PathVariable int idJardin,
+			int page) {
+		log.info("Controller Plante Utilisateur : méthode find by jardin appelée (page)");
+		try {
+			ServiceResponse<Page<PlanteUtilisateur>> serviceResponse1 = planteUtilisateurService.readByJardin(idJardin,
+					page);
 
-		ServiceResponse<Page<PlanteUtilisateur>> serviceResponse1 = planteUtilisateurService.readByJardin(idJardin, page);
-
-		return makeUpdateDtoPageResponse(serviceResponse1);
+			return makeUpdateDtoPageResponse(serviceResponse1);
+		} catch (Exception e) {
+			log.warn("Erreur méthode PlanteUtilisateur Controller findByJardin(idJardin, page)" + e.getMessage());
+			return null;
+		}
 	}
-	
+
+	/**
+	 * Methode d'affichage de la Liste des plantes utilisateur d'un jardin
+	 * 
+	 * @param idJardin Id du Jardin en question
+	 * @return ResponseEntity contenant un ResponseDto de type Liste de
+	 *         PlanteUtilisateurUpdateDto
+	 */
 	@GetMapping(path = "/jardin/liste/{idJardin}")
 	public ResponseEntity<ResponseDto<List<PlanteUtilisateurUpdateDto>>> findByJardin(@PathVariable int idJardin) {
+		log.info("Controller Plante Utilisateur : méthode find by jardin appelée (liste)");
+		try {
+			ServiceResponse<List<PlanteUtilisateur>> serviceResponse1 = planteUtilisateurService.readByJardin(idJardin);
 
-		ServiceResponse<List<PlanteUtilisateur>> serviceResponse1 = planteUtilisateurService.readByJardin(idJardin);
-
-		return makeUpdateDtoListResponse(serviceResponse1);
+			return makeUpdateDtoListResponse(serviceResponse1);
+		} catch (Exception e) {
+			log.warn("Erreur méthode PlanteUtilisateur Controller findByJardin(idJardin)" + e.getMessage());
+			return null;
+		}
 	}
-	
-	
+
+	/**
+	 * Méthode permettant de supprimer tout les plantes utilisateurs d'un jardin
+	 * 
+	 * @param idJardin Id du Jardin en question
+	 * @return ResponseEntity contenant un ResponseDto de type Liste de
+	 *         PlanteUtilisateurUpdateDto
+	 */
 	@DeleteMapping(path = "/jardin/{idJardin}")
 	public ResponseEntity<ResponseDto<PlanteUtilisateurUpdateDto>> deleteAllByJardin(@PathVariable int idJardin) {
 		log.info("Controller: méthode DELETE ALL BY JARDIN appelée");
+
+		try {
+			boolean result = planteUtilisateurService.deleteByJardin(idJardin);
 		
-		boolean result = planteUtilisateurService.deleteByJardin(idJardin);
 		ResponseDto<PlanteUtilisateurUpdateDto> responseDto = new ResponseDto<>();
 
 		if (result) {
@@ -81,10 +109,14 @@ public class PlanteUtilisateurControllerImpl
 			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 		} else {
 			responseDto.setError(true);
-			responseDto.setMessage("Erreur pendant la suppression de l'entité: " +idJardin);
+			responseDto.setMessage("Erreur pendant la suppression de l'entité: " + idJardin);
 			responseDto.setBody(null);
 			log.info("Controller: méthode DELETE ALL BY JARDIN - Erreur");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+		}
+		} catch (Exception e) {
+			log.warn("Erreur méthode PlanteUtilisateur Controller deleteAllByJardin" + e.getMessage());
+			return null;
 		}
 	}
 

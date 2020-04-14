@@ -9,10 +9,21 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * Classe configuration permettant la génération de Swagger
+ * 
+ * @since 0.0.1-SNAPSHOT
+ *
+ */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
 
+	/**
+	 * Méthode génératrice du fichier swagger
+	 * 
+	 * @return
+	 */
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())

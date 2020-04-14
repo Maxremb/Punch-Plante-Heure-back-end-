@@ -3,6 +3,7 @@ package com.fr.adaming.service.impl;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
@@ -36,14 +37,9 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 	public ServiceResponse<Utilisateur> create(Utilisateur entity) {
 		if (entity != null) {
 			if (!adminRepo.existsByEmail(entity.getEmail()) && !adminRepo.existsByPseudonyme(entity.getPseudonyme())) {
-				try {
-					dao.save(entity);
-					log.info("Utilisateur sauvegardé dans la DB");
-					return new ServiceResponse<Utilisateur>("Success", entity);
-				} catch (Exception e) {
-					log.warn(e.getMessage());
-					return new ServiceResponse<Utilisateur>("Exception lors de la création dans la DB", null);
-				}
+				dao.save(entity);
+				log.info("Utilisateur sauvegardé dans la DB");
+				return new ServiceResponse<Utilisateur>("Success", entity);
 			}
 			log.info(" Création non réalisé : Un utilisateur possède déjà cet email ou ce pseudo");
 			return new ServiceResponse<Utilisateur>("Email ou pseudo deja utilisé", null);
@@ -56,10 +52,10 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 	public ServiceResponse<Utilisateur> update(Utilisateur entite) {
 		if (entite != null && dao.existsById(entite.getId())) {
 			try {
-				dao.save(entite);
-				log.info("Utilisateur modifié dans la DB");
-				return new ServiceResponse<Utilisateur>("Success", entite);
-			} catch (Exception e) {
+			dao.save(entite);
+			log.info("Utilisateur modifié dans la DB");
+			return new ServiceResponse<Utilisateur>("Success", entite);
+			} catch (DataIntegrityViolationException e) {
 				log.warn(e.getMessage());
 				return new ServiceResponse<Utilisateur>("Exception lors de la modification dans la DB", null);
 			}
@@ -72,40 +68,27 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 
 	@Override
 	public ServiceResponse<Utilisateur> readByNomAndPrenom(String nom, String prenom) {
-		try {
-			if (nom != null && prenom != null) {
-				log.info("Recherche Utilisateur par nom et prenom dans la DB OK");
-				return new ServiceResponse<Utilisateur>("Recherche Utilisateur par nom et prenom",
-						userRepo.findByNomAndPrenom(nom, prenom));
-			} else {
-				log.info("Recherche Utilisateur par nom et prenom non réalisée : nom ou prenom null");
-				return new ServiceResponse<Utilisateur>("Recherche non réalisée : nom ou prenom null", null);
-			}
-		} catch (Exception e) {
-			log.warn("Problème récupération d'un Utilisateur après recherche via nom et prenom (couche service)"
-					+ e.getMessage());
-			return new ServiceResponse<Utilisateur>("Recherche par nom et prenom non réalisée", null);
+		if (nom != null && prenom != null) {
+			log.info("Recherche Utilisateur par nom et prenom dans la DB OK");
+			return new ServiceResponse<Utilisateur>("Recherche Utilisateur par nom et prenom",
+					userRepo.findByNomAndPrenom(nom, prenom));
+		} else {
+			log.info("Recherche Utilisateur par nom et prenom non réalisée : nom ou prenom null");
+			return new ServiceResponse<Utilisateur>("Recherche non réalisée : nom ou prenom null", null);
 		}
-
 	}
 
 	@Override
 	public Boolean isActif(String pseudonyme) {
 		if (pseudonyme != null) {
-			try {
-				log.info("Vérification de l'activation d'un utilisateur OK");
-				Utilisateur user = (Utilisateur) adminRepo.findByPseudonyme(pseudonyme);
-				if (user != null && user.getActif() == true) {
-					log.info("Utilisateur actif");
-					return true;
-				}
-				log.info("Utilisateur désactivé");
-				return false;
-			} catch (Exception e) {
-				log.warn("Problème lors de la vérification de l'activation d'un utilisateur (couche service)"
-						+ e.getMessage());
-				return null;
+			log.info("Vérification de l'activation d'un utilisateur OK");
+			Utilisateur user = (Utilisateur) adminRepo.findByPseudonyme(pseudonyme);
+			if (user != null && user.getActif() == true) {
+				log.info("Utilisateur actif");
+				return true;
 			}
+			log.info("Utilisateur désactivé");
+			return false;
 		}
 		log.info("Vérificaation de l'activation d'un utilisateur non réalisée : pseudonme null");
 		return null;
@@ -116,20 +99,14 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 	public Boolean desactivateUser(Integer id) {
 		if (id != null && dao.existsById(id)) {
 			Utilisateur user = dao.findById(id).orElse(null);
-			if (user != null && user.getActif()) {
-				try {
-					user.setActif(false);
-					dao.save(user);
-					log.info("Désactivation de l'utilisateur OK");
-					return true;
-				} catch (Exception e) {
-					log.warn("Problème lors de la désactivation d'un utilisateur (couche service)" + e.getMessage());
-					return false;
-				}
+			if (user.getActif()) {
+				user.setActif(false);
+				dao.save(user);
+				log.info("Désactivation de l'utilisateur OK");
+				return true;
 			}
 			log.info("Utilisateur déjà desactivé");
 			return false;
-
 		}
 		log.info("Desactivation non réalisée ; ID null ou n'existe pas dans la DB");
 		return false;
@@ -140,14 +117,9 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 		if (id != null && dao.existsById(id)) {
 			Utilisateur user = dao.findById(id).orElse(null);
 			if (!user.getActif()) {
-				try {
-					user.setActif(true);
-					dao.save(user);
-					return true;
-				} catch (Exception e) {
-					log.warn("Problème lors de l'activation d'un utilisateur (couche service)" + e.getMessage());
-					return false;
-				}
+				user.setActif(true);
+				dao.save(user);
+				return true;
 			}
 			log.info("Utilisateur déjà activé");
 			return false;
@@ -160,15 +132,10 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 	public ServiceResponse<Utilisateur> existsByEmailAndMdp(String email, String mdp) {
 
 		if (email != null && mdp != null) {
-			try {
-				log.info("Vérification existence mail et mdp dans DB");
-				if (userRepo.findByEmailAndMdp(email, mdp) != null) {
-					Utilisateur entite = userRepo.findByEmailAndMdp(email, mdp);
-					return new ServiceResponse<Utilisateur>("Success", entite);
-				}
-			} catch (Exception e) {
-				log.warn("Problème recherche d'un Admin via mail et mdp (couche service)" + e.getMessage());
-				return new ServiceResponse<Utilisateur>("Exception lors de la recherche par email and mdp", null);
+			log.info("Vérification existence mail et mdp dans DB");
+			if (userRepo.findByEmailAndMdp(email, mdp) != null) {
+				Utilisateur entite = userRepo.findByEmailAndMdp(email, mdp);
+				return new ServiceResponse<Utilisateur>("Success", entite);
 			}
 		}
 		log.info("Recherche non réalisée : email ou mdp null");

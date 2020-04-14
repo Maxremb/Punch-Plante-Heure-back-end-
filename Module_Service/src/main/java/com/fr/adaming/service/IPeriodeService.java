@@ -48,7 +48,7 @@ public interface IPeriodeService {
 	 * @param jardin le jardin dont l'ont aura les périodes
 	 * @return Un dto serviceResponse contenant objet de type liste de periode ou null.
 	 */
-	public ServiceResponse<List<Periode>> readByJardin(int idDep,
+	public ServiceResponse<List<Periode>> readByJardinAndDep(int idDep,
 			int idJardin);
 
 }

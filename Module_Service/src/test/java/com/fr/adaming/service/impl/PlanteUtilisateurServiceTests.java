@@ -30,7 +30,7 @@ import com.fr.adaming.service.IServiceTests;
  * Classe de Tests pour le Service de l'entite Plante Utilisateur
  * </p>
  * 
- * @author Lucie
+ * @author Lucie Martinez / Isaline Millet
  * @since 0.0.1
  *
  */
@@ -124,8 +124,10 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 	public void testReadAllNoContent_shouldReturnEmptyPage() {
 		ServiceResponse<Page<PlanteUtilisateur>> list = planteUtilisateurService.readAll(0);
 		assertTrue(list.getBody().toList().isEmpty());
-
 	}
+	
+	
+	
 
 	@Test
 	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -143,17 +145,6 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 		String date = "2020-04-01";
 		LocalDate localDate = LocalDate.parse(date);
 		assertThat(planteUtilisateurService.readById(1).getBody()).isNotNull().hasFieldOrPropertyWithValue("dateSemis", localDate);
-		
-//		PlanteUtilisateur planteUtilisateur = new PlanteUtilisateur();
-//		planteUtilisateur.setId(1);
-//		String date = "2020-04-01";
-//		LocalDate localDate = LocalDate.parse(date);
-//		planteUtilisateur.setDatePlantation(localDate);
-//		planteUtilisateur.setDateSemis(localDate);
-//		planteUtilisateur.setEtatPlante(EtatPlante.semis);
-//		planteUtilisateur.setEtatSante(EtatSante.bonneSante);
-//		
-//		assertEquals(planteUtilisateur, planteUtilisateurService.readById(1));
 	}
 
 	@Test
@@ -447,5 +438,116 @@ public class PlanteUtilisateurServiceTests implements IServiceTests {
 		
 		assertNull(response.getBody());
 	}	
+	
+	/**
+	 * <p>Cette méthode test la récupération d'une page de Plantes Utilisateur via id jardin - conditions valides</p>
+	 */
+	@Test
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, date_plantation, date_semis, etat_plante, etat_sante, jardin_id, plante_model_id)  values(1,'2020-04-01', '2020-04-01', 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testReadByJardin_shouldReturnPage() {		
+		assertTrue(planteUtilisateurService.readByJardin(1, 0).getBody().toList().size() == 1);
+		assertThat(planteUtilisateurService.readByJardin(1, 0).getMessage()).isEqualTo("Succes");
+		assertThat(planteUtilisateurService.readByJardin(1, 0).getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("dateSemis", LocalDate.parse("2020-04-01"));
+		assertThat(planteUtilisateurService.readByJardin(1, 0).getBody().toList().get(0)).isNotNull().hasFieldOrPropertyWithValue("datePlantation", LocalDate.parse("2020-04-01"));
+	}
+	
+	/**
+	 * <p>Cette méthode test la récupération d'une page de Plantes Utilisateur via id jardin - conditions invalides (id jardin inexistant)</p>
+	 */
+	@Test
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, date_plantation, date_semis, etat_plante, etat_sante, jardin_id, plante_model_id)  values(1,'2020-04-01', '2020-04-01', 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testReadByJardinInexistingId_shouldReturnNull() {		
+		assertNull(planteUtilisateurService.readByJardin(2, 0).getBody());
+		assertThat(planteUtilisateurService.readByJardin(2, 0).getMessage()).isEqualTo("Jardin inexistant");
+	}
+	
+	/**
+	 * <p>Cette méthode test la récupération d'une liste de Plantes Utilisateur via id jardin - conditions valides</p>
+	 */
+	@Test
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, date_plantation, date_semis, etat_plante, etat_sante, jardin_id, plante_model_id)  values(1,'2020-04-01', '2020-04-01', 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testReadListByJardin_shouldReturnList() {		
+		assertTrue(planteUtilisateurService.readByJardin(1).getBody().size() == 1);
+		assertThat(planteUtilisateurService.readByJardin(1).getMessage()).isEqualTo("Succes");
+		assertThat(planteUtilisateurService.readByJardin(1).getBody().get(0)).isNotNull().hasFieldOrPropertyWithValue("dateSemis", LocalDate.parse("2020-04-01"));
+		assertThat(planteUtilisateurService.readByJardin(1).getBody().get(0)).isNotNull().hasFieldOrPropertyWithValue("datePlantation", LocalDate.parse("2020-04-01"));
+	}
+	
+	/**
+	 * <p>Cette méthode test la récupération d'une liste de Plantes Utilisateur via id jardin - conditions invalides (id jardin inexistant)</p>
+	 */
+	@Test
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, date_plantation, date_semis, etat_plante, etat_sante, jardin_id, plante_model_id)  values(1,'2020-04-01', '2020-04-01', 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testReadListByJardinInexistingId_shouldReturnEmptyList() {		
+		assertThat(planteUtilisateurService.readByJardin(2).getBody()).isEmpty();
+		assertThat(planteUtilisateurService.readByJardin(2).getMessage()).isEqualTo("Jardin inexistant");
+	}
+	
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testDeletingByJardinValidId_shouldReturnTrue() {
+		assertTrue(planteUtilisateurService.deleteByJardin(1));
+	}
+
+	
+	@Test
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testDeletingByJardinInvalidId_shouldReturnFalse() {
+		assertFalse(planteUtilisateurService.deleteByJardin(2));	
+	}
 	
 }

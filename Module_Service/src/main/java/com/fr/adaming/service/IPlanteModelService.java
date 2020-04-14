@@ -8,8 +8,8 @@ import com.fr.adaming.entity.PlanteModel;
 // TODO
 public interface IPlanteModelService extends IService<PlanteModel> {
 
-	@Deprecated
-	public ServiceResponse<PlanteModel> readByNomScientifique(String nomScientique);
+//	@Deprecated
+//	public ServiceResponse<PlanteModel> readByNomScientifique(String nomScientique);
 
 	public ServiceResponse<Page<PlanteModel>> readAllReduced(int p);
 
