@@ -30,14 +30,9 @@ public class RetentionServiceImpl extends AbstractService<Retention> implements 
 	public ServiceResponse<Retention> create(Retention entity) {
 		if (entity != null) {
 			if (!repo.existsBySol(entity.getSol())) {
-				try {
 					dao.save(entity);
 					log.info("Retention sauvegardé dans la BD");
 					return new ServiceResponse<Retention>("Success", entity);
-				} catch (DataIntegrityViolationException e) {
-					log.warn(e.getMessage());
-					return new ServiceResponse<Retention>("Exception lors de la création dans la DB", null);
-				}
 			}
 			log.info("Création non réalisé : sol déjà existant dans la DB");
 			return new ServiceResponse<Retention>("Sol déjà connu dans la database", null);

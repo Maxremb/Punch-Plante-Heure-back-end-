@@ -99,7 +99,7 @@ public class UtilisateurServiceImpl extends AbstractService<Utilisateur> impleme
 	public Boolean desactivateUser(Integer id) {
 		if (id != null && dao.existsById(id)) {
 			Utilisateur user = dao.findById(id).orElse(null);
-			if (user != null && user.getActif()) {
+			if (user.getActif()) {
 				user.setActif(false);
 				dao.save(user);
 				log.info("Désactivation de l'utilisateur OK");

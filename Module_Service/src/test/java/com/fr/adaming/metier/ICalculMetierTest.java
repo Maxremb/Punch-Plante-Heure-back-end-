@@ -3,7 +3,7 @@ package com.fr.adaming.metier;
 
 /**
  * Interface ICalculMetier definissant les méthodes obligatoires dans les tests de la couche metier
- * @author maxime
+ * @author Maxime Rembert / Isaline Millet
  * @since 0.0.1-SNAPSHOT
  */
 public interface ICalculMetierTest {
@@ -49,6 +49,44 @@ public interface ICalculMetierTest {
 	 * retourne un set de jardin vide
 	 */
 	public void TestCalculRuWithFullReserveJardin_ShouldReturnEmptySet();
+	
+	/**
+	 * Test de la méthode réinitialisation de réserve utile - conditions valides
+	 * retourne un jardin 
+	 */
+	public void TestReinitValid_ShouldReturnEntity();
+	
+	/**
+	 * Test de la méthode réinitialisation de réserve utile - conditions invalides (jardin null)
+	 * retourne null 
+	 */
+	public void TestReinitInvalidJardinNull_ShouldReturnNull();
+	
+	/**
+	 * Test de la méthode réinitialisation de réserve utile - conditions invalides (jardin inexistant)
+	 * retourne null 
+	 */
+	public void TestReinitInvalidJardinInexistant_ShouldReturnNull();
+	
+	/**
+	 * Test de la méthode réinitialisation de réserve utile - conditions invalides (jardin sans longueur)
+	 * retourne null 
+	 */
+	public void TestReinitInvalidJardinNoLongueur_ShouldReturnNull();
+	
+	/**
+	 * Test de la méthode réinitialisation de réserve utile - conditions invalides (jardin sans largeur)
+	 * retourne null 
+	 */
+	public void TestReinitInvalidJardinNoLargeur_ShouldReturnNull();
+	
+	/**
+	 * Test de la méthode réinitialisation de réserve utile - conditions invalides (jardin sans profondeur)
+	 * retourne null 
+	 */
+	public void TestReinitInvalidJardinNoProfondeur_ShouldReturnNull();
+	
+	
 	
 	
 	
