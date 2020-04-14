@@ -59,11 +59,13 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 
 	@Override
 	public Page<Departement> convertPageDtoToEntity(Page<DepartementDto> pageDto) {
-		log.info("Conversion d'une liste départements DTO en liste départements");
+		log.info("Conversion d'une page départements DTO en liste départements");
 
 		if (pageDto != null) {
+			log.info("Conversion vers page département  OK ");
 			return pageDto.map(this::convertDtoToEntity);
 		} else {
+			log.info("Conversion vers page département non réalisée : département dto null");
 			return new PageImpl<Departement>(new ArrayList<Departement>());
 		}
 
@@ -71,11 +73,13 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 
 	@Override
 	public Page<DepartementDto> convertPageEntityToDto(Page<Departement> pageDep) {
-		log.info("Conversion d'une liste départements DTO en liste départements");
+		log.info("Conversion d'une page départements DTO en liste départements");
 
 		if (pageDep != null) {
+			log.info("Conversion vers page département dto OK ");
 			return pageDep.map(this::convertEntityToDto);
 		} else {
+			log.info("Conversion vers page département non réalisée : département null");
 			return new PageImpl<DepartementDto>(new ArrayList<DepartementDto>());
 		}
 	}

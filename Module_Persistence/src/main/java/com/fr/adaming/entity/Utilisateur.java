@@ -8,16 +8,35 @@ import javax.persistence.Id;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+/**
+ * Classe représentative de l'entité persistante Utilisateur héritant de la classe Admin
+ * @author Maxime Rembert
+ * @since 0.0.1-SNAPSHOT
+ *
+ */
+@Getter
+@Setter
 @Entity
-@EqualsAndHashCode
-public class Utilisateur {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	@Column
-	private String nom;
+@EqualsAndHashCode (callSuper = false)
+public class Utilisateur extends Admin {
 	
+	@Column (nullable = false, columnDefinition = "")
+	private String nom;
+	@Column (nullable = false)
+	private String prenom;
+	@Column
+	private String description;
+	@Column 
+	private Integer telephone;
+	@Column
+	private String reputation;
+	@Column (columnDefinition = "BOOLEAN DEFAULT FALSE")
+	private Boolean newsletter ;
+	@Column (columnDefinition = "BOOLEAN DEFAULT TRUE")
+	private Boolean actif;
+	@Column
+	private String photo;
 }

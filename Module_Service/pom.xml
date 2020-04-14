@@ -9,6 +9,10 @@
 	</parent>
 	<artifactId>Module_Service</artifactId>
 
+	<properties>
+		<spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.fr.adaming</groupId>

@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.fr.adaming.entity.Departement;
+import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Periode;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.enums.TypePeriod;
@@ -50,5 +53,13 @@ public interface IPeriodeRepository extends JpaRepository<Periode, Integer>{
 	 * @return Une Periode
 	 */
 	public Periode findByDepartementAndPlanteModelAndType(Departement departement, PlanteModel planteModel, TypePeriod type);
+	
+	/** Cherche les periodes qui correspondent à un jardin
+	 * @param depNum le numero du departement du jardin
+	 * @param idJardin l'id du jardin
+	 * @return Une liste de Periode
+	 */
+	@Query(value = " select * from ((periode p inner join plante_model pm on p.plante_model_id=pm.id)  inner join plante_utilisateur pu on pu.plante_model_id=pm.id) where p.departement_numero_dep = :depNum and pu.jardin_id= :idJardin", nativeQuery = true)
+	public List<Periode> findByJardinAndDep(Integer idJardin, Integer depNum);
 
 }

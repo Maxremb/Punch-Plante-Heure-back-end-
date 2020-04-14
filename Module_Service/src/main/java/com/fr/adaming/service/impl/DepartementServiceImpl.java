@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -85,7 +87,6 @@ public class DepartementServiceImpl extends AbstractService<Departement>
 	protected IDepartementRepository depRepo;
 
 	public ServiceResponse<Departement> readDepartementByNom(String nom) {
-		try {
 			if (nom != null) {
 				log.info("Récupération d'un département après recherche par nom");
 				return new ServiceResponse<Departement>("Récupération d'un département après recherche par nom",
@@ -95,15 +96,11 @@ public class DepartementServiceImpl extends AbstractService<Departement>
 				return new ServiceResponse<Departement>(
 						"Tentative de récupération d'un département après recherche via nom NULL", null);
 			}
-		} catch (Exception e) {
-			log.warn(
-					"Problème récupération d'un département après recherche via nom (couche service)" + e.getMessage());
-			return new ServiceResponse<Departement>("Pb tentative de récupération d'un département", null);
-		}
 	}
 
-	public ServiceResponse<Page<Meteo>> readMeteoByNumeroDep(Pageable pageable, Integer numDep) {
-//		try {
+	public ServiceResponse<Page<Meteo>> readMeteoByNumeroDep(Integer page, Integer numDep) {
+		Pageable pageable = PageRequest.of(page, 20);
+		try {
 			if (!dao.existsById(numDep)) {
 				log.info("Récupération d'une liste de conditions météo après recherche par département inexistant");
 				return new ServiceResponse<Page<Meteo>>(
@@ -113,12 +110,21 @@ public class DepartementServiceImpl extends AbstractService<Departement>
 				return new ServiceResponse<Page<Meteo>>("Récupération d'une liste de conditions météo par département",
 						metRepo.findMeteoByNumeroDep(pageable, numDep));
 			}
-//		} catch (Exception e) {
-//			log.warn("Problème readMeteoByNumDep");
-//			log.error(e.getLocalizedMessage());
-//			return new ServiceResponse<Page<Meteo>>("Problème readMeteoByNumDep", depRepo.findMeteoByNumeroDep(pageable, numDep));
-//		}
+		} catch (InvalidDataAccessApiUsageException e) {
+			log.warn("Problème readMeteoByNumDep");
+			return new ServiceResponse<Page<Meteo>>("Problème readMeteoByNumDep", null);
+		}
 
+	}
+
+	@Override
+	public ServiceResponse<List<Departement>> readAllList() {
+		log.info("Récupération de la liste des départements");
+		List<Departement> liste = dao.findAll();
+		ServiceResponse<List<Departement>> serviceResponse = new ServiceResponse<List<Departement>>();
+		serviceResponse.setBody(liste);
+		serviceResponse.setMessage("Succes");
+		return serviceResponse;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.fr.adaming.dto.ServiceResponse;
+import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Periode;
 import com.fr.adaming.enums.TypePeriod;
 
@@ -42,5 +43,12 @@ public interface IPeriodeService {
 	 * @return Un dto serviceResponse contenant objet de type periode ou null.
 	 */
 	public ServiceResponse<Periode> readByDepartementIdAndPlanteModelIdAndType(int depId, int planteId, TypePeriod type);
+	
+	/**Cherche les periodes d'un jardin
+	 * @param jardin le jardin dont l'ont aura les périodes
+	 * @return Un dto serviceResponse contenant objet de type liste de periode ou null.
+	 */
+	public ServiceResponse<List<Periode>> readByJardinAndDep(int idDep,
+			int idJardin);
 
 }

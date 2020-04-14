@@ -498,6 +498,27 @@ public class MeteoServiceTests implements IServiceTests {
 	}
 	
 	/**
+	 * Methode visant à tester la methode READ BY MONTH AND DEPARTEMENT pour un mois invalide
+	 */
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (71, 'saone_et_loire')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (1, 25, 20, 5, 120, 5, '2020-01-03', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (2, 27, 22, 10, 100, 5, '2020-01-07', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (3, 25, 20, 5, 120, 5, '2019-01-01', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, temperature_max, temperature_min, pluie, ensoleillement, evapo_transpiration_potentielle, date, departement_id) VALUES (4, 27, 22, 10, 100, 5, '2020-05-05', 71)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadByMonthInvalid2AndDepartement_ShouldReturnABodyNull() {
+		
+		ServiceResponse<List<Meteo>> response = servicemeteo.readByMonthAndDepartement(2020, 0, 69);
+		
+		assertNotNull(response);
+		assertNull(response.getBody());
+		assertThat(response.getMessage()).isEqualTo("Echec lors de la récupération des meteos : le mois est invalide");
+	}
+	
+	/**
 	 * Methode visant à tester la methode READ BY MONTH AND DEPARTEMENT pour un departement invalide
 	 */
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)

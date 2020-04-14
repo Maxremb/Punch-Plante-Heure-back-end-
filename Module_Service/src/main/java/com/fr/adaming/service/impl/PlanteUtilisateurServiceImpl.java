@@ -1,10 +1,14 @@
 package com.fr.adaming.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.fr.adaming.dto.ServiceResponse;
@@ -32,13 +36,12 @@ import lombok.extern.slf4j.Slf4j;
 public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisateur>
 		implements IPlanteUtilisateurService {
 
-	
 	@Autowired
 	private IPlanteUtilisateurRepository repo;
-	
+
 	@Autowired
 	private IJardinRepository jRepo;
-	
+
 	@Override
 	public ServiceResponse<PlanteUtilisateur> create(PlanteUtilisateur planteUtilisateur) {
 
@@ -49,14 +52,9 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 		}
 
 		else {
-			try {
 				dao.save(planteUtilisateur);
 				log.info("Plante Utilisateur enregistré dans la BD");
 				return new ServiceResponse<PlanteUtilisateur>("Succes", planteUtilisateur);
-			} catch (Exception e) {
-				log.warn(e.getMessage());
-				return new ServiceResponse<PlanteUtilisateur>("Erreur lors de la création de l'objet", null);
-			}
 		}
 	}
 
@@ -72,16 +70,10 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 		}
 
 		else {
-			try {
 				log.info("Plante Utilisateur enregistré dans la BD");
 				return new ServiceResponse<PlanteUtilisateur>("Succes", dao.save(planteUtilisateur));
-			} catch (Exception e) {
-				log.warn(e.getMessage());
-				return new ServiceResponse<PlanteUtilisateur>("Erreur lors de la sauvegarde des modifications", null);
-			}
 		}
 	}
-
 
 	@Override
 	public ServiceResponse<Page<PlanteUtilisateur>> readByJardin(int idJardin, int p) {
@@ -89,21 +81,48 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 			log.info("Jardin inexistant");
 			return new ServiceResponse<Page<PlanteUtilisateur>>("Jardin inexistant", null);
 		} else {
-			try {
-				log.info("Jardin existant");
-				ServiceResponse<Page<PlanteUtilisateur>> serviceResponse = new ServiceResponse<Page<PlanteUtilisateur>>();
-				Pageable pageable = PageRequest.of(p, 20, Sort.by("plante_model_id"));
-				Page<PlanteUtilisateur> page = repo.findByJardin(idJardin, pageable);
-				
-				serviceResponse.setBody(page);
-				serviceResponse.setMessage("Succes");
-				return serviceResponse;
-			} catch (Exception e) {
-				log.warn(e.getMessage());
-				return new ServiceResponse<Page<PlanteUtilisateur>>("Erreur lors de l'affichage de la liste", null);
-			}
+			log.info("Jardin existant");
+			ServiceResponse<Page<PlanteUtilisateur>> serviceResponse = new ServiceResponse<Page<PlanteUtilisateur>>();
+			Pageable pageable = PageRequest.of(p, 20, Sort.by(Direction.DESC, "id"));
+			Page<PlanteUtilisateur> page = repo.findByJardin(idJardin, pageable);
 
+			serviceResponse.setBody(page);
+			serviceResponse.setMessage("Succes");
+			return serviceResponse;
 		}
+	}
+
+	@Override
+	public ServiceResponse<List<PlanteUtilisateur>> readByJardin(int idJardin) {
+		if (!jRepo.existsById(idJardin)) {
+			log.info("Jardin inexistant");
+			List<PlanteUtilisateur> listeNulle = new ArrayList<>();
+			return new ServiceResponse<List<PlanteUtilisateur>>("Jardin inexistant", listeNulle);
+		} else {
+			log.info("Jardin existant");
+			ServiceResponse<List<PlanteUtilisateur>> serviceResponse = new ServiceResponse<List<PlanteUtilisateur>>();
+
+			List<PlanteUtilisateur> liste = repo.findByJardin(idJardin);
+
+			serviceResponse.setBody(liste);
+			serviceResponse.setMessage("Succes");
+			return serviceResponse;
+		}
+	}
+
+	@Override
+	public boolean deleteByJardin(int idJardin) {
+		log.debug("Service: deleteByJardin de l'entité jardin id : " + idJardin);
+
+		boolean delete = true;
+		if (jRepo.existsById(idJardin)) {
+			repo.deleteAllByJardin(idJardin);
+		} else {
+			log.info("Jardin inexistant");
+			delete = false;
+		}
+		return delete;
+
 	}
 
 }

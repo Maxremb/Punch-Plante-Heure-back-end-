@@ -29,11 +29,6 @@ public interface IControllerTests {
 		 */
 		public void testDeletingEntityWithInvalidId_shouldReturn400()throws Exception;
 		
-//		/**
-//		 * Teste de la méthode deleteById avec un id négatif. Doit retourner un statut 400. Le body de responseDto doit être null.
-//		 */
-//		public void testDeletingEntityWithNegativeId_shouldReturn400()throws Exception;
-		
 		/**
 		 * Teste de la méthode update avec entité valide (id existant). Doit retourner un statut 200. Le body de responseDto doit contenir un objet de type UpdateDto
 		 */
@@ -53,11 +48,6 @@ public interface IControllerTests {
 		 * Teste de la méthode readById avec un id qui n'exite pas dans la base de données. Doit retourner un statut 400. Le body de responseDto doit être null.
 		 */
 		public void testReadingEntityWithInvalidId_shouldReturn400()throws Exception;
-		
-//		/**
-//		 * Teste de la méthode readById avec un id negatif. Doit retourner un statut 400. Le body de responseDto doit être null.
-//		 */
-//		public void testReadingEntityWithNegativeId_shouldReturn400()throws Exception;
 		
 		/**
 		 * Teste de la méthode readAll. Doit retourner un statut 200. Le body de responseDto doit contenir une liste de UpdateDto

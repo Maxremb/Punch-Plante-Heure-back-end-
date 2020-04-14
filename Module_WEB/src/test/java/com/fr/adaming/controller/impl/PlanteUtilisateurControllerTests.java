@@ -51,8 +51,13 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 		dto.setSemiDate(localDate);
 
 		UtilisateurUpdateDto utilisateurDto = new UtilisateurUpdateDto();
-		utilisateurDto.setNom("Stark");
+		utilisateurDto.setLastName("Stark");
 		utilisateurDto.setIdentifier(1);
+		utilisateurDto.setFirstName("tony");
+		utilisateurDto.setMail("stark@stark.fr");
+		utilisateurDto.setPwd("4TEST");
+		utilisateurDto.setPseudo("IronMan");
+		// ID EMAIL MDP PSEUDO NOM PRENOM NON NULLABLE
 
 		DepartementDto depDto = new DepartementDto();
 		depDto.setDepNum(69);
@@ -76,7 +81,7 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 	}
 
 	@Test
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Stark')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -124,7 +129,7 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 
 	}
 
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Stark')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -164,7 +169,7 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 		assertNotNull(responseDto.getMessage());
 	}
 
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Stark')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -192,7 +197,7 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 
 	}
 
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Stark')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -228,7 +233,7 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 
 	}
 
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Stark')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -253,7 +258,7 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 
 	}
 
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Stark')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -280,7 +285,7 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 
 	}
 
-	@Sql(statements = "insert into utilisateur (id, nom) values(1,'Stark')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)

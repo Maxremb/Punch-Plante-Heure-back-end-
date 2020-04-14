@@ -163,6 +163,22 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 	}
 	
 	@Override
+	public ResponseEntity<ResponseDto<List<D>>> readAllList() {
+		
+		log.info("Controller: méthode READALL liste appelée");
+		
+		ServiceResponse<List<E>> serviceResponse = serviceDep.readAllList();
+		
+		List<D> listReturned = converter.convertListEntityToDto(serviceResponse.getBody());
+		ResponseDto<List<D>> responseDto = new ResponseDto<List<D>>();
+		responseDto.setError(false);
+		responseDto.setMessage(serviceResponse.getMessage());
+		responseDto.setBody(listReturned);
+		log.info("Controller: méthode READALL liste - Succes");
+		return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+	}
+	
+	@Override
 	public ResponseEntity<ResponseDto<D>> readByName(String name) {
 		
 		log.info("Controller: méthode READBYNAME appelée");
@@ -192,9 +208,7 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 		
 		log.info("Controller: méthode READMETEOBYNUMDEP appelée");
 		
-		Pageable pageable = PageRequest.of(page, elementsPerPage, Sort.by(sortName));
-		
-		ServiceResponse<Page<ME>> serviceResponse = serviceDep.readMeteoByNumeroDep(pageable, id);
+		ServiceResponse<Page<ME>> serviceResponse = serviceDep.readMeteoByNumeroDep(page, id);
 		
 		ResponseDto<Page<MU>> responseDto = new ResponseDto<Page<MU>>();
 		

@@ -105,6 +105,18 @@ public interface IControllerDepartement<D, MU> {
 	/**
 	 * <b>Description : </b>
 	 * <p>
+	 * Methode pour afficher la liste complete des instances de l'entite département
+	 * </p>
+	 * 
+	 * @return ResponseDto : erreur true or false / body null ou objet liste DepartementDto / message
+	 */
+	@GetMapping(path = "/all/list")
+	public ResponseEntity<ResponseDto<List<D>>> readAllList();
+	
+	
+	/**
+	 * <b>Description : </b>
+	 * <p>
 	 * Methode pour afficher un département via son nom
 	 * </p>
 	 * 

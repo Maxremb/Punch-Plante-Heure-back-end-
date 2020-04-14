@@ -172,62 +172,59 @@ public class JardinServiceTest implements IServiceTests {
 		assertThat(serviceJardin.readByNom(0, null).getBody()).isNull();
 		assertThat(serviceJardin.readByNom(0, null).getMessage()).isEqualTo("Recherche non réalisée : nom null");
 	}
-	
-//	
-//	CAS AVEC UN UTILISATEUR
-//
-//	/**
-//	 * Cette méthode teste la récupération des jardins d'un utilisateur via son id -
-//	 * conditions valides
-//	 */
-//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Test
-//	public void testReadUserExistingUser_ShouldReturnPage() {
-//		assertTrue(serviceJardin.readByUtilisateur(0, 2).getBody().toList().size() == 1);
-//	}
-//
-//	/**
-//	 * Cette méthode teste la récupération des jardins d'un utilisateur via son id -
-//	 * conditions invalides (id inexistant)
-//	 */
-//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Test
-//	public void testReadUserNotExistingUser_ShouldReturnEmptyPage() {
-//		assertThat(serviceJardin.readByUtilisateur(0, 1).getBody().toList()).isEmpty();
-//		assertEquals(serviceJardin.readByUtilisateur(0, 1).getMessage(), "Recherche jardin par utilisateur");
-//	}
-//
-//	/**
-//	 * Cette méthode teste la récupération des jardins d'un utilisateur via son id -
-//	 * conditions invalides (id inexistant)
-//	 */
-//	@Sql(statements = "INSERT INTO Utilisateur (id, nom) VALUES (2, 'nomTestUtilisateur')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Test
-//	public void testReadUserWithIdNull_ShouldReturnNull() {
-//		assertNull(serviceJardin.readByUtilisateur(0, null).getBody());
-//		assertEquals(serviceJardin.readByUtilisateur(0, null).getMessage(), "Recherche non réalisé : id null");
-//	}
+
+	/**
+	 * Cette méthode teste la récupération des jardins d'un utilisateur via son id -
+	 * conditions valides
+	 */
+	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme) VALUES (2,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadUserExistingUser_ShouldReturnPage() {
+		assertTrue(serviceJardin.readByUtilisateur(0, 2).getBody().toList().size() == 1);
+	}
+
+	/**
+	 * Cette méthode teste la récupération des jardins d'un utilisateur via son id -
+	 * conditions invalides (id inexistant)
+	 */
+	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme) VALUES (2,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadUserNotExistingUser_ShouldReturnEmptyPage() {
+		assertThat(serviceJardin.readByUtilisateur(0, 1).getBody().toList()).isEmpty();
+		assertEquals(serviceJardin.readByUtilisateur(0, 1).getMessage(), "Recherche jardin par utilisateur");
+	}
+
+	/**
+	 * Cette méthode teste la récupération des jardins d'un utilisateur via son id -
+	 * conditions invalides (id inexistant)
+	 */
+	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme) VALUES (2,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (1, 'nomTestDepartement')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, pluie, temperature_max, departement_id) VALUES (1, '2020-02-20', 5, 20, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep, utilisateur_id) VALUES (1, 'nom4Test', 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadUserWithIdNull_ShouldReturnNull() {
+		assertNull(serviceJardin.readByUtilisateur(0, null).getBody());
+		assertEquals(serviceJardin.readByUtilisateur(0, null).getMessage(), "Recherche non réalisé : id null");
+	}
 
 	/**
 	 * Cette méthode teste la récupération des jardins d'un département via son id - conditions valides

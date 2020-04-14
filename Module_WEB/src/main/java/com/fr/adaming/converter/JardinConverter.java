@@ -17,7 +17,16 @@ import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Utilisateur;
 
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Couche converter pour le jardin qui implement IConverter
+ * 
+ * @author Clara Cadet
+ * @since 0.0.1-SNAPSHOT
+ */
 @Component
+@Slf4j
 public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdateDto, Jardin> {
 
 	@Autowired
@@ -28,8 +37,9 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 
 	@Override
 	public Jardin convertCreateDtoToEntity(JardinCreateDto createDto) {
-
+		log.info("Converter Jardin : méthode de conversion create dto vers jardin");
 		if (createDto != null) {
+			log.info("Conversion OK");
 			Jardin entite = new Jardin();
 			entite.setEstArroser(createDto.isArrosed());
 			entite.setProfSol(createDto.getDepthGround());
@@ -41,13 +51,15 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 			entite.setUtilisateur(convertUtil.convertUpdateDtoToEntity(createDto.getUser()));
 			return entite;
 		}
-
+		log.info("Conversion non réalisée : create dto null");
 		return null;
 	}
 
 	@Override
 	public JardinCreateDto convertEntityToCreateDto(Jardin entity) {
+		log.info("Converter jardin : méthode de conversion jardin vers create dto");
 		if (entity != null) {
+			log.info("Conversion OK");
 			JardinCreateDto createDto = new JardinCreateDto();
 			createDto.setArrosed(entity.isEstArroser());
 			createDto.setDepthGround(entity.getProfSol());
@@ -60,12 +72,15 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 
 			return createDto;
 		}
+		log.info("Conversion non réalisée : jardin null");
 		return null;
 	}
 
 	@Override
 	public Jardin convertUpdateDtoToEntity(JardinUpdateDto updateDto) {
+		log.info("Converter jardin : méthode conversion update dto vers jardin");
 		if (updateDto != null) {
+			log.info("Conversion OK");
 			Jardin entite = new Jardin();
 			entite.setRESERVE_MAX_EAU(updateDto.getMaxReserve());
 			entite.setReserveUtile(updateDto.getUsefullReserve());
@@ -80,12 +95,15 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 			entite.setId(updateDto.getIdentifier());
 			return entite;
 		}
+		log.info("Conversion non réalisée : update dto null");
 		return null;
 	}
 
 	@Override
 	public JardinUpdateDto convertEntityToUpdateDto(Jardin entity) {
+		log.info("Converter jardin : méthode conversion jardin vers update dto");
 		if (entity != null) {
+			log.info("Conversion OK");
 			JardinUpdateDto updateDto = new JardinUpdateDto();
 			updateDto.setMaxReserve(entity.getRESERVE_MAX_EAU());
 			updateDto.setUsefullReserve(entity.getReserveUtile());
@@ -102,23 +120,30 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 
 			return updateDto;
 		}
+		log.info("Conversion non réalisée : jardin null");
 		return null;
 	}
 
 	@Override
 	public Page<Jardin> convertPageCreateDtoToEntity(Page<JardinCreateDto> pageCreateDto) {
+		log.info("Converter jardin : méthode conversion page create dto vers page jardin");
 		if (pageCreateDto != null) {
+			log.info("Conversion OK");
 			return pageCreateDto.map(this::convertCreateDtoToEntity);
 		} else {
+			log.info("Conversion non réalisée : page create dto null");
 			return new PageImpl<Jardin>(new ArrayList<Jardin>());
 		}
 	}
 
 	@Override
 	public Page<JardinCreateDto> convertPageEntityToCreateDto(Page<Jardin> pageEntity) {
+		log.info("Converter jardin : méthode conversion page jardin vers page create dto");
 		if (pageEntity != null) {
+			log.info("Conversion OK");
 			return pageEntity.map(this::convertEntityToCreateDto);
 		} else {
+			log.info("Conversion non réalisée : page jardin null");
 			return new PageImpl<JardinCreateDto>(new ArrayList<JardinCreateDto>());
 		}
 
@@ -126,9 +151,12 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 
 	@Override
 	public Page<Jardin> convertPageUpdateDtoToEntity(Page<JardinUpdateDto> pageUpdateDto) {
+		log.info("Converter jardin : méthode conversion page update dto vers page jardin");
 		if (pageUpdateDto != null) {
+			log.info("Conversion OK");
 			return pageUpdateDto.map(this::convertUpdateDtoToEntity);
 		} else {
+			log.info("Conversion non réalisée : page update dto null");
 			return new PageImpl<Jardin>(new ArrayList<Jardin>());
 		}
 
@@ -136,18 +164,23 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 
 	@Override
 	public Page<JardinUpdateDto> convertPageEntityToUpdateDto(Page<Jardin> pageEntity) {
+		log.info("Converter jardin : méthode conversion page jardin vers update dto");
 		if (pageEntity != null) {
+			log.info("Conversion OK");
 			return pageEntity.map(this::convertEntityToUpdateDto);
 		} else {
+			log.info("Conversion non réalisée : page jardin null");
 			return new PageImpl<JardinUpdateDto>(new ArrayList<JardinUpdateDto>());
 		}
 	}
 
 	@Override
 	public List<Jardin> convertListCreateDtoToEntity(List<JardinCreateDto> listeCreateDto) {
+		log.info("Converter jardin : méthode conversion liste create dto vers liste jardin");
 
 		List<Jardin> listeRetour = new ArrayList<Jardin>();
 		if (listeCreateDto != null) {
+			log.info("Conversion OK");
 			for (JardinCreateDto j : listeCreateDto) {
 				listeRetour.add(convertCreateDtoToEntity(j));
 			}
@@ -158,8 +191,10 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 
 	@Override
 	public List<JardinCreateDto> convertListEntityToCreateDto(List<Jardin> listeEntity) {
+		log.info("Converter jardin : méthode conversion list jardin vers liste create dto");
 		List<JardinCreateDto> listeRetour = new ArrayList<JardinCreateDto>();
 		if (listeEntity != null) {
+			log.info("Conversion OK");
 			for (Jardin j : listeEntity) {
 				listeRetour.add(convertEntityToCreateDto(j));
 			}
@@ -169,21 +204,27 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 
 	@Override
 	public List<Jardin> convertListUpdateDtoToEntity(List<JardinUpdateDto> listeUpdateDto) {
+		log.info("Converter jardin : méthode conversion list update dto vers liste jardin");
 		List<Jardin> listeRetour = new ArrayList<Jardin>();
 		if (listeUpdateDto != null) {
-		for (JardinUpdateDto j : listeUpdateDto) {
-			listeRetour.add(convertUpdateDtoToEntity(j));
-		}}
+			log.info("Conversion OK");
+			for (JardinUpdateDto j : listeUpdateDto) {
+				listeRetour.add(convertUpdateDtoToEntity(j));
+			}
+		}
 		return listeRetour;
 	}
 
 	@Override
 	public List<JardinUpdateDto> convertListEntityToUpdateDto(List<Jardin> listeEntity) {
+		log.info("Converter jardin : méthode conversion list jardin vers update dto");
 		List<JardinUpdateDto> listeRetour = new ArrayList<JardinUpdateDto>();
-		if(listeEntity != null) {
-		for (Jardin j : listeEntity) {
-			listeRetour.add(convertEntityToUpdateDto(j));
-		}}
+		if (listeEntity != null) {
+			log.info("Conversion OK");
+			for (Jardin j : listeEntity) {
+				listeRetour.add(convertEntityToUpdateDto(j));
+			}
+		}
 		return listeRetour;
 	}
 

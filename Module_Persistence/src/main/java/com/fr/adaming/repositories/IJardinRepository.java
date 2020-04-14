@@ -54,6 +54,6 @@ public interface IJardinRepository extends JpaRepository<Jardin, Integer>{
 	 */
 	@Query(value = "select * from jardin where departement_numero_dep = :idDepartement", nativeQuery = true)
 	public List<Jardin> trouveListJardinParDepartement(@Param(value = "idDepartement") Integer idDepartement);
-	
+		
 	
 }

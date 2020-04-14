@@ -3,6 +3,7 @@ package com.fr.adaming.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -44,7 +45,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 					dao.save(entity);
 					log.info("Jardin sauvegardé dans la DB");
 					return new ServiceResponse<Jardin>("Success", entity);
-				} catch (Exception e) {
+				} catch (DataIntegrityViolationException e) {
 					log.warn(e.getMessage());
 					return new ServiceResponse<Jardin>("Exception lors de la création dans la DB", null);
 				}
@@ -57,16 +58,10 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 	@Override
 	public ServiceResponse<Jardin> update(Jardin entite) {
 		if (entite != null && dao.existsById(entite.getId())) {
-			try {
 				entite = calculReserveEauMax(entite);
 				dao.save(entite);
 				log.info("Jardin modifié dans la DB");
 				return new ServiceResponse<Jardin>("Success", entite);
-			} catch (Exception e) {
-				log.warn(e.getMessage());
-				return new ServiceResponse<Jardin>("Exception lors de la modification dans la DB", null);
-			}
-
 		}
 		log.info("Modification non réalisée : id inconnu dans la database ou entité nulle");
 		return new ServiceResponse<Jardin>("Modification non réalisée : id inconnu dans la database ou entité nulle",
@@ -75,7 +70,6 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 
 	@Override
 	public ServiceResponse<Page<Jardin>> readByNom(int page, String nom) {
-		try {
 			if (nom != null) {
 				log.info("Recherche jardin par nom dans la DB OK");
 				Pageable pageable = PageRequest.of(page, 20);
@@ -84,26 +78,15 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 				log.info("Recherche jardin par nom non réalisée : nom null");
 				return new ServiceResponse<Page<Jardin>>("Recherche non réalisée : nom null", null);
 			}
-		} catch (Exception e) {
-			log.warn("Problème récupération d'un jardin après recherche via nom (couche service)" + e.getMessage());
-			return new ServiceResponse<Page<Jardin>>("Recherche par nom non réalisée", null);
-		}
-
 	}
 
 	@Override
 	public ServiceResponse<Page<Jardin>> readByUtilisateur(int page, Integer id) {
 		if (id != null) {
-			try {
 				log.info("Recherche jardin par utilisateur dans la DB OK");
 				Pageable pageable = PageRequest.of(page, 20);
 				return new ServiceResponse<Page<Jardin>>("Recherche jardin par utilisateur",
 						repo.trouveParUtilisateur(pageable, id));
-
-			} catch (Exception e) {
-				log.warn(e.getMessage());
-				return new ServiceResponse<Page<Jardin>>("Exception lors de la recherche jardin par utilisateur", null);
-			}
 		}
 		log.info("Recherche jardin par utilisateur non réalisée : id null");
 		return new ServiceResponse<Page<Jardin>>("Recherche non réalisé : id null", null);
@@ -112,18 +95,11 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 
 	@Override
 	public ServiceResponse<Page<Jardin>> readByDepartement(int page, Integer numDep) {
-
 		if (numDep != null) {
-			try {
 				log.info("Recherche jardin par utilisateur dans la DB OK");
 				Pageable pageable = PageRequest.of(page, 20);
 				return new ServiceResponse<Page<Jardin>>("Recherche jardin par departement",
 						repo.trouveParDepartement(pageable, numDep));
-
-			} catch (Exception e) {
-				log.warn(e.getMessage());
-				return new ServiceResponse<Page<Jardin>>("Exception lors de la recherche jardin par departement", null);
-			}
 		}
 		log.info("Recherche jardin par departement non réalisée : numDep null");
 		return new ServiceResponse<Page<Jardin>>("Recherche non réalisée : numDep null", null);
