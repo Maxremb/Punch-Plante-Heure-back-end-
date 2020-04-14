@@ -2,7 +2,8 @@ image: java:8
 
 before_script:
   - apt-get update
-  - echo GitLab-CI BeforeScript Success
+  - echo GitLab-CI BeforeScript Success1
+  - chmod +x mvnw
 
 job1:
   script:
