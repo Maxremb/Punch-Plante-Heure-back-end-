@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -97,22 +98,23 @@ public class CalculMetier implements ICalculMetier {
 	 */
 	@Override
 	public ServiceResponse<Jardin> reinitArrosJardin(Integer id) {
-
-		Jardin jardin = jardinRepo.findById(id).orElse(null);
-		// remplissage reserve utile par arrosage
-		if (jardin != null) {
-			if (jardin.getLongueur() != null && jardin.getLargeur() != null && jardin.getProfSol() != null) {
-				jardin.setReserveUtile(jardin.getRESERVE_MAX_EAU());
-				dao.save(jardin);
-				log.info("Jardin reserve utile modifiée dans la DB");
-				return new ServiceResponse<Jardin>("Success", jardin);
-			} else {
-				return new ServiceResponse<Jardin>("Pas de longueur et/ou largeur et/ou profondeur", null);
+		try {
+			Jardin jardin = jardinRepo.findById(id).orElse(null);
+			// remplissage reserve utile par arrosage
+			if (jardin != null) {
+				if (jardin.getLongueur() != null && jardin.getLargeur() != null) {
+					jardin.setReserveUtile(jardin.getRESERVE_MAX_EAU());
+					dao.save(jardin);
+					log.info("Jardin reserve utile modifiée dans la DB");
+					return new ServiceResponse<Jardin>("Success", jardin);
+				} else {
+					return new ServiceResponse<Jardin>("Pas de longueur et/ou largeur et/ou profondeur", null);
+				}
 			}
+			return new ServiceResponse<Jardin>("Jardin null", null);
+		} catch (InvalidDataAccessApiUsageException e) {
+			log.warn("Tentative de réinitialisation jardin null");
+			return new ServiceResponse<Jardin>("Tentative de réinitialisation jardin null ou absence profondeur", null);
 		}
-		
-		return new ServiceResponse<Jardin>("Jardin null", null);
-
 	}
-
 }
