@@ -4,8 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,6 +23,7 @@ import com.fr.adaming.dto.DepartementDto;
 import com.fr.adaming.dto.PeriodeUpdateDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
+import com.fr.adaming.enums.TypePeriod;
 
 
 //TODO : Test read By ... with  valid param AND invalid param
@@ -210,20 +213,20 @@ public class PeriodeControllerTest extends AbstractTestMethods<PeriodeUpdateDto>
 	// *************************************************
 	// TEST READ BY DEPT ID
 
-//	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReadByDeptIdWithValidParam_ShouldReturn200() throws Exception {
-		String path = BASE_URL + "/departement/" + depNum;
+		String path = BASE_URL + "/departement/69?page=0";
 
 		ResponseDto<Page<PeriodeUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, PeriodeUpdateDto.class);
 
@@ -232,28 +235,29 @@ public class PeriodeControllerTest extends AbstractTestMethods<PeriodeUpdateDto>
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReadByDeptIdWithInvalidParam_ShouldReturn400() throws Exception {
-		String path = BASE_URL + "/departement/70";
+		String path = BASE_URL + "/departement/70?page=0";
 
-		String responseAsString = runMockMvcLite("get", path, 400);
+		ResponseDto<Page<PeriodeUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, PeriodeUpdateDto.class);
 
-		assertThat(responseAsString).isEmpty();
+		assertThat(responseDto.isError()).isFalse();
+		assertThat(responseDto.getBody().toList().isEmpty());
 	}
 
 	@Test
 	public void TestReadByDeptIdWithNullParam_ShouldReturn400() throws Exception {
-		String path = BASE_URL + "/departement/" + null;
+		String path = BASE_URL + "/departement/?page=0";
 
 		String responseAsString = runMockMvcLite("get", path, 400);
 
@@ -263,63 +267,63 @@ public class PeriodeControllerTest extends AbstractTestMethods<PeriodeUpdateDto>
 	// *************************************************
 	// TEST READ BY PLANTE ID
 
-//	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestREadByPlanteIdWithValidParam_ShouldReturn200() throws Exception {
-//		String path = BASE_URL + "/plant/1";
-//
-//		ResponseDto<Page<PeriodeUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, PeriodeUpdateDto.class);
-//
-//		assertThat(responseDto.isError()).isFalse();
-//		assertThat(responseDto.getBody().getSize()).isEqualTo(2);
-//		assertThat(responseDto.getBody().toList().get(0)).hasFieldOrPropertyWithValue("nomCommun", commun);
-//		assertThat(responseDto.getBody().toList().get(1)).hasFieldOrPropertyWithValue("nomScientifique", scientifique);
+		String path = BASE_URL + "/plant/1?page=0";
+
+		ResponseDto<Page<PeriodeUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, PeriodeUpdateDto.class);
+
+		assertThat(responseDto.isError()).isFalse();
+		assertThat(responseDto.getBody().toList().size()).isEqualTo(2);
+		assertThat(responseDto.getBody().toList().get(0)).hasFieldOrPropertyWithValue("startDate", LocalDate.parse("2020-04-01"));
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestREadByPlanteIdWithinvalidParam_ShouldReturn400() throws Exception {
-		String path = BASE_URL + "/plant/55";
+		String path = BASE_URL + "/plant/55?page=0";
 
-		String responseAsString = runMockMvcLite("get", path, 400);
+		ResponseDto<Page<PeriodeUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, PeriodeUpdateDto.class);
 
-		assertThat(responseAsString).isEmpty();
+		assertThat(responseDto.isError()).isFalse();
+		assertThat(responseDto.getBody().toList().isEmpty());
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestREadByPlanteIdWithNullParam_ShouldReturn400() throws Exception {
-		String path = BASE_URL + "/plant/" + null;
+		String path = BASE_URL + "/plant/?page=0";
 
 		String responseAsString = runMockMvcLite("get", path, 400);
 
@@ -329,84 +333,83 @@ public class PeriodeControllerTest extends AbstractTestMethods<PeriodeUpdateDto>
 	// *************************************************
 	// TEST READ BY DEPT ID AND PLANTE ID
 
-//	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReadByDeptIdAndPlantIdWithValidParam_ShouldReturn200() throws Exception {
-//		
-//		String path = BASE_URL + "/alltypes?depId=&plantId=";
-//
-//		ResponseDto<List<PeriodeUpdateDto>> responseDto = runMockMvc4Lists("get", path, 200, PeriodeUpdateDto.class);
-//
-//		assertThat(responseDto.getBody().size()).isEqualTo(2);
+		String path = BASE_URL + "/alltypes?depId=69&plantId=1";
 
-	}
+		ResponseDto<List<PeriodeUpdateDto>> responseDto = runMockMvc4Lists("get", path, 200, PeriodeUpdateDto.class);
 
-//	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void TestReadByDeptIdandPlantIdWithinvalidDept_ShouldReturn400() throws Exception {
-//
-//		String path = BASE_URL + "/alltypes?depId=1&plantId=50";
-//
-//		String responseAsString = runMockMvcLite("get", path, 400);
-//
-//		assertThat(responseAsString).isEmpty();
-	}
+		assertThat(responseDto.getBody().size()).isEqualTo(2);
 
-//	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void TestReadByDeptIdandPlantIdWithinvalidPlante_ShouldReturn400() throws Exception {
-
-//		String path = BASE_URL + "/alltypes?depId=500&plantId=500";
-//
-//		String responseAsString = runMockMvcLite("get", path, 400);
-//
-//		assertThat(responseAsString).isEmpty();
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestReadByDeptIdandPlantIdWithinvalidDept_ShouldReturn400() throws Exception {
+
+		String path = BASE_URL + "/alltypes?depId=125&plantId=1";
+
+		ResponseDto<List<PeriodeUpdateDto>> responseDto = runMockMvc4Lists("get", path, 200, PeriodeUpdateDto.class);
+
+		assertThat(responseDto.getBody()).isEmpty();
+	}
+
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestReadByDeptIdandPlantIdWithinvalidPlante_ShouldReturn400() throws Exception {
+
+		String path = BASE_URL + "/alltypes?depId=500&plantId=500";
+
+		ResponseDto<List<PeriodeUpdateDto>> responseDto = runMockMvc4Lists("get", path, 200, PeriodeUpdateDto.class);
+
+		assertThat(responseDto.getBody()).isEmpty();
+	}
+
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReadByDeptIdAndPlantIdWithNullParam_ShouldReturn400() throws Exception {
-		String path = BASE_URL + "/alltypes?depId=&plantId=";
+		String path = BASE_URL + "/alltypes";
 
 		String responseAsString = runMockMvcLite("get", path, 400);
 
@@ -417,24 +420,24 @@ public class PeriodeControllerTest extends AbstractTestMethods<PeriodeUpdateDto>
 	// TEST READ BY DEPT ID AND PLANTE ID AND TYPE
 
 //	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestByReadByDeptIdAndPlanteIdAndTypeWithValidParam_ShouldReturn200() throws Exception {
 		
-//		String path = BASE_URL + "/alltypes?depId=1&plantId=50";
+//		String path = BASE_URL + "/alltypes?depId=1&plantId=50&type=FLORAISON";
 //
-//		String responseAsString = runMockMvcLite("get", path, 400);
+//		ResponseDto<PeriodeUpdateDto> responseDto = runMockMvc("get", path, 200, PeriodeUpdateDto.class);
 //
-//		assertThat(responseAsString).isEmpty();
+//		assertThat(responseDto.getBody()).isNotNull().hasFieldOrPropertyWithValue("startDate", LocalDate.parse("2020-04-01"));
 	}
 
 	@Test
@@ -481,60 +484,59 @@ public class PeriodeControllerTest extends AbstractTestMethods<PeriodeUpdateDto>
 	// TEST READ BY JARDIN
 
 	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReadByJardinWithValidParam_ShouldReturn200() throws Exception {
 		
-//		String path = BASE_URL + "/alltypes?depId=1&plantId=50";
-//
-//		String responseAsString = runMockMvcLite("get", path, 400);
-//
-//		assertThat(responseAsString).isEmpty();
+		String path = BASE_URL + "/jardin?jardinId=1&depId=69";
 
-	}
+		ResponseDto<List<PeriodeUpdateDto>> responseDto = runMockMvc4Lists("get", path, 200, PeriodeUpdateDto.class);
 
-//	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void TestReadByJardinWithinvalidParam_ShouldReturn400() throws Exception {
-		
-//		String path = BASE_URL + "/jardin?jardinId=500&depId=500";
-//
-//		String responseAsString = runMockMvcLite("get", path, 400);
-//
-//		assertThat(responseAsString).isEmpty();
+		assertThat(responseDto.getBody()).isNotNull();
 	}
 
 	@Test
-	@Sql(statements = "INSERT INTO plante_model (id,nom_commun,nom_scientifique) VALUES (1," + commSql + ","
-			+ scientifSql + ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
-			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (1,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-	@Sql(statements = "INSERT INTO periode (id,date_debut,date_fin,departement_numero_dep,plante_model_id) VALUES (2,'2020-01-01','2020-02-01',"
-			+ depNum + ",1) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	@Sql(statements = "DELETE FROM plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void TestReadByJardinWithinvalidParam_ShouldReturn400() throws Exception {
+		
+		String path = BASE_URL + "/alltypes?depId=125&plantId=12";
+
+		ResponseDto<List<PeriodeUpdateDto>> responseDto = runMockMvc4Lists("get", path, 200, PeriodeUpdateDto.class);
+
+		assertTrue(responseDto.getBody().isEmpty());
+	}
+
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (2, '2020-04-01', '2020-04-01', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	public void TestReadByJardinWithnullParam_ShouldReturn400() throws Exception {
 		String path = BASE_URL + "/jardin?jardinId=&depId=&";
 
