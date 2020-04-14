@@ -47,36 +47,48 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 
 	@GetMapping(path = "/pseudo")
 	public ResponseEntity<ResponseDto<AdminUpdateDto>> readByPseudonyme(@RequestParam(name = "pseudo") String pseudo) {
-		ServiceResponse<Admin> resp = adminService.readByPseudonyme(pseudo);
-		return makeUpdateDtoResponse(resp);
-
+		try {
+			ServiceResponse<Admin> resp = adminService.readByPseudonyme(pseudo);
+			return makeUpdateDtoResponse(resp);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Admin Controller readBypseudonyme" + e.getMessage());
+			return null;
+		}
 	}
 
 	@GetMapping(path = "/mail")
 	public ResponseEntity<ResponseDto<AdminUpdateDto>> readByEmail(@RequestParam(name = "mail") String mail) {
-		ServiceResponse<Admin> resp = adminService.readByEmail(mail);
-		return makeUpdateDtoResponse(resp);
-
+		try {
+			ServiceResponse<Admin> resp = adminService.readByEmail(mail);
+			return makeUpdateDtoResponse(resp);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Admin Controller readByEmail" + e.getMessage());
+			return null;
+		}
 	}
-
 
 	@GetMapping(path = "/exists/mail")
 	public ResponseEntity<ResponseDto<Boolean>> existsByMail(@RequestParam(name = "mail") String mail) {
 		log.info("Controller: méthode existsByMail appelée");
 
-		boolean result = adminService.existsByEmail(mail);
-		ResponseDto<Boolean> responseDto = new ResponseDto<>();
+		try {
+			boolean result = adminService.existsByEmail(mail);
+			ResponseDto<Boolean> responseDto = new ResponseDto<>();
 
-		if (result) {
-			responseDto.setError(false);
-			responseDto.setMessage("L'admin existe dans la DB");
-			responseDto.setBody(null);
-			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-		} else {
-			responseDto.setError(true);
-			responseDto.setMessage("Aucun admin n'existe avec mail : " + mail);
-			responseDto.setBody(null);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+			if (result) {
+				responseDto.setError(false);
+				responseDto.setMessage("L'admin existe dans la DB");
+				responseDto.setBody(null);
+				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+			} else {
+				responseDto.setError(true);
+				responseDto.setMessage("Aucun admin n'existe avec mail : " + mail);
+				responseDto.setBody(null);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+			}
+		} catch (Exception e) {
+			log.warn("Erreur méthode Admin Controller existsByEMail" + e.getMessage());
+			return null;
 		}
 	}
 
@@ -84,19 +96,24 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 	public ResponseEntity<ResponseDto<Boolean>> existsByPseudo(@RequestParam(name = "pseudo") String pseudo) {
 		log.info("Controller: méthode existsByPseudo appelée");
 
-		boolean result = adminService.existsByPseudonyme(pseudo);
-		ResponseDto<Boolean> responseDto = new ResponseDto<>();
+		try {
+			boolean result = adminService.existsByPseudonyme(pseudo);
+			ResponseDto<Boolean> responseDto = new ResponseDto<>();
 
-		if (result) {
-			responseDto.setError(false);
-			responseDto.setMessage("L'admin existe dans la DB");
-			responseDto.setBody(null);
-			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-		} else {
-			responseDto.setError(true);
-			responseDto.setMessage("Aucun admin n'existe avec pseudo : " + pseudo);
-			responseDto.setBody(null);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+			if (result) {
+				responseDto.setError(false);
+				responseDto.setMessage("L'admin existe dans la DB");
+				responseDto.setBody(null);
+				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+			} else {
+				responseDto.setError(true);
+				responseDto.setMessage("Aucun admin n'existe avec pseudo : " + pseudo);
+				responseDto.setBody(null);
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
+			}
+		} catch (Exception e) {
+			log.warn("Erreur méthode Admin Controller existsByPseudo" + e.getMessage());
+			return null;
 		}
 	}
 

@@ -52,9 +52,14 @@ public class PeriodeControllerImpl extends AbstractController<PeriodeCreateDto, 
 			@RequestParam(name = "page") int page) {
 
 		log.info("Controller Département : méthode read by département id appelée");
-		ServiceResponse<Page<Periode>> serviceResponse = periodeService.readByDepartementId(page, id);
+		try {
+			ServiceResponse<Page<Periode>> serviceResponse = periodeService.readByDepartementId(page, id);
 
-		return makeUpdateDtoPageResponse(serviceResponse);
+			return makeUpdateDtoPageResponse(serviceResponse);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Periode Controller readByDepartementId" + e.getMessage());
+			return null;
+		}
 
 	}
 
@@ -69,9 +74,14 @@ public class PeriodeControllerImpl extends AbstractController<PeriodeCreateDto, 
 	public ResponseEntity<ResponseDto<Page<PeriodeUpdateDto>>> readByPlanteId(@PathVariable("plantId") int id,
 			@RequestParam("page") int page) {
 		log.info("Controller Département : méthode read by plante id appelée");
-		ServiceResponse<Page<Periode>> serviceResponse = periodeService.readByPlanteModelId(page, id);
+		try {
+			ServiceResponse<Page<Periode>> serviceResponse = periodeService.readByPlanteModelId(page, id);
 
-		return makeUpdateDtoPageResponse(serviceResponse);
+			return makeUpdateDtoPageResponse(serviceResponse);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Periode Controller readByPlanteId" + e.getMessage());
+			return null;
+		}
 
 	}
 
@@ -87,10 +97,15 @@ public class PeriodeControllerImpl extends AbstractController<PeriodeCreateDto, 
 	public ResponseEntity<ResponseDto<List<PeriodeUpdateDto>>> readByDepartementIdAndPlanteModelId(
 			@RequestParam(name = "depId") int idDep, @RequestParam(name = "plantId") int idPlant) {
 		log.info("Controller Département : méthode read by département id and plante id appelée");
-		ServiceResponse<List<Periode>> serviceResponse = periodeService.readByDepartementIdAndPlanteModelId(idDep,
-				idPlant);
+		try {
+			ServiceResponse<List<Periode>> serviceResponse = periodeService.readByDepartementIdAndPlanteModelId(idDep,
+					idPlant);
 
-		return makeUpdateDtoListResponse(serviceResponse);
+			return makeUpdateDtoListResponse(serviceResponse);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Periode Controller readByDepartementIdAndPlanteModelId" + e.getMessage());
+			return null;
+		}
 
 	}
 
@@ -108,10 +123,15 @@ public class PeriodeControllerImpl extends AbstractController<PeriodeCreateDto, 
 			@RequestParam(name = "depId") int idDep, @RequestParam(name = "plantId") int idPlant,
 			@RequestParam(name = "type") TypePeriod type) {
 		log.info("Controller Département : méthode read by plante id and département id and type appelée");
-		ServiceResponse<Periode> serviceResponse = periodeService.readByDepartementIdAndPlanteModelIdAndType(idDep,
-				idPlant, type);
+		try {
+			ServiceResponse<Periode> serviceResponse = periodeService.readByDepartementIdAndPlanteModelIdAndType(idDep,
+					idPlant, type);
 
-		return makeUpdateDtoResponse(serviceResponse);
+			return makeUpdateDtoResponse(serviceResponse);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Periode Controller readByPlanteModelIdAndDepartementIdAndType" + e.getMessage());
+			return null;
+		}
 
 	}
 
@@ -128,9 +148,14 @@ public class PeriodeControllerImpl extends AbstractController<PeriodeCreateDto, 
 	public ResponseEntity<ResponseDto<List<PeriodeUpdateDto>>> readByJardin(
 			@RequestParam(name = "jardinId") int idJardin, @RequestParam(name = "depId") int idDep) {
 		log.info("Controller Département : méthode read by jardin appelée");
-		ServiceResponse<List<Periode>> serviceResponse = periodeService.readByJardinAndDep(idJardin, idDep);
+		try {
+			ServiceResponse<List<Periode>> serviceResponse = periodeService.readByJardinAndDep(idJardin, idDep);
 
-		return makeUpdateDtoListResponse(serviceResponse);
+			return makeUpdateDtoListResponse(serviceResponse);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Periode Controller readByJardin" + e.getMessage());
+			return null;
+		}
 
 	}
 }

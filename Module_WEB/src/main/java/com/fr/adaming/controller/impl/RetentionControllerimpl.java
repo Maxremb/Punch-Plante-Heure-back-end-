@@ -45,9 +45,14 @@ public class RetentionControllerimpl extends AbstractController<RetentionCreateD
 	@GetMapping(path = "/sol")
 	public ResponseEntity<ResponseDto<RetentionUpdateDto>> readBySol(@RequestParam(name = "sol") Sol sol) {
 		log.info("Controller rétention : méthode read by sol appelée");
-		ServiceResponse<Retention> resp = serviceRetention.readBySol(sol);
+		try {
+			ServiceResponse<Retention> resp = serviceRetention.readBySol(sol);
 
-		return makeUpdateDtoResponse(resp);
+			return makeUpdateDtoResponse(resp);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Rentention Controller readBySol" + e.getMessage());
+			return null;
+		}
 	}
 
 }

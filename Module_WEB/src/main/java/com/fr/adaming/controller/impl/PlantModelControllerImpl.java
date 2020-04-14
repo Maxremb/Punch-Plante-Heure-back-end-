@@ -20,8 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
- * Classe de la couche Controller pour l'entité Plante Model Elle étend la classe
- * abstraite AbstractController
+ * Classe de la couche Controller pour l'entité Plante Model Elle étend la
+ * classe abstraite AbstractController
  * 
  * @author Gregoire
  * @since 0.0.1-SNAPSHOT
@@ -40,10 +40,14 @@ public class PlantModelControllerImpl
 	@Override
 	public ResponseEntity<ResponseDto<Page<PlanteModelUpdateDto>>> readAll(int p) {
 		log.info("Controller Plante Modele : méthode read all appelée");
-		ServiceResponse<Page<PlanteModel>> serviceResponse = servicePM.readAllReduced(p);
+		try {
+			ServiceResponse<Page<PlanteModel>> serviceResponse = servicePM.readAllReduced(p);
 
-		return makeUpdateDtoPageResponse(serviceResponse);
-
+			return makeUpdateDtoPageResponse(serviceResponse);
+		} catch (Exception e) {
+			log.warn("Erreur méthode PlanteModel Controller readAll" + e.getMessage());
+			return null;
+		}
 	}
 
 	/**
@@ -60,10 +64,14 @@ public class PlantModelControllerImpl
 	public ResponseEntity<ResponseDto<Page<PlanteModelUpdateDto>>> readByNom(@RequestParam(name = "page") int page,
 			@RequestParam(name = "nom") String nom) {
 		log.info("Controller Plante Modele : méthode read by nom appelée");
-		ServiceResponse<Page<PlanteModel>> serviceResponse = servicePM.findByNom(page, nom);
+		try {
+			ServiceResponse<Page<PlanteModel>> serviceResponse = servicePM.findByNom(page, nom);
 
-		return makeUpdateDtoPageResponse(serviceResponse);
-
+			return makeUpdateDtoPageResponse(serviceResponse);
+		} catch (Exception e) {
+			log.warn("Erreur méthode PlanteModel Controller readByNom" + e.getMessage());
+			return null;
+		}
 	}
 
 }

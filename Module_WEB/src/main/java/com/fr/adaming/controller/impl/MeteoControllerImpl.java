@@ -54,8 +54,13 @@ public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, Mete
 	public ResponseEntity<ResponseDto<Page<MeteoUpdateDto>>> readByDate(
 			@RequestParam(name = "date") @NotBlank String date, @RequestParam(name = "page") @Positive int page) {
 		log.info("Controlelr Météo : méthode read by date appelée");
-		ServiceResponse<Page<Meteo>> response = service.readByDate(LocalDate.parse(date), page);
-		return makeUpdateDtoPageResponse(response);
+		try {
+			ServiceResponse<Page<Meteo>> response = service.readByDate(LocalDate.parse(date), page);
+			return makeUpdateDtoPageResponse(response);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Meteo Controller readByDate" + e.getMessage());
+			return null;
+		}
 
 	}
 
@@ -70,16 +75,22 @@ public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, Mete
 	public ResponseEntity<ResponseDto<MeteoUpdateDto>> readByDateAndDepartement(
 			@RequestParam(name = "date") @NotBlank String date, @RequestParam(name = "numero") int numDepartement) {
 		log.info("Controlelr Météo : méthode read by date and département appelée");
-		ServiceResponse<Meteo> response = service.readByDateAndDepartement(LocalDate.parse(date), numDepartement);
-		return makeUpdateDtoResponse(response);
+		try {
+			ServiceResponse<Meteo> response = service.readByDateAndDepartement(LocalDate.parse(date), numDepartement);
+
+			return makeUpdateDtoResponse(response);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Meteo Controller readByDateAndDepartement" + e.getMessage());
+			return null;
+		}
 
 	}
 
 	/**
-	 *Méthode visant à récupérer une liste de meteo par mois et departement.
+	 * Méthode visant à récupérer une liste de meteo par mois et departement.
 	 * 
 	 * @param mois           Le numéro du mois
-	 * @param numDepartement Le nuléro du département
+	 * @param numDepartement Le numéro du département
 	 * @return ResponseEntity avec ResponseDto contenant une liste de meteoUpdateDto
 	 * @author Gregoire
 	 */
@@ -88,7 +99,12 @@ public class MeteoControllerImpl extends AbstractController<MeteoCreateDto, Mete
 			@RequestParam(name = "annee") int annee, @RequestParam(name = "mois") int mois,
 			@RequestParam(name = "depNum") int numDepartement) {
 		log.info("Controlelr Météo : méthode read by mois and département appelée");
-		return makeUpdateDtoListResponse(service.readByMonthAndDepartement(annee, mois, numDepartement));
+		try {
+			return makeUpdateDtoListResponse(service.readByMonthAndDepartement(annee, mois, numDepartement));
+		} catch (Exception e) {
+			log.warn("Erreur méthode Meteo Controller readByMoisAndDepartement" + e.getMessage());
+			return null;
+		}
 
 	}
 }

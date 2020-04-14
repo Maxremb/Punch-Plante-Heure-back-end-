@@ -58,16 +58,21 @@ public class JardinControllerImpl extends AbstractController<JardinCreateDto, Ja
 			@RequestParam(name = "nom") @NotBlank String nom) {
 		log.info("Controller Jardin : méthode read by name appelée");
 
-		ServiceResponse<Page<Jardin>> resp = serviceJardin.readByNom(page, nom);
+		try {
+			ServiceResponse<Page<Jardin>> resp = serviceJardin.readByNom(page, nom);
 
-		return makeUpdateDtoPageResponse(resp);
+			return makeUpdateDtoPageResponse(resp);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Jardin Controller readByName" + e.getMessage());
+			return null;
+		}
 
 	}
 
 	/**
 	 * Méthode visant à rechercher tout les jardins d'un utilisateur
 	 * 
-	 * @param page      Page que l'utilisateur veut afficher
+	 * @param page       Page que l'utilisateur veut afficher
 	 * @param identifier Id de l'utilisateur en question
 	 * @return ResponseEntity contenant un ResponseDto de type Page de
 	 *         JardinUpdateDto
@@ -77,9 +82,14 @@ public class JardinControllerImpl extends AbstractController<JardinCreateDto, Ja
 	public ResponseEntity<ResponseDto<Page<JardinUpdateDto>>> readByUser(@RequestParam(name = "page") int page,
 			@RequestParam(name = "identifier") @Positive Integer identifier) {
 		log.info("Controller Jardin : méthode read by User appelée");
-		ServiceResponse<Page<Jardin>> resp = serviceJardin.readByUtilisateur(page, identifier);
+		try {
+			ServiceResponse<Page<Jardin>> resp = serviceJardin.readByUtilisateur(page, identifier);
 
-		return makeUpdateDtoPageResponse(resp);
+			return makeUpdateDtoPageResponse(resp);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Jardin Controller readByUser" + e.getMessage());
+			return null;
+		}
 
 	}
 
@@ -96,9 +106,14 @@ public class JardinControllerImpl extends AbstractController<JardinCreateDto, Ja
 	public ResponseEntity<ResponseDto<Page<JardinUpdateDto>>> readByDep(@RequestParam(name = "page") int page,
 			@RequestParam(name = "numDep") @Positive Integer numDep) {
 		log.info("Controller Jardin : méthode read by département appelée");
-		ServiceResponse<Page<Jardin>> resp = serviceJardin.readByDepartement(page, numDep);
+		try {
+			ServiceResponse<Page<Jardin>> resp = serviceJardin.readByDepartement(page, numDep);
 
-		return makeUpdateDtoPageResponse(resp);
+			return makeUpdateDtoPageResponse(resp);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Jardin Controller readByDep" + e.getMessage());
+			return null;
+		}
 	}
 
 	/**
@@ -112,9 +127,14 @@ public class JardinControllerImpl extends AbstractController<JardinCreateDto, Ja
 	@GetMapping(path = "/arrosage")
 	public ResponseEntity<ResponseDto<JardinUpdateDto>> reinitArrossJardin(@RequestParam(name = "id") Integer id) {
 		log.info("Controller Jardin : méthode ré-intitalition arrossage appelée");
-		ServiceResponse<Jardin> resp = calculMetier.reinitArrosJardin(id);
+		try {
+			ServiceResponse<Jardin> resp = calculMetier.reinitArrosJardin(id);
 
-		return makeUpdateDtoResponse(resp);
+			return makeUpdateDtoResponse(resp);
+		} catch (Exception e) {
+			log.warn("Erreur méthode Jardin Controller reinitArrossJardin" + e.getMessage());
+			return null;
+		}
 	}
 
 }
