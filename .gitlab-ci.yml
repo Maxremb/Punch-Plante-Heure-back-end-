@@ -25,7 +25,8 @@ test :
     - ./mvnw test
 
 packaging:
-  only: master
+  only: 
+    - master
   stage: packaging
   script:
     - ./mvnw package -DskipTests=true
