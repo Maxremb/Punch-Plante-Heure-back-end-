@@ -76,18 +76,20 @@ public class UtilisateurControllerImpl
 			if (result != null) {
 
 				if (result) {
+					log.info("Utilisateur est actif");
 					responseDto.setError(false);
 					responseDto.setMessage("Utilisateur actif");
 					responseDto.setBody(true);
 					return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 				}
-
+				log.info("Utilisateur non actif");
 				responseDto.setError(false);
 				responseDto.setMessage("Utilisateur non actif");
 				responseDto.setBody(false);
 				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 
 			}
+			log.info("Pseudonyme null");
 			responseDto.setError(true);
 			responseDto.setMessage("Aucun utilisateur n'existe avec pseudo : " + pseudonyme);
 			responseDto.setBody(null);
@@ -113,11 +115,13 @@ public class UtilisateurControllerImpl
 			ResponseDto<Boolean> responseDto = new ResponseDto<>();
 
 			if (result) {
+				log.info("Utilisateur désactivé");
 				responseDto.setError(false);
 				responseDto.setMessage("L'utilisateur à bien été désactivé");
 				responseDto.setBody(null);
 				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 			} else {
+				log.info("Utilisateur déjà désactivé");
 				responseDto.setError(true);
 				responseDto.setMessage(
 						"Utilisateur déjà désactivé / erreur lors de la requête / id null ou non existant dans la DB (id : "
@@ -147,11 +151,13 @@ public class UtilisateurControllerImpl
 			ResponseDto<Boolean> responseDto = new ResponseDto<>();
 
 			if (result) {
+				log.info("Utilisateur activé");
 				responseDto.setError(false);
 				responseDto.setMessage("L'utilisateur à bien été activé");
 				responseDto.setBody(null);
 				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 			} else {
+				log.info("Utilisateur déjà activé");
 				responseDto.setError(true);
 				responseDto.setMessage(
 						"Utilisateur déjà activé / erreur lors de la requête / id null ou non existant dans la DB (id : "

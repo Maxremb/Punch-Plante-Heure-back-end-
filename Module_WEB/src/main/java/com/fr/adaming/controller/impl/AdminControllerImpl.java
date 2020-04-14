@@ -76,11 +76,13 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 			ResponseDto<Boolean> responseDto = new ResponseDto<>();
 
 			if (result) {
+				log.info("Admin existant dans DB");
 				responseDto.setError(false);
 				responseDto.setMessage("L'admin existe dans la DB");
 				responseDto.setBody(null);
 				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 			} else {
+				log.info("Aucun admin avec cet email");
 				responseDto.setError(true);
 				responseDto.setMessage("Aucun admin n'existe avec mail : " + mail);
 				responseDto.setBody(null);
@@ -101,11 +103,13 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 			ResponseDto<Boolean> responseDto = new ResponseDto<>();
 
 			if (result) {
+				log.info("Admin existant dans DB");
 				responseDto.setError(false);
 				responseDto.setMessage("L'admin existe dans la DB");
 				responseDto.setBody(null);
 				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
 			} else {
+				log.info("Aucun admin n'existe avec ce pseudo");
 				responseDto.setError(true);
 				responseDto.setMessage("Aucun admin n'existe avec pseudo : " + pseudo);
 				responseDto.setBody(null);
@@ -125,6 +129,7 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 			String mail = tableau[0];
 			String pwd = tableau[1];
 			if (userService.existsByEmailAndMdp(mail, pwd).getBody() != null) {
+				log.info("Admin existant dans la DB");
 				ServiceResponse<Utilisateur> serviceResponse = userService.existsByEmailAndMdp(mail, pwd);
 
 				UtilisateurUpdateDto returnedUtil = utilConv.convertEntityToUpdateDto(serviceResponse.getBody());
@@ -137,6 +142,7 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 
 			} else if (adminService.existsByEmailAndMdp(mail, pwd).getBody() != null
 					&& userService.existsByEmailAndMdp(mail, pwd).getBody() == null) {
+				log.info("Utilisateur existant dans la DB");
 				ServiceResponse<Admin> serviceResponse = adminService.existsByEmailAndMdp(mail, pwd);
 
 				AdminUpdateDto returnedAdmin = adminConv.convertEntityToUpdateDto(serviceResponse.getBody());
@@ -147,7 +153,7 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 
 				return ResponseEntity.status(HttpStatus.OK).body(connexionDto);
 			} else {
-
+				log.info("Aucune entité ne correspond à ces entrées");
 				connexionDto.setUser(false);
 				connexionDto.setBodyAdmin(null);
 				connexionDto.setBodyUtil(null);
