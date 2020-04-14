@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
 
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,11 +18,14 @@ import com.fr.adaming.ModuleWebApplication;
 import com.fr.adaming.controller.AbstractTestMethods;
 import com.fr.adaming.controller.IControllerTests;
 import com.fr.adaming.dto.DepartementDto;
-import com.fr.adaming.dto.JardinUpdateDto;
 import com.fr.adaming.dto.PeriodeUpdateDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
 
+/**
+ * @since 0.0.1-SNAPSHOT
+ *
+ */
 @SpringBootTest(classes = ModuleWebApplication.class)
 @AutoConfigureMockMvc
 public class PeriodeControllerTest extends AbstractTestMethods<PeriodeUpdateDto> implements IControllerTests {

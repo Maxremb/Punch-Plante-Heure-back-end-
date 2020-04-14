@@ -24,6 +24,14 @@ import com.fr.adaming.controller.IControllerTests;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 
+/**
+ * Classe test de la couche controller UTILISATEUR. Elle étend la classe
+ * Abstract Test Method et implémente IControlelrTest
+ * 
+ * @author Maxime Rembert
+ * @since 0.0.1-SNAPSHOT
+ *
+ */
 @SpringBootTest(classes = ModuleWebApplication.class)
 @AutoConfigureMockMvc
 public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurUpdateDto> implements IControllerTests {
@@ -167,6 +175,11 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 	// ***********************************
 	// Test READ BY NOM AND PRENOM
 
+	/**
+	 * Méthode test Read by Nom And Prenom avec param OK Retourne 200
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -179,6 +192,11 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		assertThat(responseDto.isError()).isFalse();
 	}
 
+	/**
+	 * Méthode test read by nom and prenom avec invalid param Retourne 400
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme) VALUES (5,'Dhaene','François','franfran@trail.fr','4TEST','vigneron') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -190,6 +208,11 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		assertThat(responseDto.isError()).isTrue();
 	}
 
+	/**
+	 * Méthode Read By Nom and Prenom avec null param Retourne 400
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme) VALUES (5,'Dhaene','François','franfran@trail.fr','4TEST','vigneron') ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -204,6 +227,11 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 	// ************************
 	// Test IS ACTIF
 
+	/**
+	 * Méthode test Is Actif avec valid param Retourne 200 et body = true
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme,actif) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre',true) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -215,9 +243,15 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
+		assertThat(responseDto.isError()).isFalse();
 		assertThat(responseDto.getBody()).isEqualTo(true);
 	}
 
+	/**
+	 * Méthode test Is Actif avec user desactivé Retourne 200 et body = false
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme,actif) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre',false) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -229,13 +263,19 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
+		assertThat(responseDto.isError()).isFalse();
 		assertThat(responseDto.getBody()).isEqualTo(false);
 	}
 
+	/**
+	 * Méthode Is Actif With invalid Param Retourne 200 et body = false
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme,actif) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre',true) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void TestIsActifWithInvalidParam_ShouldReturn400() throws Exception {
+	public void TestIsActifWithInvalidParam_ShouldReturn200() throws Exception {
 		String path = BASE_URL + "/actif?pseudonyme=abc";
 
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -243,26 +283,39 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
+		assertThat(responseDto.isError()).isFalse();
 		assertThat(responseDto.getBody()).isEqualTo(false);
 	}
 
 	// ***************************
 	// Test Deactivate Utilisateur
 
+	/**
+	 * Méthode test desactivate user with valid param Retourne 200
+	 * 
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme,actif) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre',true) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void TestDesactivateUserWithActifUser_ShouldReturn200AndTrueBody() throws UnsupportedEncodingException, Exception {
+	public void TestDesactivateUserWithActifUser_ShouldReturn200() throws UnsupportedEncodingException, Exception {
 		String path = BASE_URL + "/desactivate?id=" + identifier;
 
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
-		
+
 		assertThat(responseDto.isError()).isFalse();
 	}
 
+	/**
+	 * Méthode test desactivate user avec user desactivé Retourne 400
+	 * 
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme,actif) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre',false) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -270,13 +323,20 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		String path = BASE_URL + "/desactivate?id=" + identifier;
 
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+				.andExpect(status().isBadRequest()).andReturn().getResponse()
+				.getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isTrue();
 	}
 
+	/**
+	 * Méthode test desactivate User avec invalid param Retourne 400
+	 * 
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme,actif) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre',true) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -284,7 +344,8 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		String path = BASE_URL + "/desactivate?id=" + 10;
 
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+				.andExpect(status().isBadRequest()).andReturn().getResponse()
+				.getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
@@ -294,20 +355,32 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 	// ************************************
 	// Test activate Utilisateur
 
+	/**
+	 * Méthode activate User avec valid param Retourne 200
+	 * 
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme,actif) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre',false) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-	public void TestActivateUserWithDesactifUser_ShouldReturn200AndTrueBody() throws UnsupportedEncodingException, Exception {
+	public void TestActivateUserWithDesactifUser_ShouldReturn200() throws UnsupportedEncodingException, Exception {
 		String path = BASE_URL + "/activate?id=" + identifier;
 
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
-		
+
 		assertThat(responseDto.isError()).isFalse();
 	}
 
+	/**
+	 * Méthode activate user avec user deja activé Retourne 400
+	 * 
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme,actif) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre',true) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -315,13 +388,20 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		String path = BASE_URL + "/activate?id=" + identifier;
 
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+				.andExpect(status().isBadRequest()).andReturn().getResponse()
+				.getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
-		
+
 		assertThat(responseDto.isError()).isTrue();
 	}
 
+	/**
+	 * Méthode activateUser avec invalide param Retourne 400
+	 * 
+	 * @throws UnsupportedEncodingException
+	 * @throws Exception
+	 */
 	@Test
 	@Sql(statements = "INSERT INTO utilisateur (id,nom,prenom,email,mdp,pseudonyme,actif) VALUES (1,'jornet','kilian','kiki@trail.fr','4TEST','extra terrestre',true) ", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
@@ -329,18 +409,23 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		String path = BASE_URL + "/activate?id=" + 10;
 
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
-				.andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+				.andExpect(status().isBadRequest()).andReturn().getResponse()
+				.getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
 		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
-		
+
 		assertThat(responseDto.isError()).isTrue();
 	}
 
 	// ********************************************************
-	
-	
+
 	// *** Méthodes privés ***
 
+	/**
+	 * Méthode permettant de générer un objet de type Utilisateur Update Dto
+	 * 
+	 * @return L'objet userUpdate dto préparé
+	 */
 	private UtilisateurUpdateDto makeNewUpdateDto() {
 		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison
 
