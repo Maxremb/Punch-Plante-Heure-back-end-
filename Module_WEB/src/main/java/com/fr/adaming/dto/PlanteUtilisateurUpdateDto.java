@@ -15,7 +15,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class PlanteUtilisateurUpdateDto extends PlanteUtilisateurCreateDto {
 	
 	@NotNull

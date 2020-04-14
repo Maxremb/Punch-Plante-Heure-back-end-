@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode (callSuper = true)
 public class PlanteModelUpdateDto extends PlanteModelCreateDto {
 
 	@Positive(message = "PlanteModelUpdateDto: Un identifiant ne peut pas etre 0 ou negatif")

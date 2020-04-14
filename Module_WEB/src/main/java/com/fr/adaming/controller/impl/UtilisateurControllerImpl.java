@@ -47,7 +47,7 @@ public class UtilisateurControllerImpl
 	@GetMapping(path = "/nomEtPrenom")
 	public ResponseEntity<ResponseDto<UtilisateurUpdateDto>> readByNomAndPrenom(@RequestParam(name = "nom") String nom,
 			@RequestParam(name = "prenom") String prenom) {
-log.info("Controlelr utilisateur : méthode read by Nom and Prenom appelée");
+		log.info("Controlelr utilisateur : méthode read by Nom and Prenom appelée");
 		ServiceResponse<Utilisateur> resp = userService.readByNomAndPrenom(nom, prenom);
 		return makeUpdateDtoResponse(resp);
 
@@ -63,26 +63,28 @@ log.info("Controlelr utilisateur : méthode read by Nom and Prenom appelée");
 	public ResponseEntity<ResponseDto<Boolean>> isActif(@RequestParam(name = "pseudonyme") String pseudonyme) {
 		log.info("Controller utilisateur : méthode isActif appelée");
 
-		boolean result = userService.isActif(pseudonyme);
+		Boolean result = userService.isActif(pseudonyme);
 		ResponseDto<Boolean> responseDto = new ResponseDto<>();
 
-		if (result) {
-			responseDto.setError(false);
-			responseDto.setMessage("Utilisateur actif");
-			responseDto.setBody(true);
-			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-		} else if (!result) {
-			responseDto.setError(false);
-			responseDto.setMessage("Utilisateur non actif");
-			responseDto.setBody(false);
-			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
-		} else {
-			responseDto.setError(true);
-			responseDto.setMessage("Aucun utilisateur n'existe avec pseudo : " + pseudonyme);
-			responseDto.setBody(null);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
-		}
+		if (result != null) {
 
+			if (result) {
+				responseDto.setError(false);
+				responseDto.setMessage("Utilisateur actif");
+				responseDto.setBody(true);
+				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+			} else if (!result) {
+				responseDto.setError(false);
+				responseDto.setMessage("Utilisateur non actif");
+				responseDto.setBody(false);
+				return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+			}
+
+		}
+		responseDto.setError(true);
+		responseDto.setMessage("Aucun utilisateur n'existe avec pseudo : " + pseudonyme);
+		responseDto.setBody(null);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseDto);
 	}
 
 	/**
