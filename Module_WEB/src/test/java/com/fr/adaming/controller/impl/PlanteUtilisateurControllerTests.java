@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -310,5 +311,150 @@ public class PlanteUtilisateurControllerTests extends AbstractTestMethods<Plante
 		assertNotNull(responseDto.getBody());
 
 	}
+	
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(2, 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadingByJardinValidId_shouldReturn200() throws Exception {
+		String path = BASE_URL + "/jardin/1?page=0";
+
+		ResponseDto<Page<PlanteUtilisateurUpdateDto>> responseDto = runMockMvc4Pages("get", path, 200, PlanteUtilisateurUpdateDto.class);
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Succes", responseDto.getMessage());
+		assertNotNull(responseDto.getBody());
+	}
+	
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(2, 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadingByJardinInvalidId_shouldReturn200() throws Exception {
+		String path = BASE_URL + "/jardin/0?page=0";
+
+		ResponseDto<PlanteUtilisateurUpdateDto> responseDto = runMockMvc("get", path, 200, PlanteUtilisateurUpdateDto.class);
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Jardin inexistant", responseDto.getMessage());
+
+	}
+	
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(2, 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadingListeByJardinValidId_shouldReturn200() throws Exception {
+		String path = BASE_URL + "/jardin/liste/1";
+
+		ResponseDto<List<PlanteUtilisateurUpdateDto>> responseDto = runMockMvc4Lists("get", path, 200, PlanteUtilisateurUpdateDto.class);
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Succes", responseDto.getMessage());
+		assertNotNull(responseDto.getBody());
+	}
+	
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(2, 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testReadingListeByJardinInvalidId_shouldReturn200() throws Exception {
+		String path = BASE_URL + "/jardin/liste/0";
+
+		ResponseDto<List<PlanteUtilisateurUpdateDto>> responseDto = runMockMvc4Lists("get", path, 200, PlanteUtilisateurUpdateDto.class);
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Jardin inexistant", responseDto.getMessage());
+		
+	}
+	
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(2, 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testDeleteByJardinValidId_shouldReturn200() throws Exception {
+		String path = BASE_URL + "/jardin/1";
+
+		ResponseDto<PlanteUtilisateurUpdateDto> responseDto = runMockMvc("delete", path, 200, PlanteUtilisateurUpdateDto.class);
+		assertNotNull(responseDto);
+		assertFalse(responseDto.isError());
+		assertEquals("Suppression réussie", responseDto.getMessage());
+		assertNull(responseDto.getBody());
+	}
+	
+	@Sql(statements = "insert into utilisateur (id, email,mdp,nom,prenom,pseudonyme) values(1,'stark@stark.fr','4TEST','Stark','tony','IronMan')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into departement (numero_dep, nom) values(69,'Rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Meteo (id, date, ensoleillement, evapo_transpiration_potentielle, pluie, temperature_min, temperature_max, departement_id) VALUES (1, '2020-02-20', 1, 1, 5, 20, 25, 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into jardin (id, nom, departement_numero_dep, utilisateur_id) values(1,'Jardin1', 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_model (id, nom_scientifique) values(2,'Hibiscus')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(2, 0, 1, 1, 2)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "delete from plante_utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from plante_model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Meteo", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "delete from departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Test
+	public void testDeleteByJardinInvalidId_shouldReturn200() throws Exception {
+		String path = BASE_URL + "/jardin/0";
+
+		ResponseDto<PlanteUtilisateurUpdateDto> responseDto = runMockMvc("delete", path, 400, PlanteUtilisateurUpdateDto.class);
+		assertNotNull(responseDto);
+		assertTrue(responseDto.isError());
+		assertEquals("Erreur pendant la suppression de l'entité: 0", responseDto.getMessage());
+		assertNull(responseDto.getBody());
+	}
+	
 
 }
