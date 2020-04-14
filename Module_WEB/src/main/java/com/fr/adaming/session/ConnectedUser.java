@@ -32,7 +32,9 @@ public class ConnectedUser {
 
 
 	public int getIdentifier(String token) {
-		
+		log.debug("token input: " + token);
+		log.debug("token in memory: " + this.token);
+		log.debug("id: " + this.identifier);
 		return token.equals(this.token) ? identifier : 0;
 	}
 
@@ -49,6 +51,10 @@ public class ConnectedUser {
 		log.debug("token in memory: " + this.token);
 		log.debug("role: " + this.role);
 		return token.equals(this.token) ? role : Role.None;
+	}
+	
+	public boolean testToken(String token) {
+		return token.equals(this.token);
 	}
 	
 	

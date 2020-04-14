@@ -60,17 +60,6 @@ public class TokenManagement {
 		
 	}
 	
-//	/**
-//	 * Méthode provisoire pour la déconnexion
-//	 */
-//	public void disconnectSession() {
-//		user.setIdentifier(0);
-//		user.setPseudo(null);
-//		user.setMail(null);
-//		user.setRole(Role.None);
-//		user.setToken(null);
-//	}
-	
 	/**
 	 * Génere un token de 20 caractères 
 	 * @return Un String aléatoire, 20 caractères de long.
