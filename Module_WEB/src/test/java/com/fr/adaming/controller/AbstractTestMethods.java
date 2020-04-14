@@ -216,7 +216,7 @@ public class AbstractTestMethods<U> {
 	 */
 	protected String runMockMvcLite(String requestType, String path, int expectedStatus) throws Exception {
 
-		log.info("Abstract Test Methods : Mock Mvc appelée (request type, url pth, status)");
+		log.info("Abstract Test Methods : Mock Mvc appelée (request type, url path, status)");
 		return runMockMvcLite(requestType, path, expectedStatus, null);
 
 	}
