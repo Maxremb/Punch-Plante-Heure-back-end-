@@ -545,6 +545,56 @@ public class PeriodeServiceTest implements IServiceTests {
 	}
 	
 	/**
+	 * Cette méthode teste la création d'une période - conditions invalides (id utilisé)
+	 */
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-02', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testCreateInvalidID_shouldReturnEntity() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		
+		PlanteModel plante = new PlanteModel();
+		plante.setId(1);
+		plante.setNomCommun("nomCommun");
+		plante.setNomScientifique("nomScientifique");
+		
+		PlanteUtilisateur planteUtil = new PlanteUtilisateur();
+		planteUtil.setId(1);
+		planteUtil.setEtatPlante(EtatPlante.recolte);
+		planteUtil.setEtatSante(EtatSante.bonneSante);
+		planteUtil.setJardin(jardin);
+		planteUtil.setPlanteModel(plante);
+		
+		Periode periode = new Periode();
+		periode.setId(1);
+		periode.setDateDebut(LocalDate.parse("2020-04-01"));
+		periode.setDateFin(LocalDate.parse("2020-04-01"));
+		periode.setType(TypePeriod.FLORAISON);
+		periode.setDepartement(dep);
+		periode.setPlanteModel(plante);
+		
+		ServiceResponse<Periode> resp = service.create(periode);
+		
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("Une entité avec cet ID existe déjà dans la base dde données");
+	}
+	
+	/**
 	 * Cette méthode teste la création d'une période - conditions invalides (sans date début)
 	 */
 	@Test
@@ -784,56 +834,374 @@ public class PeriodeServiceTest implements IServiceTests {
 		assertThat(resp.getMessage()).isEqualTo("La date de fin est avant la date de début pour cette periode");
 	}
 	
-//	/**
-//	 * Cette méthode teste la modification d'une période - conditions valides
-//	 */
-//	@Test
-//	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-02', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
-//	public void testUpdateValid_shouldReturnEntity() {
-//		Departement dep = new Departement();
-//		dep.setNom("rhone");
-//		dep.setNumeroDep(69);
-//		
-//		Jardin jardin = new Jardin();
-//		jardin.setId(1);
-//		jardin.setNom("nomJardin");
-//		jardin.setDepartement(dep);
-//		
-//		PlanteModel plante = new PlanteModel();
-//		plante.setId(1);
-//		plante.setNomCommun("nomCommun");
-//		plante.setNomScientifique("nomScientifique");
-//		
-//		PlanteUtilisateur planteUtil = new PlanteUtilisateur();
-//		planteUtil.setId(1);
-//		planteUtil.setEtatPlante(EtatPlante.recolte);
-//		planteUtil.setEtatSante(EtatSante.bonneSante);
-//		planteUtil.setJardin(jardin);
-//		planteUtil.setPlanteModel(plante);
-//		
-//		Periode periode = new Periode();
-//		periode.setId(1);
-//		periode.setDateDebut(LocalDate.parse("2020-04-05"));
-//		periode.setDateFin(LocalDate.parse("2020-04-01"));
-//		periode.setType(TypePeriod.FLORAISON);
-//		periode.setDepartement(dep);
-//		periode.setPlanteModel(plante);
-//		
-//		ServiceResponse<Periode> resp = service.create(periode);
-//		
-//		assertThat(resp.getBody()).isNull();
-//		assertThat(resp.getMessage()).isEqualTo("La date de fin est avant la date de début pour cette periode");
-//	}
+	/**
+	 * Cette méthode teste la modification d'une période - conditions valides
+	 */
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-02', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testUpdateValid_shouldReturnEntity() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		
+		PlanteModel plante = new PlanteModel();
+		plante.setId(1);
+		plante.setNomCommun("nomCommun");
+		plante.setNomScientifique("nomScientifique");
+		
+		PlanteUtilisateur planteUtil = new PlanteUtilisateur();
+		planteUtil.setId(1);
+		planteUtil.setEtatPlante(EtatPlante.recolte);
+		planteUtil.setEtatSante(EtatSante.bonneSante);
+		planteUtil.setJardin(jardin);
+		planteUtil.setPlanteModel(plante);
+		
+		Periode periode = new Periode();
+		periode.setId(1);
+		periode.setDateDebut(LocalDate.parse("2020-04-01"));
+		periode.setDateFin(LocalDate.parse("2020-04-02"));
+		periode.setType(TypePeriod.FLORAISON);
+		periode.setDepartement(dep);
+		periode.setPlanteModel(plante);
+		
+		ServiceResponse<Periode> resp = service.update(periode);
+		
+		assertThat(resp.getBody()).isNotNull().hasFieldOrPropertyWithValue("dateFin", LocalDate.parse("2020-04-02"));
+		assertThat(resp.getMessage()).isEqualTo("Success");
+	}
 	
+	/**
+	 * Cette méthode teste la modification d'une période - conditions invalides (null)
+	 */
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-02', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testUpdateInvalidNull_shouldReturnNull() {
+		ServiceResponse<Periode> resp = service.update(null);
+		
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("Tentative de modification avec une entité null");
+	}
 	
+	/**
+	 * Cette méthode teste la modification d'une période - conditions invalides (sans date début)
+	 */
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-02', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testUpdateInvalidDebut_shouldReturnNull() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		
+		PlanteModel plante = new PlanteModel();
+		plante.setId(1);
+		plante.setNomCommun("nomCommun");
+		plante.setNomScientifique("nomScientifique");
+		
+		PlanteUtilisateur planteUtil = new PlanteUtilisateur();
+		planteUtil.setId(1);
+		planteUtil.setEtatPlante(EtatPlante.recolte);
+		planteUtil.setEtatSante(EtatSante.bonneSante);
+		planteUtil.setJardin(jardin);
+		planteUtil.setPlanteModel(plante);
+		
+		Periode periode = new Periode();
+		periode.setId(1);
+		periode.setDateDebut(null);
+		periode.setDateFin(LocalDate.parse("2020-04-02"));
+		periode.setType(TypePeriod.FLORAISON);
+		periode.setDepartement(dep);
+		periode.setPlanteModel(plante);
+		
+		ServiceResponse<Periode> resp = service.update(periode);
+		
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("Les dates de début et de fin doivent être spécifiés");
+	}
 	
+	/**
+	 * Cette méthode teste la modification d'une période - conditions invalides (sans date fin)
+	 */
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-02', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testUpdateInvalidFin_shouldReturnNull() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		
+		PlanteModel plante = new PlanteModel();
+		plante.setId(1);
+		plante.setNomCommun("nomCommun");
+		plante.setNomScientifique("nomScientifique");
+		
+		PlanteUtilisateur planteUtil = new PlanteUtilisateur();
+		planteUtil.setId(1);
+		planteUtil.setEtatPlante(EtatPlante.recolte);
+		planteUtil.setEtatSante(EtatSante.bonneSante);
+		planteUtil.setJardin(jardin);
+		planteUtil.setPlanteModel(plante);
+		
+		Periode periode = new Periode();
+		periode.setId(1);
+		periode.setDateDebut(LocalDate.parse("2020-04-02"));
+		periode.setDateFin(null);
+		periode.setType(TypePeriod.FLORAISON);
+		periode.setDepartement(dep);
+		periode.setPlanteModel(plante);
+		
+		ServiceResponse<Periode> resp = service.update(periode);
+		
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("Les dates de début et de fin doivent être spécifiés");
+	}
+	
+	/**
+	 * Cette méthode teste la modification d'une période - conditions invalides (sans dep)
+	 */
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-02', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testUpdateInvalidDep_shouldReturnNull() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		
+		PlanteModel plante = new PlanteModel();
+		plante.setId(1);
+		plante.setNomCommun("nomCommun");
+		plante.setNomScientifique("nomScientifique");
+		
+		PlanteUtilisateur planteUtil = new PlanteUtilisateur();
+		planteUtil.setId(1);
+		planteUtil.setEtatPlante(EtatPlante.recolte);
+		planteUtil.setEtatSante(EtatSante.bonneSante);
+		planteUtil.setJardin(jardin);
+		planteUtil.setPlanteModel(plante);
+		
+		Periode periode = new Periode();
+		periode.setId(1);
+		periode.setDateDebut(LocalDate.parse("2020-04-02"));
+		periode.setDateFin(LocalDate.parse("2020-04-02"));
+		periode.setType(TypePeriod.FLORAISON);
+		periode.setDepartement(null);
+		periode.setPlanteModel(plante);
+		
+		ServiceResponse<Periode> resp = service.update(periode);
+		
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("Les periodes doivent être liés à un département et à une plante");
+	}
+	
+	/**
+	 * Cette méthode teste la modification d'une période - conditions invalides (sans plante)
+	 */
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-02', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testUpdateInvalidPlante_shouldReturnNull() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		
+		PlanteModel plante = new PlanteModel();
+		plante.setId(1);
+		plante.setNomCommun("nomCommun");
+		plante.setNomScientifique("nomScientifique");
+		
+		PlanteUtilisateur planteUtil = new PlanteUtilisateur();
+		planteUtil.setId(1);
+		planteUtil.setEtatPlante(EtatPlante.recolte);
+		planteUtil.setEtatSante(EtatSante.bonneSante);
+		planteUtil.setJardin(jardin);
+		planteUtil.setPlanteModel(plante);
+		
+		Periode periode = new Periode();
+		periode.setId(1);
+		periode.setDateDebut(LocalDate.parse("2020-04-02"));
+		periode.setDateFin(LocalDate.parse("2020-04-02"));
+		periode.setType(TypePeriod.FLORAISON);
+		periode.setDepartement(dep);
+		periode.setPlanteModel(null);
+		
+		ServiceResponse<Periode> resp = service.update(periode);
+		
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("Les periodes doivent être liés à un département et à une plante");
+	}
+	
+	/**
+	 * Cette méthode teste la modification d'une période - conditions invalides (date debut après date fin)
+	 */
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-02', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testUpdateInvalidDates_shouldReturnNull() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		
+		PlanteModel plante = new PlanteModel();
+		plante.setId(1);
+		plante.setNomCommun("nomCommun");
+		plante.setNomScientifique("nomScientifique");
+		
+		PlanteUtilisateur planteUtil = new PlanteUtilisateur();
+		planteUtil.setId(1);
+		planteUtil.setEtatPlante(EtatPlante.recolte);
+		planteUtil.setEtatSante(EtatSante.bonneSante);
+		planteUtil.setJardin(jardin);
+		planteUtil.setPlanteModel(plante);
+		
+		Periode periode = new Periode();
+		periode.setId(1);
+		periode.setDateDebut(LocalDate.parse("2020-04-05"));
+		periode.setDateFin(LocalDate.parse("2020-04-02"));
+		periode.setType(TypePeriod.FLORAISON);
+		periode.setDepartement(dep);
+		periode.setPlanteModel(plante);
+		
+		ServiceResponse<Periode> resp = service.update(periode);
+		
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("La date de fin est avant la date de début pour cette periode");
+	}
+	
+	/**
+	 * Cette méthode teste la modification d'une période - conditions invalides (id periode inexistant)
+	 */
+	@Test
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Jardin (id, nom, departement_numero_dep) VALUES (1, 'nomJardin', 69)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO plante_model (id, nom_commun, nom_scientifique) VALUES (1, 'nomCommun', 'nomScientifique')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "insert into plante_utilisateur (id, etat_plante, etat_sante, jardin_id, plante_model_id) values(1, 3, 0, 1, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO periode(id, date_debut, date_fin, type, departement_numero_dep, plante_model_id) VALUES (1, '2020-04-01', '2020-04-02', 1, 69, 1)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "DELETE FROM periode", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Jardin", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	@Sql(statements = "DELETE FROM Plante_Model", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+	public void testUpdateInvalidID_shouldReturnNull() {
+		Departement dep = new Departement();
+		dep.setNom("rhone");
+		dep.setNumeroDep(69);
+		
+		Jardin jardin = new Jardin();
+		jardin.setId(1);
+		jardin.setNom("nomJardin");
+		jardin.setDepartement(dep);
+		
+		PlanteModel plante = new PlanteModel();
+		plante.setId(1);
+		plante.setNomCommun("nomCommun");
+		plante.setNomScientifique("nomScientifique");
+		
+		PlanteUtilisateur planteUtil = new PlanteUtilisateur();
+		planteUtil.setId(1);
+		planteUtil.setEtatPlante(EtatPlante.recolte);
+		planteUtil.setEtatSante(EtatSante.bonneSante);
+		planteUtil.setJardin(jardin);
+		planteUtil.setPlanteModel(plante);
+		
+		Periode periode = new Periode();
+		periode.setId(2);
+		periode.setDateDebut(LocalDate.parse("2020-04-05"));
+		periode.setDateFin(LocalDate.parse("2020-04-02"));
+		periode.setType(TypePeriod.FLORAISON);
+		periode.setDepartement(dep);
+		periode.setPlanteModel(plante);
+		
+		ServiceResponse<Periode> resp = service.update(periode);
+		
+		assertThat(resp.getBody()).isNull();
+		assertThat(resp.getMessage()).isEqualTo("Une entité avec cet ID n'existe pas dans la base dde données");
+	}	
 }

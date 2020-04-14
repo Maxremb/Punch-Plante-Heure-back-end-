@@ -1,10 +1,7 @@
 package com.fr.adaming.dto;
 
-import java.util.List;
-
 import javax.validation.constraints.NotNull;
 
-import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.enums.Sol;
 
 import lombok.EqualsAndHashCode;
