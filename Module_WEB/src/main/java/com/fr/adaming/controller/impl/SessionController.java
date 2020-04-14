@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RestController
-@CrossOrigin(exposedHeaders = "Set-Cookie", allowCredentials = "true", origins = "http://localhost:4200")
+@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 @RequestMapping(path = "/session")
 @Slf4j
 public class SessionController {
@@ -156,65 +156,65 @@ public class SessionController {
 		
 	}
 	
-	// TODO Copié de adminController pour debug
-	
-	@PostMapping(path = "/mailAndPwd")
-	public ResponseEntity<ConnexionDto> existsByMailandPwd(@RequestBody String[] tableau, HttpServletResponse response) {
-		ConnexionDto connexionDto = new ConnexionDto();
-		try {
-
-			System.out.println(response.getHeader("Set-Cookie"));
-			Cookie cookie = new Cookie("Bobby", "1234");
-			response.addCookie(cookie);
-			
-			String mail = tableau[0];
-			String pwd = tableau[1];
-			if (userService.existsByEmailAndMdp(mail, pwd).getBody() != null) {
-				ServiceResponse<Utilisateur> serviceResponse = userService.existsByEmailAndMdp(mail, pwd);
-
-				UtilisateurUpdateDto returnedUtil = utilConv.convertEntityToUpdateDto(serviceResponse.getBody());
-				String token = tokenManagement.makeNewSession(returnedUtil); // Generation de tokens pour la sécurité du front
-
-				connexionDto.setUser(true);
-				connexionDto.setBodyAdmin(null);
-				connexionDto.setBodyUtil(returnedUtil);
-				connexionDto.setToken(token);
-
-				return ResponseEntity.status(HttpStatus.OK).body(connexionDto);
-
-			} else if (adminService.existsByEmailAndMdp(mail, pwd).getBody() != null
-					&& userService.existsByEmailAndMdp(mail, pwd).getBody() == null) {
-				ServiceResponse<Admin> serviceResponse = adminService.existsByEmailAndMdp(mail, pwd);
-
-				AdminUpdateDto returnedAdmin = adminConv.convertEntityToUpdateDto(serviceResponse.getBody());
-				String token = tokenManagement.makeNewSession(returnedAdmin);
-
-				connexionDto.setUser(false);
-				connexionDto.setBodyAdmin(returnedAdmin);
-				connexionDto.setBodyUtil(null);
-				connexionDto.setToken(token);
-
-				return ResponseEntity.status(HttpStatus.OK).body(connexionDto);
-			} else {
-
-				connexionDto.setUser(false);
-				connexionDto.setBodyAdmin(null);
-				connexionDto.setBodyUtil(null);
-				connexionDto.setToken(null);
-
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(connexionDto);
-			}
-
-		} catch (NullPointerException e) {
-			log.info("Null Pointer Exception" + e.getMessage());
-			connexionDto.setUser(false);
-			connexionDto.setBodyAdmin(null);
-			connexionDto.setBodyUtil(null);
-			connexionDto.setToken(null);
-
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(connexionDto);
-		}
-
-	}
+//	// TODO Copié de adminController pour debug
+//	
+//	@PostMapping(path = "/mailAndPwd")
+//	public ResponseEntity<ConnexionDto> existsByMailandPwd(@RequestBody String[] tableau, HttpServletResponse response) {
+//		ConnexionDto connexionDto = new ConnexionDto();
+//		try {
+//
+//			System.out.println(response.getHeader("Set-Cookie"));
+//			Cookie cookie = new Cookie("Bobby", "1234");
+//			response.addCookie(cookie);
+//			
+//			String mail = tableau[0];
+//			String pwd = tableau[1];
+//			if (userService.existsByEmailAndMdp(mail, pwd).getBody() != null) {
+//				ServiceResponse<Utilisateur> serviceResponse = userService.existsByEmailAndMdp(mail, pwd);
+//
+//				UtilisateurUpdateDto returnedUtil = utilConv.convertEntityToUpdateDto(serviceResponse.getBody());
+//				String token = tokenManagement.makeNewSession(returnedUtil); // Generation de tokens pour la sécurité du front
+//
+//				connexionDto.setUser(true);
+//				connexionDto.setBodyAdmin(null);
+//				connexionDto.setBodyUtil(returnedUtil);
+//				connexionDto.setToken(token);
+//
+//				return ResponseEntity.status(HttpStatus.OK).body(connexionDto);
+//
+//			} else if (adminService.existsByEmailAndMdp(mail, pwd).getBody() != null
+//					&& userService.existsByEmailAndMdp(mail, pwd).getBody() == null) {
+//				ServiceResponse<Admin> serviceResponse = adminService.existsByEmailAndMdp(mail, pwd);
+//
+//				AdminUpdateDto returnedAdmin = adminConv.convertEntityToUpdateDto(serviceResponse.getBody());
+//				String token = tokenManagement.makeNewSession(returnedAdmin);
+//
+//				connexionDto.setUser(false);
+//				connexionDto.setBodyAdmin(returnedAdmin);
+//				connexionDto.setBodyUtil(null);
+//				connexionDto.setToken(token);
+//
+//				return ResponseEntity.status(HttpStatus.OK).body(connexionDto);
+//			} else {
+//
+//				connexionDto.setUser(false);
+//				connexionDto.setBodyAdmin(null);
+//				connexionDto.setBodyUtil(null);
+//				connexionDto.setToken(null);
+//
+//				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(connexionDto);
+//			}
+//
+//		} catch (NullPointerException e) {
+//			log.info("Null Pointer Exception" + e.getMessage());
+//			connexionDto.setUser(false);
+//			connexionDto.setBodyAdmin(null);
+//			connexionDto.setBodyUtil(null);
+//			connexionDto.setToken(null);
+//
+//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(connexionDto);
+//		}
+//
+//	}
 
 }
