@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @RestController
-@CrossOrigin
+@CrossOrigin(exposedHeaders = "Set-Cookie", allowCredentials = "true")
 @RequestMapping(path = "/session")
 @Slf4j
 public class SessionController {
