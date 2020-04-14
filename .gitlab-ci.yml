@@ -1,0 +1,10 @@
+image: java:8
+
+before_script:
+  - apt-get update
+  - echo GitLab-CI BeforeScript Success
+
+job1:
+  script:
+    - echo Gitlab-CI Job1 ===> Compile
+    - ./mvnw compile
