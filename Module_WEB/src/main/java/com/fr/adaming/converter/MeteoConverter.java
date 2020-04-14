@@ -21,18 +21,26 @@ import com.fr.adaming.repositories.IDepartementRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Couche converter pour la météo qui implement IConverter
+ * 
+ * @author Jeanne-Marie MATHEVET
+ * @since0.0.1-SNAPSHOT
+ *
+ */
 @Component
 @Slf4j
-public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto, Meteo>, IMeteoConverter{
+public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto, Meteo>, IMeteoConverter {
 
 	@Autowired
 	private IConverterDepartement<Departement, DepartementDto> convertDep;
-	
+
 	@Autowired
 	private IDepartementRepository dptDao;
-	
+
 	@Override
 	public Meteo convertCreateDtoToEntity(MeteoCreateDto createDto) {
+		log.info("Converter météo : méthode conversion create dto vers météo");
 		if (createDto == null) {
 			log.info("Conversion d'un objet createDto null en objet meteo null");
 			return null;
@@ -48,11 +56,12 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 			meteo.setDepartement(convertDep.convertDtoToEntity(createDto.getDepartement()));
 			return meteo;
 		}
-		
+
 	}
 
 	@Override
 	public MeteoCreateDto convertEntityToCreateDto(Meteo meteo) {
+		log.info("Converter météo : méthode conversion météo vers create dto");
 		if (meteo == null) {
 			log.info("Conversion d'un objet meteo null en objet createDto null");
 			return null;
@@ -72,6 +81,7 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 
 	@Override
 	public Meteo convertUpdateDtoToEntity(MeteoUpdateDto updateDto) {
+		log.info("Converter météo : méthode conversion update dto vers météo");
 		if (updateDto == null) {
 			log.info("Conversion d'un objet updateDto null en objet meteo null");
 			return null;
@@ -92,6 +102,7 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 
 	@Override
 	public MeteoUpdateDto convertEntityToUpdateDto(Meteo meteo) {
+		log.info("Converter météo : méthode conversion météo vers update dto");
 		if (meteo == null) {
 			log.info("Conversion d'un objet meteo null en objet updateDto null");
 			return null;
@@ -112,6 +123,7 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 
 	@Override
 	public List<Meteo> convertListCreateDtoToEntity(List<MeteoCreateDto> listeCreateDto) {
+		log.info("Converter météo : méthode conversion liste create dto vers liste météo");
 		if (listeCreateDto == null) {
 			log.info("Conversion d'une liste CreateDto nulle en liste Meteo vide");
 			return Collections.emptyList();
@@ -127,6 +139,7 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 
 	@Override
 	public List<MeteoCreateDto> convertListEntityToCreateDto(List<Meteo> listeEntity) {
+		log.info("Converter météo : méthode conversion liste météo vers liste create dto");
 		if (listeEntity == null) {
 			log.info("Conversion d'une liste Meteo nulle en liste CreateDto vide");
 			return Collections.emptyList();
@@ -142,29 +155,31 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 
 	@Override
 	public List<Meteo> convertListUpdateDtoToEntity(List<MeteoUpdateDto> listeUpdateDto) {
+		log.info("Converter météo : méthode conversion liste update dto vers liste météo");
 		if (listeUpdateDto == null) {
 			log.info("Conversion d'une liste UpdateDto nulle en liste Meteo vide");
 			return Collections.emptyList();
 		} else {
 			log.info("Conversion d'une liste UpdateDto en liste Meteo");
 			List<Meteo> listeRetour = new ArrayList<>();
-			for(MeteoUpdateDto dto : listeUpdateDto) {
+			for (MeteoUpdateDto dto : listeUpdateDto) {
 				listeRetour.add(convertUpdateDtoToEntity(dto));
 			}
 			return listeRetour;
 		}
-		
+
 	}
 
 	@Override
 	public List<MeteoUpdateDto> convertListEntityToUpdateDto(List<Meteo> listeEntity) {
+		log.info("Converter météo : méthode conversion liste météo vers liste update dto");
 		if (listeEntity == null) {
 			log.info("Conversion d'une liste Meteo nulle en liste UpdateDto vide");
 			return Collections.emptyList();
 		} else {
 			log.info("Conversion d'une liste Meteo en liste UpdateDto");
 			List<MeteoUpdateDto> listeRetour = new ArrayList<>();
-			for(Meteo meteo : listeEntity) {
+			for (Meteo meteo : listeEntity) {
 				listeRetour.add(convertEntityToUpdateDto(meteo));
 			}
 			return listeRetour;
@@ -173,51 +188,56 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 
 	@Override
 	public Page<Meteo> convertPageCreateDtoToEntity(Page<MeteoCreateDto> pageCreateDto) {
+		log.info("Converter météo : méthode conversion page create dto vers page météo");
 		if (pageCreateDto == null) {
 			log.info("Conversion d'une page CreateDto nulle en page Meteo vide");
 			return new PageImpl<Meteo>(new ArrayList<Meteo>());
 		} else {
 			log.info("Conversion d'une page CreateDto en page Meteo");
-			return pageCreateDto.map(this :: convertCreateDtoToEntity);
+			return pageCreateDto.map(this::convertCreateDtoToEntity);
 		}
 	}
 
 	@Override
 	public Page<MeteoCreateDto> convertPageEntityToCreateDto(Page<Meteo> pageEntity) {
+		log.info("Converter météo : méthode conversion page météo vers page create dto");
 		if (pageEntity == null) {
 			log.info("Conversion d'une page Meteo nulle en page CreateDto vide");
 			return new PageImpl<MeteoCreateDto>(new ArrayList<MeteoCreateDto>());
 		} else {
 			log.info("Conversion d'une page Meteo en page CreateDto");
-			return pageEntity.map(this :: convertEntityToCreateDto);
+			return pageEntity.map(this::convertEntityToCreateDto);
 		}
-		
+
 	}
 
 	@Override
 	public Page<Meteo> convertPageUpdateDtoToEntity(Page<MeteoUpdateDto> pageUpdateDto) {
+		log.info("Converter météo : méthode conversion page update dto vers page météo");
 		if (pageUpdateDto == null) {
 			log.info("Conversion d'une page UpdateDto nulle en page Meteo vide");
 			return new PageImpl<Meteo>(new ArrayList<Meteo>());
 		} else {
 			log.info("Conversion d'une page UpdateDto en page Meteo");
-			return pageUpdateDto.map(this :: convertUpdateDtoToEntity);
+			return pageUpdateDto.map(this::convertUpdateDtoToEntity);
 		}
 	}
 
 	@Override
 	public Page<MeteoUpdateDto> convertPageEntityToUpdateDto(Page<Meteo> pageEntity) {
+		log.info("Converter météo : méthode conversion page météo vers page update dto");
 		if (pageEntity == null) {
 			log.info("Conversion d'une page Meteo nulle en page UpdateDto vide");
 			return new PageImpl<MeteoUpdateDto>(new ArrayList<MeteoUpdateDto>());
 		} else {
 			log.info("Conversion d'une page Meteo en page UpdateDto");
-			return pageEntity.map(this :: convertEntityToUpdateDto);
+			return pageEntity.map(this::convertEntityToUpdateDto);
 		}
-		
+
 	}
-	
+
 	public Meteo convertMeteoXlsDtoToEntity(MeteoXlsDto xlsDto) {
+		log.info("Converter météo : méthode conversion données XLS dto vers météo");
 		if (xlsDto == null) {
 			log.info("Conversion d'un objet xlsDto null en objet meteo null");
 			return null;
@@ -229,11 +249,13 @@ public class MeteoConverter implements IConverter<MeteoCreateDto, MeteoUpdateDto
 			meteo.setTemperatureMin(xlsDto.getTn());
 			meteo.setEnsoleillement(xlsDto.getInst());
 			meteo.setEvapoTranspirationPotentielle(xlsDto.getEtpmon());
-			meteo.setDate(LocalDate.parse((xlsDto.getDate()).replace("/","-"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-			meteo.setDepartement(dptDao.findById(Integer.valueOf(String.valueOf(xlsDto.getStation()).substring(0, 2))).orElse(null));
+			meteo.setDate(
+					LocalDate.parse((xlsDto.getDate()).replace("/", "-"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+			meteo.setDepartement(
+					dptDao.findById(Integer.valueOf(String.valueOf(xlsDto.getStation()).substring(0, 2))).orElse(null));
 			return meteo;
 		}
-		
+
 	}
-	
+
 }
