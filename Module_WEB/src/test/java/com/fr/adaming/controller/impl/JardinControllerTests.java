@@ -278,6 +278,7 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
 			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO utilisateur (id, email, mdp, pseudonyme, nom, prenom) values (5, 'natasha@avengers.com', 'NatLoveHulk1', 'Nat', 'Romanof', 'Natasha')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep, utilisateur_id) VALUES (1,'Bob'," + depNum
 			+ ",5)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -304,6 +305,7 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
 			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO utilisateur (id, email, mdp, pseudonyme, nom, prenom) values (5, 'natasha@avengers.com', 'NatLoveHulk1', 'Nat', 'Romanof', 'Natasha')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep, utilisateur_id) VALUES (1,'Bob'," + depNum
 			+ ",5)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -328,6 +330,7 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 	
 	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (" + depNum + ", " + depNameSql
 			+ ")", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+	@Sql(statements = "INSERT INTO Departement (numero_dep, nom) VALUES (69, 'rhone')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO utilisateur (id, email, mdp, pseudonyme, nom, prenom) values (5, 'natasha@avengers.com', 'NatLoveHulk1', 'Nat', 'Romanof', 'Natasha')", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 	@Sql(statements = "INSERT INTO jardin (id, nom,departement_numero_dep, utilisateur_id) VALUES (1,'Bob'," + depNum
 			+ ",5)", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -338,14 +341,14 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 	@Sql(statements = "DELETE FROM utilisateur", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Sql(statements = "DELETE FROM departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
-	public void testReinitArossJardin_shouldReturn200() throws Exception {
+	public void testReinitArossJardin_shouldReturn400() throws Exception {
 
 		String path = BASE_URL + "/arrosage?id=1";
 
-		ResponseDto<JardinUpdateDto> responseDto = runMockMvc("get", path, 200, JardinUpdateDto.class);
+		ResponseDto<JardinUpdateDto> responseDto = runMockMvc("get", path, 400, JardinUpdateDto.class);
 
 		assertNotNull(responseDto);
-		assertFalse(responseDto.isError());
+		assertTrue(responseDto.isError());
 
 	}
 	
