@@ -1,10 +1,12 @@
 # Punch Plante Heure
 
 Description :
-"Punch Plante Heure" est une application Web permettant la gestion de ses jardin et ses plantes pour les utilisateurs, grâce à des planings selon chaque plante.
+Ce projet est la partie back-end de "Punch Plante Heure", une application Web permettant la gestion de ses jardin et ses plantes pour les utilisateurs, grâce à des planings selon chaque plante.
 Elle permet aux visiteurs de consulter les pages d'informations (accueil, à propos, contact) ainsi qu'à l'inscription et la connexion
 Elle permet aux utilisateurs connectés de consulter les plantes du dictionnaire, créer leur jardin, et le gérer en y ajoutant des plantes.
 Elle permet aux admins de s'authentifier et de gérer les différentes pages du site.
+
+Vous pouvez retrouver la partie front-end à [PunchPlanteHeure-Front](https://gitlab.com/YohannB-cat/punchplanteheure-front/-/blob/dev/README.md)
 
 
 ## Fonctionnalités
@@ -29,6 +31,7 @@ Admin :
 
 ### Technologies utilisées
 
+* [Java8](https://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
 * [SpringBoot](https://spring.io/projects/spring-boot)
 * [Maven](https://maven.apache.org/)
 * [SpringBatch](https://spring.io/projects/spring-batch)
@@ -103,19 +106,18 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
-## Authors
+## Equipe
 
+* **Léa COSTON** - *Cheffe de projet* -
+* **Grégoire BREBNER**
+* **Yohann BACHELIER**
+* **Isaline MILLET**
+* **Maxime REMBERT*
+* **Clara CADET**
+* **Lucie MARTINEZ**
+* **Flavien GOMILA**
+* **Thierry-Meng CLOAREC**
 * **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
 
