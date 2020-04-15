@@ -69,8 +69,6 @@ public class PlanteModel {
 
 	@Column
 	private String photo;
-
-	// TODO faire des tables de jointure avec une entité famille pour les asso positives et negatives
 	
 	@Column
 	@Transient

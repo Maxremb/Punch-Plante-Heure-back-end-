@@ -98,8 +98,7 @@ public class DepartementServiceImpl extends AbstractService<Departement>
 			}
 	}
 
-	public ServiceResponse<Page<Meteo>> readMeteoByNumeroDep(Integer page, Integer numDep) {
-		Pageable pageable = PageRequest.of(page, 20);
+	public ServiceResponse<Page<Meteo>> readMeteoByNumeroDep(Pageable pageable, Integer numDep) {
 		try {
 			if (!dao.existsById(numDep)) {
 				log.info("Récupération d'une liste de conditions météo après recherche par département inexistant");

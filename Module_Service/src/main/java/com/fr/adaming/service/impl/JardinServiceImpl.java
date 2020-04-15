@@ -165,6 +165,7 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 			}
 
 		}
+		log.info("Calcul de la reserve d'eau max du jardin OK");
 		return jardin;
 	}
 

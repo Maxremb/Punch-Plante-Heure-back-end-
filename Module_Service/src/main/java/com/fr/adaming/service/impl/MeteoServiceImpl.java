@@ -29,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MeteoServiceImpl extends AbstractService<Meteo> implements IMeteoService {
 
-	// Injection de dependances
 	@Autowired
 	private IMeteoRepository repo;
 
@@ -85,6 +84,7 @@ public class MeteoServiceImpl extends AbstractService<Meteo> implements IMeteoSe
 	@Override
 	public ServiceResponse<Meteo> readByDateAndDepartement(LocalDate date, int numDepartement) {
 		if (date != null && repoD.existsById(numDepartement)) {
+			log.info("Recupération de la méteo à partir du departement et de la date entrée");
 			return new ServiceResponse<Meteo>("Recuperation de la meteo du departement indiqué et à la date indiquée",
 					repo.findByDateAndDepartement(date, repoD.findById(numDepartement).orElse(null)));
 		} else {
@@ -101,6 +101,7 @@ public class MeteoServiceImpl extends AbstractService<Meteo> implements IMeteoSe
 		if (date != null) {
 			Pageable pageable = PageRequest.of(page, 20);
 			Page<Meteo> pageMeteo = repo.findByDate(date, pageable);
+			log.info("Recupération de la météo a partir de la date entrée");
 			return new ServiceResponse<Page<Meteo>>("Recupération de la météo à la date indiquée", pageMeteo);
 		} else {
 			log.info("Echec lors de la récupération de la météo : la date est NULLE");
