@@ -4,8 +4,6 @@ import org.springframework.data.domain.Page;
 
 import com.fr.adaming.dto.ServiceResponse;
 
-//TODO adapter les methodes au demandes du projet
-
 /**
  * <p>IService représente les méthodes CRUD générales des classes Services</p>
  * 

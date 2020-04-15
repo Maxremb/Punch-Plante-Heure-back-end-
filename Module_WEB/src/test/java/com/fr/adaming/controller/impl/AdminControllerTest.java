@@ -286,7 +286,7 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isFalse();
 	}
@@ -307,7 +307,7 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 				.andExpect(status().isBadRequest()).andReturn().getResponse()
 				.getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isTrue();
 	}
@@ -328,7 +328,7 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 				.andExpect(status().isBadRequest()).andReturn().getResponse()
 				.getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isTrue();
 	}
@@ -352,7 +352,7 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isFalse();
 	}
@@ -373,7 +373,7 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 				.andExpect(status().isBadRequest()).andReturn().getResponse()
 				.getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isTrue();
 	}
@@ -394,7 +394,7 @@ public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> imp
 				.andExpect(status().isBadRequest()).andReturn().getResponse()
 				.getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isTrue();
 	}

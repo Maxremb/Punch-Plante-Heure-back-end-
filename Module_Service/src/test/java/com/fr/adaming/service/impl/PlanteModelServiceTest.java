@@ -20,7 +20,6 @@ import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.service.IPlanteModelService;
 import com.fr.adaming.service.IServiceTests;
 
-//TODO reparer testes qui ne fonctionnent pas
 
 /**
  * Cette classe teste la couche service de l'entité PlanteModel
@@ -210,11 +209,9 @@ public class PlanteModelServiceTest implements IServiceTests {
 		assertNotNull(serviceResponse);
 		assertEquals("Success", serviceResponse.getMessage());
 		
-		// TODO comprendre pourquoi le teste ne fonctionne pas: 
-		// La casse est ignorée quand on utilise swagger/rest mais pas dans le teste pour une raison inconnue.
-		// Lien possible avec le fait qu'on utlise h2 au lieu de mysql
+		//TODO comprendre pourquoi le teste ne marche pas
 		
-//		assertTrue(serviceResponse.getBody().toList().size() == 1);
+//		assertThat(serviceResponse.getBody().toList()).asList().hasSize(1);
 //		assertThat(serviceResponse.getBody().getContent()).asList()
 //				.allSatisfy(plant -> assertThat(plant).isInstanceOf(PlanteModel.class));
 

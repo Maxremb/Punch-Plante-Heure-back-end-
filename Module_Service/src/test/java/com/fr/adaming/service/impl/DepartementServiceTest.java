@@ -36,8 +36,6 @@ import com.fr.adaming.service.IServiceTests;
 @SpringBootTest(classes = ModuleServiceApplication.class)
 public class DepartementServiceTest implements IServiceTests {
 
-	private static final Pageable pageable = PageRequest.of(0, 20);
-
 	@Autowired
 	private IDepartementService<Departement, Meteo> serviceDep;
 

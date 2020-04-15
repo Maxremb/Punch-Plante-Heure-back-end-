@@ -241,7 +241,7 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isFalse();
 		assertThat(responseDto.getBody()).isEqualTo(true);
@@ -261,7 +261,7 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isFalse();
 		assertThat(responseDto.getBody()).isEqualTo(false);
@@ -281,7 +281,7 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isFalse();
 		assertThat(responseDto.getBody()).isEqualTo(false);
@@ -305,7 +305,7 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isFalse();
 	}
@@ -326,7 +326,7 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 				.andExpect(status().isBadRequest()).andReturn().getResponse()
 				.getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isTrue();
 	}
@@ -347,7 +347,7 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 				.andExpect(status().isBadRequest()).andReturn().getResponse()
 				.getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isTrue();
 	}
@@ -370,7 +370,7 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 		String responseAsString = mockMvc.perform(get(path).contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isOk()).andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isFalse();
 	}
@@ -391,7 +391,7 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 				.andExpect(status().isBadRequest()).andReturn().getResponse()
 				.getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isTrue();
 	}
@@ -412,7 +412,7 @@ public class UtilisateurControllerTests extends AbstractTestMethods<UtilisateurU
 				.andExpect(status().isBadRequest()).andReturn().getResponse()
 				.getContentAsString(StandardCharsets.UTF_8);
 		// convertir la reponse JSON en DTO
-		ResponseDto responseDto = mapper.readValue(responseAsString, ResponseDto.class);
+		ResponseDto<?> responseDto = mapper.readValue(responseAsString, ResponseDto.class);
 
 		assertThat(responseDto.isError()).isTrue();
 	}

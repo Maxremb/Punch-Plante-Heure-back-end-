@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fr.adaming.dto.ResponseDto;
 
-//TODO ajouter une responseDto
-
 /**
  *
  * @author Isaline MILLET

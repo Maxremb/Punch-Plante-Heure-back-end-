@@ -25,27 +25,10 @@ import com.fr.adaming.entity.Departement;
  */
 @SpringBootTest(classes = ModuleWebApplication.class)
 public class DepartementConverterTest implements IConverterDepartementTests {
-
-//	
-//	Quand le converter Meteo sera fonctionnel, il faut passer les lignes en commentaires dans les assertions des méthodes en lignes fonctionnelles et supprimer les lignes au dessus de chaque commentaire.
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
 	
 	
 	@Autowired
 	private DepartementConverter departementConverter;
-	
-	@Autowired
-	private MeteoConverter meteoConverter;
 
 	@Override
 	@Test
@@ -60,7 +43,6 @@ public class DepartementConverterTest implements IConverterDepartementTests {
 		assertThat(returnDepartement.getClass()).isEqualTo(Departement.class);
 		assertThat(returnDepartement).hasFieldOrPropertyWithValue("numeroDep", dto.getDepNum());
 		assertThat(returnDepartement).hasFieldOrPropertyWithValue("nom", dto.getName());
-//		assertThat(returnDepartement).hasFieldOrPropertyWithValue("meteoDep", meteoConverter.convertListUpdateDtoToEntity(dto.getWeatherDep()));
 	}
 
 	@Override
@@ -82,7 +64,6 @@ public class DepartementConverterTest implements IConverterDepartementTests {
 		assertThat(returnedDto.getClass()).isEqualTo(DepartementDto.class);
 		assertThat(returnedDto).hasFieldOrPropertyWithValue("depNum", dep.getNumeroDep());
 		assertThat(returnedDto).hasFieldOrPropertyWithValue("name", dep.getNom());
-//		assertThat(returnedDto).hasFieldOrPropertyWithValue("weatherDep", meteoConverter.convertListEntityToUpdateDto(dep.getMeteoDep()));
 	}
 
 	@Override
@@ -115,8 +96,6 @@ public class DepartementConverterTest implements IConverterDepartementTests {
 		assertThat(returnedListDto.get(1)).hasFieldOrPropertyWithValue("depNum", dep2.getNumeroDep());
 		assertThat(returnedListDto.get(0)).hasFieldOrPropertyWithValue("name", dep1.getNom());
 		assertThat(returnedListDto.get(1)).hasFieldOrPropertyWithValue("name", dep2.getNom());
-//		assertThat(returnedListDto.get(0)).hasFieldOrPropertyWithValue("weatherDep", meteoConverter.convertListEntityToUpdateDto(dep1.getMeteoDep()));
-//		assertThat(returnedListDto.get(1)).hasFieldOrPropertyWithValue("weatherDep", meteoConverter.convertListEntityToUpdateDto(dep2.getMeteoDep()));
 	}
 
 	@Override
@@ -152,8 +131,6 @@ public class DepartementConverterTest implements IConverterDepartementTests {
 		assertThat(returnedListDep.get(1)).hasFieldOrPropertyWithValue("numeroDep", dto2.getDepNum());
 		assertThat(returnedListDep.get(0)).hasFieldOrPropertyWithValue("nom", dto1.getName());
 		assertThat(returnedListDep.get(1)).hasFieldOrPropertyWithValue("nom", dto2.getName());
-//		assertThat(returnedListDep.get(0)).hasFieldOrPropertyWithValue("meteoDep", meteoConverter.convertListUpdateDtoToEntity(dto1.getWeatherDep()));
-//		assertThat(returnedListDep.get(1)).hasFieldOrPropertyWithValue("meteoDep", meteoConverter.convertListUpdateDtoToEntity(dto2.getWeatherDep()));
 	}
 
 	@Override
@@ -194,8 +171,6 @@ public class DepartementConverterTest implements IConverterDepartementTests {
 		assertThat(returnedPageDep.toList().get(1)).hasFieldOrPropertyWithValue("numeroDep", dto2.getDepNum());
 		assertThat(returnedPageDep.toList().get(0)).hasFieldOrPropertyWithValue("nom", dto1.getName());
 		assertThat(returnedPageDep.toList().get(1)).hasFieldOrPropertyWithValue("nom", dto2.getName());
-//		assertThat(returnedListDep.toList().get(0)).hasFieldOrPropertyWithValue("meteoDep", meteoConverter.convertListUpdateDtoToEntity(dto1.getWeatherDep()));
-//		assertThat(returnedListDep.toList().get(1)).hasFieldOrPropertyWithValue("meteoDep", meteoConverter.convertListUpdateDtoToEntity(dto2.getWeatherDep()));
 
 	}
 
@@ -227,9 +202,6 @@ public class DepartementConverterTest implements IConverterDepartementTests {
 		assertThat(returnedPageDto.toList().get(1)).hasFieldOrPropertyWithValue("depNum", dep2.getNumeroDep());
 		assertThat(returnedPageDto.toList().get(0)).hasFieldOrPropertyWithValue("name", dep1.getNom());
 		assertThat(returnedPageDto.toList().get(1)).hasFieldOrPropertyWithValue("name", dep2.getNom());
-//		assertThat(returnedListDto.toList().get(0)).hasFieldOrPropertyWithValue("weatherDep", meteoConverter.convertListEntityToUpdateDto(dep1.getMeteoDep()));
-//		assertThat(returnedListDto.toList().get(1)).hasFieldOrPropertyWithValue("weatherDep", meteoConverter.convertListEntityToUpdateDto(dep2.getMeteoDep()));
-
 	}
 
 }
