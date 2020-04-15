@@ -2,7 +2,7 @@
 
 Description :
 Ce projet est la partie back-end de "Punch Plante Heure", une application Web permettant la gestion de ses jardin et ses plantes pour les utilisateurs, grâce à des planings selon chaque plante.
-Elle permet aux visiteurs de consulter les pages d'informations (accueil, à propos, contact) ainsi qu'à l'inscription et la connexion
+Elle permet aux visiteurs de consulter les pages d'informations (accueil, dictionnaire de plante, à propos, contact) ainsi qu'à l'inscription et la connexion
 Elle permet aux utilisateurs connectés de consulter les plantes du dictionnaire, créer leur jardin, et le gérer en y ajoutant des plantes.
 Elle permet aux admins de s'authentifier et de gérer les différentes pages du site.
 
