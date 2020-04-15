@@ -13,6 +13,8 @@ target/
 .springBeans
 .sts4-cache
 
+app.log
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
