@@ -19,39 +19,57 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Component
 @Slf4j
-public class SessionService implements ISessionService{
+public class SessionService implements ISessionService {
 
 	@Autowired
 	private IConnectedUser user;
-	
+
 	@Autowired
 	private IConnectedUserConverter converter;
 
 	public Role getUserRole(String token) {
-		return user.getRole(token);
+		if (token != null) {
+			return user.getRole(token);
+		} else {
+			return Role.None;
+		}
 	}
 
 	public int getUserIdentifier(String token) {
-		return user.getIdentifier(token);
+		if (token != null) {
+			return user.getIdentifier(token);
+		} else {
+			return 0;
+		}
 	}
 
 	public String getUserEmail(String token) {
-		return user.getMail(token);
+		if (token != null) {
+			return user.getMail(token);
+		} else {
+			return null;
+		}
 	}
 
 	public String getUserPseudo(String token) {
-		return user.getPseudo(token);
+		if (token != null) {
+			return user.getPseudo(token);
+		} else {
+			return null;
+		}
 	}
 
-	/** Retourne l'objet connectedUserDto si le token est bon
+	/**
+	 * Retourne l'objet connectedUserDto si le token est bon
+	 * 
 	 * @param token Le token envoyé au controller
 	 * @return Un objet connectedUser ou null
 	 */
 	public ConnectedUserDto getUser(String token) {
-		
+
 		log.debug("user: " + user);
 
-		if (user.testToken(token)) {
+		if (token != null && user.testToken(token)) {
 			return converter.convertUsertoDto(token);
 		} else {
 			return null;
