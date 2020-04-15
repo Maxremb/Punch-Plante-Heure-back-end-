@@ -110,6 +110,7 @@ public class AdminServiceImpl extends AbstractService<Admin> implements IAdminSe
 			log.info("Vérification existence mail et mdp dans DB OK");
 			if (adminRepo.findByEmailAndMdp(email, mdp) != null) {
 				Admin entite = adminRepo.findByEmailAndMdp(email, mdp);
+				log.info("Recherche d'un admin avec ce mail and pwd");
 				return new ServiceResponse<Admin>("Success", entite);
 			}
 		}

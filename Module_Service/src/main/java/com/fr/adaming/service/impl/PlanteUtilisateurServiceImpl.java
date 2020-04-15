@@ -46,15 +46,17 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 	public ServiceResponse<PlanteUtilisateur> create(PlanteUtilisateur planteUtilisateur) {
 
 		if (planteUtilisateur == null) {
+			log.info("Creation echouée, l'objet d'entré est nul");
 			return new ServiceResponse<PlanteUtilisateur>("Objet d'entrée null", null);
 		} else if (dao.existsById(planteUtilisateur.getId())) {
+			log.info("Creation echouée, l'id est dèjà existant dans la base de données");
 			return new ServiceResponse<PlanteUtilisateur>("Id déjà connu dans la BD", null);
 		}
 
 		else {
-				dao.save(planteUtilisateur);
-				log.info("Plante Utilisateur enregistré dans la BD");
-				return new ServiceResponse<PlanteUtilisateur>("Succes", planteUtilisateur);
+			dao.save(planteUtilisateur);
+			log.info("Plante Utilisateur enregistré dans la BD");
+			return new ServiceResponse<PlanteUtilisateur>("Succes", planteUtilisateur);
 		}
 	}
 
@@ -70,8 +72,8 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 		}
 
 		else {
-				log.info("Plante Utilisateur enregistré dans la BD");
-				return new ServiceResponse<PlanteUtilisateur>("Succes", dao.save(planteUtilisateur));
+			log.info("Plante Utilisateur enregistré dans la BD");
+			return new ServiceResponse<PlanteUtilisateur>("Succes", dao.save(planteUtilisateur));
 		}
 	}
 
@@ -88,6 +90,7 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 
 			serviceResponse.setBody(page);
 			serviceResponse.setMessage("Succes");
+			log.info("Retour d'une page contenant les plantes Utilisateur associé a ce jardin OK ");
 			return serviceResponse;
 		}
 	}
@@ -106,17 +109,18 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 
 			serviceResponse.setBody(liste);
 			serviceResponse.setMessage("Succes");
+			log.info("Lecture de la liste de Plante Utilisateur associée a ce jardin OK ");
 			return serviceResponse;
 		}
 	}
 
 	@Override
 	public boolean deleteByJardin(int idJardin) {
-		log.debug("Service: deleteByJardin de l'entité jardin id : " + idJardin);
 
 		boolean delete = true;
 		if (jRepo.existsById(idJardin)) {
 			repo.deleteAllByJardin(idJardin);
+			log.info("Les Plantes utilisateur du jardin ont bien été supprimées !");
 		} else {
 			log.info("Jardin inexistant");
 			delete = false;

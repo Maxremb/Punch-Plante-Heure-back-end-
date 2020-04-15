@@ -62,6 +62,6 @@ public interface IService<E> {
 	 * @param entite Entite à modifier
 	 * @return ServiceResponse contenant L'entité ou null (en cas d'erreur)
 	 */
-	public ServiceResponse<E> update(E entite); //TODO decider si on veut update en boolean
+	public ServiceResponse<E> update(E entite);
 
 }
