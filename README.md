@@ -110,15 +110,15 @@ Les tests manquants aux deux premiers sprints ont également été rajoutés.
 ## Equipe
 
 * **Léa COSTON** - *Cheffe de projet* 
-* **Grégoire BREBNER** - *Référent Technique Back-End* - [LinkedIn](https:/www.linkedin.com/in/gregoire-brebner-40115249)
+* **Grégoire BREBNER** - *Référent Technique Back-End* - [LinkedIn](https://www.linkedin.com/in/gregoire-brebner-40115249)
 * **Yohann BACHELIER** - *Référent Technique Front-End* 
 * **Isaline MILLET** - *Développeuse/Référente Technique Back-End au dernier sprint* - [LinkedIn](https://www.linkedin.com/in/isaline-millet)
 * **Clara CADET** - *Développeuse* - [LinkedIn](https://www.linkedin.com/in/clara-cadet/)
 * **Lucie MARTINEZ** - *Développeuse* - [LinkedIn](http://linkedin.com/in/lucie-f-martinez-1129-1230)
-* **Jeanne-Marie MATHEVET** - *Développeuse* - [LinkedIn](https:/www.linkedin.com/in/jeannemariemathevet)
-* **Maxime REMBERT** - *Référent métier* - [LinkedIn](https:/www.linkedin.com/in/maxime-rembert)
+* **Jeanne-Marie MATHEVET** - *Développeuse* - [LinkedIn](https://www.linkedin.com/in/jeannemariemathevet)
+* **Maxime REMBERT** - *Référent métier* - [LinkedIn](https://www.linkedin.com/in/maxime-rembert)
 * **Flavien GOMILA** - *Référent métier* - [LinkedIn](https://www.linkedin.com/in/flavien-gomila)
-* **Thierry-Meng CLOAREC** - *Référent métier* - [LinkedIn](https:/www.linkedin.com/in/thierry-meng-cloarec)
+* **Thierry-Meng CLOAREC** - *Référent métier* - [LinkedIn](https://www.linkedin.com/in/thierry-meng-cloarec)
 * **Mehdi BENSALHA** - *Encadrant-Scrum Master* 
 
 
