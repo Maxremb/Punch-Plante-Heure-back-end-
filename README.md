@@ -81,12 +81,15 @@ Maxime REMBERT - Développeur
 
 * Quatrième sprint
 
-Mise en production de l'application (Java doc, propreté du code,
+Mise en production de l'application (Java doc, propreté du code, fichier .log) et rédaction du READ ME.
 L'équipe responsable de ce sprint était composée de :
 Isaline MILLET - Référent technique Back-End
 Clara CADET - Développeuse
 Lucie MARTINEZ - Développeuse
 Maxime REMBERT - Développeur
+
+
+
 
 
 ```
