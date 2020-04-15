@@ -30,6 +30,7 @@ public class SessionController {
 	@Autowired
 	private SessionService service;
 
+	
 	@PostMapping(path = "/user")
 	public ResponseEntity<ConnectedUserDto> getUser(@RequestBody String token) {
 		log.info("Controller Session : méthode getUser apelée");

@@ -10,14 +10,10 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import com.fr.adaming.ModuleServiceApplication;
 import com.fr.adaming.dto.ServiceResponse;
-import com.fr.adaming.entity.Admin;
-import com.fr.adaming.entity.Utilisateur;
 import com.fr.adaming.entity.Utilisateur;
 import com.fr.adaming.service.IService;
 import com.fr.adaming.service.IServiceTests;
 import com.fr.adaming.service.IUtilisateurService;
-
-import ch.qos.logback.classic.pattern.Util;
 
 /**
  * 

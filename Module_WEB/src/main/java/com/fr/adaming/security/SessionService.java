@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.ConnectedUserDto;
 import com.fr.adaming.enums.Role;
-import com.fr.adaming.session.ConnectedUser;
+import com.fr.adaming.security.interfaces.IConnectedUserConverter;
+import com.fr.adaming.security.interfaces.ISessionService;
+import com.fr.adaming.session.IConnectedUser;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,39 +19,57 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Component
 @Slf4j
-public class SessionService {
+public class SessionService implements ISessionService {
 
 	@Autowired
-	private ConnectedUser user;
-	
+	private IConnectedUser user;
+
 	@Autowired
-	private ConnectedUserConverter converter;
+	private IConnectedUserConverter converter;
 
 	public Role getUserRole(String token) {
-		return user.getRole(token);
+		if (token != null) {
+			return user.getRole(token);
+		} else {
+			return Role.None;
+		}
 	}
 
 	public int getUserIdentifier(String token) {
-		return user.getIdentifier(token);
+		if (token != null) {
+			return user.getIdentifier(token);
+		} else {
+			return 0;
+		}
 	}
 
 	public String getUserEmail(String token) {
-		return user.getMail(token);
+		if (token != null) {
+			return user.getMail(token);
+		} else {
+			return null;
+		}
 	}
 
 	public String getUserPseudo(String token) {
-		return user.getPseudo(token);
+		if (token != null) {
+			return user.getPseudo(token);
+		} else {
+			return null;
+		}
 	}
 
-	/** Retourne l'objet connectedUserDto si le token est bon
+	/**
+	 * Retourne l'objet connectedUserDto si le token est bon
+	 * 
 	 * @param token Le token envoyé au controller
 	 * @return Un objet connectedUser ou null
 	 */
 	public ConnectedUserDto getUser(String token) {
-		
+
 		log.debug("user: " + user);
 
-		if (user.testToken(token)) {
+		if (token != null && user.testToken(token)) {
 			return converter.convertUsertoDto(token);
 		} else {
 			return null;

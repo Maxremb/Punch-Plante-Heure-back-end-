@@ -1,1 +1,0 @@
-﻿INSERT INTO retention (coeff_remplissage,sol) VALUES ( 0.1,0),(0.14,1), (0.22,2), (0.21,3), (0.16,4);
