@@ -245,7 +245,7 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 
 		try {
 			
-			Pageable pageable = PageRequest.of(page, elementsPerPage, Sort.by(sortName));
+			Pageable pageable = PageRequest.of(page, elementsPerPage, Sort.by(sortName).descending());
 			
 			ServiceResponse<Page<ME>> serviceResponse = serviceDep.readMeteoByNumeroDep(pageable, id);
 
