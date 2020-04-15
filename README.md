@@ -6,7 +6,7 @@ Elle permet aux visiteurs de consulter les pages d'informations (accueil, à pro
 Elle permet aux utilisateurs connectés de consulter les plantes du dictionnaire, créer leur jardin, et le gérer en y ajoutant des plantes.
 Elle permet aux admins de s'authentifier et de gérer les différentes pages du site.
 
-Vous pouvez retrouver la partie front-end à [PunchPlanteHeure-Front](https://gitlab.com/YohannB-cat/punchplanteheure-front/-/blob/dev/README.md)
+Ce projet a été réalisé en 10 jours (fin le 15/04/2020) en parallèle de la partie front-end que l'on peut retrouver à [PunchPlanteHeure-Front](https://gitlab.com/YohannB-cat/punchplanteheure-front/-/blob/dev/README.md)
 
 
 ## Fonctionnalités
@@ -40,6 +40,9 @@ Admin :
 * [H2](https://www.h2database.com/html/main.html)
 * [JUnit](https://junit.org/junit5/)
 * [Swagger](https://swagger.io/)
+* [Jacoco](https://www.jacoco.org/)
+* [Sonar](https://www.sonarqube.org/)
+* [MySQL](https://www.mysql.com/fr/)
 
 
 
@@ -92,32 +95,21 @@ Give an example
 
 Add additional notes about how to deploy this on a live system
 
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Equipe
 
-* **Léa COSTON** - *Cheffe de projet* -
-* **Grégoire BREBNER**
-* **Yohann BACHELIER**
-* **Isaline MILLET**
-* **Maxime REMBERT*
-* **Clara CADET**
-* **Lucie MARTINEZ**
-* **Flavien GOMILA**
-* **Thierry-Meng CLOAREC**
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Léa COSTON** - *Cheffe de projet* 
+* **Grégoire BREBNER** - *Référent Technique Back-End* - [LinkedIn](www.linkedin.com/in/gregoire-brebner-40115249)
+* **Yohann BACHELIER** - *Référent Technique Front-End* 
+* **Isaline MILLET** - *Développeur* - [LinkedIn](https://www.linkedin.com/in/isaline-millet)
+* **Maxime REMBERT** - *Développeur* - [LinkedIn](www.linkedin.com/in/maxime-rembert)
+* **Clara CADET** - *Développeuse* - [LinkedIn](https://www.linkedin.com/in/clara-cadet/)
+* **Lucie MARTINEZ** - *Développeuse* - [LinkedIn](http://linkedin.com/in/lucie-f-martinez-1129-1230)
+* **Jeanne-Marie Mathevet** - *Développeuse* - [LinkedIn](www.linkedin.com/in/jeannemariemathevet)
+* **Flavien GOMILA** - *Référent métier* - [LinkedIn](https://www.linkedin.com/in/flavien-gomila)
+* **Thierry-Meng CLOAREC** - *Référent métier* - [LinkedIn](www.linkedin.com/in/thierry-meng-cloarec)
+* **Bensalha Mehdi** - *Encadrant* - 
+
 
 
 
