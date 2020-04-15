@@ -8,21 +8,26 @@ import com.fr.adaming.security.interfaces.IConnectedUserConverter;
 import com.fr.adaming.session.IConnectedUser;
 
 @Component
-public class ConnectedUserConverter implements IConnectedUserConverter{
-	
+public class ConnectedUserConverter implements IConnectedUserConverter {
+
 	@Autowired
 	private IConnectedUser user;
-	
+
 	public ConnectedUserDto convertUsertoDto(String token) {
-		
-		ConnectedUserDto dto = new ConnectedUserDto();
-		dto.setId(user.getIdentifier(token));
-		dto.setMail(user.getMail(token));
-		dto.setPseudo(user.getPseudo(token));
-		dto.setRole(user.getRole(token));
-		
-		return dto;
-		
+
+		if (token != null) {
+
+			ConnectedUserDto dto = new ConnectedUserDto();
+			dto.setId(user.getIdentifier(token));
+			dto.setMail(user.getMail(token));
+			dto.setPseudo(user.getPseudo(token));
+			dto.setRole(user.getRole(token));
+
+			return dto;
+		} else {
+			return null;
+		}
+
 	}
 
 }
