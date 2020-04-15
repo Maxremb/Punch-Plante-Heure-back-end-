@@ -7,9 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +18,6 @@ import com.fr.adaming.ModuleWebApplication;
 import com.fr.adaming.controller.AbstractTestMethods;
 import com.fr.adaming.controller.IControllerTests;
 import com.fr.adaming.dto.DepartementDto;
-import com.fr.adaming.dto.MeteoUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
 
 @SpringBootTest(classes = ModuleWebApplication.class)
@@ -31,9 +27,6 @@ public class DepartementControllerTests extends AbstractTestMethods<DepartementD
 	// Paramètres par défaut
 
 	private static final String BASE_URL = "/departement";
-	private static final int id = 1;
-	private static final String nom = "nom4Test";
-	private static final List<MeteoUpdateDto> listeMeteo = new ArrayList<>();
 
 	private DepartementDto makeNewDepartementDto() {
 		// Creation du dto qu'on va utiliser pour la requete et aussi la comparaison

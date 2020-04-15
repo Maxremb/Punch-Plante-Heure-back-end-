@@ -1,14 +1,11 @@
 package com.fr.adaming.config;
 
-import java.util.Set;
-
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fr.adaming.converter.IMeteoConverter;
 import com.fr.adaming.dto.MeteoXlsDto;
-import com.fr.adaming.entity.Jardin;
 import com.fr.adaming.entity.Meteo;
 import com.fr.adaming.metier.ICalculMetier;
 
@@ -46,12 +43,14 @@ public class MeteoItemProcessor implements ItemProcessor<MeteoXlsDto, Meteo> {
 
 //		if (meteo.getDate().equals(LocalDate.now())) {
 
-			Set<Jardin> jardinSet = calcul.calculRU(meteo);
+		calcul.calculRU(meteo);
 
-			for (Jardin j : jardinSet) {
-				// Utilisateur util = getUtilisateurByJardin(j);
-				// send email to util.getEmail avec nom du jardin et type de sol.
-			}
+//		Set<Jardin> jardinSet = calcul.calculRU(meteo);
+
+//			for (Jardin j : jardinSet) {
+//				// Utilisateur util = getUtilisateurByJardin(j);
+//				// send email to util.getEmail avec nom du jardin et type de sol.
+//			}
 
 //		}
 

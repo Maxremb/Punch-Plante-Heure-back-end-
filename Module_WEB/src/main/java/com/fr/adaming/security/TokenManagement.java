@@ -12,12 +12,15 @@ import com.fr.adaming.enums.Role;
 import com.fr.adaming.security.interfaces.ITokenManagement;
 import com.fr.adaming.session.ConnectedUser;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Classe pour la gestion de sessions utilisateurs dans le front
  * @author Gregoire
  *
  */
 @Component
+@Slf4j
 public class TokenManagement implements ITokenManagement{
 	
 	@Autowired
@@ -29,6 +32,7 @@ public class TokenManagement implements ITokenManagement{
 	 * @return Un token sous format String
 	 */
 	public String makeNewSession(UtilisateurUpdateDto util) {
+		log.info("Bean Tokenmanagement : méthode makeNewSession user appelée");
 		
 		user.setIdentifier(util.getIdentifier());
 		user.setPseudo(util.getPseudo());
@@ -38,6 +42,7 @@ public class TokenManagement implements ITokenManagement{
 		String token = generateToken();
 		user.setToken(token);
 		
+		log.info("Session user OK");
 		return token;
 		
 	}
@@ -48,6 +53,7 @@ public class TokenManagement implements ITokenManagement{
 	 * @return Un token sous format String
 	 */
 	public String makeNewSession(AdminUpdateDto admin) {
+		log.info("Bean Tokenmanagement : méthode makeNewAdmin admin appelée");
 		
 		user.setIdentifier(admin.getIdentifier());
 		user.setPseudo(admin.getPseudo());
@@ -57,6 +63,7 @@ public class TokenManagement implements ITokenManagement{
 		String token = generateToken();
 		user.setToken(token);
 		
+		log.info("Session admin OK");
 		return token;
 		
 	}
@@ -66,6 +73,7 @@ public class TokenManagement implements ITokenManagement{
 	 * @return Un String aléatoire, 20 caractères de long.
 	 */
 	public String generateToken() {
+		log.info("Bean Tokenmanagement : méthode generateToken");
 		
 		Random random = new SecureRandom();
 		
@@ -78,7 +86,7 @@ public class TokenManagement implements ITokenManagement{
 			int n = random.nextInt(alphabet.length());
 			token.append(alphabet.charAt(n));
 		}
-		
+		log.info("Token généré !");
 		return new String(token);
 	}
 	

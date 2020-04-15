@@ -25,6 +25,8 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 
 	@Override
 	public Departement convertDtoToEntity(DepartementDto dto) {
+
+		log.info("Conversion d'un département dto vers département");
 		try {
 			if (dto == null) {
 				log.info("Tentative de conversion d'un DepartementDto NULL vers entité");
@@ -44,6 +46,7 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 
 	@Override
 	public DepartementDto convertEntityToDto(Departement dep) {
+		log.info("Conversion d'une entité vers département dto");
 		if (dep == null) {
 			log.info("Tentative de conversion d'un Departement NULL vers département DTO");
 			return null;
@@ -86,6 +89,7 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 
 	@Override
 	public List<Departement> convertListDtoToEntity(List<DepartementDto> listeDto) {
+		log.info("Conversion d'une liste de dépatement dto vers département");
 		
 		if (listeDto == null || listeDto.isEmpty()) {
 			log.info("Tentative conversion d'une liste département DTO vide ou null en département");
@@ -101,6 +105,7 @@ public class DepartementConverter implements IConverterDepartement<Departement, 
 
 	@Override
 	public List<DepartementDto> convertListEntityToDto(List<Departement> listeDep) {
+		log.info("Conversion d'une liste de département vers département dto");
 		if (listeDep == null || listeDep.isEmpty()) {
 			log.info("Tentative conversion d'une liste département vide en département DTO");
 			return new ArrayList<>();

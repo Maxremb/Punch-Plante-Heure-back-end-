@@ -13,8 +13,111 @@
 	<artifactId>Collabo-tanique</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Collabo-tanique</name>
-	<description>Projet Final Session Lyon 2020</description>
+	<name>Punch Plante Heure</name>
+	<description>Projet Final Session Lyon 2020 - Gestion de jardin</description>
+
+	<scm>
+		<url>https://gitlab.com/Spaghetti-droid/punchplanteheure</url>
+	</scm>
+
+	<developers>
+	
+		<developer>
+			<name>Léa COSTON</name>
+			<roles>
+				<role>Chef de Projet</role>
+			</roles>
+			<email>coston.lea@gmail.com</email>
+		</developer>
+	
+		<developer>
+			<name>Grégoire BREBNER</name>
+			<roles>
+				<role>Référent Technique BACK et développeur FRONT</role>
+			</roles>
+			<email>gregoire_brebner@hotmail.com</email>
+		</developer>
+	
+		<developer>
+			<name>Yohann BACHELIER</name>
+			<roles>
+				<role>Référent Technique FRONT</role>
+			</roles>
+			<email>yohann.bachelier@gmail.com</email>
+		</developer>
+		
+		<developer>
+			<name>Isaline MILLET</name>
+			<roles>
+				<role>Développeur BACK/FRONT et Référent Technique BACK dernier sprint</role>
+			</roles>
+			<email>isalinemillet38@gmail.com</email>
+		</developer>
+		
+		<developer>
+			<name>Flavien GOMILA</name>
+			<roles>
+				<role>Développeur FRONT et Référent métier</role>
+			</roles>
+			<email>flavien.gomila@gmail.com</email>
+		</developer>
+		
+		<developer>
+			<name>Thierry-Meng CLOAREC</name>
+			<roles>
+				<role>Développeur BACK/FRONT et Référent métier</role>
+			</roles>
+			<email>tm.cloarec@gmail.com</email>
+		</developer>
+		
+		<developer>
+			<name>Maxime REMBERT</name>
+			<roles>
+				<role>Développeur BACK/FRONT et Référent métier</role>
+			</roles>
+			<email>maxime.rembert@gmail.com</email>
+		</developer>
+		
+		<developer>
+			<name>Clara CADET</name>
+			<roles>
+				<role>Développeur BACK/FRONT</role>
+			</roles>
+			<email>clara.cadet@yahoo.fr</email>
+		</developer>
+		
+		<developer>
+			<name>Lucie MARTINEZ</name>
+			<roles>
+				<role>Développeur BACK/FRONT</role>
+			</roles>
+			<email>martinez.lucie02@hotmail.fr</email>
+		</developer>
+		
+		<developer>
+			<name>Jeanne-Marie MATHEVET</name>
+			<roles>
+				<role>Développeur BACK/FRONT</role>
+			</roles>
+			<email>jmmathevet@gmail.com</email>
+		</developer>
+				
+	</developers>
+
+	<organization>
+		<name>INTI Formation</name>
+		<url>http://lms.intiformation.fr//</url>
+	</organization>
+
+	<contributors>
+		<contributor>
+			<name>Mehdi BENSALHA</name>
+			<email>mbensalha@adaming.fr</email>
+			<roles>
+				<role>Formateur</role>
+			</roles>
+		</contributor>
+	</contributors>
 
 	<properties>
 		<java.version>1.8</java.version>

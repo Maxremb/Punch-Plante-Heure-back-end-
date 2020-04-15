@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
@@ -34,8 +35,6 @@ import com.fr.adaming.service.IServiceTests;
  */
 @SpringBootTest(classes = ModuleServiceApplication.class)
 public class DepartementServiceTest implements IServiceTests {
-
-	private static final Pageable pageable = PageRequest.of(0, 20);
 
 	@Autowired
 	private IDepartementService<Departement, Meteo> serviceDep;
@@ -326,23 +325,24 @@ public class DepartementServiceTest implements IServiceTests {
 	@Sql(statements = "DELETE FROM Departement", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	@Test
 	public void testReadMeteoByNumeroDep_shouldReturnPage() {
-		assertThat(serviceDep.readMeteoByNumeroDep(0, 1).getBody()).isNotNull();
-		assertTrue(serviceDep.readMeteoByNumeroDep(0, 1).getBody().toList().size() == 1);
-		assertThat(serviceDep.readMeteoByNumeroDep(0, 1).getBody().toList().get(0)).hasFieldOrPropertyWithValue("id",
+		Pageable pageable = PageRequest.of(0, 20, Sort.by("date"));
+		assertThat(serviceDep.readMeteoByNumeroDep(pageable, 1).getBody()).isNotNull();
+		assertTrue(serviceDep.readMeteoByNumeroDep(pageable, 1).getBody().toList().size() == 1);
+		assertThat(serviceDep.readMeteoByNumeroDep(pageable, 1).getBody().toList().get(0)).hasFieldOrPropertyWithValue("id",
 				1);
-		assertThat(serviceDep.readMeteoByNumeroDep(0, 1).getBody().toList().get(0))
+		assertThat(serviceDep.readMeteoByNumeroDep(pageable, 1).getBody().toList().get(0))
 				.hasFieldOrPropertyWithValue("temperatureMax", (double) 10);
-		assertThat(serviceDep.readMeteoByNumeroDep(0, 1).getBody().toList().get(0))
+		assertThat(serviceDep.readMeteoByNumeroDep(pageable, 1).getBody().toList().get(0))
 				.hasFieldOrPropertyWithValue("temperatureMin", (double) 10);
-		assertThat(serviceDep.readMeteoByNumeroDep(0, 1).getBody().toList().get(0)).hasFieldOrPropertyWithValue("pluie",
+		assertThat(serviceDep.readMeteoByNumeroDep(pageable, 1).getBody().toList().get(0)).hasFieldOrPropertyWithValue("pluie",
 				(double) 10);
-		assertThat(serviceDep.readMeteoByNumeroDep(0, 1).getBody().toList().get(0))
+		assertThat(serviceDep.readMeteoByNumeroDep(pageable, 1).getBody().toList().get(0))
 				.hasFieldOrPropertyWithValue("ensoleillement", (double) 10);
-		assertThat(serviceDep.readMeteoByNumeroDep(0, 1).getBody().toList().get(0))
+		assertThat(serviceDep.readMeteoByNumeroDep(pageable, 1).getBody().toList().get(0))
 				.hasFieldOrPropertyWithValue("evapoTranspirationPotentielle", (double) 10);
-		assertThat(serviceDep.readMeteoByNumeroDep(0, 1).getBody().toList().get(0)).hasFieldOrPropertyWithValue("date",
+		assertThat(serviceDep.readMeteoByNumeroDep(pageable, 1).getBody().toList().get(0)).hasFieldOrPropertyWithValue("date",
 				LocalDate.parse("2020-02-01"));
-		assertThat(serviceDep.readMeteoByNumeroDep(0, 1).getMessage()).isEqualTo("Récupération d'une liste de conditions météo par département");
+		assertThat(serviceDep.readMeteoByNumeroDep(pageable, 1).getMessage()).isEqualTo("Récupération d'une liste de conditions météo par département");
 	}
 	
 	/**
@@ -350,8 +350,10 @@ public class DepartementServiceTest implements IServiceTests {
 	 */
 	@Test
 	public void testReadMeteoByNumeroDepInexistant_shouldReturnPage() {
-		assertNull(serviceDep.readMeteoByNumeroDep(0, 1).getBody());
-		assertThat(serviceDep.readMeteoByNumeroDep(0, 1).getMessage()).isEqualTo("Tentative récupération d'une liste de conditions météo par département inexistant");
+
+		Pageable pageable = PageRequest.of(0, 20, Sort.by("date"));
+		assertNull(serviceDep.readMeteoByNumeroDep(pageable, 1).getBody());
+		assertThat(serviceDep.readMeteoByNumeroDep(pageable, 1).getMessage()).isEqualTo("Tentative récupération d'une liste de conditions météo par département inexistant");
 	}
 	
 	/**
@@ -359,8 +361,9 @@ public class DepartementServiceTest implements IServiceTests {
 	 */
 	@Test
 	public void testReadMeteoByNumeroDepNull_shouldReturnPage() {
-		assertNull(serviceDep.readMeteoByNumeroDep(0, null).getBody());
-		assertThat(serviceDep.readMeteoByNumeroDep(0, null).getMessage()).isEqualTo("Problème readMeteoByNumDep");
+		Pageable pageable = PageRequest.of(0, 20, Sort.by("date"));
+		assertNull(serviceDep.readMeteoByNumeroDep(pageable, null).getBody());
+		assertThat(serviceDep.readMeteoByNumeroDep(pageable, null).getMessage()).isEqualTo("Problème readMeteoByNumDep");
 	}
 
 }

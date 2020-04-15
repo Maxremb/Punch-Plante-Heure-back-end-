@@ -33,8 +33,6 @@ import com.fr.adaming.enums.Sol;
 @AutoConfigureMockMvc
 public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> implements IControllerTests {
 
-	// TODO rajouter user quand converter user existe
-
 	private static final String BASE_URL = "/jardin";
 
 	// Parametres par defaut pour Jardin
@@ -46,13 +44,9 @@ public class JardinControllerTests extends AbstractTestMethods<JardinUpdateDto> 
 	private static final Float width = 123.1f;
 	private static final Float depthGround = 0.5f;
 
-	private static final String nameSql = "'" + name + "'";
-
 	// Parametres pour user
 
 	private static final String nom = "Alice";
-
-	private static final String nomSql = "'" + nom + "'";
 
 	// Parametres pour departement
 

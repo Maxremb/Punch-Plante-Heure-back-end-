@@ -91,7 +91,7 @@ public class AdminConverter implements IConverter<AdminCreateDto, AdminUpdateDto
 	public List<Admin> convertListCreateDtoToEntity(List<AdminCreateDto> listeCreateDto) {
 		log.info("Converter admin : méthode liste create dto vers liste admin appelée");
 		List<Admin> listeRetour = new ArrayList<>();
-		if (listeCreateDto != null) {
+		if (!listeCreateDto.isEmpty()) {
 			for (AdminCreateDto a : listeCreateDto) {
 				listeRetour.add(convertCreateDtoToEntity(a));
 			}
@@ -103,7 +103,7 @@ public class AdminConverter implements IConverter<AdminCreateDto, AdminUpdateDto
 	public List<AdminCreateDto> convertListEntityToCreateDto(List<Admin> listeEntity) {
 		log.info("Converter admin : méthode liste admin vers liste create dto appelée");
 		List<AdminCreateDto> listeRetour = new ArrayList<>();
-		if (listeEntity != null) {
+		if (!listeEntity.isEmpty()) {
 			for (Admin a : listeEntity) {
 				listeRetour.add(convertEntityToCreateDto(a));
 			}
@@ -115,7 +115,7 @@ public class AdminConverter implements IConverter<AdminCreateDto, AdminUpdateDto
 	public List<Admin> convertListUpdateDtoToEntity(List<AdminUpdateDto> listeUpdateDto) {
 		log.info("Converter admin : méthode liste update dto vers liste admin appelée");
 		List<Admin> listeRetour = new ArrayList<>();
-		if (listeUpdateDto != null) {
+		if (!listeUpdateDto.isEmpty()) {
 			for (AdminUpdateDto a : listeUpdateDto) {
 				listeRetour.add(convertUpdateDtoToEntity(a));
 			}
@@ -127,7 +127,7 @@ public class AdminConverter implements IConverter<AdminCreateDto, AdminUpdateDto
 	public List<AdminUpdateDto> convertListEntityToUpdateDto(List<Admin> listeEntity) {
 		log.info("Converter admin : méthode liste admin vers liste update dto appelée");
 		List<AdminUpdateDto> listeRetour = new ArrayList<>();
-		if (listeEntity != null) {
+		if (!listeEntity.isEmpty()) {
 			for (Admin a : listeEntity) {
 				listeRetour.add(convertEntityToUpdateDto(a));
 			}

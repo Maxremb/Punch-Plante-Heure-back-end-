@@ -19,7 +19,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Component
 @Slf4j
-public class SessionService implements ISessionService{
+
+public class SessionService implements ISessionService {
 
 	@Autowired
 	private IConnectedUser user;
@@ -28,32 +29,67 @@ public class SessionService implements ISessionService{
 	private IConnectedUserConverter converter;
 
 	public Role getUserRole(String token) {
-		return user.getRole(token);
+		log.info("Bean Session service : méthode getUserRole apprlée");
+		if (token != null) {
+			log.info("GetRole OK");
+			return user.getRole(token);
+		} else {
+			log.info("GetRole non réalisée : token null");
+			return Role.None;
+		}
 	}
 
 	public int getUserIdentifier(String token) {
-		return user.getIdentifier(token);
+		log.info("Bean Session service : méthode getUserIdentifier");
+		if (token != null) {
+			log.info("GetIdetnifier OK");
+			return user.getIdentifier(token);
+		} else {
+
+			log.info("GetIdentifier non réalisée : token null");
+			return 0;
+		}
 	}
 
 	public String getUserEmail(String token) {
-		return user.getMail(token);
+		log.info("Bean Session service : méthode getUserEmail");
+		if (token != null) {
+			log.info("GetMail OK");
+			return user.getMail(token);
+		} else {
+
+			log.info("GetMail non réalisée : token null");
+			return null;
+		}
 	}
 
 	public String getUserPseudo(String token) {
-		return user.getPseudo(token);
+		log.info("Bean Session service : méthode getUserPseudo");
+		if (token != null) {
+			log.info("GetPseudo OK");
+			return user.getPseudo(token);
+		} else {
+			log.info("GetPseudo non réalisée : token null");
+			return null;
+		}
 	}
 
-	/** Retourne l'objet connectedUserDto si le token est bon
+	/**
+	 * Retourne l'objet connectedUserDto si le token est bon
+	 * 
 	 * @param token Le token envoyé au controller
 	 * @return Un objet connectedUser ou null
 	 */
 	public ConnectedUserDto getUser(String token) {
-		
+		log.info("Bean Session service : méthode getUser appelée");
+
 		log.debug("user: " + user);
 
-		if (user.testToken(token)) {
+		if (token != null && user.testToken(token)) {
+			log.info("Conversion user vers dto OK");
 			return converter.convertUsertoDto(token);
 		} else {
+			log.info("Conversion non réalisée : token null");
 			return null;
 		}
 	}

@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -241,7 +244,10 @@ public abstract class AbstractControllerDepartement<D, MU, ME, MC, E> implements
 		log.info("Controller: méthode READMETEOBYNUMDEP appelée");
 
 		try {
-			ServiceResponse<Page<ME>> serviceResponse = serviceDep.readMeteoByNumeroDep(page, id);
+			
+			Pageable pageable = PageRequest.of(page, elementsPerPage, Sort.by(sortName).descending());
+			
+			ServiceResponse<Page<ME>> serviceResponse = serviceDep.readMeteoByNumeroDep(pageable, id);
 
 			ResponseDto<Page<MU>> responseDto = new ResponseDto<Page<MU>>();
 

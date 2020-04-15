@@ -40,10 +40,6 @@ public class PlanteModel {
 	@Column(length = 255, nullable = false, unique=true)
 	private String nomScientifique;
 
-//	@Column
-//	@OneToMany
-//	private List<Periode> dates;
-
 	@Column(columnDefinition = "INT DEFAULT 0")
 	private int intervalArrosage;
 
@@ -73,8 +69,6 @@ public class PlanteModel {
 
 	@Column
 	private String photo;
-
-	// TODO faire des tables de jointure avec une entité famille pour les asso positives et negatives
 	
 	@Column
 	@Transient

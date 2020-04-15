@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -98,8 +97,7 @@ public class DepartementServiceImpl extends AbstractService<Departement>
 			}
 	}
 
-	public ServiceResponse<Page<Meteo>> readMeteoByNumeroDep(Integer page, Integer numDep) {
-		Pageable pageable = PageRequest.of(page, 20);
+	public ServiceResponse<Page<Meteo>> readMeteoByNumeroDep(Pageable pageable, Integer numDep) {
 		try {
 			if (!dao.existsById(numDep)) {
 				log.info("Récupération d'une liste de conditions météo après recherche par département inexistant");
