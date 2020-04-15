@@ -4,10 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import com.fr.adaming.dto.ServiceResponse;
-import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Meteo;
 
 /**

@@ -11,7 +11,6 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import com.fr.adaming.ModuleServiceApplication;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Admin;
-import com.fr.adaming.entity.Departement;
 import com.fr.adaming.service.IAdminService;
 import com.fr.adaming.service.IService;
 import com.fr.adaming.service.IServiceTests;

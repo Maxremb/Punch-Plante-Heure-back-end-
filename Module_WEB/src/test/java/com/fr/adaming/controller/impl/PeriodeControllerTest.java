@@ -23,7 +23,6 @@ import com.fr.adaming.dto.DepartementDto;
 import com.fr.adaming.dto.PeriodeUpdateDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
-import com.fr.adaming.enums.TypePeriod;
 
 
 //TODO : Test read By ... with  valid param AND invalid param
