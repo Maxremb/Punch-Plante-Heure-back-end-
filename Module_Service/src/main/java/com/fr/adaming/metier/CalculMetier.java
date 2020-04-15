@@ -104,6 +104,7 @@ public class CalculMetier implements ICalculMetier {
 			if (jardin != null) {
 				if (jardin.getLongueur() != null && jardin.getLargeur() != null) {
 					jardin.setReserveUtile(jardin.getRESERVE_MAX_EAU());
+					jardin.setEstArroser(true);
 					dao.save(jardin);
 					log.info("Jardin reserve utile modifiée dans la DB");
 					return new ServiceResponse<Jardin>("Success", jardin);
