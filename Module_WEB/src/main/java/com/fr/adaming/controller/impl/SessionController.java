@@ -15,6 +15,8 @@ import com.fr.adaming.security.SessionService;
 
 import lombok.extern.slf4j.Slf4j;
 
+//TODO Testes sur toute la partie sécuité
+
 /**
  * Controller pour la récuperation de données associés à une session
  * 
