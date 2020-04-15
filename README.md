@@ -45,7 +45,48 @@ Admin :
 * [MySQL](https://www.mysql.com/fr/)
 
 
+### Organisation du projet
 
+Le projet "Punch Plante Heure" a été réalisé selon la méthodologie SCRUM et avec une architecture en multi-modules (Repository, Service et Web) afin d'optimiser son évolution potentielle.
+Il a été conçut dans le cadre d'une formation, et à donc nécessité l'intervention de chaque developpeur sur les parties Back-End et Front-End. Des roulements d'équipes ont donc été réalisés entre les différents sprints.
+Pour mener à bien sa réalisation, nous avons découpés le developpement de l'appli en 4 sprints. Les trois premiers sprints ont durés 3 jours, et 1 jour pour le quatrième (mise en production). 
+
+* Premier sprint
+
+Ce sprint a été consacré au developpement de la structure du projet Java et à la création et la gestion des entités Jardin, Departement, PlanteModelUtilisateur et PlanteUtilisateur, ainsi que de leurs associations entre-elles.
+Des tests unitaires pour chacunes de ces entités ont également été ajoutés.
+L'équipe responsable de ce sprint était composée de :
+Léa CORTON - Cheffe de projet
+Gregoire BREBNER - Référent technique Back-End
+Clara CADET - Développeuse
+Lucie MARTINEZ - Développeuse
+Isaline MILLET - Développeuse
+
+* Second sprint
+
+Ce sprint a été consacré au developpement à la création et la gestion entités Periode et Meteo, ainsi que leurs associations avec les différentes entités.
+Des tests unitaires pour chacunes de ces entités ont également été ajoutés.
+L'équipe responsable de ce sprint était composée de :
+Gregoire BREBNER - Référent technique Back-End
+Jeanne-Marie MATHEVET - Développeuse
+Thierry-Meng CLOAREC -Développeur et référent métier
+Maxime REMBERT - Développeur et référent métier
+
+* Troisième sprint
+
+Ce sprint a été consacré au developpement à la création et la gestion des entités Admin et Utilisateur, ainsi que leurs associations avec les différentes entités.
+L'équipe responsable de ce sprint était composée de :
+Isaline MILLET - Référent technique Back-End
+Maxime REMBERT - Développeur
+
+* Quatrième sprint
+
+Mise en production de l'application (Java doc, propreté du code,
+L'équipe responsable de ce sprint était composée de :
+Isaline MILLET - Référent technique Back-End
+Clara CADET - Développeuse
+Lucie MARTINEZ - Développeuse
+Maxime REMBERT - Développeur
 
 
 ```
