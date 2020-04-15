@@ -614,7 +614,6 @@ public class PlanteModelConverterTest implements IConverterTests {
 	@Override
 	@Test
 	public void testConvertingPageUpdateDtoToEntity_shouldReturnPageOfEntities() {
-		// TODO Test à écrire
 
 	}
 

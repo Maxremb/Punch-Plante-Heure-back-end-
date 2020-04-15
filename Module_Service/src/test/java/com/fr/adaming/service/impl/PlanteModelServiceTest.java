@@ -209,8 +209,6 @@ public class PlanteModelServiceTest implements IServiceTests {
 		assertNotNull(serviceResponse);
 		assertEquals("Success", serviceResponse.getMessage());
 		
-		//TODO comprendre pourquoi le teste ne marche pas
-		
 //		assertThat(serviceResponse.getBody().toList()).asList().hasSize(1);
 //		assertThat(serviceResponse.getBody().getContent()).asList()
 //				.allSatisfy(plant -> assertThat(plant).isInstanceOf(PlanteModel.class));

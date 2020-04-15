@@ -35,8 +35,6 @@ import com.fr.adaming.dto.ResponseDto;
 @AutoConfigureMockMvc
 public class AdminControllerTest extends AbstractTestMethods<AdminUpdateDto> implements IControllerTests {
 
-	// TODO : Test Exists By Email and Pwd (bas de page)
-
 	@Autowired
 	private MockMvc mockMvc;
 

@@ -25,8 +25,6 @@ import com.fr.adaming.dto.PlanteModelUpdateDto;
 import com.fr.adaming.dto.ResponseDto;
 
 
-//TODO : Test read By ... with  valid param AND invalid param
-
 
 /**
  * * Classe test de la couche controller Periode. Elle étend la classe Abstract
