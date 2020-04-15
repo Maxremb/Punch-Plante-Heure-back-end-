@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.ConnectedUserDto;
 import com.fr.adaming.enums.Role;
-import com.fr.adaming.session.ConnectedUser;
+import com.fr.adaming.security.interfaces.IConnectedUserConverter;
+import com.fr.adaming.security.interfaces.ISessionService;
+import com.fr.adaming.session.IConnectedUser;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,13 +19,13 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Component
 @Slf4j
-public class SessionService {
+public class SessionService implements ISessionService{
 
 	@Autowired
-	private ConnectedUser user;
+	private IConnectedUser user;
 	
 	@Autowired
-	private ConnectedUserConverter converter;
+	private IConnectedUserConverter converter;
 
 	public Role getUserRole(String token) {
 		return user.getRole(token);

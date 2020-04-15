@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fr.adaming.dto.ConnectedUserDto;
 import com.fr.adaming.enums.Role;
-import com.fr.adaming.security.SessionService;
-
-import lombok.extern.slf4j.Slf4j;
+import com.fr.adaming.security.interfaces.ISessionService;
 
 /**
  * Controller pour la récuperation de données associés à une session
@@ -23,11 +21,10 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 @RequestMapping(path = "/session")
-@Slf4j
 public class SessionController {
 	
 	@Autowired
-	private SessionService service;
+	private ISessionService service;
 	
 	@PostMapping(path = "/user")
 	public ResponseEntity<ConnectedUserDto> getUser(@RequestBody String token){

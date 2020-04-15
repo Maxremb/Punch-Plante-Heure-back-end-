@@ -22,7 +22,7 @@ import com.fr.adaming.dto.UtilisateurCreateDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.entity.Admin;
 import com.fr.adaming.entity.Utilisateur;
-import com.fr.adaming.security.TokenManagement;
+import com.fr.adaming.security.interfaces.ITokenManagement;
 import com.fr.adaming.service.IAdminService;
 import com.fr.adaming.service.IUtilisateurService;
 
@@ -47,7 +47,7 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 	private IConverter<AdminCreateDto, AdminUpdateDto, Admin> adminConv;
 	
 	@Autowired
-	private TokenManagement tokenManagement;
+	private ITokenManagement tokenManagement;
 
 	@GetMapping(path = "/pseudo")
 	public ResponseEntity<ResponseDto<AdminUpdateDto>> readByPseudonyme(@RequestParam(name = "pseudo") String pseudo) {

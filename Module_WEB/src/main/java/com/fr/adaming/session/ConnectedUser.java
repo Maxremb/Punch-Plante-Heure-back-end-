@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @ToString
 @Slf4j
-public class ConnectedUser {
+public class ConnectedUser implements IConnectedUser{
 	
 	private int identifier;
 	private String mail;

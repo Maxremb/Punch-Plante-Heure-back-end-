@@ -18,7 +18,6 @@ import com.fr.adaming.ModuleServiceApplication;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.service.IPlanteModelService;
-import com.fr.adaming.service.IService;
 import com.fr.adaming.service.IServiceTests;
 
 //TODO reparer testes qui ne fonctionnent pas
