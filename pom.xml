@@ -57,15 +57,23 @@
 		<developer>
 			<name>Flavien GOMILA</name>
 			<roles>
-				<role>Développeur FRONT</role>
+				<role>Développeur FRONT et Référent métier</role>
 			</roles>
 			<email>flavien.gomila@gmail.com</email>
 		</developer>
 		
 		<developer>
+			<name>Thierry-Meng CLOAREC</name>
+			<roles>
+				<role>Développeur BACK/FRONT et Référent métier</role>
+			</roles>
+			<email>tm.cloarec@gmail.com</email>
+		</developer>
+		
+		<developer>
 			<name>Maxime REMBERT</name>
 			<roles>
-				<role>Développeur BACK/FRONT</role>
+				<role>Développeur BACK/FRONT et Référent métier</role>
 			</roles>
 			<email>maxime.rembert@gmail.com</email>
 		</developer>
@@ -92,14 +100,6 @@
 				<role>Développeur BACK/FRONT</role>
 			</roles>
 			<email>jmmathevet@gmail.com</email>
-		</developer>
-		
-		<developer>
-			<name>Thierry-Meng CLOAREC</name>
-			<roles>
-				<role>Développeur BACK/FRONT</role>
-			</roles>
-			<email>tm.cloarec@gmail.com</email>
 		</developer>
 				
 	</developers>
