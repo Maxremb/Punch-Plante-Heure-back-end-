@@ -28,33 +28,47 @@ public class SessionService implements ISessionService {
 	private IConnectedUserConverter converter;
 
 	public Role getUserRole(String token) {
+		log.info("Bean Session service : méthode getUserRole apprlée");
 		if (token != null) {
+			log.info("GetRole OK");
 			return user.getRole(token);
 		} else {
+			log.info("GetRole non réalisée : token null");
 			return Role.None;
 		}
 	}
 
 	public int getUserIdentifier(String token) {
+		log.info("Bean Session service : méthode getUserIdentifier");
 		if (token != null) {
+			log.info("GetIdetnifier OK");
 			return user.getIdentifier(token);
 		} else {
+
+			log.info("GetIdentifier non réalisée : token null");
 			return 0;
 		}
 	}
 
 	public String getUserEmail(String token) {
+		log.info("Bean Session service : méthode getUserEmail");
 		if (token != null) {
+			log.info("GetMail OK");
 			return user.getMail(token);
 		} else {
+
+			log.info("GetMail non réalisée : token null");
 			return null;
 		}
 	}
 
 	public String getUserPseudo(String token) {
+		log.info("Bean Session service : méthode getUserPseudo");
 		if (token != null) {
+			log.info("GetPseudo OK");
 			return user.getPseudo(token);
 		} else {
+			log.info("GetPseudo non réalisée : token null");
 			return null;
 		}
 	}
@@ -66,12 +80,15 @@ public class SessionService implements ISessionService {
 	 * @return Un objet connectedUser ou null
 	 */
 	public ConnectedUserDto getUser(String token) {
+		log.info("Bean Session service : méthode getUser appelée");
 
 		log.debug("user: " + user);
 
 		if (token != null && user.testToken(token)) {
+			log.info("Conversion user vers dto OK");
 			return converter.convertUsertoDto(token);
 		} else {
+			log.info("Conversion non réalisée : token null");
 			return null;
 		}
 	}
