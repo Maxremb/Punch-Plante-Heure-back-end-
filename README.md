@@ -47,7 +47,6 @@ Admin :
 
 
 
-What things you need to install the software and how to install them
 
 ```
 Give examples
@@ -91,24 +90,26 @@ Explain what these tests test and why
 Give an example
 ```
 
-## Deployment
+## Améliorations possibles
 
-Add additional notes about how to deploy this on a live system
+- Impléménter une partie communautaire avec l'envoi de commentaires sur des plantes et jardins, l'envoi de messages privés et sur un forum.
+- Alimenter notre base de données pour avoir des informations plus complètes et fiables
+- Permettre l'envoi d'images
 
 
 ## Equipe
 
 * **Léa COSTON** - *Cheffe de projet* 
-* **Grégoire BREBNER** - *Référent Technique Back-End* - [LinkedIn](www.linkedin.com/in/gregoire-brebner-40115249)
+* **Grégoire BREBNER** - *Référent Technique Back-End* - [LinkedIn](https:/www.linkedin.com/in/gregoire-brebner-40115249)
 * **Yohann BACHELIER** - *Référent Technique Front-End* 
-* **Isaline MILLET** - *Développeur* - [LinkedIn](https://www.linkedin.com/in/isaline-millet)
-* **Maxime REMBERT** - *Développeur* - [LinkedIn](www.linkedin.com/in/maxime-rembert)
+* **Isaline MILLET** - *Développeuse/Référente Technique Back-End au dernier sprint* - [LinkedIn](https://www.linkedin.com/in/isaline-millet)
 * **Clara CADET** - *Développeuse* - [LinkedIn](https://www.linkedin.com/in/clara-cadet/)
 * **Lucie MARTINEZ** - *Développeuse* - [LinkedIn](http://linkedin.com/in/lucie-f-martinez-1129-1230)
-* **Jeanne-Marie Mathevet** - *Développeuse* - [LinkedIn](www.linkedin.com/in/jeannemariemathevet)
+* **Jeanne-Marie MATHEVET** - *Développeuse* - [LinkedIn](https:/www.linkedin.com/in/jeannemariemathevet)
+* **Maxime REMBERT** - *Référent métier* - [LinkedIn](https:/www.linkedin.com/in/maxime-rembert)
 * **Flavien GOMILA** - *Référent métier* - [LinkedIn](https://www.linkedin.com/in/flavien-gomila)
-* **Thierry-Meng CLOAREC** - *Référent métier* - [LinkedIn](www.linkedin.com/in/thierry-meng-cloarec)
-* **Bensalha Mehdi** - *Encadrant* - 
+* **Thierry-Meng CLOAREC** - *Référent métier* - [LinkedIn](https:/www.linkedin.com/in/thierry-meng-cloarec)
+* **Mehdi BENSALHA** - *Encadrant* - 
 
 
 
