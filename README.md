@@ -6,7 +6,7 @@ Elle permet aux visiteurs de consulter les pages d'informations (accueil, à pro
 Elle permet aux utilisateurs connectés de consulter les plantes du dictionnaire, créer leur jardin, et le gérer en y ajoutant des plantes.
 Elle permet aux admins de s'authentifier et de gérer les différentes pages du site.
 
-Ce projet a été réalisé en 10 jours (fin le 15/04/2020) en parallèle de la partie front-end que l'on peut retrouver à [PunchPlanteHeure-Front](https://gitlab.com/YohannB-cat/punchplanteheure-front/-/blob/dev/README.md)
+Ce projet a été réalisé en 10 jours ouvrés (fin le 15/04/2020) uniquement en télétravail et en parallèle de la partie front-end que l'on peut retrouver à [PunchPlanteHeure-Front](https://gitlab.com/YohannB-cat/punchplanteheure-front/-/blob/dev/README.md)
 
 
 ## Fonctionnalités
@@ -31,6 +31,7 @@ Admin :
 
 ### Technologies utilisées
 
+* [StarUML](http://staruml.io/)
 * [Java8](https://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
 * [SpringBoot](https://spring.io/projects/spring-boot)
 * [Maven](https://maven.apache.org/)
@@ -51,6 +52,12 @@ Le projet "Punch Plante Heure" a été réalisé selon la méthodologie SCRUM et
 Il a été conçu dans le cadre d'une formation, et à donc nécessité l'intervention de chaque developpeur sur les parties Back-End et Front-End. Des roulements d'équipes ont donc été réalisés entre les différents sprints.
 Pour mener à bien sa réalisation, nous avons découpés le developpement de l'appli en 3 sprints d'une durée de 3 jours chacuns.
 Une dernière étape à été consacrée à la mise en production de l'application (Java doc, propreté du code, journalisation, READ ME) avant présentation au client.
+
+* Conception :
+
+Les fonctionnalités du site ont été définies ainsi que les entités à manipuler
+Des diagrammes Use Case et un diagramme de classe ont été réalisés  sur StarUML par l'équipe de développeurs en parallèle de l'architecture réalisé par les référent techniques
+
 
 
 * Premier sprint
@@ -88,43 +95,10 @@ Les tests manquants aux deux premiers sprints ont également été rajoutés.
 
 
 
-### Installing
 
-A step by step series of examples that tell you how to get a development env running
+## Problèmes rencontrés :
+- Homogénéisation du code et tests unitaires commencés trop tard, impliquant une grosse charge de travail sur le dernier sprint
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Améliorations possibles
 
@@ -145,7 +119,7 @@ Give an example
 * **Maxime REMBERT** - *Référent métier* - [LinkedIn](https:/www.linkedin.com/in/maxime-rembert)
 * **Flavien GOMILA** - *Référent métier* - [LinkedIn](https://www.linkedin.com/in/flavien-gomila)
 * **Thierry-Meng CLOAREC** - *Référent métier* - [LinkedIn](https:/www.linkedin.com/in/thierry-meng-cloarec)
-* **Mehdi BENSALHA** - *Encadrant* - 
+* **Mehdi BENSALHA** - *Encadrant-Scrum Master* 
 
 
 
