@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.fr.adaming.controller.AbstractController;
 import com.fr.adaming.dto.PlanteModelCreateDto;
 import com.fr.adaming.dto.PlanteModelUpdateDto;
@@ -15,7 +16,6 @@ import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteModel;
 import com.fr.adaming.service.IPlanteModelService;
-import com.fr.adaming.service.impl.PlanteModelServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 

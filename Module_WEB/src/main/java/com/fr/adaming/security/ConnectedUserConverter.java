@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fr.adaming.dto.ConnectedUserDto;
-import com.fr.adaming.session.ConnectedUser;
+import com.fr.adaming.security.interfaces.IConnectedUserConverter;
+import com.fr.adaming.session.IConnectedUser;
 
 @Component
-public class ConnectedUserConverter {
+public class ConnectedUserConverter implements IConnectedUserConverter{
 	
 	@Autowired
-	ConnectedUser user;
+	private IConnectedUser user;
 	
 	public ConnectedUserDto convertUsertoDto(String token) {
 		

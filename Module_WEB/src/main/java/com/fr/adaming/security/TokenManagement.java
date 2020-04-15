@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.fr.adaming.dto.AdminUpdateDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.enums.Role;
+import com.fr.adaming.security.interfaces.ITokenManagement;
 import com.fr.adaming.session.ConnectedUser;
 
 /**
@@ -17,7 +18,7 @@ import com.fr.adaming.session.ConnectedUser;
  *
  */
 @Component
-public class TokenManagement {
+public class TokenManagement implements ITokenManagement{
 	
 	@Autowired
 	private ConnectedUser user;

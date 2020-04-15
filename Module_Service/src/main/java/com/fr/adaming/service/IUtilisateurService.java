@@ -1,7 +1,6 @@
 package com.fr.adaming.service;
 
 import com.fr.adaming.dto.ServiceResponse;
-import com.fr.adaming.entity.Admin;
 import com.fr.adaming.entity.Utilisateur;
 
 /**

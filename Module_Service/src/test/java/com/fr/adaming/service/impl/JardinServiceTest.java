@@ -17,8 +17,6 @@ import com.fr.adaming.ModuleServiceApplication;
 import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.Departement;
 import com.fr.adaming.entity.Jardin;
-import com.fr.adaming.entity.Retention;
-import com.fr.adaming.entity.Utilisateur;
 import com.fr.adaming.enums.Sol;
 import com.fr.adaming.service.IJardinService;
 import com.fr.adaming.service.IService;
