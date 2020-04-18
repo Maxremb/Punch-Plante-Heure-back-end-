@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Component
 @Slf4j
-public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdateDto, Jardin> {
+public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdateDto, Jardin>, IJardinConverter {
 
 	@Autowired
 	private IConverterDepartement<Departement, DepartementDto> convertDep;
@@ -226,6 +226,23 @@ public class JardinConverter implements IConverter<JardinCreateDto, JardinUpdate
 			}
 		}
 		return listeRetour;
+	}
+
+	@Override
+	public List<Integer> convertJardinListToId(List<Jardin> jardinList) {
+
+		List<Integer> idList = new ArrayList<Integer>();
+
+		if (jardinList != null) {
+
+			for (Jardin j : jardinList) {
+				idList.add(j.getId());
+			}
+			
+		}
+
+		return idList;
+
 	}
 
 }

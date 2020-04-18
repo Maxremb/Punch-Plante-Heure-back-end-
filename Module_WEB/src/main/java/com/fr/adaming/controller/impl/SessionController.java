@@ -1,17 +1,24 @@
 package com.fr.adaming.controller.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fr.adaming.converter.IJardinConverter;
 import com.fr.adaming.dto.ConnectedUserDto;
 import com.fr.adaming.enums.Role;
-import com.fr.adaming.security.SessionService;
+import com.fr.adaming.security.interfaces.ISessionService;
+import com.fr.adaming.service.IJardinService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,12 +37,41 @@ import lombok.extern.slf4j.Slf4j;
 public class SessionController {
 
 	@Autowired
-	private SessionService service;
+	private ISessionService service;
 
-	
+	@Autowired
+	private IJardinService jService;
+
+	@Autowired
+	private IJardinConverter jconvert;
+
+	@GetMapping(path = "/gardens")
+	public ResponseEntity<List<Integer>> getUserGardens(@RequestParam(name = "token") String token) {
+		log.info("Controller Session : méthode getUserGardens appelée");
+
+		List<Integer> gardenIdList = new ArrayList<Integer>();
+		int localId = service.getUserIdentifier(token);
+		
+		log.debug("Session getUserGardens: ConnectedUser id = " + localId);
+		
+		HttpStatus status = HttpStatus.OK;
+
+		if (localId == 0) {
+			log.warn("token invalide ou session null: Http status 400");
+			status = HttpStatus.BAD_REQUEST;
+		} else {
+
+			gardenIdList = jconvert.convertJardinListToId(jService.readByUtilisateur(localId).getBody());
+
+		}
+
+		return ResponseEntity.status(status).body(gardenIdList);
+
+	}
+
 	@PostMapping(path = "/user")
 	public ResponseEntity<ConnectedUserDto> getUser(@RequestBody String token) {
-		log.info("Controller Session : méthode getUser apelée");
+		log.info("Controller Session : méthode getUser appelée");
 		ConnectedUserDto user = service.getUser(token);
 		HttpStatus status = HttpStatus.OK;
 

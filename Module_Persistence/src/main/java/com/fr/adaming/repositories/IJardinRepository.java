@@ -30,11 +30,19 @@ public interface IJardinRepository extends JpaRepository<Jardin, Integer>{
 	/**
 	 * Permet la recherche de jardins par l'identifiant unique d'un utilisateur propriétaires
 	 * @param pageable caractéristiques de la pagination
-	 * @param idUtilisateur
+	 * @param idUtilisateur L'id de l'utilisateur
 	 * @return une page de jardin possédés par l'utilisateur ayant cet identifiant
 	 */
 	@Query(value = "select * from jardin where utilisateur_id= :idUtilisateur", nativeQuery = true)
 	public Page<Jardin> trouveParUtilisateur(Pageable pageable, @Param(value = "idUtilisateur") Integer idUtilisateur);
+	
+	/**
+	 * Permet la recherche de jardins par l'identifiant unique d'un utilisateur propriétaires
+	 * @param idUtilisateur L'id de l'utilisateur
+	 * @return une Liste de jardin possédés par l'utilisateur ayant cet identifiant
+	 */
+	@Query(value = "select * from jardin where utilisateur_id= :idUtilisateur", nativeQuery = true)
+	public List<Jardin> trouveParUtilisateur(@Param(value = "idUtilisateur") Integer idUtilisateur);
 	
 	/**
 	 * Permet la recherche de jardins par le numéro de département unique où il(s) se trouve(nt)

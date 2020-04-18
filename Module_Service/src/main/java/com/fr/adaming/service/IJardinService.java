@@ -1,5 +1,7 @@
 package com.fr.adaming.service;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import com.fr.adaming.dto.ServiceResponse;
@@ -31,6 +33,15 @@ public interface IJardinService {
 	 *         jardin (peut être vide ou NULL)
 	 */
 	public ServiceResponse<Page<Jardin>> readByUtilisateur(int page, Integer id);
+	
+	/**
+	 * Methode permettant la recherche de jardins par un identifiant utilisateur
+	 * 
+	 * @param id de l'utilisateur des jardins à rechercher
+	 * @return un ServiceReponse constitué d'un message, d'un boolean erreur et d'une liste de
+	 *         jardin (peut être vide ou NULL)
+	 */
+	public ServiceResponse<List<Jardin>> readByUtilisateur(Integer id);
 
 	/**
 	 * Methode permettant la recherche de jardins par un numéro de département

@@ -92,6 +92,18 @@ public class JardinServiceImpl extends AbstractService<Jardin> implements IJardi
 		return new ServiceResponse<Page<Jardin>>("Recherche non réalisé : id null", null);
 
 	}
+	
+	@Override
+	public ServiceResponse<List<Jardin>> readByUtilisateur(Integer id) {
+		if (id != null) {
+				log.info("Recherche jardin par utilisateur dans la DB OK");
+				return new ServiceResponse<List<Jardin>>("Recherche jardin par utilisateur",
+						repo.trouveParUtilisateur(id));
+		}
+		log.info("Recherche jardin par utilisateur non réalisée : id null");
+		return new ServiceResponse<List<Jardin>>("Recherche non réalisé : id null", null);
+
+	}
 
 	@Override
 	public ServiceResponse<Page<Jardin>> readByDepartement(int page, Integer numDep) {
