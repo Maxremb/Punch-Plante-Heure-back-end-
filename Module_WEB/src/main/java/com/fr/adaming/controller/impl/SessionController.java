@@ -19,6 +19,7 @@ import com.fr.adaming.dto.ConnectedUserDto;
 import com.fr.adaming.enums.Role;
 import com.fr.adaming.security.interfaces.ISessionService;
 import com.fr.adaming.service.IJardinService;
+import com.fr.adaming.service.IPlanteUtilisateurService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,12 +42,39 @@ public class SessionController {
 
 	@Autowired
 	private IJardinService jService;
+	
+	@Autowired
+	private IPlanteUtilisateurService uService;
 
 	@Autowired
 	private IJardinConverter jconvert;
+	
+	@PostMapping(path = "/plants")
+	public ResponseEntity<List<Integer>> getUserPlants(@RequestBody String token) {
+		log.info("Controller Session : méthode getUserGardens appelée");
 
-	@GetMapping(path = "/gardens")
-	public ResponseEntity<List<Integer>> getUserGardens(@RequestParam(name = "token") String token) {
+		List<Integer> plantIdList = new ArrayList<Integer>();
+		int localId = service.getUserIdentifier(token);
+		
+		log.debug("Session getUserGardens: ConnectedUser id = " + localId);
+		
+		HttpStatus status = HttpStatus.OK;
+
+		if (localId == 0) {
+			log.warn("token invalide ou session null: Http status 400");
+			status = HttpStatus.BAD_REQUEST;
+		} else {
+
+			plantIdList = uService.readByUtilisateurId(localId).getBody();
+
+		}
+
+		return ResponseEntity.status(status).body(plantIdList);
+
+	} 
+
+	@PostMapping(path = "/gardens")
+	public ResponseEntity<List<Integer>> getUserGardens(@RequestBody String token) {
 		log.info("Controller Session : méthode getUserGardens appelée");
 
 		List<Integer> gardenIdList = new ArrayList<Integer>();

@@ -37,4 +37,11 @@ public interface IPlanteUtilisateurService {
 	 * @return boolean true ou false
 	 */
 	public boolean deleteByJardin(int idJardin);
+
+	/** Recupère une liste de planteUtilisateurs par utilisateur
+	 * @param idUtil Id de l'utilisateur
+	 * @return une liste d'Id de planteUtilisateur
+	 * @author Gregoire
+	 */
+	public ServiceResponse<List<Integer>> readByUtilisateurId(int idUtil);
 }

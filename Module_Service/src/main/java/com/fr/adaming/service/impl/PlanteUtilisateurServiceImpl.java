@@ -15,6 +15,7 @@ import com.fr.adaming.dto.ServiceResponse;
 import com.fr.adaming.entity.PlanteUtilisateur;
 import com.fr.adaming.repositories.IJardinRepository;
 import com.fr.adaming.repositories.IPlanteUtilisateurRepository;
+import com.fr.adaming.repositories.IUtilisateurRepository;
 import com.fr.adaming.service.AbstractService;
 import com.fr.adaming.service.IPlanteUtilisateurService;
 
@@ -41,6 +42,9 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 
 	@Autowired
 	private IJardinRepository jRepo;
+	
+	@Autowired
+	private IUtilisateurRepository uRepo;
 
 	@Override
 	public ServiceResponse<PlanteUtilisateur> create(PlanteUtilisateur planteUtilisateur) {
@@ -110,6 +114,25 @@ public class PlanteUtilisateurServiceImpl extends AbstractService<PlanteUtilisat
 			serviceResponse.setBody(liste);
 			serviceResponse.setMessage("Succes");
 			log.info("Lecture de la liste de Plante Utilisateur associée a ce jardin OK ");
+			return serviceResponse;
+		}
+	}
+	
+	@Override
+	public ServiceResponse<List<Integer>> readByUtilisateurId(int idUtil) {
+		if (!uRepo.existsById(idUtil)) {
+			log.warn("Utilisateur inexistant");
+			
+			return new ServiceResponse<List<Integer>>("Utilisateur inexistant", new ArrayList<Integer>());
+		} else {
+			log.debug("Utilisateur existant");
+			ServiceResponse<List<Integer>> serviceResponse = new ServiceResponse<List<Integer>>();
+
+			List<Integer> liste = repo.findByUtilisateurId(idUtil);
+
+			serviceResponse.setBody(liste);
+			serviceResponse.setMessage("Succes");
+			log.debug("Lecture de la liste de Plante Utilisateur associée a ce jardin OK ");
 			return serviceResponse;
 		}
 	}

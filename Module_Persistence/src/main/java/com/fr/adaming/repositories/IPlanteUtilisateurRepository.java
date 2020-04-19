@@ -40,6 +40,14 @@ public interface IPlanteUtilisateurRepository extends JpaRepository<PlanteUtilis
 	@Query(value = "select * from plante_utilisateur where jardin_id= :idJardin", nativeQuery = true)
 	public List<PlanteUtilisateur> findByJardin (@Param(value = "idJardin") Integer idJardin);
 	
+	/** Trouve les plantes par utilisateur
+	 * @param idUtil Id de l'utilisateur
+	 * @return une liste d'id de plantUtilisateur
+	 * @author Gregoire
+	 */
+	@Query(value = "select pu.id from PlanteUtilisateur pu join pu.jardin j where j.utilisateur.id = :idUtil")
+	public List<Integer> findByUtilisateurId(@Param(value = "idUtil") Integer idUtil);
+	
 	/**
 	 * Permet la suppression des plantes d'un jardin par le numéro du jardin
 	 * @param idJardin correspondant au numéro unique du jardin
