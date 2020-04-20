@@ -1,6 +1,8 @@
 package com.fr.adaming.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import com.fr.adaming.converter.IConverter;
 import com.fr.adaming.dto.ResponseDto;
 import com.fr.adaming.dto.ServiceResponse;
+import com.fr.adaming.enums.Role;
+import com.fr.adaming.security.interfaces.ISessionService2;
 import com.fr.adaming.service.IService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,25 +34,46 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class AbstractController<C, U, E> implements IController<C, U> {
 
+	protected Map<String, Role> niveauDAcces = new HashMap<String, Role>();
+
 	@Autowired
 	protected IConverter<C, U, E> converter;
 
 	@Autowired
 	protected IService<E> service;
 
+	@Autowired
+	protected ISessionService2 sService;
+
 	@Override
 	public ResponseEntity<ResponseDto<U>> create(C dto) {
 
 		log.info("Controller: méthode CREATE appelée");
 
+		Role userRole = sService.getUserRole();
+
+		ServiceResponse<E> serviceResponse;
+
 		try {
-			ServiceResponse<E> serviceResponse = service.create(converter.convertCreateDtoToEntity(dto));
+
+			if (accessControl("create", userRole)) {
+
+				serviceResponse = service.create(converter.convertCreateDtoToEntity(dto));
+
+			} else {
+				log.warn("Create: Acces refusé");
+				serviceResponse = new ServiceResponse<E>("Create: Acces refusé", null);
+			}
 
 			return makeUpdateDtoResponse(serviceResponse);
 		} catch (Exception e) {
 			log.warn("Erreur méthode Abstract Controller create" + e.getMessage());
-			return null;
+			ResponseDto<U> responseDto = new ResponseDto<U>();
+			responseDto.setError(true);
+			responseDto.setMessage("Erreur méthode Abstract Controller create" + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
 		}
+
 	}
 
 	@Override
@@ -87,7 +112,10 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 			return makeUpdateDtoResponse(serviceResponse);
 		} catch (Exception e) {
 			log.warn("Erreur méthode Abstract Controller update" + e.getMessage());
-			return null;
+			ResponseDto<U> responseDto = new ResponseDto<U>();
+			responseDto.setError(true);
+			responseDto.setMessage("Erreur méthode Abstract Controller update" + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
 		}
 	}
 
@@ -101,7 +129,10 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 			return makeUpdateDtoResponse(serviceResponse);
 		} catch (Exception e) {
 			log.warn("Erreur méthode Abstract Controller readById" + e.getMessage());
-			return null;
+			ResponseDto<U> responseDto = new ResponseDto<U>();
+			responseDto.setError(true);
+			responseDto.setMessage("Erreur méthode Abstract Controller readById" + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
 		}
 
 	}
@@ -116,7 +147,10 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 			return makeUpdateDtoPageResponse(serviceResponse);
 		} catch (Exception e) {
 			log.warn("Erreur méthode Abstract Controller readAll" + e.getMessage());
-			return null;
+			ResponseDto<Page<U>> responseDto = new ResponseDto<>();
+			responseDto.setError(true);
+			responseDto.setMessage("Erreur méthode Abstract Controller readAll" + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
 		}
 
 	}
@@ -213,6 +247,13 @@ public abstract class AbstractController<C, U, E> implements IController<C, U> {
 			return null;
 		}
 
+	}
+
+	private boolean accessControl(String key, Role userRole) {
+		Role lowestRole = this.niveauDAcces.get(key);
+
+		return (lowestRole == Role.None) || (userRole == lowestRole)
+				|| ((lowestRole == Role.Utilisateur) && (userRole == Role.Admin));
 	}
 
 }

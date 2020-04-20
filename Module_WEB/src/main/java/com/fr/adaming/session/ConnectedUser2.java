@@ -8,7 +8,6 @@ import com.fr.adaming.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Stoque les données pour une session d'un utilisateur. Remplace ConnectedUser, en enlevant le token qui était redondant

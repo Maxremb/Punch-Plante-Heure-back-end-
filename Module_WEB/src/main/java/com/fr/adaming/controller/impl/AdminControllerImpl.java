@@ -1,5 +1,10 @@
 package com.fr.adaming.controller.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +27,7 @@ import com.fr.adaming.dto.UtilisateurCreateDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.entity.Admin;
 import com.fr.adaming.entity.Utilisateur;
+import com.fr.adaming.enums.Role;
 import com.fr.adaming.security.interfaces.ISessionManagement;
 import com.fr.adaming.service.IAdminService;
 import com.fr.adaming.service.IUtilisateurService;
@@ -30,9 +36,33 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping(path = "/admin")
 @RestController
-@CrossOrigin( allowCredentials = "true", origins = "http://localhost:4200")
+@CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
 @Slf4j
 public class AdminControllerImpl extends AbstractController<AdminCreateDto, AdminUpdateDto, Admin> {
+
+	/**
+	 * Configuration des autorisations dans AbstractController. Pour chaque méthode,
+	 * le role minimum que l'utilisateur doit avoir est spécifié. Ordre des
+	 * permissions: Admin > Utilisateur > None, donc l'admin peut accéder a toutes
+	 * les méthodes, mais utilisateur ne peut pas accéder au méthodes réservés à
+	 * l'admin. Chaque clé est le nom de la méthode qui est configuré.
+	 * 
+	 * Exemple: niveauDAcces.put("create", Role.Utilisateur); --> Les admins et les
+	 * utilisateurs connectés peuvent utiliser la méthode create, mais pas les
+	 * utilisateurs non-connectés qui ont Role.None
+	 * 
+	 * @author Gregoire
+	 */
+	@PostConstruct
+	public void init() {
+
+		niveauDAcces.put("create", Role.Admin);
+		niveauDAcces.put("deleteById", Role.Admin);
+		niveauDAcces.put("update", Role.Admin);
+		niveauDAcces.put("readById", Role.Admin);
+		niveauDAcces.put("readAll", Role.Admin);
+
+	}
 
 	@Autowired
 	private IAdminService adminService;
@@ -45,7 +75,7 @@ public class AdminControllerImpl extends AbstractController<AdminCreateDto, Admi
 
 	@Autowired
 	private IConverter<AdminCreateDto, AdminUpdateDto, Admin> adminConv;
-	
+
 	@Autowired
 	private ISessionManagement sessionManagement;
 
