@@ -50,7 +50,7 @@ public class SessionController2 {
 	@Autowired
 	private IJardinConverter jconvert;
 	
-	@PostMapping(path = "/plants")
+	@GetMapping(path = "/plants")
 	public ResponseEntity<List<Integer>> getUserPlants() {
 		log.info("Controller Session : méthode getUserGardens appelée");
 
@@ -74,7 +74,7 @@ public class SessionController2 {
 
 	} 
 
-	@PostMapping(path = "/gardens")
+	@GetMapping(path = "/gardens")
 	public ResponseEntity<List<Integer>> getUserGardens() {
 		log.info("Controller Session : méthode getUserGardens appelée");
 
@@ -98,7 +98,7 @@ public class SessionController2 {
 
 	}
 
-	@PostMapping(path = "/user")
+	@GetMapping(path = "/user")
 	public ResponseEntity<ConnectedUserDto> getUser() {
 		log.info("Controller Session : méthode getUser appelée");
 		ConnectedUserDto user = service.getUser();
@@ -120,7 +120,7 @@ public class SessionController2 {
 	 * @param token Le token associé à la session
 	 * @return ResponseEntity contenant un role
 	 */
-	@PostMapping(path = "/role")
+	@GetMapping(path = "/role")
 	public ResponseEntity<Role> getUserRole() {
 		log.info("Controller Session : méthode GetUserRole appelée");
 		Role role = service.getUserRole();
@@ -141,7 +141,7 @@ public class SessionController2 {
 	 * @param token Le token
 	 * @return ResponseEntity contenant un int
 	 */
-	@PostMapping(path = "/identifier")
+	@GetMapping(path = "/identifier")
 	public ResponseEntity<Integer> getUserIdentifier() {
 		log.info("Controller Session : méthode GetUserIdentifier appelée");
 		int id = service.getUserIdentifier();
@@ -162,7 +162,7 @@ public class SessionController2 {
 	 * @param token Le token de la session
 	 * @return ResponseEntity contenant l'email en format String.
 	 */
-	@PostMapping(path = "/email")
+	@GetMapping(path = "/email")
 	public ResponseEntity<String> getUserEmail() {
 		log.info("Controller Session : méthode GetUserMail appelée");
 		String email = service.getUserEmail();
@@ -184,7 +184,7 @@ public class SessionController2 {
 	 * @param token Le token de la session
 	 * @return ResponseEntity contenant le pseudo en format string.
 	 */
-	@PostMapping(path = "/pseudo")
+	@GetMapping(path = "/pseudo")
 	public ResponseEntity<String> getUserPseudo() {
 		log.info("Controller Session : méthode GetUserPseudo appelée");
 		String pseudo = service.getUserPseudo();
