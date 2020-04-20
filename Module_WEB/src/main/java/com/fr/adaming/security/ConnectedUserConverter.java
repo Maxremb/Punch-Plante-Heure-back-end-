@@ -9,8 +9,13 @@ import com.fr.adaming.session.IConnectedUser;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author Gregoire
+ * @deprecated en faveur de ConnectedUserConverter2
+ */
 @Component
 @Slf4j
+@Deprecated
 public class ConnectedUserConverter implements IConnectedUserConverter {
 
 	@Autowired

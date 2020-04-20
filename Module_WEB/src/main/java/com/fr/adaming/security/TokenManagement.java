@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.fr.adaming.dto.AdminUpdateDto;
 import com.fr.adaming.dto.UtilisateurUpdateDto;
 import com.fr.adaming.enums.Role;
-import com.fr.adaming.security.interfaces.ITokenManagement;
+import com.fr.adaming.security.interfaces.ISessionManagement;
 import com.fr.adaming.session.ConnectedUser;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +20,9 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Component
+@Deprecated
 @Slf4j
-public class TokenManagement implements ITokenManagement{
+public class TokenManagement{ //implements ISessionManagement{
 	
 	@Autowired
 	private ConnectedUser user;

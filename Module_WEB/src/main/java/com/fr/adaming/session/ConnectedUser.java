@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @ToString
 @Slf4j
+@Deprecated
 public class ConnectedUser implements IConnectedUser{
 	
 	private int identifier;

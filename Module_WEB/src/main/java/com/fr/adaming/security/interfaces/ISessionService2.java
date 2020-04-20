@@ -6,23 +6,22 @@ import com.fr.adaming.enums.Role;
 /**
  * Une couche entre l'objet connected user et le controller.
  * @author Gregoire
- * @deprecated en faveur de ISessionService2
+ *
  */
-@Deprecated
-public interface ISessionService {
+public interface ISessionService2 {
 	
-	public Role getUserRole(String token);
+	public Role getUserRole();
 
-	public int getUserIdentifier(String token);
+	public int getUserIdentifier();
 
-	public String getUserEmail(String token);
+	public String getUserEmail();
 
-	public String getUserPseudo(String token) ;
+	public String getUserPseudo() ;
 
 	/** Retourne l'objet connectedUserDto si le token est bon
 	 * @param token Le token envoyé au controller
 	 * @return Un objet connectedUser ou null
 	 */
-	public ConnectedUserDto getUser(String token);
+	public ConnectedUserDto getUser();
 
 }

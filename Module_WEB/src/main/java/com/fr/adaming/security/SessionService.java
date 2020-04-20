@@ -15,10 +15,12 @@ import lombok.extern.slf4j.Slf4j;
  * Une couche entre l'objet connected user et le controller
  * 
  * @author Gregoire
+ * @deprecated en faveur de SessionService2
  *
  */
 @Component
 @Slf4j
+@Deprecated
 public class SessionService implements ISessionService {
 
 	@Autowired

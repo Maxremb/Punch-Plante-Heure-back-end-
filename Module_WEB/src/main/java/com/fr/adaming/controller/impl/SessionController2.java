@@ -18,6 +18,7 @@ import com.fr.adaming.converter.IJardinConverter;
 import com.fr.adaming.dto.ConnectedUserDto;
 import com.fr.adaming.enums.Role;
 import com.fr.adaming.security.interfaces.ISessionService;
+import com.fr.adaming.security.interfaces.ISessionService2;
 import com.fr.adaming.service.IJardinService;
 import com.fr.adaming.service.IPlanteUtilisateurService;
 
@@ -29,18 +30,16 @@ import lombok.extern.slf4j.Slf4j;
  * Controller pour la récuperation de données associés à une session
  * 
  * @author Gregoire
- * @deprecated en faveur de SessionController2
  *
  */
-//@RestController
+@RestController
 @CrossOrigin(allowCredentials = "true", origins = "http://localhost:4200")
-//@RequestMapping(path = "/session")
+@RequestMapping(path = "/session")
 @Slf4j
-@Deprecated
-public class SessionController {
+public class SessionController2 {
 
 	@Autowired
-	private ISessionService service;
+	private ISessionService2 service;
 
 	@Autowired
 	private IJardinService jService;
@@ -52,11 +51,11 @@ public class SessionController {
 	private IJardinConverter jconvert;
 	
 	@PostMapping(path = "/plants")
-	public ResponseEntity<List<Integer>> getUserPlants(@RequestBody String token) {
+	public ResponseEntity<List<Integer>> getUserPlants() {
 		log.info("Controller Session : méthode getUserGardens appelée");
 
 		List<Integer> plantIdList = new ArrayList<Integer>();
-		int localId = service.getUserIdentifier(token);
+		int localId = service.getUserIdentifier();
 		
 		log.debug("Session getUserGardens: ConnectedUser id = " + localId);
 		
@@ -76,11 +75,11 @@ public class SessionController {
 	} 
 
 	@PostMapping(path = "/gardens")
-	public ResponseEntity<List<Integer>> getUserGardens(@RequestBody String token) {
+	public ResponseEntity<List<Integer>> getUserGardens() {
 		log.info("Controller Session : méthode getUserGardens appelée");
 
 		List<Integer> gardenIdList = new ArrayList<Integer>();
-		int localId = service.getUserIdentifier(token);
+		int localId = service.getUserIdentifier();
 		
 		log.debug("Session getUserGardens: ConnectedUser id = " + localId);
 		
@@ -100,9 +99,9 @@ public class SessionController {
 	}
 
 	@PostMapping(path = "/user")
-	public ResponseEntity<ConnectedUserDto> getUser(@RequestBody String token) {
+	public ResponseEntity<ConnectedUserDto> getUser() {
 		log.info("Controller Session : méthode getUser appelée");
-		ConnectedUserDto user = service.getUser(token);
+		ConnectedUserDto user = service.getUser();
 		HttpStatus status = HttpStatus.OK;
 
 		if (user == null) {
@@ -122,9 +121,9 @@ public class SessionController {
 	 * @return ResponseEntity contenant un role
 	 */
 	@PostMapping(path = "/role")
-	public ResponseEntity<Role> getUserRole(@RequestBody String token) {
+	public ResponseEntity<Role> getUserRole() {
 		log.info("Controller Session : méthode GetUserRole appelée");
-		Role role = service.getUserRole(token);
+		Role role = service.getUserRole();
 		HttpStatus status = HttpStatus.OK;
 
 		if (role == Role.None) {
@@ -143,9 +142,9 @@ public class SessionController {
 	 * @return ResponseEntity contenant un int
 	 */
 	@PostMapping(path = "/identifier")
-	public ResponseEntity<Integer> getUserIdentifier(@RequestBody String token) {
+	public ResponseEntity<Integer> getUserIdentifier() {
 		log.info("Controller Session : méthode GetUserIdentifier appelée");
-		int id = service.getUserIdentifier(token);
+		int id = service.getUserIdentifier();
 		HttpStatus status = HttpStatus.OK;
 
 		if (id == 0) {
@@ -164,9 +163,9 @@ public class SessionController {
 	 * @return ResponseEntity contenant l'email en format String.
 	 */
 	@PostMapping(path = "/email")
-	public ResponseEntity<String> getUserEmail(@RequestBody String token) {
+	public ResponseEntity<String> getUserEmail() {
 		log.info("Controller Session : méthode GetUserMail appelée");
-		String email = service.getUserEmail(token);
+		String email = service.getUserEmail();
 
 		HttpStatus status = HttpStatus.OK;
 
@@ -186,9 +185,9 @@ public class SessionController {
 	 * @return ResponseEntity contenant le pseudo en format string.
 	 */
 	@PostMapping(path = "/pseudo")
-	public ResponseEntity<String> getUserPseudo(@RequestBody String token) {
+	public ResponseEntity<String> getUserPseudo() {
 		log.info("Controller Session : méthode GetUserPseudo appelée");
-		String pseudo = service.getUserPseudo(token);
+		String pseudo = service.getUserPseudo();
 
 		HttpStatus status = HttpStatus.OK;
 
